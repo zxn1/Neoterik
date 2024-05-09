@@ -12,11 +12,9 @@ class Main extends BaseController
         $this->session          = service('session');
     }
 
-    public function index()
+    public function teacher_main()
     {
         $data = [];
-        $this->render_login('login',$data);
-        
-        // return view('App\\Modules\\Login\\Views\\login');
+        $this->render('teacher/rph_main',$data);
     }
 }
