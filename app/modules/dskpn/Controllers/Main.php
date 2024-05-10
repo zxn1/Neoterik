@@ -35,4 +35,11 @@ class Main extends BaseController
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
+
+    public function topic_list_in_cluster()
+    {
+        $data = [];
+        $script = ['topic_list_in_cluster'];
+        $this->render_jscss('topic_list_in_cluster', $data, $script);
+    }
 }

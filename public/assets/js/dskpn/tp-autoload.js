@@ -16,7 +16,8 @@ function autoPopulate(kluster, tp)
 {
     if(kluster == 3 && tp == 3)
     {
-        clearDynamicInputs();
+        clearAllDynamicInputs();
+
         StandardData.forEach(function(item){
             item.TP.forEach(function(ts){
                 addField('collection-' + item.name, ts);
