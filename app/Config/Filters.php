@@ -77,7 +77,8 @@ class Filters extends BaseFilters
             'AuthFilter' => [
                 'except' => [
                     '/login',
-                    '/login/attempt_login'
+                    '/login/attempt_login',
+                    '/register/'
                 ]
             ],
         ],
