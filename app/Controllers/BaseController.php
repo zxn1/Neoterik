@@ -87,7 +87,7 @@ abstract class BaseController extends Controller
         echo view('render/main/main', $array);
     }
 
-    public function render_js($view, $data, $js = [])
+    public function render_jscss($view, $data, $js = [], $css = [])
     {
         $uri = service('uri');
         $modules = $uri->getSegment(1);
@@ -97,9 +97,14 @@ abstract class BaseController extends Controller
         foreach($js as $sc)
             $jsTemp[] = $modules . "\\" . $sc;
 
+        $cssTemp = [];
+        foreach($css as $cs)
+            $cssTemp[] = $modules . "\\" . $cs;
+
         $array = [
             'data'  => $data,
             'script' => $jsTemp,
+            'style' => $cssTemp,
             'view'  => $view_path . $view
         ];
 
