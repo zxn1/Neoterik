@@ -24,6 +24,15 @@ class Main extends BaseController
     {
         $data = [];
         $script = ['data', 'dynamic-input'];
-        $this->render_js('map_static_field', $data, $script);
+        $style = ['static-field'];
+        $this->render_jscss('map_static_field', $data, $script, $style);
+    }
+
+    public function tp_maintenance()
+    {
+        $data = [];
+        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $style = ['static-field', 'tp-maintenance'];
+        $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
 }
