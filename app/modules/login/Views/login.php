@@ -50,18 +50,18 @@
                   <p class="mb-0">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p>
                 </div>
                 <div class="card-body">
-                  <form method="post" action="<?php echo site_url('login'); ?>" id="login-form" class="smart-form client-form" data-gtm-form-interact-id="0">
+                  <form method="post" action="<?= "auth_login" ?>" id="login-form" class="smart-form client-form" data-gtm-form-interact-id="0">
                     <?= csrf_field() ?>
                     <label>Nama Pengguna</label>
                     <div class="mb-3">
-                      <input id="um_username" name="login" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon">
+                      <input id="um_username" name="login" type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
                       <div class="invalid-feedback">
                         <?= session('errors.login') ?>
                       </div>
                     </div>
                     <label>Kata Laluan</label>
                     <div class="mb-3">
-                      <input id="um_password" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
+                      <input id="um_password" name="password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" required>
                       <div class="invalid-feedback">
                         <?= session('errors.password') ?>
                       </div>

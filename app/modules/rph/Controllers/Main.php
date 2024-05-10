@@ -15,6 +15,12 @@ class Main extends BaseController
     public function teacher_main()
     {
         $data = [];
-        $this->render('teacher/rph_main',$data);
+        $this->render('teacher/rph_main', $data);
+    }
+
+    public function teacher_suggestion()
+    {
+        $data = [];
+        $this->render('teacher/rph_suggestion', $data);
     }
 }
