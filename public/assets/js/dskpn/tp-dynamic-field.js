@@ -71,3 +71,11 @@ function clearDynamicInputs()
         children.not(':first-child').remove(); // Remove all excep first
     });
 }
+
+function clearAllDynamicInputs()
+{
+    StandardData.forEach(function(item) {
+        var collection = $('#collection-' + item.name);
+        collection.empty();
+    });
+}
