@@ -178,12 +178,12 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo site_url('logout'); ?>">
+        <a class="nav-link" href="<?= site_url('login/logout') ?>">
           <div class="icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
             <!-- Font Awesome icon for Sign Out -->
             <i class="fa fa-sign-out-alt" style="font-size:0.8rem;"></i>
           </div>
-          <span class="nav-link-text ms-1">Sign Out</span>
+          <span class="nav-link-text ms-1 d-flex">Sign Out</span>
         </a>
       </li>
     </ul>
