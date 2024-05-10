@@ -41,12 +41,21 @@
     border: 0 !important;
     /* border-radius: 4px; */
   }
+
+  /* .row>* {
+    padding-right: calc(var(--bs-gutter-x)* 0);
+    padding-left: calc(var(--bs-gutter-x)* 0);
+    margin-right: calc(var(--bs-gutter-x)* .5);
+    margin-left: calc(var(--bs-gutter-x)* .5);
+  } */
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
+
 <div class="container-fluid py-4">
+
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
       <h6 class="my-auto text-white">MAKLUMAT RPH</h6>
@@ -107,6 +116,404 @@
     </div>
   </div>
 
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card mt-4" style="min-height:400px;" id="notifications">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">REKA BENTUK INTRUKSI</h6>
+        </div>
+        <div class="card-body pt-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-1" colspan="4">
+                    <p class="mb-0">Butiran</p>
+                  </th>
+                  <th class="text-center">
+                    <p class="mb-0">Tindakan</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Active Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Collaborative Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Constructive Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Authentic Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Goal-Directed Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mt-4" style="min-height:400px;" id="notifications">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">INTEGRASI TEKNOLOGI</h6>
+        </div>
+        <div class="card-body pt-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-1" colspan="4">
+                    <p class="mb-0">Butiran</p>
+                  </th>
+                  <th class="text-center">
+                    <p class="mb-0">Tindakan</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Entry Level</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Adaptation Level</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Infussion Level</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Transformation Level</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Goal-Directed Learning</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card mt-4" style="min-height:400px;" id="notifications">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">PENDEKATAN</h6>
+        </div>
+        <div class="card-body pt-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-1" colspan="4">
+                    <p class="mb-0">Butiran</p>
+                  </th>
+                  <th class="text-center">
+                    <p class="mb-0">Tindakan</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Inkuiri</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Berasaskan Masalah</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Berasaskan Projek</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Pembelajaran Masteri</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Kontekstual</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Berasaskan Pengalaman</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mt-4" id="notifications">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">KAEDAH</h6>
+        </div>
+        <div class="card-body pt-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-1" colspan="4">
+                    <p class="mb-0">Butiran</p>
+                  </th>
+                  <th class="text-center">
+                    <p class="mb-0">Tindakan</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Simulasi</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Main Peranan</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Nyanyian</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Bercerita</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Lain-lain:</span>
+                      <textarea></textarea>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mt-4" id="notifications">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">PENGLIBATAN IBU BAPA</h6>
+        </div>
+        <div class="card-body pt-0">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead>
+                <tr>
+                  <th class="ps-1" colspan="4">
+                    <p class="mb-0">Butiran</p>
+                  </th>
+                  <th class="text-center">
+                    <p class="mb-0">Tindakan</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm">Penglibatan Ibu Bapa</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <br>
+      <a href="teacher_suggestion" type="button" class="btn btn-info btn-lg w-100">SETERUSNYA</a>
+      <!-- <button type="button" class="btn btn-info btn-lg w-100">SETERUSNYA</button> -->
+    </div>
+  </div>
 </div>
 <script>
   $(document).ready(function() {
