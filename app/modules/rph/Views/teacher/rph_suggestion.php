@@ -202,7 +202,7 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                   <li class="list-group-item">Merumuskan kadar pernafasan bergantung kepada jenis aktiviti.</li>
                   <li class="list-group-item">Berkomunikasi secara kreatif dan inovatif tentang situasi yang memberi kesan baik dan kesan buruk kepada pernafasan manusia dan cadangan penjagaan kesihatan peparu.</li>
                 </ul>
-                <ul class="list-group flex-grow-1 mx-2">
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
                   </div>
@@ -213,7 +213,7 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                   <li class="list-group-item">Mengesyorkan gaya hidup yang boleh diamalkan untuk mencegah risiko penyakit tidak berjangkit.</li>
                   <li class="list-group-item">Merancang aktiviti harian yang boleh dilakukan untuk mengelakkan penyakit tidak berjangkit.</li>
                 </ul>
-                <ul class="list-group flex-grow-1 mx-2">
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">SENI VISUAL</h6>
                   </div>
