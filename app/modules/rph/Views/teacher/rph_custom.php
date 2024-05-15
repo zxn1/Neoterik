@@ -48,6 +48,7 @@
     flex-grow: 1;
   }
 
+
   /* Media query for screens smaller than a certain width (e.g., phones) */
   @media (max-width: 768px) {
     .d-flex {
@@ -63,6 +64,12 @@
       margin-bottom: 5%;
       /* Ensure each ul takes up the full width */
     }
+
+  }
+
+  .zero-top-border {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
   }
 
   /* .row>* {
@@ -85,9 +92,13 @@
     </div>
     <div class="card-body">
       <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-4">
           <label for="kluster">KLUSTER</label>
           <input class="form-control" value="PERKEMBANGAN MANUSIA" readonly>
+        </div>
+        <div class="col-md-6">
+          <label for="kluster">SUB-TEMA</label>
+          <input class="form-control" value="2023" readonly>
         </div>
         <div class="col-md-2">
           <label for="kluster">TAHUN</label>
@@ -96,23 +107,24 @@
       </div>
       <div class="row py-4">
 
-        <div class="col-md-8">
-          <label for="topik">TOPIK</label>
+        <div class="col-md-4">
+          <label for="topik">TEMA</label>
           <input class="form-control" value="Pernafasan Manusia dan Penyakit Berkaitan" readonly>
         </div>
-        <div class="col-md-2">
-          <label for="tema">TEMA</label>
+        <div class="col-md-6">
+          <label for="tema">TOPIK</label>
           <input class="form-control" value="Individu" readonly>
 
         </div>
         <div class="col-md-2">
-          <label for="subtema">SUB-TEMA</label>
+          <label for="subtema">DURASI PELAKSANAAN</label> (minit)
           <input class="form-control" value="Tubuh dan Kesihatan" readonly>
         </div>
       </div>
     </div>
   </div>
   <br>
+  <!-- Tab -->
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
@@ -125,23 +137,28 @@
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false" tabindex="-1">
-                  TAHAP PENGUASAAN
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#standard_prestasi" role="tab" aria-controls="standard_prestasi" aria-selected="false" tabindex="-1">
+                  STANDARD PRESTASI
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kompetensi_teras" role="tab" aria-controls="kompetensi_teras" aria-selected="false" tabindex="-1">
-                  KOMPETENSI TERAS
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#petaksiran" role="tab" aria-controls="petaksiran" aria-selected="false" tabindex="-1">
+                  PENTAKSIRAN
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#domain" role="tab" aria-controls="domain" aria-selected="false" tabindex="-1">
-                  16 DOMAIN KEMENJADIAN MURID
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#objektif_prestasi" role="tab" aria-controls="objektif_prestasi" aria-selected="false" tabindex="-1">
+                  OBJEKTIF PRESTASI
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kemahiran" role="tab" aria-controls="kemahiran" aria-selected="false" tabindex="-1">
-                  7 KEMAHIRAN INSANIAH
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#aktiviti" role="tab" aria-controls="aktiviti" aria-selected="false" tabindex="-1">
+                  AKTIVITI
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#abm" role="tab" aria-controls="abm" aria-selected="false" tabindex="-1">
+                  ALAT BANTU MENGAJAR
                 </a>
               </li>
 
@@ -156,7 +173,10 @@
               <div class="d-flex top-0 w-100">
                 <!-- standard Pembelajaran -->
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 2.1.1 Mengenal pasti organ yang terlibat dalam proses pernafasan.
 2.1.2 Memerihalkan proses pernafasan dari aspek laluan udara dan
 pertukaran gas yang berlaku di peparu melalui pemerhatian menerusi
@@ -172,14 +192,20 @@ melalui lakaran, TMK, penulisan atau lisan secara kreatif.
                 </textarea>
                 </ul>
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 6.1.1 Menyatakan contoh penyakit tidak berjangkit.
 6.1.2 Menghubungkait punca dan kesan penyakit tidak berjangkit.
 6.1.3 Berkomunikasi mengenai cara pencegahan penyakit tidak berjangkit.
                 </textarea>
                 </ul>
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 1.1.1 Mengenal pasti jenis peta pemikiran yang sesuai diaplikasikan untuk
 menghasilkan karya kreatif dalam Bidang Menggambar:
 (iii) Poster - Peta Minda
@@ -187,47 +213,26 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                 </ul>
               </div>
             </div>
-            <!-- Tahap Penguasaan -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
+            <!-- STANDARD PRESTASI -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="standard_prestasi" role="tabpanel" aria-labelledby="standard_prestasi">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SAINS</h6>
+                <div class="card-body py-2">
+
+                  <div class="row pt-3">
+                    <div class="custom row" id="tahap-penguasaan">
+                    </div>
+
                   </div>
-                  <li class="list-group-item">Melabel organ yang terlibat semasa proses pernafasan.</li>
-                  <li class="list-group-item">Menerangkan proses pernafasan dari aspek laluan udara.</li>
-                  <li class="list-group-item">Mengitlak pergerakan dada semasa proses pernafasan.</li>
-                  <li class="list-group-item">Membezakan kandungan oksigen dan karbon dioksida semasa proses pernafasan.</li>
-                  <li class="list-group-item">Merumuskan kadar pernafasan bergantung kepada jenis aktiviti.</li>
-                  <li class="list-group-item">Berkomunikasi secara kreatif dan inovatif tentang situasi yang memberi kesan baik dan kesan buruk kepada pernafasan manusia dan cadangan penjagaan kesihatan peparu.</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  <div class="text-end p-2 pb-3">
+                    <button class="btn btn-outline-primary btn-sm mb-0">Kemaskini TP</button>
                   </div>
-                  <li class="list-group-item">Menyatakan punca penyakit tidak berjangkit seperti penyakit jantung, asma, penyakit buah pinggang dan diabetes.</li>
-                  <li class="list-group-item">Menerangkan punca penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Membezakan kesan setiap penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Menjelaskan melalui contoh cara mengurangkan risiko penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Mengesyorkan gaya hidup yang boleh diamalkan untuk mencegah risiko penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Merancang aktiviti harian yang boleh dilakukan untuk mengelakkan penyakit tidak berjangkit.</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SENI VISUAL</h6>
-                  </div>
-                  <li class="list-group-item">Mengenal bahasa seni visual pada karya.</li>
-                  <li class="list-group-item">Menerangkan penggunaan bahasa seni visual yang terdapat pada karya.</li>
-                  <li class="list-group-item">Mengaplikasi kemahiran dan pengetahuan bahasa seni dalam aktiviti penerokaan.</li>
-                  <li class="list-group-item">Menganalisis karya seni menggunakan pengetahuan dan kemahiran seni dalam aktiviti penerokaan.</li>
-                  <li class="list-group-item">Menentukan penggunaan bahasa seni visual, media, teknik dan proses yang sesuai dalam aktiviti penerokaan.</li>
-                  <li class="list-group-item">Menjana idea kreatif dalam aktiviti penerokaan.</li>
-                </ul>
+                </div>
+
               </div>
             </div>
-            <!-- Kompetensi Teras -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="kompetensi_teras" role="tabpanel" aria-labelledby="kompetensi_teras">
+            <!-- PENTAKSIRAN -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="petaksiran" role="tabpanel" aria-labelledby="petaksiran">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
@@ -251,8 +256,8 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                 </ul>
               </div>
             </div>
-            <!-- 16 Domain kemenjadian murid -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
+            <!-- OBJEKTIF PRESTASI -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
@@ -279,8 +284,32 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                 </ul>
               </div>
             </div>
-            <!-- 7 Kemahiran Insaniah -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
+            <!-- AKTIVITI -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="aktiviti" role="tabpanel" aria-labelledby="aktiviti">
+              <div class="d-flex top-0 w-100">
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
+              </div>
+            </div>
+            <!-- ALAT BANTU MENGAJAR -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="abm" role="tabpanel" aria-labelledby="abm">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
@@ -766,11 +795,6 @@ lompat
         </div>
       </div>
     </div>
-  </div>
-  <div class="text-end p-3">
-    <a href="teacher_custom" type="button" class="btn bg-gradient-secondary">Ubah</a>
-
-    <a href="teacher_suggestion" type="button" class="btn bg-gradient-primary">Guna</a>
   </div>
 </div>
 <script>
