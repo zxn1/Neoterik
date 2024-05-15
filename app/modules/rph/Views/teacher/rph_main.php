@@ -515,7 +515,6 @@
 
         <a href="teacher_suggestion" type="button" class="btn bg-gradient-primary">Seterusnya</a>
       </div>
-      <!-- <button type="button" class="btn btn-info btn-lg w-100">SETERUSNYA</button> -->
     </div>
   </div>
 </div>
