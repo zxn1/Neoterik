@@ -42,6 +42,29 @@
     /* border-radius: 4px; */
   }
 
+  /* CSS for desktop screens */
+  .list-group {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+  /* Media query for screens smaller than a certain width (e.g., phones) */
+  @media (max-width: 768px) {
+    .d-flex {
+      flex-direction: column;
+      /* Change flex direction to column for smaller screens */
+    }
+
+    .list-group {
+      flex-basis: auto;
+      /* Reset flex-basis to auto for stacked layout */
+      flex-grow: 0;
+      width: 100%;
+      margin-bottom: 5%;
+      /* Ensure each ul takes up the full width */
+    }
+  }
+
   /* .row>* {
     padding-right: calc(var(--bs-gutter-x)* 0);
     padding-left: calc(var(--bs-gutter-x)* 0);
@@ -65,7 +88,6 @@
         <div class="col">
           <label for="kluster">KLUSTER</label>
           <input class="form-control" value="PERKEMBANGAN MANUSIA" readonly>
-
         </div>
       </div>
       <div class="row py-4">
@@ -94,27 +116,27 @@
           <div class="nav-wrapper position-relative w-100">
             <ul class="nav nav-pills nav-fill p-1" role="tablist">
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="false">
+                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#standard_pembelajaran" role="tab" aria-controls="standard_pembelajaran" aria-selected="false">
                   STANDARD PEMBELAJARAN
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam2" role="tab" aria-controls="cam2" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false" tabindex="-1">
                   TAHAP PENGUASAAN
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kompetensi_teras" role="tab" aria-controls="kompetensi_teras" aria-selected="false" tabindex="-1">
                   KOMPETENSI TERAS
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#domain" role="tab" aria-controls="domain" aria-selected="false" tabindex="-1">
                   16 DOMAIN KEMENJADIAN MURID
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kemahiran" role="tab" aria-controls="kemahiran" aria-selected="false" tabindex="-1">
                   7 KEMAHIRAN INSANIAH
                 </a>
               </li>
@@ -123,37 +145,12 @@
             </ul>
           </div>
         </div>
-        <div class="card-body p-3 mt-2">
+        <div class="card-body p-3 mt-2" style="height: auto;">
           <div class="tab-content" id="v-pills-tabContent">
-            <div class="tab-pane fade position-relative height-600 border-radius-lg active show" id="cam1" role="tabpanel" aria-labelledby="cam1" style="background-image: url('../../assets/img/bg-smart-home-1.jpg'); background-size:cover;">
-              <div class="position-absolute d-flex top-0 w-100">
+            <!-- Standard Pembelajaran -->
+            <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
+              <div class="d-flex top-0 w-100">
                 <!-- standard Pembelajaran -->
-<<<<<<< Updated upstream
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SAINS</h6>
-                  </div>
-                  <li class="list-group-item">Mengenal pasti organ yang terlibat dalam proses pernafasan</li>
-                  <li class="list-group-item">Memerihalkan proses pernafasan dari aspek laluan udara dan pertukaran gas yang berlaku di peparu melalui pemerhatian menerusi pelbagai media.</li>
-                  <li class="list-group-item">Membezakan kandungan oksigen dan karbon dioksida semasa menarik dan menghembus nafas.</li>
-                  <li class="list-group-item">Memerihalkan pergerakan dada semasa menarik dan menghembus nafas dengan menjalankan aktiviti.</li>
-                  <li class="list-group-item">Mengitlak bahawa kadar pernafasan bergantung kepada jenis aktiviti yang dilakukan.</li>
-                  <li class="list-group-item">Menjelaskan pemerhatian tentang proses pernafasan manusia melalui lakaran, TMK, penulisan atau lisan secara kreatif.</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                  </div>
-                  <li class="list-group-item">Menyatakan contoh penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Menghubungkait punca dan kesan penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Berkomunikasi mengenai cara pencegahan penyakit tidak berjangkit.</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SENI VISUAL</h6>
-                  </div>
-                  <li class="list-group-item">Mengenal pasti jenis peta pemikiran yang sesuai diaplikasikan untuk menghasilkan karya kreatif dalam Bidang Menggambar:(iii) Poster - Peta Minda</li>
-=======
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
 2.1.1 Mengenal pasti organ yang terlibat dalam proses pernafasan.
@@ -183,13 +180,12 @@ melalui lakaran, TMK, penulisan atau lisan secara kreatif.
 menghasilkan karya kreatif dalam Bidang Menggambar:
 (iii) Poster - Peta Minda
                 </textarea>
->>>>>>> Stashed changes
                 </ul>
               </div>
-
             </div>
-            <div class="tab-pane fade position-relative height-400 border-radius-lg" id="cam2" role="tabpanel" aria-labelledby="cam2" style="background-image: url('../../assets/img/bg-smart-home-2.jpg'); background-size:cover;">
-              <div class="position-absolute d-flex top-0 w-100">
+            <!-- Tahap Penguasaan -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
+              <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -206,26 +202,101 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
                   </div>
-                  <li class="list-group-item">Menyatakan contoh penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Menghubungkait punca dan kesan penyakit tidak berjangkit.</li>
-                  <li class="list-group-item">Berkomunikasi mengenai cara pencegahan penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Menyatakan punca penyakit tidak berjangkit seperti penyakit jantung, asma, penyakit buah pinggang dan diabetes.</li>
+                  <li class="list-group-item">Menerangkan punca penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Membezakan kesan setiap penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Menjelaskan melalui contoh cara mengurangkan risiko penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Mengesyorkan gaya hidup yang boleh diamalkan untuk mencegah risiko penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Merancang aktiviti harian yang boleh dilakukan untuk mengelakkan penyakit tidak berjangkit.</li>
                 </ul>
                 <ul class="list-group flex-grow-1 mx-2">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">SENI VISUAL</h6>
                   </div>
-                  <li class="list-group-item">Mengenal pasti jenis peta pemikiran yang sesuai diaplikasikan untuk menghasilkan karya kreatif dalam Bidang Menggambar:(iii) Poster - Peta Minda</li>
+                  <li class="list-group-item">Mengenal bahasa seni visual pada karya.</li>
+                  <li class="list-group-item">Menerangkan penggunaan bahasa seni visual yang terdapat pada karya.</li>
+                  <li class="list-group-item">Mengaplikasi kemahiran dan pengetahuan bahasa seni dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menganalisis karya seni menggunakan pengetahuan dan kemahiran seni dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menentukan penggunaan bahasa seni visual, media, teknik dan proses yang sesuai dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menjana idea kreatif dalam aktiviti penerokaan.</li>
                 </ul>
               </div>
             </div>
-            <div class="tab-pane fade position-relative height-400 border-radius-lg" id="cam3" role="tabpanel" aria-labelledby="cam3" style="background-image: url('../../assets/img/home-decor-3.jpg'); background-size:cover;">
-              <div class="position-absolute d-flex top-0 w-100">
-                <p class="text-white p-3 mb-0">17.05.2021 4:57PM</p>
-                <div class="ms-auto p-3">
-                  <span class="badge badge-secondary">
-                    <i class="fas fa-dot-circle text-danger" aria-hidden="true"></i>
-                    Recording</span>
-                </div>
+            <!-- Kompetensi Teras -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="kompetensi_teras" role="tabpanel" aria-labelledby="kompetensi_teras">
+              <div class="d-flex top-0 w-100">
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item">(KSN1) Memerhati</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item">(KPK3) Pendidikan Kesihatan Reproduktif dan Sosial (PEERS)</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item">(KSV1) Bahasa Seni Visual</li>
+                  <li class="list-group-item">(KSV2) Kemahiran Seni Visual</li>
+                </ul>
+              </div>
+            </div>
+            <!-- 16 Domain kemenjadian murid -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
+              <div class="d-flex top-0 w-100">
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
+                  <li class="list-group-item">(DKM2) Numerasi (N)</li>
+                  <li class="list-group-item">(DKM3) Literasi Saintifik (LS)</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
+                  <li class="list-group-item">(DKM9) Komunikasi (Kom)</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
+                  <li class="list-group-item">(DKM8) Kreativiti (Kr)</li>
+                </ul>
+              </div>
+            </div>
+            <!-- 7 Kemahiran Insaniah -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
+              <div class="d-flex top-0 w-100">
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
+                </ul>
               </div>
             </div>
           </div>
@@ -234,105 +305,44 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
     </div>
   </div>
 
-  <!-- <li class="nav-item" role="presentation">
-    <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
-      Objektif Prestasi
-    </a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
-      Pentaksiran
-    </a>
-  </li>
-  <li class="nav-item" role="presentation">
-    <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#cam3" role="tab" aria-controls="cam3" aria-selected="false" tabindex="-1">
-      Lain-lain
-    </a>
-  </li> -->
-  <!-- <div class="row">
-    <div class="col-md-6">
-      <div class="card mt-4" id="notifications">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
-          <h6 class="my-auto text-white">Pendekatan</h6>
+  <!-- Objecktif Prestasi -->
+  <br>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header d-flex pb-0 p-3">
+          <div class="nav-wrapper position-relative w-100">
+            <ul class="nav nav-pills nav-fill p-1" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#objektif_prestasi" role="tab" aria-controls="objektif_prestasi" aria-selected="false">
+                  OBJEKTIF PRESTASI
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#idea_pengajaran" role="tab" aria-controls="idea_pengajaran" aria-selected="false" tabindex="-1">
+                  IDEA PENGAJARAN (AKTIVITI)
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#abm" role="tab" aria-controls="abm" aria-selected="false" tabindex="-1">
+                  ALAT BANTU MENGAJAR
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#pentaksiran" role="tab" aria-controls="pentaksiran" aria-selected="false" tabindex="-1">
+                  PENTAKSIRAN
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#spesifikasi_pengajaran" role="tab" aria-controls="spesifikasi_pengajaran" aria-selected="false" tabindex="-1">
+                  SPESIFIKASI PENGAJARAN
+                </a>
+              </li>
+
+              <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 155px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="true">-</a></div>
+            </ul>
+          </div>
         </div>
-<<<<<<< Updated upstream
-        <div class="card-body pt-0">
-          <div class="table-responsive">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th class="ps-1" colspan="4">
-                    <p class="mb-0">Butiran</p>
-                  </th>
-                  <th class="text-center">
-                    <p class="mb-0">Tindakan</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Inkuiri</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Berasaskan Masalah</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Pembelajaran Masteri</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Konseptual</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Berasaskan Pengalaman</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-=======
         <div class="card-body p-3 mt-2" style="height: auto;">
           <div class="tab-content" id="v-pills-tabContent">
             <!-- OBJEKTIF PRESTASI -->
@@ -748,98 +758,11 @@ lompat
                 </div>
               </div>
             </div>
->>>>>>> Stashed changes
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card mt-4" id="notifications">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
-          <h6 class="my-auto text-white">Kaedah</h6>
-        </div>
-        <div class="card-body pt-0">
-          <div class="table-responsive">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th class="ps-1" colspan="4">
-                    <p class="mb-0">Description</p>
-                  </th>
-                  <th class="text-center">
-                    <p class="mb-0">Action</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Simulasi</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Main Peranan</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Nyanyian</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Bercerita</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Lain-lain:</span>
-                      <textarea></textarea>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  </div>
 </div>
 <script>
   $(document).ready(function() {
