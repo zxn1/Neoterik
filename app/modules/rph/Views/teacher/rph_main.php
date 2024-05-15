@@ -510,15 +510,11 @@
         </div>
       </div>
       <br>
-<<<<<<< Updated upstream
-      <a href="teacher_suggestion" type="button" class="btn btn-info btn-lg w-100">SETERUSNYA</a>
-=======
       <div class="text-end p-3">
         <a href="teacher_suggestion" type="button" class="btn bg-gradient-secondary">Batal</a>
 
         <a href="teacher_suggestion" type="button" class="btn bg-gradient-primary">Seterusnya</a>
       </div>
->>>>>>> Stashed changes
       <!-- <button type="button" class="btn btn-info btn-lg w-100">SETERUSNYA</button> -->
     </div>
   </div>
