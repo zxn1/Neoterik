@@ -7,6 +7,10 @@ hr.custom {
     margin : 0px !important;
 }
 
+.nav.nav-pills .nav-link {
+    background-color: var(--bs-nav-pills-link-active-bg) !important;
+}
+
   /* Custom Css to overwrite select2 style */
   .select2-container .select2-selection__rendered {
     display: flex;
