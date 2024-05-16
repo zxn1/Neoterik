@@ -42,11 +42,9 @@
             PENYELENGGARAAN TAHAP PENGUASAAN
           </a>
         </li>
-
-        
       </ul>
     </div>
-  </div>
+    </div>
   <!-- <div class="card-header d-flex p-3 bg-gradient-primary">
     <h6 class="my-auto text-white flex-grow-1">Penyelenggaraan Tahap Penguasaan</h6>
     <button class="btn text-white btn-sm mb-0 ms-auto" onclick="clearDynamicInputs()">
