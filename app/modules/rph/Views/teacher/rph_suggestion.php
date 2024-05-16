@@ -65,6 +65,12 @@
     }
   }
 
+
+  .zero-top-border {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
   /* .row>* {
     padding-right: calc(var(--bs-gutter-x)* 0);
     padding-left: calc(var(--bs-gutter-x)* 0);
@@ -156,7 +162,10 @@
               <div class="d-flex top-0 w-100">
                 <!-- standard Pembelajaran -->
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 2.1.1 Mengenal pasti organ yang terlibat dalam proses pernafasan.
 2.1.2 Memerihalkan proses pernafasan dari aspek laluan udara dan
 pertukaran gas yang berlaku di peparu melalui pemerhatian menerusi
@@ -172,14 +181,20 @@ melalui lakaran, TMK, penulisan atau lisan secara kreatif.
                 </textarea>
                 </ul>
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 6.1.1 Menyatakan contoh penyakit tidak berjangkit.
 6.1.2 Menghubungkait punca dan kesan penyakit tidak berjangkit.
 6.1.3 Berkomunikasi mengenai cara pencegahan penyakit tidak berjangkit.
                 </textarea>
                 </ul>
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="15" readonly>
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
 1.1.1 Mengenal pasti jenis peta pemikiran yang sesuai diaplikasikan untuk
 menghasilkan karya kreatif dalam Bidang Menggambar:
 (iii) Poster - Peta Minda
@@ -202,7 +217,7 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                   <li class="list-group-item">Merumuskan kadar pernafasan bergantung kepada jenis aktiviti.</li>
                   <li class="list-group-item">Berkomunikasi secara kreatif dan inovatif tentang situasi yang memberi kesan baik dan kesan buruk kepada pernafasan manusia dan cadangan penjagaan kesihatan peparu.</li>
                 </ul>
-                <ul class="list-group flex-grow-1 mx-2">
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
                   </div>
@@ -213,7 +228,7 @@ menghasilkan karya kreatif dalam Bidang Menggambar:
                   <li class="list-group-item">Mengesyorkan gaya hidup yang boleh diamalkan untuk mencegah risiko penyakit tidak berjangkit.</li>
                   <li class="list-group-item">Merancang aktiviti harian yang boleh dilakukan untuk mengelakkan penyakit tidak berjangkit.</li>
                 </ul>
-                <ul class="list-group flex-grow-1 mx-2">
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">SENI VISUAL</h6>
                   </div>
