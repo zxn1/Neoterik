@@ -1,3 +1,88 @@
 .custom.row>* {
     padding-right: 0px !important;
 }
+
+hr.custom {
+    border-top: 1px solid #919191 !important;
+    margin : 0px !important;
+}
+
+  /* Custom Css to overwrite select2 style */
+  .select2-container .select2-selection__rendered {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    color: #344767;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 1px solid #d2d6da;
+    border-radius: 0.5rem;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+  }
+
+  .select2-container--open .select2-selection__rendered {
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+  }
+
+  .select2-container--open .select2-dropdown--below {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #d2d6da;
+
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    /* color: #444; */
+    line-height: inherit !important;
+  }
+
+  .select2-container--default .select2-selection--single {
+    /* background-color: #fff; */
+    border: 0 !important;
+    /* border-radius: 4px; */
+  }
+
+  /* CSS for desktop screens */
+  .list-group {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+
+  /* Media query for screens smaller than a certain width (e.g., phones) */
+  @media (max-width: 768px) {
+    .d-flex {
+      flex-direction: column;
+      /* Change flex direction to column for smaller screens */
+    }
+
+    .list-group {
+      flex-basis: auto;
+      /* Reset flex-basis to auto for stacked layout */
+      flex-grow: 0;
+      width: 100%;
+      margin-bottom: 5%;
+      /* Ensure each ul takes up the full width */
+    }
+
+  }
+
+  .zero-top-border {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  /* .row>* {
+    padding-right: calc(var(--bs-gutter-x)* 0);
+    padding-left: calc(var(--bs-gutter-x)* 0);
+    margin-right: calc(var(--bs-gutter-x)* .5);
+    margin-left: calc(var(--bs-gutter-x)* .5);
+  } */

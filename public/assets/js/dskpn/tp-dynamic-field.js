@@ -5,20 +5,22 @@ $(document).ready(function() {
 $(document).ready(function() {
     StandardData.forEach(function(item){
         $('#tahap-penguasaan').append(`
-            <div class="col-md-4">
-                <div class="d-flex flex-column h-100">
-                    <p class="mb-1 pt-2 text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">${ item.name }</p>
-                    <div id="collection-${item.name}">
-                        <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.name}">
-                            <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
-                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-${item.name}').remove();">
-                                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <button class="btn btn-outline-warning opacity-6 btn-sm mt-2" onclick="addField('collection-${item.name}')">Tambah TP</button>
+            <ul class="list-group flex-grow-1 mx-2">
+                <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white text-uppercase">${ item.name }</h6>
                 </div>
-            </div>
+                <div class="list-group-item" id="collection-${item.name}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.name}" style="display: flex !important;flex-direction: row !important;">
+                        <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-${item.name}').remove();">
+                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="p-2 pb-3">
+                <button class="btn bg-gradient-primary mt-2" onclick="addField('collection-${item.name}')">Tambah TP</button>
+                </div>
+            </ul>
         `);
     });
  });
@@ -65,10 +67,10 @@ function countInputs(collectionId) {
 
 function clearDynamicInputs()
 {
-    StandardData.forEach(function(item){
+    StandardData.forEach(function(item) {
         var collection = $('#collection-' + item.name);
-        var children = collection.children(); // Get all children elements
-        children.not(':first-child').remove(); // Remove all excep first
+        collection.empty();
+        addField('collection-' + item.name);
     });
 }
 

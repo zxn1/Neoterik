@@ -23,10 +23,14 @@ function autoPopulate(kluster, tp)
                 addField('collection-' + item.name, ts);
             });
         });
+
+        document.getElementById("savetpchanges").innerHTML = "Kemaskini TP";
         Swal.fire({
             icon: "success",
             title: "Rekod TP dijumpai",
             text: "Rekod TP telah dijumpai!"
           });
+    } else {
+        document.getElementById("savetpchanges").innerHTML = "Simpan";
     }
 }
