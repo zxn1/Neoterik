@@ -16,6 +16,50 @@ $(document).ready(function() {
         `);
     });
  });
+
+
+//listener
+$('#kluster-selection').on('change', function() {
+    var cm_id = $(this).val();
+
+    document.getElementById('loading-screen').style.display = "block";
+
+    $.ajax({
+        url: '/dskpn/topic/get-topic-by-kluster/' + cm_id,
+        type: 'GET',
+        data: {
+            csrf: csrfToken, // Include the CSRF token
+        },
+        dataType: 'json',
+        success: function(data) {
+            // Handle success response
+            if(data.status == 'success')
+            {
+                document.getElementById('loading-screen').style.display = "none";
+                $('#topik-dynamic-field').empty();
+                data.data.forEach(function(item){
+                    $('#topik-dynamic-field').append(`<option value="${item.tm_id}">${item.tm_desc}</option>`);
+                });
+            } else {
+                document.getElementById('loading-screen').style.display = "none";
+                Swal.fire({
+                    icon: "danger",
+                    title: "Maaf",
+                    text: "Tiada rekod topik dijumpai dibawah kluster yang dipilih!"
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            document.getElementById('loading-screen').style.display = "none";
+            // Handle error
+            Swal.fire({
+                icon: "danger",
+                title: "Maaf",
+                text: "Tiada rekod topik dijumpai dibawah kluster yang dipilih!"
+            });
+        }
+    });
+});
  
 
 //  <div class="card mt-4" id="notifications">

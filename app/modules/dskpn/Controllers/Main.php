@@ -32,6 +32,8 @@ class Main extends BaseController
     public function map_static()
     {
         $data = [];
+        $data['kluster'] = $this->cluster_model->findAll();
+
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
         $this->render_jscss('map_static_field', $data, $script, $style);
