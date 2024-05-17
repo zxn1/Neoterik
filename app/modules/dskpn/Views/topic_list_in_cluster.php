@@ -144,51 +144,44 @@
             </div>
             <div class="card-body p-3">
                 <div class="accordion" id="accordionRental">
+                    <?php foreach($cluster as $clust) { ?>
+
                     <div class="accordion-item mb-3">
                         <h5 class="accordion-header" id="headingOne">
-                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                Cluster 1
+                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
+                                <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                <?= $clust['cm_desc']; ?>
                             </button>
                         </h5>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                        <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
                             <div class="accordion-body" class="custom row" id="tahap-penguasaan">
-                                <ul class="list-group">
-                                </ul>
+                            
+                            <?php foreach($topik_main as $topik) {
+                                if($topik['cm_id'] == $clust['cm_id'])
+                                {
+                                ?>
+                                <div class="col-md-12">
+                                    <div class="d-flex flex-column h-100">
+                                        <div id="collection1-<?= $topik['tm_id']; ?>">
+                                            <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
+                                                <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
+                                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
+                                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }
+                            } ?>
+
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item mb-3">
-                        <h5 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                Cluster 2
-                            </button>
-                        </h5>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionRental">
-                        <div class="accordion-body" class="custom row" id="tahap-penguasaan2">
-                                <ul class="list-group">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item mb-3">
-                        <h5 class="accordion-header" id="headingThree">
-                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                Cluster 3
-                            </button>
-                        </h5>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionRental">
-                        <div class="accordion-body" class="custom row" id="tahap-penguasaan3">
-                                <ul class="list-group">
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+
+                    <?php } ?>
+
                 </div>
             </div>
         </div>
