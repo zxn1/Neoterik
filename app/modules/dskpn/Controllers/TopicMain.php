@@ -30,8 +30,19 @@ class TopicMain extends BaseController
         if($this->topic_model->insert($data))
         {
             return redirect()->back()->with('success', 'Berjaya menambah Topic dalam Kluster!');
-        } else {
-            return redirect()->back()->with('fail', 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!');
         }
+
+        return redirect()->back()->with('fail', 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!');
+    }
+
+    public function delete($id = null)
+    {
+        $response = ['status' => 'fail'];
+        if($this->topic_model->delete($id))
+        {
+            $response = ['status' => 'success'];
+        }
+        
+        return $this->response->setJSON($response);
     }
 }
