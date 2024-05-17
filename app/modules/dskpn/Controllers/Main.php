@@ -70,4 +70,20 @@ class Main extends BaseController
         $this->render_jscss('domain_mapping', $data, $script, $style);
 
     }
+    
+    public function mapping_kompetensi_teras()
+    {
+        $data = [];
+        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $style = ['static-field', 'tp-maintenance'];
+        $this->render_jscss('mapping_kompetensi_teras', $data, $script, $style);
+
+    }
+    public function mapping_spesifikasi_dskpn()
+    {
+        $data = [];
+        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $style = ['static-field', 'tp-maintenance'];
+        $this->render_jscss('mapping_spesifikasi_dskpn', $data, $script, $style);
+    }    
 }
