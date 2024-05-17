@@ -58,7 +58,7 @@
         </div>
     </div>
     <div class="text-end p-3">
-        <a href="<?= route_to('tp_maintenance') ?>" type="button" class="btn bg-gradient-info mt-2">Seterusnya</a>
+        <a href="<?= route_to('tp_maintenance') ?>" type="button" class="btn bg-gradient-primary mt-2">Seterusnya</a>
     </div>
   </div>
 </div>

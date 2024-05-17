@@ -39,7 +39,24 @@ class Main extends BaseController
     public function topic_list_in_cluster()
     {
         $data = [];
-        $script = ['topic_list_in_cluster'];
-        $this->render_jscss('topic_list_in_cluster', $data, $script);
+        $script = ['data','topic_list_in_cluster'];
+        $style = ['topic_list_in_cluster'];
+        $this->render_jscss('topic_list_in_cluster', $data, $script, $style);
+    }
+
+    public function list_registered_dskpn()
+    {
+        $data = [];
+        $script = ['data', 'dynamic-input'];
+        $style = ['static-field'];
+        $this->render_jscss('list_registered_dskpn', $data, $script, $style);
+
+        // return view('list-registered-dskpn');
+    }
+
+    public function dskpn_view()
+    {
+        $data = [];
+        $this->render('dskpn_view', $data);
     }
 }

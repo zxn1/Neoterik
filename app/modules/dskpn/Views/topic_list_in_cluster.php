@@ -1,94 +1,115 @@
-<h3 class="ps-3">Senarai Topik Dalam Kluster</h3>
-<div class="container-fluid py-2">
-    <div class="row">
+<style>
+  /* Custom Css to overwrite select2 style */
+  .select2-container .select2-selection__rendered {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4rem;
+    color: #344767;
+    white-space: nowrap;
+    background-color: #fff;
+    border: 1px solid #d2d6da;
+    border-radius: 0.5rem;
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 38px !important;
+  }
+
+  .select2-container--open .select2-selection__rendered {
+    border-bottom: none;
+    border-bottom-right-radius: 0;
+  }
+
+  .select2-container--open .select2-dropdown--below {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #d2d6da;
+
+  }
+
+  .select2-container--default .select2-selection--single .select2-selection__rendered {
+    /* color: #444; */
+    line-height: inherit !important;
+  }
+
+  .select2-container--default .select2-selection--single {
+    /* background-color: #fff; */
+    border: 0 !important;
+    /* border-radius: 4px; */
+  }
+
+  /* CSS for desktop screens */
+  .list-group {
+    flex-basis: 0;
+    flex-grow: 1;
+  }
+
+
+  /* Media query for screens smaller than a certain width (e.g., phones) */
+  @media (max-width: 768px) {
+    .d-flex {
+      flex-direction: column;
+      /* Change flex direction to column for smaller screens */
+    }
+
+    .list-group {
+      flex-basis: auto;
+      /* Reset flex-basis to auto for stacked layout */
+      flex-grow: 0;
+      width: 100%;
+      margin-bottom: 5%;
+      /* Ensure each ul takes up the full width */
+    }
+
+  }
+
+  .zero-top-border {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  /* .row>* {
+    padding-right: calc(var(--bs-gutter-x)* 0);
+    padding-left: calc(var(--bs-gutter-x)* 0);
+    margin-right: calc(var(--bs-gutter-x)* .5);
+    margin-left: calc(var(--bs-gutter-x)* .5);
+  } */
+</style>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
+<div class="container-fluid py-4">
         <div class="card">
-            <div class="card-body p-3">
-                    <div class="accordion" id="accordionExample" >
-                        <div class="accordion-item" style="background-color: #f4ecf6; border: none; margin-bottom: 5px;">
-                            <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                            <i class="bi bi-caret-down-fill"></i> Cluster 1
-                            </button>
-                            </h2>
-                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <!-- Data for Cluster 1 goes here -->
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Topic 1</li>
-                                        <li class="list-group-item">Topic 2</li>
-                                        <li class="list-group-item">Topic 3</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" style="background-color: #f4ecf6; border: none; margin-bottom: 5px;">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Cluster 2
-                                </button>
-                            </h2>
-                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" >
-                                <div class="accordion-body">
-                                    <!-- Data for Cluster 2 goes here -->
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Topic A</li>
-                                        <li class="list-group-item">Topic B</li>
-                                        <li class="list-group-item">Topic C</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item" style="background-color: #f4ecf6; border: none; margin-bottom: 5px;">
-                            <h2 class="accordion-header" id="headingTwo">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Cluster 3
-                                </button>
-                            </h2>
-                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" >
-                                <div class="accordion-body">
-                                    <!-- Data for Cluster 2 goes here -->
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Topic A</li>
-                                        <li class="list-group-item">Topic B</li>
-                                        <li class="list-group-item">Topic C</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+                <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
-        </div>
-    </div>
-</div>
-<br>
-<h3 class="ps-3">Daftar Topik dalam Kluster</h3>
-<div class="container-fluid py-2">
-    <div class="row">
-        <div class="card">
             <div class="card-body p-3" >
-                <div class="row align-items-center" style="background-color: #f4ecf6; border: none; margin-bottom: 5px;">
+                <div class="row align-items-center">
                     <div class="row">
                         <div class="col-md-6">
-                            <!-- Select your cluster dropdown -->
                             <div class="form-group">
                                 <label for="clusterSelect" >Select your cluster</label>
-                                <select class="form-control" id="clusterSelect">
-                                    <!-- Dummy data -->
-                                    <option >Cluster 1</option>
-                                    <option>Cluster 2</option>
-                                    <option>Cluster 3</option>
+                                <select class="form-control select2" aria-label="Default select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <!-- Subtema text input -->
                             <div class="form-group">
                                 <label for="subtemaInput">Subtema</label>
                                 <input type="text" class="form-control" id="subtemaInput">
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <!-- Year text input -->
                             <div class="form-group">
                                 <label for="yearInput">Year</label>
                                 <input type="text" class="form-control" id="yearInput">
@@ -96,15 +117,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
-                            <!-- Subtema text input -->
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="subtemaInput">Tema</label>
                                 <input type="text" class="form-control" id="subtemaInput">
                             </div>
                         </div>
-                        <div class="col-md-9">
-                            <!-- Year text input -->
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="yearInput">Topik</label>
                                 <input type="text" class="form-control" id="yearInput">
@@ -112,17 +131,68 @@
                         </div>
                     </div>
                 </div>
-                <br>
-                <div class="row">
-                    <div class="col-md-12">
-                        <!-- Button for Topic -->
-                        <div class="form-group">
-                        <button type="button" class="btn btn-primary form-control" id="topicButton" style="background-color: #bdc3f9; border-color: #bdc3f9;">Daftar</button>
+            </div>
+            <div class="text-end p-3">
+                <a href="" type="button" class="btn bg-gradient-info">Tambah</a>
+            </div>
+        </div>
+</div>
+<div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-header d-flex p-3 bg-gradient-primary">
+                <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
+            </div>
+            <div class="card-body p-3">
+                <div class="accordion" id="accordionRental">
+                    <div class="accordion-item mb-3">
+                        <h5 class="accordion-header" id="headingOne">
+                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                Cluster 1
+                            </button>
+                        </h5>
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                            <div class="accordion-body" class="custom row" id="tahap-penguasaan">
+                                <ul class="list-group">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3">
+                        <h5 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                Cluster 2
+                            </button>
+                        </h5>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionRental">
+                        <div class="accordion-body" class="custom row" id="tahap-penguasaan2">
+                                <ul class="list-group">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item mb-3">
+                        <h5 class="accordion-header" id="headingThree">
+                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                Cluster 3
+                            </button>
+                        </h5>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionRental">
+                        <div class="accordion-body" class="custom row" id="tahap-penguasaan3">
+                                <ul class="list-group">
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </div>
-
+<div class="text-end p-3">
+    <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
+</div>
