@@ -14,7 +14,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('domain-mapping',            [Main::class,     'domain_mapping']);
     $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras']);
     $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn']);
-
+  
     //Topic Main
     $routes->group('topic', function ($routes) {
         $routes->post('create',                [TopicMain::class,     'create'],                  ['as' => 'create_topic']);

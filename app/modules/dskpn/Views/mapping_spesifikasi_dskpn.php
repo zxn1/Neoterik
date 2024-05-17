@@ -58,7 +58,7 @@
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
-      <h6 class="my-auto text-white">MAKLUMAT RPH</h6>
+      <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
     </div>
     <div class="card-body">
       <div class="row">
@@ -71,42 +71,8 @@
           </select>
         </div>
         <div class="col">
-          <label for="subtema">SUB-TEMA</label>
-          <select class="form-control select2" id="subtema" name="subtema">
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
-          </select>
-        </div>
-        <div class="col">
-          <label for="tahun">TAHUN</label>
+          <label for="tahun">TOPIK</label>
           <select class="form-control select2" id="tahun" name="tahun">
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
-          </select>
-        </div>
-      </div>
-      <div class="row py-4">
-        <div class="col">
-          <label for="tema">TEMA</label>
-          <select class="form-control select2" id="tema" name="tema">
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
-          </select>
-        </div>
-        <div class="col">
-          <label for="topik">TOPIK</label>
-          <select class="form-control select2" id="topik" name="topik">
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
-          </select>
-        </div>
-        <div class="col">
-          <label for="durasi">DURASI</label>
-          <select class="form-control select2" id="durasi" name="durasi">
             <option value="AL">Alabama</option>
             <!-- Other options here -->
             <option value="WY">Wyoming</option>
@@ -115,7 +81,8 @@
       </div>
     </div>
   </div>
-
+  <br>
+  <!-- PENGETAHUAN ASAS -->
   <div class="row">
     <div class="col-md-4">
       <div class="card mt-4" style="min-height:400px;" id="notifications">
@@ -385,7 +352,6 @@
       </div>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-6">
       <div class="card mt-4" id="notifications">
@@ -473,48 +439,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card mt-4" id="notifications">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
-          <h6 class="my-auto text-white">PENGLIBATAN IBU BAPA</h6>
-        </div>
-        <div class="card-body pt-0">
-          <div class="table-responsive">
-            <table class="table mb-0">
-              <thead>
-                <tr>
-                  <th class="ps-1" colspan="4">
-                    <p class="mb-0">Butiran</p>
-                  </th>
-                  <th class="text-center">
-                    <p class="mb-0">Tindakan</p>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm">Penglibatan Ibu Bapa</span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="text-end p-3">
-        <a href="teacher_suggestion" type="button" class="btn bg-gradient-secondary">Batal</a>
-        <a href="teacher_suggestion" type="button" class="btn bg-gradient-info">Seterusnya</a>
-      </div>
-    </div>
+  </div>
+  <br>
+  <div class="text-end p-3">
+    <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
+    <a href="mapping-spesifikasi-dskpn" type="button" class="btn bg-gradient-info">Seterusnya</a>
   </div>
 </div>
 <script>

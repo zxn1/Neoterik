@@ -783,9 +783,9 @@ lompat
     </div>
   </div>
   <div class="text-end p-3">
-    <a href="teacher_custom" type="button" class="btn bg-gradient-secondary">Ubah</a>
+    <a href="teacher_custom" type="button" class="btn bg-gradient-warning">Ubah</a>
 
-    <a href="teacher_suggestion" type="button" class="btn bg-gradient-primary">Guna</a>
+    <a href="teacher_suggestion" type="button" class="btn bg-gradient-info">Guna</a>
   </div>
 </div>
 <script>
