@@ -85,8 +85,8 @@
 
 
 <div class="container-fluid py-4">
-        <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <form class="card" action="<?= route_to('create_topic'); ?>" method="POST">
+            <div class="card-header d-flex p-3 bg-gradient-primary">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
             <div class="card-body p-3" >
@@ -95,24 +95,24 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="clusterSelect" >Select your cluster</label>
-                                <select class="form-control select2" aria-label="Default select example">
+                                <select name="cluster" class="form-control select2" aria-label="Default select example">
                                     <option selected>Open this select menu</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <?php foreach($cluster as $item) { ?>
+                                    <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="subtemaInput">Subtema</label>
-                                <input type="text" class="form-control" id="subtemaInput">
+                                <input type="text" name="subtema" class="form-control" id="subtemaInput">
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="yearInput">Year</label>
-                                <input type="text" class="form-control" id="yearInput">
+                                <input type="text" name="year" class="form-control" id="yearInput">
                             </div>
                         </div>
                     </div>
@@ -120,22 +120,22 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="subtemaInput">Tema</label>
-                                <input type="text" class="form-control" id="subtemaInput">
+                                <input type="text" name="tema" class="form-control" id="subtemaInput">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="yearInput">Topik</label>
-                                <input type="text" class="form-control" id="yearInput">
+                                <input type="text" name="topik" class="form-control" id="yearInput">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="text-end p-3">
-                <a href="" type="button" class="btn bg-gradient-info">Tambah</a>
+                <input type="submit" class="btn bg-gradient-info" value="Tambah"/>
             </div>
-        </div>
+        </form>
 </div>
 <div class="container-fluid py-4">
         <div class="card">
@@ -196,3 +196,24 @@
 <div class="text-end p-3">
     <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
 </div>
+
+<!-- alert part -->
+<?php if (session()->has('success')): ?>
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Berjaya",
+            text: "<?= session('success'); ?>"
+          });
+    </script>
+<?php endif; ?>
+
+<?php if (session()->has('fail')): ?>
+    <script>
+        Swal.fire({
+            icon: "danger",
+            title: "Maaf",
+            text: "<?= session('fail'); ?>"
+          });
+    </script>
+<?php endif; ?>
