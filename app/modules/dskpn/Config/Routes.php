@@ -4,7 +4,7 @@ use App\Modules\Dskpn\Controllers\Main;
 use App\Modules\Dskpn\Controllers\TopicMain;
 
 $routes->group('dskpn', function ($routes) {
-    /*           Route Path                   Class Controller  function                                  Route Name        */
+    /*           Route Path                   Class Controller  function                        Route Name        */
     $routes->get('/',                         [Main::class,     'index']);
     $routes->get('mapping-static-field',      [Main::class,     'map_static']);
     $routes->get('tp-maintenance',            [Main::class,     'tp_maintenance'],              ['as' => 'tp_maintenance']);
@@ -17,7 +17,8 @@ $routes->group('dskpn', function ($routes) {
   
     //Topic Main
     $routes->group('topic', function ($routes) {
-        $routes->post('create',                [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
-        $routes->delete('delete/(:num)',       [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
+        $routes->post('create',                         [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
+        $routes->delete('delete/(:num)',                [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
+        $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
     });
 });

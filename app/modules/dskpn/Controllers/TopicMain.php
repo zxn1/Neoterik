@@ -45,4 +45,17 @@ class TopicMain extends BaseController
         
         return $this->response->setJSON($response);
     }
+
+    public function getTopicByKluster($id = null)
+    {
+        $response = ['status' => 'fail', 'data' => []];
+
+        $topikSelected = $this->topic_model->where('cm_id', $id)->find();
+        if(!empty($topikSelected))
+        {
+            $response = ['status' => 'success', 'data' => $topikSelected];
+        }
+        
+        return $this->response->setJSON($response);
+    }
 }
