@@ -8,22 +8,19 @@
         <div class="col-md-6">
             <div class="d-flex flex-column h-100 mb-2">
             <p class="mb-1 pt-2 text-bold">Pilih Kluster</p>
-            <select class="form-control select2" aria-label="Default select example">
+            <select id="kluster-selection" class="form-control select2" aria-label="Default select example">
                 <option selected>Open this select menu</option>
-                <option value="1">Sahsiah dan Akhlak</option>
-                <option value="2">Kesenian Manusia</option>
-                <option value="3">Perkembangan Manusia</option>
+                <?php foreach($kluster as $item) { ?>
+                  <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                <?php } ?>
             </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="d-flex flex-column h-100 mb-2">
             <p class="mb-1 pt-2 text-bold">Pilih Topik</p>
-            <select class="form-control select2" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">Sirah dan Hubungan Sosial</option>
-                <option value="2">Kecerdasan dan Kecekapan</option>
-                <option value="3">Pernafasan Manusia Dan Penyakit Berkaitan</option>
+            <select id="topik-dynamic-field" class="form-control select2" aria-label="Default select example">
+                <option selected>Sila pilih Kluster dahulu.</option>
             </select>
             </div>
         </div>
@@ -79,3 +76,10 @@
             </div>
         </div> -->
       <!-- </div> -->
+
+
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+<div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
+  <dotlottie-player style="position : fixed; right : -100px; top : 20px; z-index : 3;" src="https://lottie.host/82b8666a-afa5-4659-8a0e-6faedb04158f/vlZwAM82T0.json" background="transparent" speed="1" style="width: 500px; height: 500px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+  <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
+</div>
