@@ -62,7 +62,6 @@
     <!-- End Footer -->
   </main>
   <!-- Configurationbar -->
-  <?= view('render/main//configurationbar'); ?>
   <!--  Configurationbar -->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/popper.min.js"></script>
