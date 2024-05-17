@@ -13,6 +13,21 @@
     border-radius: 0.5rem;
   }
 
+  .zero-top-border {
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    border-bottom-left-radius: 15px !important;
+    border-bottom-right-radius: 15px !important;
+  }
+  
+  .objektif-prestasi {
+    padding: 0.5rem !important;
+  }
+
+  .objektif-prestasi-text {
+    background-color: #edf1fd;
+  }
+
   .select2-container--default .select2-selection--single .select2-selection__arrow {
     height: 38px !important;
   }
