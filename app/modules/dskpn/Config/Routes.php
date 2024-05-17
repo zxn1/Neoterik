@@ -18,5 +18,6 @@ $routes->group('dskpn', function ($routes) {
     //Topic Main
     $routes->group('topic', function ($routes) {
         $routes->post('create',                [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
+        $routes->delete('delete/(:num)',       [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
     });
 });

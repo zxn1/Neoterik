@@ -4,17 +4,21 @@ namespace App\Modules\Dskpn\Controllers;
 
 use App\Controllers\BaseController;
 
+//model
 use App\Modules\Dskpn\Models\ClusterMainModel;
+use App\Modules\Dskpn\Models\TopicMainModel;
 
 class Main extends BaseController
 {
 
     protected $cluster_model;
+    protected $topic_model;
 
     public function __construct()
     {
         $this->session          = service('session');
-        $this->cluster_model   = new ClusterMainModel();
+        $this->cluster_model    = new ClusterMainModel();
+        $this->topic_model      = new TopicMainModel();
     }
 
     public function index()
@@ -44,8 +48,8 @@ class Main extends BaseController
     public function topic_list_in_cluster()
     {
         $data = [];
-
-        $data['cluster'] = $this->cluster_model->findAll();;
+        $data['cluster'] = $this->cluster_model->findAll();
+        $data['topik_main'] = $this->topic_model->findAll();
 
         $script = ['data','topic_list_in_cluster'];
         $style = ['topic_list_in_cluster'];
