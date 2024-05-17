@@ -59,4 +59,15 @@ class Main extends BaseController
         $data = [];
         $this->render('dskpn_view', $data);
     }
+
+
+    // 16 Domain Mapping View
+    public function domain_mapping()
+    {
+        $data = [];
+        $script = ['data', 'dynamic-input'];
+        $style = ['static-field'];
+        $this->render_jscss('domain_mapping', $data, $script, $style);
+
+    }
 }
