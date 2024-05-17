@@ -11,4 +11,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('list-registered-dskpn',     [Main::class,     'list_registered_dskpn']);
     $routes->get('dskpn-view',                [Main::class,     'dskpn_view']);
     $routes->get('domain-mapping',            [Main::class,     'domain_mapping']);
+    $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras']);
+    $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn']);
+    
 });
