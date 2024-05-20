@@ -100,9 +100,14 @@
 <div class="container-fluid py-4 accordion">
         <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
             <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
-            <div id="collapseOne" class="card-body p-3 accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="col-md-2 text-end">
+                <i id="collapseIcon" class="fa fa-plus"></i>
+            </div>
+            </div>
+            <div id="collapseOne" class="card-body p-3 accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                 <div class="row align-items-center">
                     <div class="row">
                         <div class="col-md-6">
@@ -119,13 +124,13 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="subtemaInput">Subtema</label>
-                                <input type="text" name="subtema" class="form-control" id="subtemaInput">
+                                <input type="text" name="subtema" class="form-control" id="subtemaInput" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="yearInput">Year</label>
-                                <input type="text" name="year" class="form-control" id="yearInput">
+                                <input type="text" name="year" class="form-control" id="yearInput" required>
                             </div>
                         </div>
                     </div>
@@ -133,13 +138,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="subtemaInput">Tema</label>
-                                <input type="text" name="tema" class="form-control" id="subtemaInput">
+                                <input type="text" name="tema" class="form-control" id="subtemaInput" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="yearInput">Topik</label>
-                                <input type="text" name="topik" class="form-control" id="yearInput">
+                                <input type="text" name="topik" class="form-control" id="yearInput" required>
                             </div>
                         </div>
                     </div>

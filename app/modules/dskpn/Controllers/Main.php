@@ -61,7 +61,13 @@ class Main extends BaseController
     public function list_registered_dskpn()
     {
         $data = [];
-        $script = ['data', 'dynamic-input'];
+        $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
+        ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+        ->findAll();
+
+        // dd($data['cluster']);
+
+        $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
         $this->render_jscss('list_registered_dskpn', $data, $script, $style);
 
