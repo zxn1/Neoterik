@@ -120,29 +120,13 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ls_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.learning_standard: 18 rows
+-- Dumping data for table neoterik.learning_standard: 0 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 REPLACE INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, '1. Kemahiran Hidup.\r\n2. Kemahiran Visual.', 2, NULL, '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL),
-	(2, '1. Kemahiran Menjadi Jurutera', 3, NULL, '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL),
-	(3, '2.1 Kejuruteraan Sains\r\n2.2 Respirasi', 4, NULL, '2024-05-20 12:46:14', '2024-05-20 12:46:14', NULL),
-	(4, '3.1 Mengenali Sejarah Mesopotamia\r\n3.2 Sejarah Kun', 5, NULL, '2024-05-20 12:46:14', '2024-05-20 12:46:14', NULL),
-	(5, '1. test math', 6, NULL, '2024-05-20 12:49:42', '2024-05-20 12:49:42', NULL),
-	(6, '1. test kimia', 7, NULL, '2024-05-20 12:49:42', '2024-05-20 12:49:42', NULL),
-	(7, 'test', 8, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
-	(8, 'testA', 9, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
-	(9, 'TESTB', 10, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
-	(10, 'test', 11, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
-	(11, 'testA', 12, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
-	(12, 'TESTB', 13, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
-	(13, 'test', 14, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
-	(14, 'testA', 15, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
-	(15, 'TESTB', 16, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
-	(16, 'test', 17, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL),
-	(17, 'testA', 18, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL),
-	(18, 'TESTB', 19, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL);
+	(2, '1. Kemahiran Menjadi Jurutera', 3, NULL, '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL);
 /*!40000 ALTER TABLE `learning_standard` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.objective_performance
@@ -153,10 +137,12 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`op_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.objective_performance: 7 rows
+-- Dumping data for table neoterik.objective_performance: 0 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
+REPLACE INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(2, 'Yang saya tahu, saya tak tahu. Betul.', '2024-05-20 11:31:36', '2024-05-20 11:31:36', NULL);
 /*!40000 ALTER TABLE `objective_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.standard_performance
@@ -166,11 +152,8 @@ CREATE TABLE IF NOT EXISTS `standard_performance` (
   `sp_tp_level_desc` varchar(50) DEFAULT NULL,
   `sm_id` int(11) DEFAULT NULL,
   `dskpn_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.standard_performance: 0 rows
 /*!40000 ALTER TABLE `standard_performance` DISABLE KEYS */;
@@ -185,10 +168,13 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.subject_main: 18 rows
+-- Dumping data for table neoterik.subject_main: 0 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
+REPLACE INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(2, 'Pw8uO7M', 'Sains', '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL),
+	(3, 'RQrFO8E', 'Jurutera', '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL);
 /*!40000 ALTER TABLE `subject_main` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.topic_main
@@ -208,6 +194,9 @@ CREATE TABLE IF NOT EXISTS `topic_main` (
 -- Dumping data for table neoterik.topic_main: 10 rows
 /*!40000 ALTER TABLE `topic_main` DISABLE KEYS */;
 REPLACE INTO `topic_main` (`tm_id`, `tm_desc`, `tm_sub_theme`, `tm_theme`, `tm_year`, `cm_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(6, 'asdad dasd asd saf a af ds fa', 'adsad', 'adada', '123', 1, '2024-05-17 11:05:03', '2024-05-19 12:31:52', '2024-05-19 12:31:52'),
+	(5, 'asdafasga a f saf adf af saf ', 'tset', 'asdad', '23', 2, '2024-05-17 11:04:33', '2024-05-19 12:31:57', '2024-05-19 12:31:57'),
+	(4, 'fafa', 'asda', 'fafafa', '1231', 1, '2024-05-17 10:30:43', '2024-05-19 12:31:48', '2024-05-19 12:31:48'),
 	(7, 'Jantung dan Pernafasan Manusia', 'tesa', 'asdada', '1313', 1, '2024-05-17 12:52:49', '2024-05-19 11:34:54', NULL),
 	(8, 'Pernafasan dan Respirasi', 'test', 'Individu', '4', 1, '2024-05-19 12:32:26', '2024-05-19 12:32:26', NULL),
 	(9, 'Tenaga ATP dan TDP, respirasi', 'test', 'Kumpulan', '4', 1, '2024-05-19 12:33:18', '2024-05-19 12:33:18', NULL),

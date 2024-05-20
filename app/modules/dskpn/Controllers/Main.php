@@ -10,6 +10,7 @@ use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\SubjectMainModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
+use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
 class Main extends BaseController
 {
@@ -19,6 +20,8 @@ class Main extends BaseController
     protected $subject_model;
     protected $learning_standard_model;
     protected $objective_performance_model;
+    protected $standard_performance_model;
+    protected $db;
 
     public function __construct()
     {
@@ -28,6 +31,8 @@ class Main extends BaseController
         $this->subject_model            = new SubjectMainModel();
         $this->learning_standard_model  = new LearningStandardModel();
         $this->objective_performance_model = new ObjectivePerformanceModel();
+        $this->standard_performance_model  = new StandardPerformanceModel();
+        $this->db                       = $this->db = \Config\Database::connect();
     }
 
     public function index()
@@ -51,6 +56,31 @@ class Main extends BaseController
     public function tp_maintenance()
     {
         $data = [];
+
+        $data['parameters'] = $this->request->getGet();
+        if(!empty($data['parameters']))
+        {
+            //step 1 - get Cluster
+            $data['cluster_desc'] = $this->cluster_model
+                                    ->where('cm_id', $data['parameters']['cluster_id'])->first();
+
+            //step 2 - get Topic
+            $data['topic_desc'] = $this->topic_model
+                                    ->where('tm_id', $data['parameters']['topic_id'])->first();
+
+            //step 3 - get Subject Via Learning Standard
+            foreach($data['parameters']['learning_standard_id'] as $ls_id)
+            {
+                $query = $this->db->table('subject_main')
+                    ->select('subject_main.*')
+                    ->join('learning_standard', 'learning_standard.sm_id = subject_main.sm_id')
+                    ->where('learning_standard.ls_id', $ls_id)
+                    ->get();
+
+                $data['subjects'][] = $query->getResult();
+            }
+        }
+
         $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('tp_maintenance', $data, $script, $style);
@@ -156,10 +186,40 @@ class Main extends BaseController
                         'dskpn_id' => null //temporary null
                     ]);
                     
-                    $data['learning_standard_id'] = $this->learning_standard_model->insertID();
+                    $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
                 }
             }
-        var_dump($data); //data ni perlu simpan dalam table baru called Steps. 'Standard Pembelajaran Insertion'.
+        
+        $parameters = http_build_query($data);
+        return redirect()->to(route_to('tp_maintenance') . '?' . $parameters);
+
+        // var_dump($parameters);
+        //var_dump($data); //data ni perlu simpan dalam table baru called Steps. 'Standard Pembelajaran Insertion'.
+    }
+
+    public function store_standard_performance()
+    {
+        $allData = $this->request->getPost();
+
+        foreach($allData as $key => $data)
+        {
+            $parts = explode('-', $key);
+            //first repeatition max is only 4/5.
+            $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
+
+            foreach($data as $index => $item)
+            {
+                $tpLevel = $index + 1;
+                $this->standard_performance_model->insert([
+                    'sp_tp_level' => $tpLevel,
+                    'sp_tp_level_desc' => $item,
+                    'sm_id' => $tempSubject['sm_id'],
+                    'dskpn_id' => null
+                ]);
+            }
+        }
+        
+        return redirect()->to(route_to('mapping_dynamic_dskpn'));
     }
 
     private function _generateRandomString($length = 10) {
