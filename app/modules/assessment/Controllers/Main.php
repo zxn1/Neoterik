@@ -23,4 +23,10 @@ class Main extends BaseController
         $data = [];
         $this->render('student_management',$data);
     }
+
+    public function overall_report()
+    {
+        $data = [];
+        $this->render('overall_report',$data);
+    }
 }
