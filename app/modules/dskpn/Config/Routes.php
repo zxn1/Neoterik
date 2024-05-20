@@ -11,11 +11,12 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('topic-list-in-cluster',     [Main::class,     'topic_list_in_cluster'],       ['as' => 'cluster_topic']);
     $routes->get('list-registered-dskpn',     [Main::class,     'list_registered_dskpn'],       ['as' => 'list_dskpn']);
     $routes->get('dskpn-view',                [Main::class,     'dskpn_view']);
-    $routes->get('domain-mapping',            [Main::class,     'domain_mapping']);
-    $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras']);
-    $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn']);
+    $routes->get('domain-mapping',            [Main::class,     'domain_mapping'],              ['as' => 'domain_mapping']);
+    $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras'],    ['as' => 'mapping_core']);
+    $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn'],   ['as' => 'mapping_dynamic_dskpn']);
 
     $routes->post('store-standard-learning',  [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
+    $routes->post('store-tahap-penguasaan',   [Main::class,     'store_standard_performance'],  ['as' => 'store_std_perfm']);
   
     //Topic Main
     $routes->group('topic', function ($routes) {
