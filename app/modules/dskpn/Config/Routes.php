@@ -6,7 +6,7 @@ use App\Modules\Dskpn\Controllers\TopicMain;
 $routes->group('dskpn', function ($routes) {
     /*           Route Path                   Class Controller  function                        Route Name        */
     $routes->get('/',                         [Main::class,     'index']);
-    $routes->get('mapping-static-field',      [Main::class,     'map_static']);
+    $routes->get('mapping-static-field',      [Main::class,     'map_static'],                  ['as' => 'mapping_standard_learning']);
     $routes->get('tp-maintenance',            [Main::class,     'tp_maintenance'],              ['as' => 'tp_maintenance']);
     $routes->get('topic-list-in-cluster',     [Main::class,     'topic_list_in_cluster'],       ['as' => 'cluster_topic']);
     $routes->get('list-registered-dskpn',     [Main::class,     'list_registered_dskpn'],       ['as' => 'list_dskpn']);
@@ -14,6 +14,8 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('domain-mapping',            [Main::class,     'domain_mapping']);
     $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras']);
     $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn']);
+
+    $routes->post('store-standard-learning',  [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
   
     //Topic Main
     $routes->group('topic', function ($routes) {
