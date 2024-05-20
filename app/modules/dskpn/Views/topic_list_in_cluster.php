@@ -1,91 +1,91 @@
 <style>
-  /* Custom Css to overwrite select2 style */
-  .select2-container .select2-selection__rendered {
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.4rem;
-    color: #344767;
-    white-space: nowrap;
-    background-color: #fff;
-    border: 1px solid #d2d6da;
-    border-radius: 0.5rem;
-  }
-
-  .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 38px !important;
-  }
-
-  .select2-container--open .select2-selection__rendered {
-    border-bottom: none;
-    border-bottom-right-radius: 0;
-  }
-
-  .select2-container--open .select2-dropdown--below {
-    border-top: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border: 1px solid #d2d6da;
-
-  }
-
-  .select2-container--default .select2-selection--single .select2-selection__rendered {
-    /* color: #444; */
-    line-height: inherit !important;
-  }
-
-  .select2-container--default .select2-selection--single {
-    /* background-color: #fff; */
-    border: 0 !important;
-    /* border-radius: 4px; */
-  }
-
-  /* CSS for desktop screens */
-  .list-group {
-    flex-basis: 0;
-    flex-grow: 1;
-  }
-
-
-  /* Media query for screens smaller than a certain width (e.g., phones) */
-  @media (max-width: 768px) {
-    .d-flex {
-      flex-direction: column;
-      /* Change flex direction to column for smaller screens */
+    /* Custom Css to overwrite select2 style */
+    .select2-container .select2-selection__rendered {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 400;
+        line-height: 1.4rem;
+        color: #344767;
+        white-space: nowrap;
+        background-color: #fff;
+        border: 1px solid #d2d6da;
+        border-radius: 0.5rem;
     }
 
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 38px !important;
+    }
+
+    .select2-container--open .select2-selection__rendered {
+        border-bottom: none;
+        border-bottom-right-radius: 0;
+    }
+
+    .select2-container--open .select2-dropdown--below {
+        border-top: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border: 1px solid #d2d6da;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        /* color: #444; */
+        line-height: inherit !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+        /* background-color: #fff; */
+        border: 0 !important;
+        /* border-radius: 4px; */
+    }
+
+    /* CSS for desktop screens */
     .list-group {
-      flex-basis: auto;
-      /* Reset flex-basis to auto for stacked layout */
-      flex-grow: 0;
-      width: 100%;
-      margin-bottom: 5%;
-      /* Ensure each ul takes up the full width */
+        flex-basis: 0;
+        flex-grow: 1;
     }
 
-  }
 
-  .zero-top-border {
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-  }
+    /* Media query for screens smaller than a certain width (e.g., phones) */
+    @media (max-width: 768px) {
+        .d-flex {
+            flex-direction: column;
+            /* Change flex direction to column for smaller screens */
+        }
 
-  .custom-accordian-radius-header {
-    border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0 !important;
-  }
+        .list-group {
+            flex-basis: auto;
+            /* Reset flex-basis to auto for stacked layout */
+            flex-grow: 0;
+            width: 100%;
+            margin-bottom: 5%;
+            /* Ensure each ul takes up the full width */
+        }
 
-  .custom-accordian-radius {
-    border-radius: 15px !important;
-  }
+    }
 
-  .accordion-item:last-of-type .accordion-button.collapsed {
-    border-bottom-right-radius: 15px !important;
-    border-bottom-left-radius: 15px !important;
-  }
+    .zero-top-border {
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+    }
 
-  /* .row>* {
+    .custom-accordian-radius-header {
+        border-radius: var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius) 0 0 !important;
+    }
+
+    .custom-accordian-radius {
+        border-radius: 15px !important;
+    }
+
+    .accordion-item:last-of-type .accordion-button.collapsed {
+        border-bottom-right-radius: 15px !important;
+        border-bottom-left-radius: 15px !important;
+    }
+
+    /* .row>* {
     padding-right: calc(var(--bs-gutter-x)* 0);
     padding-left: calc(var(--bs-gutter-x)* 0);
     margin-right: calc(var(--bs-gutter-x)* .5);
@@ -98,71 +98,71 @@
 
 
 <div class="container-fluid py-4 accordion">
-        <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
-            <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
+        <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
             <div class="col-md-2 text-end">
                 <i id="collapseIcon" class="fa fa-plus"></i>
             </div>
-            </div>
-            <div id="collapseOne" class="card-body p-3 accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="row align-items-center">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="clusterSelect" >Select your cluster</label>
-                                <select name="cluster" class="form-control select2" aria-label="Default select example">
-                                    <option selected>Open this select menu</option>
-                                    <?php foreach($cluster as $item) { ?>
+        </div>
+        <div id="collapseOne" class="card-body p-3 accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="row align-items-center">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="clusterSelect">Select your cluster</label>
+                            <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
+                                <option selected>Open this select menu</option>
+                                <?php foreach ($cluster as $item) { ?>
                                     <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="subtemaInput">Subtema</label>
-                                <input type="text" name="subtema" class="form-control" id="subtemaInput" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="yearInput">Year</label>
-                                <input type="text" name="year" class="form-control" id="yearInput" required>
-                            </div>
+                                <?php } ?>
+                            </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="subtemaInput">Tema</label>
-                                <input type="text" name="tema" class="form-control" id="subtemaInput" required>
-                            </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="subtemaInput">Subtema</label>
+                            <input type="text" name="subtema" class="form-control" id="subtemaInput" required>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="yearInput">Topik</label>
-                                <input type="text" name="topik" class="form-control" id="yearInput" required>
-                            </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="yearInput">Year</label>
+                            <input type="text" name="year" class="form-control" id="yearInput" required>
                         </div>
                     </div>
                 </div>
-                <div class="text-end p-3">
-                    <input type="submit" class="btn bg-gradient-info" value="Tambah"/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="subtemaInput">Tema</label>
+                            <input type="text" name="tema" class="form-control" id="subtemaInput" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="yearInput">Topik</label>
+                            <input type="text" name="topik" class="form-control" id="yearInput" required>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+            <div class="text-end p-3">
+                <input type="submit" class="btn bg-gradient-info" value="Tambah" />
+            </div>
+        </div>
+    </form>
 </div>
 <div class="container-fluid py-4">
-        <div class="card">
-            <div class="card-header d-flex p-3 bg-gradient-primary">
-                <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
-            </div>
-            <div class="card-body p-3">
-                <div class="accordion" id="accordionRental">
-                    <?php foreach($cluster as $clust) { ?>
+    <div class="card">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+            <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
+        </div>
+        <div class="card-body p-3">
+            <div class="accordion" id="accordionRental">
+                <?php foreach ($cluster as $clust) { ?>
 
                     <div class="accordion-item mb-3">
                         <h5 class="accordion-header" id="headingOne">
@@ -174,57 +174,65 @@
                         </h5>
                         <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
                             <div class="accordion-body" class="custom row" id="tahap-penguasaan">
-                            
-                            <?php foreach($topik_main as $topik) {
-                                if($topik['cm_id'] == $clust['cm_id'])
-                                {
+
+                                <?php foreach ($topik_main as $topik) {
+                                    if ($topik['cm_id'] == $clust['cm_id']) {
                                 ?>
-                                <div class="col-md-12">
-                                    <div class="d-flex flex-column h-100">
-                                        <div id="collection1-<?= $topik['tm_id']; ?>">
-                                            <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
-                                                <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
-                                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
-                                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                                </a>
+                                        <div class="col-md-12">
+                                            <div class="d-flex flex-column h-100">
+                                                <div id="collection1-<?= $topik['tm_id']; ?>">
+                                                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
+                                                        <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
+                                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
+                                                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            <?php }
-                            } ?>
+                                <?php }
+                                } ?>
 
                             </div>
                         </div>
                     </div>
 
-                    <?php } ?>
+                <?php } ?>
 
-                </div>
             </div>
         </div>
+    </div>
 </div>
 <div class="text-end p-3">
     <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
 </div>
 
 <!-- alert part -->
-<?php if (session()->has('success')): ?>
+<?php if (session()->has('success')) : ?>
     <script>
         Swal.fire({
             icon: "success",
             title: "Berjaya",
             text: "<?= session('success'); ?>"
-          });
+        });
     </script>
 <?php endif; ?>
 
-<?php if (session()->has('fail')): ?>
+<?php if (session()->has('fail')) : ?>
     <script>
         Swal.fire({
             icon: "danger",
             title: "Maaf",
             text: "<?= session('fail'); ?>"
-          });
+        });
     </script>
 <?php endif; ?>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");
+        if (lastAccordionItem) {
+            lastAccordionItem.querySelector(".accordion-button").classList.add("collapsed");
+        }
+    });
+</script>
