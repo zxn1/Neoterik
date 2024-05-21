@@ -12,6 +12,12 @@ use App\Modules\Dskpn\Models\LearningStandardModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
+//mapping model import
+use App\Modules\Dskpn\Models\DomainGroupModel;
+use App\Modules\Dskpn\Models\DomainMappingModel;
+use App\Modules\Dskpn\Models\DomainModel;
+//-----
+
 class Main extends BaseController
 {
 
@@ -21,6 +27,12 @@ class Main extends BaseController
     protected $learning_standard_model;
     protected $objective_performance_model;
     protected $standard_performance_model;
+
+    //mapping model sets
+    protected $domain_group_model;
+    protected $domain_model;
+    protected $domain_mapping_model;
+    //-----------------
     protected $db;
 
     public function __construct()
@@ -32,6 +44,12 @@ class Main extends BaseController
         $this->learning_standard_model  = new LearningStandardModel();
         $this->objective_performance_model = new ObjectivePerformanceModel();
         $this->standard_performance_model  = new StandardPerformanceModel();
+
+        //mapping model init
+        $this->domain_group_model       = new DomainGroupModel();
+        $this->domain_model             = new DomainModel();
+        $this->domain_mapping_model     = new DomainMappingModel();
+        //-----------------
         $this->db                       = $this->db = \Config\Database::connect();
     }
 
@@ -124,6 +142,20 @@ class Main extends BaseController
     public function domain_mapping()
     {
         $data = [];
+
+        //steps 1 - get all subjects related to iterate horizontally
+
+        //steps 2 - get 4 mapping group components
+        //steps 2.1 - get all id for 4 group_name
+        $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
+    
+        //steps 2.2 - get all item for all group
+        //steps 2.3 - store all retrieved item
+        foreach($allGroup as $group)
+        {
+            $data[$group['dg_title']] = $this->domain_model->select('d_name')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+        }
+        
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
         $this->render_jscss('domain_mapping', $data, $script, $style);
@@ -220,6 +252,99 @@ class Main extends BaseController
         }
         
         return redirect()->to(route_to('mapping_dynamic_dskpn'));
+    }
+
+
+    //private routes - internal uses
+    public function mappingInit()
+    {
+        //1. Pengetahuan asas
+        $tempAName = "Pengetahuan Asas";
+        $tempAAtt = [
+            ['DKM1: Literasi (L)', 0],
+            ['DKM2: Numerasi (N)', 0],
+            ['DKM3: Literasi Saintifik (LS)', 0],
+            ['DKM4: Literasi ICT (LICT)', 0],
+            ['(DKM5) Literasi Kewangan (LW)', 0],
+            ['(DKM6) Literasi Kebudayaan Sivik dan Nilai (LKSN)', 0]
+        ];
+
+        //2. Kemandirian
+        $tempBName = "Kemandirian";
+        $tempBAtt = [
+            ['(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)', 0],
+            ['(DKM8) Kreativiti (Kr)', 0],
+            ['(DKM9) Komunikasi (Kom)', 0],
+            ['(DKM10) Kolaborasi (K)', 0]
+        ];
+
+        //3. Kualiti Keperibadian
+        $tempCName = "Kualiti Keperibadian";
+        $tempCAtt = [
+            ['(DKM11) Inkuiri (Ik)', 0],
+            ['(DKM12) Inisiatif', 0],
+            ['(DKM13) Kegigihan', 0],
+            ['(DKM14) Penyesuaian Diri (PD)', 0],
+            ['(DKM15) Kesedaran Sosial & Budaya (KSB)', 0],
+            ['(DKM16) Kepimpinan (Kp)', 0]
+        ];
+
+        //4. 7 Kemahiran Insaniah
+        $tempDName = "7 Kemahiran Insaniah";
+        $tempDAtt = [
+            ['(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah', 0],
+            ['(KI2) Kemahiran Komunikasi', 0],
+            ['(KI3) Kemahiran Kepimpinan', 0],
+            ['(KI4) Kemahiran Kerja Berpasukan', 0],
+            ['(KI5) Pembelajaran Berterusan Dan Pengurusan Maklumat', 0],
+            ['(KI6) Kemahiran Keusahawanan', 0],
+            ['(KI7) Moral dan Etika Profesional', 0]
+        ];
+
+        //before start - check if exist no need
+        if(!empty($this->domain_group_model->where('dg_title', $tempAName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempBName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempCName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempDName)->first()))
+            return "Already initiated";
+
+        //calling
+        if($this->_mappingInitializer($tempAName, $tempAAtt) && 
+            $this->_mappingInitializer($tempBName, $tempBAtt) && 
+            $this->_mappingInitializer($tempCName, $tempCAtt) &&
+            $this->_mappingInitializer($tempDName, $tempDAtt))
+            return "OK!";
+        return "Fails!";
+    }
+
+    //private use function
+    private function _mappingInitializer($name, $attributes) //attributes is array of an array of 2 elements (domain name and not_sureYet_id).
+    {
+        //steps 1 - domain group
+        if($this->domain_group_model->insert([
+            'dg_title' => $name
+        ]))
+        {
+            //step 2 - add domain inside domain_group
+            $lastID = $this->domain_group_model->insertID();
+            $flag = false;
+            foreach($attributes as $item)
+            {
+                if($this->domain_model->insert([
+                    'd_name' => $item[0],
+                    'gd_id' => $lastID,
+                    'not_sureYet_id' => null //temporary first
+                ]))
+                {
+                    $flag = false;
+                } else {
+                    $flag = true;
+                }
+            }
+            if($flag == false)
+                return true;
+        }
+        return false;
     }
 
     private function _generateRandomString($length = 10) {
