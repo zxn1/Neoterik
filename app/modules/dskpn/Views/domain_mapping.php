@@ -113,34 +113,12 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
+
+                            <?php foreach($data['Pengetahuan Asas'] as $item) { ?>
                             <tr>
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM1: Literasi (L)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM2: Numerasi (N)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM3: Literasi Saintifik (LS)</span>
+                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
                                 </div>
                               </td>
                               <td>
@@ -149,42 +127,8 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM4: Literasi ICT (LICT)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM5) Literasi Kewangan (LW)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM6) Literasi Kebudayaan Sivik dan Nilai(LKSN)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php } ?>
+
                           </tbody>
                         </table>
                       </div>
@@ -405,34 +349,12 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
+
+                            <?php foreach($data['Kemandirian'] as $item) { ?>
                             <tr>
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM8) Kreativiti (Kr)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM9) Komunikasi (Kom)</span>
+                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
                                 </div>
                               </td>
                               <td>
@@ -441,18 +363,8 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM10) Kolaborasi (K)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php } ?>
+                            
                           </tbody>
                         </table>
                       </div>
@@ -624,34 +536,12 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
+
+                            <?php foreach($data['Kualiti Keperibadian'] as $item) { ?>
                             <tr>
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM11) Inkuiri (Ik)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM12) Inisiatif</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM13) Kegigihan</span>
+                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
                                 </div>
                               </td>
                               <td>
@@ -660,42 +550,8 @@
                                 </div>
                               </td>
                             </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM14) Penyesuaian Diri (PD)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM15) Kesedaran Sosial & Budaya (KSB)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM16) Kepimpinan (Kp)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php } ?>
+                            
                           </tbody>
                         </table>
                       </div>
