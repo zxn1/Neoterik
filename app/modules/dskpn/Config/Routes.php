@@ -24,4 +24,8 @@ $routes->group('dskpn', function ($routes) {
         $routes->delete('delete/(:num)',                [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
         $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
     });
+
+    
+    //SETTING MAPPING INITIALIZER
+    $routes->get('initialize-domain-mapping-database', [Main::class,   'mappingInit']);
 });
