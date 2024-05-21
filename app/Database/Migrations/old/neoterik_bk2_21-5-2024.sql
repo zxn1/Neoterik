@@ -51,58 +51,23 @@ CREATE TABLE IF NOT EXISTS `domain` (
   `d_id` int(11) NOT NULL AUTO_INCREMENT,
   `d_name` varchar(50) DEFAULT NULL,
   `gd_id` int(11) DEFAULT NULL,
-  `not_sureYet_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
+  `dskpn_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`d_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.domain: 23 rows
+-- Dumping data for table neoterik.domain: 0 rows
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
-REPLACE INTO `domain` (`d_id`, `d_name`, `gd_id`, `not_sureYet_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(32, '(DKM13) Kegigihan', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(31, '(DKM12) Inisiatif', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(30, '(DKM11) Inkuiri (Ik)', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(29, '(DKM10) Kolaborasi (K)', 8, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(28, '(DKM9) Komunikasi (Kom)', 8, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(27, '(DKM8) Kreativiti (Kr)', 8, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(26, '(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PK', 8, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(25, '(DKM6) Literasi Kebudayaan Sivik dan Nilai (LKSN)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(24, '(DKM5) Literasi Kewangan (LW)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(23, 'DKM4: Literasi ICT (LICT)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(22, 'DKM3: Literasi Saintifik (LS)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(21, 'DKM2: Numerasi (N)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(20, 'DKM1: Literasi (L)', 7, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(33, '(DKM14) Penyesuaian Diri (PD)', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(34, '(DKM15) Kesedaran Sosial & Budaya (KSB)', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(35, '(DKM16) Kepimpinan (Kp)', 9, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(36, '(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Ma', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(37, '(KI2) Kemahiran Komunikasi', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(38, '(KI3) Kemahiran Kepimpinan', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(39, '(KI4) Kemahiran Kerja Berpasukan', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(40, '(KI5) Pembelajaran Berterusan Dan Pengurusan Maklu', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(41, '(KI6) Kemahiran Keusahawanan', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(42, '(KI7) Moral dan Etika Profesional', 10, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL);
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.domain_group
 CREATE TABLE IF NOT EXISTS `domain_group` (
   `dg_id` int(11) NOT NULL AUTO_INCREMENT,
   `dg_title` varchar(50) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`dg_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.domain_group: 4 rows
+-- Dumping data for table neoterik.domain_group: 0 rows
 /*!40000 ALTER TABLE `domain_group` DISABLE KEYS */;
-REPLACE INTO `domain_group` (`dg_id`, `dg_title`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(9, 'Kualiti Keperibadian', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(8, 'Kemandirian', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(7, 'Pengetahuan Asas', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(10, '7 Kemahiran Insaniah', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL);
 /*!40000 ALTER TABLE `domain_group` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.domain_mapping
@@ -110,10 +75,7 @@ CREATE TABLE IF NOT EXISTS `domain_mapping` (
   `dm_id` int(11) NOT NULL AUTO_INCREMENT,
   `dm_isChecked` enum('Y','N') DEFAULT NULL,
   `d_id` int(11) DEFAULT NULL,
-  `ls_id` int(11) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`dm_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -158,13 +120,29 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ls_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.learning_standard: 2 rows
+-- Dumping data for table neoterik.learning_standard: 18 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 REPLACE INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(19, '3.2 Sains Gunaan\r\n3.3 Ethanol', 20, NULL, '2024-05-20 16:53:01', '2024-05-20 16:53:01', NULL),
-	(20, '1.1 Falsafah Kehidupan\r\n1.2 Kewarganegaraan', 21, NULL, '2024-05-20 16:53:01', '2024-05-20 16:53:01', NULL);
+	(1, '1. Kemahiran Hidup.\r\n2. Kemahiran Visual.', 2, NULL, '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL),
+	(2, '1. Kemahiran Menjadi Jurutera', 3, NULL, '2024-05-20 11:31:38', '2024-05-20 11:31:38', NULL),
+	(3, '2.1 Kejuruteraan Sains\r\n2.2 Respirasi', 4, NULL, '2024-05-20 12:46:14', '2024-05-20 12:46:14', NULL),
+	(4, '3.1 Mengenali Sejarah Mesopotamia\r\n3.2 Sejarah Kun', 5, NULL, '2024-05-20 12:46:14', '2024-05-20 12:46:14', NULL),
+	(5, '1. test math', 6, NULL, '2024-05-20 12:49:42', '2024-05-20 12:49:42', NULL),
+	(6, '1. test kimia', 7, NULL, '2024-05-20 12:49:42', '2024-05-20 12:49:42', NULL),
+	(7, 'test', 8, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
+	(8, 'testA', 9, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
+	(9, 'TESTB', 10, NULL, '2024-05-20 13:37:17', '2024-05-20 13:37:17', NULL),
+	(10, 'test', 11, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
+	(11, 'testA', 12, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
+	(12, 'TESTB', 13, NULL, '2024-05-20 13:39:02', '2024-05-20 13:39:02', NULL),
+	(13, 'test', 14, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
+	(14, 'testA', 15, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
+	(15, 'TESTB', 16, NULL, '2024-05-20 13:42:19', '2024-05-20 13:42:19', NULL),
+	(16, 'test', 17, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL),
+	(17, 'testA', 18, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL),
+	(18, 'TESTB', 19, NULL, '2024-05-20 13:44:12', '2024-05-20 13:44:12', NULL);
 /*!40000 ALTER TABLE `learning_standard` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.objective_performance
@@ -175,12 +153,10 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`op_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.objective_performance: 1 rows
+-- Dumping data for table neoterik.objective_performance: 7 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
-REPLACE INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(9, 'Penggunaan Ethanol yang berhemat kepada masyarakat', '2024-05-20 16:52:59', '2024-05-20 16:52:59', NULL);
 /*!40000 ALTER TABLE `objective_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.standard_performance
@@ -194,18 +170,10 @@ CREATE TABLE IF NOT EXISTS `standard_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.standard_performance: 7 rows
+-- Dumping data for table neoterik.standard_performance: 0 rows
 /*!40000 ALTER TABLE `standard_performance` DISABLE KEYS */;
-REPLACE INTO `standard_performance` (`sp_id`, `sp_tp_level`, `sp_tp_level_desc`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(11, 3, 'Membentuk Sebatian Ethanol Menggunakan Unsur Umum', 20, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(10, 2, 'Menyatakan bahaya Ethanol kepada Manusia', 20, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(9, 1, 'Menilai Kegunaan Sains dan Teknologi', 20, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(12, 4, 'Mengkaji Unsur Baru daripada Ethanol', 20, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(13, 1, 'Menilai Nilai murni budaya dan bangsa', 21, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(14, 2, 'Menyatakan nilai murni dan tauladan cerita rakyat', 21, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL),
-	(15, 3, 'Membentuk peparduan dan kesepakatan didalam kelas', 21, NULL, '2024-05-20 16:55:02', '2024-05-20 16:55:02', NULL);
 /*!40000 ALTER TABLE `standard_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.subject_main
@@ -217,13 +185,10 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.subject_main: 2 rows
+-- Dumping data for table neoterik.subject_main: 18 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
-REPLACE INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(21, 'J5iDbJa', 'Sivik', '2024-05-20 16:53:01', '2024-05-20 16:53:01', NULL),
-	(20, '5a1TFWS', 'Sains', '2024-05-20 16:53:01', '2024-05-20 16:53:01', NULL);
 /*!40000 ALTER TABLE `subject_main` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.topic_main
@@ -240,7 +205,7 @@ CREATE TABLE IF NOT EXISTS `topic_main` (
   PRIMARY KEY (`tm_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.topic_main: 7 rows
+-- Dumping data for table neoterik.topic_main: 10 rows
 /*!40000 ALTER TABLE `topic_main` DISABLE KEYS */;
 REPLACE INTO `topic_main` (`tm_id`, `tm_desc`, `tm_sub_theme`, `tm_theme`, `tm_year`, `cm_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(7, 'Jantung dan Pernafasan Manusia', 'tesa', 'asdada', '1313', 1, '2024-05-17 12:52:49', '2024-05-19 11:34:54', NULL),
