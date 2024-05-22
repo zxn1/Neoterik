@@ -72,7 +72,7 @@
             <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"/>
           </svg>
         </button>
-        <a href="<?= route_to('tp_maintenance') ?>" type="button" class="btn bg-gradient-primary mt-2">Seterusnya</a>
+        <!-- <a href="<?php /*route_to('tp_maintenance')*/ ?>" type="button" class="btn bg-gradient-primary mt-2">Seterusnya</a> -->
       </div>
     </div>
   </div>

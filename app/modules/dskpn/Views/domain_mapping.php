@@ -54,7 +54,8 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<div class="container-fluid py-4">
+<form action="<?= route_to('store_domain_map') ?><?= isset($dskpn_id)?"?dskpn=" . $dskpn_id:""; ?>" method="POST" class="container-fluid py-4">
+  <?= csrf_field() ?>
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -64,18 +65,26 @@
       <div class="row">
         <div class="col">
           <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster">
+          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
+            <?php if(isset($topikncluster)) { ?>
+              <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
+            <?php } else { ?>
             <option value="AL">Alabama</option>
             <!-- Other options here -->
             <option value="WY">Wyoming</option>
+            <?php } ?>
           </select>
         </div>
         <div class="col">
           <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun">
+          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
+            <?php if(isset($topikncluster)) { ?>
+              <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
+            <?php } else { ?>
             <option value="AL">Alabama</option>
             <!-- Other options here -->
             <option value="WY">Wyoming</option>
+            <?php } ?>
           </select>
         </div>
       </div>
@@ -104,10 +113,12 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
+
+              <?php foreach($subjects as $subject) { ?>
                 <div class="col-md-4">
                   <div class="card mt-4" id="notifications">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SAINS</h6>
+                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
                     </div>
                     <div class="card-body pt-0">
                       <div class="table-responsive">
@@ -123,7 +134,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
                                 </div>
                               </td>
                             </tr>
@@ -135,180 +146,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SEJARAH</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM1: Literasi (L)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM2: Numerasi (N)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM3: Literasi Saintifik (LS)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM4: Literasi ICT (LICT)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM5) Literasi Kewangan (LW)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM6) Literasi Kebudayaan Sivik dan Nilai(LKSN)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM1: Literasi (L)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM2: Numerasi (N)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM3: Literasi Saintifik (LS)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">DKM4: Literasi ICT (LICT)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM5) Literasi Kewangan (LW)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM6) Literasi Kebudayaan Sivik dan Nilai(LKSN)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <?php } ?>
+                
               </div>
 
             </div>
@@ -340,10 +179,12 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
+
+              <?php foreach($subjects as $subject) { ?>
                 <div class="col-md-4">
                   <div class="card mt-4" id="notifications">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SAINS</h6>
+                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
                     </div>
                     <div class="card-body pt-0">
                       <div class="table-responsive">
@@ -359,7 +200,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
                                 </div>
                               </td>
                             </tr>
@@ -371,132 +212,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SEJARAH</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM8) Kreativiti (Kr)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM9) Komunikasi (Kom)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM10) Kolaborasi (K)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM8) Kreativiti (Kr)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM9) Komunikasi (Kom)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM10) Kolaborasi (K)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <?php } ?>
+
               </div>
             </div>
           </div>
@@ -527,6 +244,8 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
+                
+              <?php foreach($subjects as $subject) { ?>
                 <div class="col-md-4">
                   <div class="card mt-4" id="notifications">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -546,7 +265,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
                                 </div>
                               </td>
                             </tr>
@@ -558,180 +277,8 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SEJARAH</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM11) Inkuiri (Ik)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM12) Inisiatif</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM13) Kegigihan</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM14) Penyesuaian Diri (PD)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM15) Kesedaran Sosial & Budaya (KSB)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM16) Kepimpinan (Kp)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM11) Inkuiri (Ik)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM12) Inisiatif</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM13) Kegigihan</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM14) Penyesuaian Diri (PD)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM15) Kesedaran Sosial & Budaya (KSB)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(DKM16) Kepimpinan (Kp)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <?php } ?>
+
               </div>
             </div>
           </div>
@@ -740,10 +287,10 @@
     </div>
   </div>
   <div class="text-end p-3">
-    <a href="" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <a href="mapping-kompetensi-teras" type="button" class="btn bg-gradient-info">Seterusnya</a>
+    <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a>
+    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
   </div>
-</div>
+</form>
 <script>
   $(document).ready(function() {
     $('.select2').select2();

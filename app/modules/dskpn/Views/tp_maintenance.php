@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<form action="<?= route_to('store_std_perfm') ?>" method="POST" class="container-fluid py-4">
+<form action="<?= route_to('store_std_perfm'); ?><?= isset($parameters['dskpn_id'])?"?dskpn=" . $parameters['dskpn_id']:""; ?>" method="POST" class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex pb-0 p-3">
     <div class="nav-wrapper position-relative w-100">
