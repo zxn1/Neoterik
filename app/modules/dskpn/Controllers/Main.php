@@ -498,18 +498,24 @@ class Main extends BaseController
         // Store tm_id in session
         $this->session->set('tm_id', $tm_id);
         // Redirect or load a view if needed
-        return redirect()->to(route_to('dskpn_learning_standard'));
+        return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
 
     public function dskpn_learning_standard()
     {
 
         $tm_id = $this->session->get('tm_id');
+        $data['flag'] = $this->request->getVar('flag');
         // Query get topic data
-        $data['topic'] = $this->topic_model
-            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
-            ->where('topic_main.tm_id', $tm_id)
-            ->first();
+        if(!empty($data['flag']))
+        {
+            $data['topic'] = $this->topic_model
+                            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+                            ->where('topic_main.tm_id', $tm_id)
+                            ->first();
+        } else {
+            $data['kluster'] = $this->cluster_model->findAll();
+        }
 
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];

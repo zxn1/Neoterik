@@ -40,6 +40,46 @@ $(document).on('click', '.delete-subject', function() {
     $(this).closest('.subject-card').remove();
 });
 
+$('#topik-dynamic-field').on('change', function() {
+    var topic_id = $(this).val();
+    
+    document.getElementById('loading-screen').style.display = "block";
+
+    $.ajax({
+        url: '/dskpn/topic/get-year-by-tm-id/' + topic_id,
+        type: 'GET',
+        data: {
+            csrf: csrfToken,
+        },
+        dataType: 'json',
+        success: function(data) {
+            // Handle success response
+            if(data.status == 'success')
+            {
+                document.getElementById('loading-screen').style.display = "none";
+                document.getElementById('tahun-to-display').value = data.data.tm_year;
+                console.log(data);
+            } else {
+                document.getElementById('loading-screen').style.display = "none";
+                Swal.fire({
+                    icon: "error",
+                    title: "Maaf",
+                    text: "Tiada rekod tahun bagi topik yang dipilih!"
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            document.getElementById('loading-screen').style.display = "none";
+            // Handle error
+            Swal.fire({
+                icon: "error",
+                title: "Maaf",
+                text: "Tiada rekod tahun bagi topik yang dipilih!"
+            });
+        }
+    });
+});
+
 $('#kluster-selection').on('change', function() {
     var cm_id = $(this).val();
 
@@ -58,13 +98,14 @@ $('#kluster-selection').on('change', function() {
             {
                 document.getElementById('loading-screen').style.display = "none";
                 $('#topik-dynamic-field').empty();
+                $('#topik-dynamic-field').append(`<option selected>-- Sila Pilih Topik --</option>`);
                 data.data.forEach(function(item){
                     $('#topik-dynamic-field').append(`<option value="${item.tm_id}">${item.tm_desc}</option>`);
                 });
             } else {
                 document.getElementById('loading-screen').style.display = "none";
                 Swal.fire({
-                    icon: "danger",
+                    icon: "error",
                     title: "Maaf",
                     text: "Tiada rekod topik dijumpai dibawah kluster yang dipilih!"
                 });
@@ -74,7 +115,7 @@ $('#kluster-selection').on('change', function() {
             document.getElementById('loading-screen').style.display = "none";
             // Handle error
             Swal.fire({
-                icon: "danger",
+                icon: "error",
                 title: "Maaf",
                 text: "Tiada rekod topik dijumpai dibawah kluster yang dipilih!"
             });

@@ -56,4 +56,19 @@ class TopicMain extends BaseController
         
         return $this->response->setJSON($response);
     }
+
+    public function getYear($id = null)
+    {
+        $response = ['status' => 'fail', 'data' => []];
+        $yearTopic = $this->topic_model
+                ->where('topic_main.tm_id', $id)
+                ->first();
+        
+        if(!empty($yearTopic))
+        {
+            $response = ['status' => 'success', 'data' => $yearTopic];
+        }
+
+        return $this->response->setJSON($response);
+    }
 }
