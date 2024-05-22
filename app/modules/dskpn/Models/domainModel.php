@@ -12,7 +12,9 @@ class DomainModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['d_name', 'gd_id', 'not_sureYet_id'];
+    //gd_id = dg = domain_group, sm_id = subject_main (NULL = all subject can be same), dskpn_id (NULL mean it is not vary - can be used by other DSKPN)
+    protected $allowedFields = ['d_name', 'gd_id', 'sm_id', 'dskpn_id'];
+    //Notes: 16 domains, and other static domain mapping should sm_id = NULL, dskpn_id = NULL.
 
     // If you want to use timestamps
     protected $useTimestamps = true;
