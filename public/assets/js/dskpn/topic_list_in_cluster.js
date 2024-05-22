@@ -76,7 +76,7 @@ function deleteTopic(topicID)
                 });
             } else {
                 Swal.fire({
-                    icon: "danger",
+                    icon: "error",
                     title: "Maaf",
                     text: "Proses pemadaman topik gagal!"
                 });
@@ -85,7 +85,7 @@ function deleteTopic(topicID)
         error: function(xhr, status, error) {
             // Handle error
             Swal.fire({
-                icon: "danger",
+                icon: "error",
                 title: "Maaf",
                 text: "Proses pemadaman topik gagal!\n" + error
             });

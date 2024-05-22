@@ -256,7 +256,7 @@
 <?php if (session()->has('fail')) : ?>
     <script>
         Swal.fire({
-            icon: "danger",
+            icon: "error",
             title: "Maaf",
             text: "<?= session('fail'); ?>"
         });

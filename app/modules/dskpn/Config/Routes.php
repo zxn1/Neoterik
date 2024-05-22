@@ -30,6 +30,7 @@ $routes->group('dskpn', function ($routes) {
         $routes->post('create',                         [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
         $routes->delete('delete/(:num)',                [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
         $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
+        $routes->get('get-year-by-tm-id/(:num)',        [TopicMain::class,     'getYear/$1'],              ['as' => 'get_year_by_tm_id']);
     });
 
 
