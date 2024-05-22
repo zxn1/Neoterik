@@ -89,7 +89,7 @@
                             <td class="text-center"></td>
                             <td class="text-center">
                                 <div class="col-2 text-info" style="display: inline-block;">
-                                    <a href="dskpn-view" class="dropdown-item"><i class="fa fa-eye"></i></a>
+                                    <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
                                 </div>
                                 &nbsp;&nbsp;
                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
