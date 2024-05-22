@@ -21,15 +21,23 @@ $(document).ready(function() {
 $('#add-subject-button').on('click', function() {
     document.getElementById("hinting-no-subject").style.display = "none";
     $('#standard-pembelajaran').append(`
-        <div class="col-md-4">
+        <div class="col-md-4 subject-card">
             <div class="card mt-4">
-                <div class="card-header d-flex p-1 bg-gradient-secondary">
-                    <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent;border: 0px; outline: none; color: white; font-size: 1em; font-weight:bold;" placeholder="Tajuk Subjek" required></input>
+                <div class="card-header d-flex p-3 bg-gradient-primary align-items-center">
+                    <input type="text" name="subject[]" class="form-control" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                    <button type="button" class="btn btn-link text-white ms-auto delete-subject">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </div>
-                <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" id="exampleFormControlTextarea1" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
+                <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
             </div>
         </div>
     `);
+});
+
+// Attach a delegated event listener for the delete buttons
+$(document).on('click', '.delete-subject', function() {
+    $(this).closest('.subject-card').remove();
 });
 
 $('#kluster-selection').on('change', function() {
