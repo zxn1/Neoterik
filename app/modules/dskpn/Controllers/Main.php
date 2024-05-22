@@ -5,17 +5,18 @@ namespace App\Modules\Dskpn\Controllers;
 use App\Controllers\BaseController;
 
 //model
-use App\Modules\Dskpn\Models\ClusterMainModel;
+use App\Modules\Dskpn\Models\dskpnModel;
+use App\Modules\Dskpn\Models\DomainModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
+use App\Modules\Dskpn\Models\ClusterMainModel;
+use App\Modules\Dskpn\Models\DomainGroupModel;
 use App\Modules\Dskpn\Models\SubjectMainModel;
-use App\Modules\Dskpn\Models\LearningStandardModel;
-use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
-use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
 //mapping model import
-use App\Modules\Dskpn\Models\DomainGroupModel;
 use App\Modules\Dskpn\Models\DomainMappingModel;
-use App\Modules\Dskpn\Models\DomainModel;
+use App\Modules\Dskpn\Models\LearningStandardModel;
+use App\Modules\Dskpn\Models\StandardPerformanceModel;
+use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 //-----
 
 class Main extends BaseController
@@ -27,6 +28,7 @@ class Main extends BaseController
     protected $learning_standard_model;
     protected $objective_performance_model;
     protected $standard_performance_model;
+    protected $dskpn_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -37,14 +39,14 @@ class Main extends BaseController
 
     public function __construct()
     {
-        $this->session                  = service('session');
-        $this->cluster_model            = new ClusterMainModel();
-        $this->topic_model              = new TopicMainModel();
-        $this->subject_model            = new SubjectMainModel();
-        $this->learning_standard_model  = new LearningStandardModel();
-        $this->objective_performance_model = new ObjectivePerformanceModel();
-        $this->standard_performance_model  = new StandardPerformanceModel();
-
+        $this->session                      = service('session');
+        $this->cluster_model                = new ClusterMainModel();
+        $this->topic_model                  = new TopicMainModel();
+        $this->subject_model                = new SubjectMainModel();
+        $this->learning_standard_model      = new LearningStandardModel();
+        $this->objective_performance_model  = new ObjectivePerformanceModel();
+        $this->standard_performance_model   = new StandardPerformanceModel();
+        $this->dskpn_model                  = new dskpnModel();
         //mapping model init
         $this->domain_group_model       = new DomainGroupModel();
         $this->domain_model             = new DomainModel();
@@ -125,8 +127,6 @@ class Main extends BaseController
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
         $this->render_jscss('list_registered_dskpn', $data, $script, $style);
-
-        // return view('list-registered-dskpn');
     }
 
     public function dskpn_view()
@@ -351,14 +351,67 @@ class Main extends BaseController
     }
 
     // Display List of DSKPN by ID
-    public function dskpn_by_topic($id)
+    public function dskpn_by_topic($tm_id)
     {
-        $data['dskpn'] = $this->dskpn_model->where('dskpn_id', $id)->first();
-        $data['learning_standard'] = $this->learning_standard_model->where('dskpn_id', $id)->findAll();
-        $data['standard_performance'] = $this->standard_performance_model->where('dskpn_id', $id)->findAll();
-        $data['objective_performance'] = $this->objective_performance_model->where('dskpn_id', $id)->findAll();
-        $data['subject'] = $this->subject_model->where('dskpn_id', $id)->findAll();
+        // Store tm_id in session
+        $this->session->set('tm_id', $tm_id);
+        // Redirect or load a view if needed
+        return redirect()->to(route_to('dskpn_by_topic_list'));
+    }
+    // Displays a list of DSKPN page
+    public function dskpn_by_topic_list()
+    {
+        // Retrieve tm_id from session
+        $tm_id = $this->session->get('tm_id');
+        // Check if tm_id is set in the session
+        if (!$tm_id) {
+            dd('error');
+        }
 
-        dd($data);
+        // Query to get the list of DSKPN
+        $data['dskpn'] = $this->dskpn_model
+            ->join('topic_main', 'dskpn.tm_id = topic_main.tm_id', 'left')
+            ->where('dskpn.tm_id', $tm_id)
+            ->findAll();
+
+        // Query get kluster data
+        $data['kluster'] = $this->cluster_model->findAll();
+
+        // Query get topic data
+        $data['topic'] = $this->topic_model
+            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+            ->where('topic_main.tm_id', $tm_id)
+            ->first();
+
+        // Scripts and styles
+        $script = ['dynamic-input'];
+        $style = ['static-field'];
+
+        // Render the view
+        $this->render_jscss('dskpn_by_topic', $data, $script, $style);
+    }
+
+
+    public function create_dskpn($tm_id)
+    {
+        // Store tm_id in session
+        $this->session->set('tm_id', $tm_id);
+        // Redirect or load a view if needed
+        return redirect()->to(route_to('dskpn_learning_standard'));
+    }
+
+    public function dskpn_learning_standard()
+    {
+
+        $tm_id = $this->session->get('tm_id');
+        // Query get topic data
+        $data['topic'] = $this->topic_model
+            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+            ->where('topic_main.tm_id', $tm_id)
+            ->first();
+
+        $script = ['data', 'dynamic-input'];
+        $style = ['static-field'];
+        $this->render_jscss('learning_standard', $data, $script, $style);
     }
 }
