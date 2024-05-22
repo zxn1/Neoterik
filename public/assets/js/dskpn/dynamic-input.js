@@ -23,8 +23,8 @@ $('#add-subject-button').on('click', function() {
     $('#standard-pembelajaran').append(`
         <div class="col-md-4">
             <div class="card mt-4">
-                <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <input type="text" name="subject[]" class="form-control" style="background-color: transparent;border: 0px; outline: none; color: white; font-size: 1em; font-weight:bold;" placeholder="Tajuk Subjek" required></input>
+                <div class="card-header d-flex p-1 bg-gradient-secondary">
+                    <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent;border: 0px; outline: none; color: white; font-size: 1em; font-weight:bold;" placeholder="Tajuk Subjek" required></input>
                 </div>
                 <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" id="exampleFormControlTextarea1" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
             </div>

@@ -1,5 +1,16 @@
+<style>
+  .subject-title::placeholder {
+    color: white !important;
+    opacity: 1;
+    /* Firefox */
+  }
+</style>
+
 <form action="<?= route_to('store_std_learn'); ?>" method="POST">
   <?= csrf_field() ?>
+  <input name="kluster" class="form-control" value="<?= $topic['cm_id'] ?>" hidden>
+  <input name="topik" class="form-control" value="<?= $topic['tm_id'] ?>" hidden>
+
   <div class="container-fluid py-4">
     <div class="card">
       <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -9,7 +20,7 @@
         <div class="row">
           <div class="col-md-10">
             <label for="kluster">KLUSTER</label>
-            <input name="kluster" class="form-control" value="<?= $topic['cm_desc'] ?>" readonly>
+            <input name="kluster_desc" class="form-control" value="<?= $topic['cm_desc'] ?>" readonly>
           </div>
           <div class="col-md-2">
             <label for="kluster">TAHUN</label>
@@ -30,7 +41,7 @@
         <div class="row py-4">
           <div class="col-md-8">
             <label for="topik">TOPIK</label>
-            <input name="topik" class="form-control" value="<?= $topic['cm_desc'] ?>" readonly>
+            <input name="topik_desc" class="form-control" value="<?= $topic['tm_desc'] ?>" readonly>
           </div>
           <div class="col-md-2">
             <label for="tema">TEMA</label>
@@ -44,7 +55,7 @@
           </div>
           <div class="col-md-2">
             <label for="subtema">SUB-TEMA</label>
-            <input class="form-control" placeholder="Sila Masukkan Sub-Tema">
+            <input name="subtema" class="form-control" placeholder="Sila Masukkan Sub-Tema">
           </div>
         </div>
       </div>
@@ -52,7 +63,7 @@
   </div>
 
   <div class="container-fluid py-4">
-    <div class="card">
+    <div class="card pb-3">
       <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
         <h6 class="my-auto text-white">STANDARD PEMBELAJARAN</h6>
         <span id="add-subject-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
@@ -62,8 +73,6 @@
         </span>
       </div>
       <div class="card-body py-2">
-
-
         <div class="row pb-4" id="standard-pembelajaran">
           <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
         </div>
@@ -74,17 +83,15 @@
           </div>
           <textarea name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"></textarea>
         </div>
-
-        <div class="text-end p-3">
-          <button class="btn bg-gradient-info mt-2" type="submit">Simpan&nbsp;
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-              <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
-              <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
-            </svg>
-          </button>
-          <a href="<?= route_to('tp_maintenance') ?>" type="button" class="btn bg-gradient-primary mt-2">Seterusnya</a>
-        </div>
       </div>
+    </div>
+    <div class="text-end p-3">
+      <button class="btn bg-gradient-info mt-2" type="submit">Seterusnya&nbsp;
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+          <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
+          <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
+        </svg>
+      </button>
     </div>
   </div>
 </form>
