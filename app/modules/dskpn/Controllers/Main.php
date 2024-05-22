@@ -108,9 +108,32 @@ class Main extends BaseController
     public function topic_list_in_cluster()
     {
         $data = [];
-        $data['cluster'] = $this->cluster_model->findAll();
-        $data['topik_main'] = $this->topic_model->findAll();
-
+        $data['cluster_listing'] = $this->cluster_model->findAll();
+        $data['years'] = range(1, 6); // Hardcoding years from 1 to 6
+        
+        $selectedYear = $this->request->getGet('year');
+        if(empty($selectedYear))
+            return redirect()->to(route_to('cluster_topic') . '?year=1');
+        
+        if ($selectedYear) {
+            // Filter topics by selected year
+            $data['topik_main'] = $this->topic_model->where('tm_year', $selectedYear)->findAll();
+            $data['selectedYear'] = $selectedYear;
+        
+            // Get clusters that have topics for the selected year
+            $data['cluster'] = $this->cluster_model->select('cluster_main.*')
+                ->join('topic_main', 'cluster_main.cm_id = topic_main.cm_id', 'inner')
+                ->where('topic_main.tm_year', $selectedYear)
+                ->groupBy('cluster_main.cm_id')
+                ->findAll();
+        } else {
+            $data['topik_main'] = $this->topic_model->findAll();
+            $data['selectedYear'] = '';
+        
+            // Get all clusters
+            $data['cluster'] = $data['cluster_listing'];
+        }
+        
         $script = ['data', 'topic_list_in_cluster'];
         $style = ['topic_list_in_cluster'];
         $this->render_jscss('topic_list_in_cluster', $data, $script, $style);
