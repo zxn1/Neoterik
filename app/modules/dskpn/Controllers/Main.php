@@ -5,7 +5,6 @@ namespace App\Modules\Dskpn\Controllers;
 use App\Controllers\BaseController;
 
 //model
-use App\Modules\Dskpn\Models\dskpnModel;
 use App\Modules\Dskpn\Models\DomainModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\ClusterMainModel;
@@ -19,9 +18,6 @@ use App\Modules\Dskpn\Models\DskpnModel;
 
 //mapping model import
 use App\Modules\Dskpn\Models\DomainMappingModel;
-use App\Modules\Dskpn\Models\LearningStandardModel;
-use App\Modules\Dskpn\Models\StandardPerformanceModel;
-use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 //-----
 
 class Main extends BaseController
