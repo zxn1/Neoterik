@@ -137,13 +137,20 @@ CREATE TABLE IF NOT EXISTS `dskpn` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   `approved_at` datetime DEFAULT NULL,
+  `created_by` varchar(50) DEFAULT NULL,
+  `approved_by` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`dskpn_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.dskpn: 1 rows
 /*!40000 ALTER TABLE `dskpn` DISABLE KEYS */;
-INSERT INTO `dskpn` (`dskpn_id`, `dskpn_theme`, `dskpn_sub_theme`, `tm_id`, `op_id`, `aa_id`, `created_at`, `updated_at`, `deleted_at`, `approved_at`) VALUES
-	(1, '', '', 9, 14, NULL, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL, NULL);
+INSERT INTO `dskpn` (`dskpn_id`, `dskpn_theme`, `dskpn_sub_theme`, `tm_id`, `op_id`, `aa_id`, `created_at`, `updated_at`, `deleted_at`, `approved_at`, `created_by`, `approved_by`) VALUES
+	(1, '', '', 9, 14, NULL, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL, NULL, NULL, NULL),
+	(2, '', '', 7, 17, NULL, '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL, NULL, NULL, NULL),
+	(3, 'Individu', 'cubaan kali ke 2', 9, 18, NULL, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL, NULL, NULL, NULL),
+	(4, 'Keluarga', 'asdasdasd', 10, 19, NULL, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL, NULL, NULL, NULL),
+	(5, 'Masyarakat', 'apa2 je la', 7, 20, NULL, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL, NULL, NULL, NULL),
+	(6, 'Keluarga', 'test', 7, 21, NULL, '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `dskpn` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.learning_aid
@@ -167,13 +174,27 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ls_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.learning_standard: 2 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 INSERT INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(27, '2. Algebra', 28, 1, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(26, '1. Kejuruteraan', 27, 1, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL);
+	(26, '1. Kejuruteraan', 27, 1, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
+	(28, 'asdasd', 29, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(29, 'asdasd', 30, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(30, 'asdasd', 31, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(31, 'Test', 32, 2, '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
+	(32, 'CUbcubasdas', 33, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(33, 'asdasd', 34, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(34, 'asdasda', 35, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(35, 'TEST', 36, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(36, 'SETSET', 37, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(37, 'SETSET', 38, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(38, 'asdasd', 39, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(39, 'asdasd', 40, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(40, 'Jamilsd', 41, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(41, 'sasda', 42, 6, '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL);
 /*!40000 ALTER TABLE `learning_standard` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.objective_performance
@@ -184,12 +205,19 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`op_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.objective_performance: 1 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
 INSERT INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(14, 'Kejuruteraan Algebra', '2024-05-22 02:34:13', '2024-05-22 02:34:13', NULL);
+	(14, 'Kejuruteraan Algebra', '2024-05-22 02:34:13', '2024-05-22 02:34:13', NULL),
+	(15, 'asdasds', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(16, 'asdasd', '2024-05-22 08:46:13', '2024-05-22 08:46:13', NULL),
+	(17, 'asdasd', '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
+	(18, 'asdasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(19, 'SADASD', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(20, 'asdsadas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(21, 'sadsa', '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL);
 /*!40000 ALTER TABLE `objective_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.standard_performance
@@ -224,13 +252,27 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.subject_main: 2 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
 INSERT INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(28, 'nhG6iJw', 'Matematik', '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(27, '7IfO8I0', 'Sains', '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL);
+	(27, '7IfO8I0', 'Sains', '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
+	(29, 'ztK4dp3', 'Sains', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(30, '2HSHEo5', 'Sejarah', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(31, 'rugRtk5', 'Ayam', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
+	(32, 'ajwcYn1', 'Test', '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
+	(33, 'VdR5zP6', 'Cuba', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(34, 'Izhwdzy', 'sadasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(35, 'U4MtBLB', 'asdasdasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
+	(36, '1MQAD8q', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(37, 'OEfo4e5', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(38, 'X0g2VoJ', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
+	(39, '65XOsnG', 'asdas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(40, 'OaXeJc4', 'asdasd', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(41, 'IFGVnnr', 'asdas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
+	(42, 'hji085X', 'sadsa', '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL);
 /*!40000 ALTER TABLE `subject_main` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.topic_main
@@ -243,19 +285,20 @@ CREATE TABLE IF NOT EXISTS `topic_main` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`tm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.topic_main: 8 rows
 /*!40000 ALTER TABLE `topic_main` DISABLE KEYS */;
 INSERT INTO `topic_main` (`tm_id`, `tm_desc`, `tm_year`, `cm_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(7, 'Jantung dan Pernafasan Manusia', '1313', 1, '2024-05-17 12:52:49', '2024-05-19 11:34:54', NULL),
+	(7, 'Jantung dan Pernafasan Manusia', '1', 1, '2024-05-17 12:52:49', '2024-05-19 11:34:54', NULL),
 	(14, 'Kehidupan selepas Meninggal', '4', 2, '2024-05-21 14:16:39', '2024-05-21 14:16:52', NULL),
 	(8, 'Pernafasan dan Respirasi', '4', 1, '2024-05-19 12:32:26', '2024-05-19 12:32:26', NULL),
 	(9, 'Tenaga ATP dan TDP, respirasi', '4', 1, '2024-05-19 12:33:18', '2024-05-19 12:33:18', NULL),
 	(10, 'Bebola Mata dan Kanta', '3', 1, '2024-05-19 12:34:12', '2024-05-19 12:34:12', NULL),
 	(11, 'Pertumbuhan Spora', '3', 2, '2024-05-19 12:34:40', '2024-05-21 14:17:12', NULL),
 	(12, 'Belahan dedua', '4', 2, '2024-05-19 12:35:47', '2024-05-21 14:17:30', NULL),
-	(13, 'Proses Kemenjadian Embryo', '4', 2, '2024-05-19 12:36:46', '2024-05-21 14:17:14', NULL);
+	(13, 'Proses Kemenjadian Embryo', '4', 2, '2024-05-19 12:36:46', '2024-05-21 14:17:14', NULL),
+	(16, 'topik 1', '3', 2, '2024-05-22 07:57:23', '2024-05-22 07:57:23', NULL);
 /*!40000 ALTER TABLE `topic_main` ENABLE KEYS */;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

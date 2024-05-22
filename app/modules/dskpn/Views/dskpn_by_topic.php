@@ -5,15 +5,15 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-gradient-primary">
-            <h6 class="my-auto text-white">Petaan Input Statik</h6>
+            <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
         </div>
         <div class="card-body mb-4 py-2">
             <di class="row">
                 <div class="col-md-6">
                     <div class="d-flex flex-column h-100 mb-2">
                         <p class="mb-1 pt-2 text-bold">Pilih Kluster</p>
-                        <select name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example">
-                            <option value="<?= $topic['cm_id'] ?>"><?= $topic['cm_desc'] ?></option>
+                        <select disabled name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example">
+                            <option selected value="<?= $topic['cm_id'] ?>"><?= $topic['cm_desc'] ?></option>
                             <?php foreach ($kluster as $item) { ?>
                                 <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
                             <?php } ?>
@@ -23,8 +23,8 @@
                 <div class="col-md-6">
                     <div class="d-flex flex-column h-100 mb-2">
                         <p class="mb-1 pt-2 text-bold">Pilih Topik</p>
-                        <select name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example">
-                            <option value="<?= $topic['tm_id'] ?>"><?= $topic['tm_desc'] ?></option>
+                        <select disabled name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example">
+                            <option selected value="<?= $topic['tm_id'] ?>"><?= $topic['tm_desc'] ?></option>
                         </select>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
-            <h6 class="my-auto text-white">Senarai DSKPN</h6>
+            <h6 class="my-auto text-white">SENARAI DSKPN</h6>
             <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
                 Tambah Dskpn&nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -51,21 +51,44 @@
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">ID</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Kluster</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Topik</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Attribute</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Aksi</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TEMA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">SUB-TEMA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">ATRIBUT</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($dskpn as $dskpnItem) : ?>
                         <tr>
                             <td class="text-center"><?= esc($dskpnItem['dskpn_id']) ?></td>
-                            <td class="text-center"><?= esc($dskpnItem['dskpn_theme']) ?></td>
+                            <td class="text-center">
+                                <?php
+                                // Sample value for dskpn_theme
+                                $dskpn_theme = $dskpnItem['dskpn_theme'];
+
+                                // Determine the badge class based on the value of dskpn_theme
+                                $badgeClass = '';
+                                switch ($dskpn_theme) {
+                                    case 'Individu':
+                                        $badgeClass = 'bg-gradient-success';
+                                        break;
+                                    case 'Keluarga':
+                                        $badgeClass = 'bg-gradient-info';
+                                        break;
+                                    case 'Masyarakat':
+                                        $badgeClass = 'bg-gradient-primary';
+                                        break;
+                                    default:
+                                        $badgeClass = 'bg-gradient-secondary'; // default class if none of the cases match
+                                        break;
+                                }
+                                ?>
+                                <span class="badge badge-sm <?= esc($badgeClass) ?>"><?= esc($dskpn_theme) ?></span>
+                            </td>
                             <td class="text-center"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
                             <td class="text-center"></td>
                             <td class="text-center">
-                                <div class="col-2" style="display: inline-block;">
+                                <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="dskpn-view" class="dropdown-item"><i class="fa fa-eye"></i></a>
                                 </div>
                                 &nbsp;&nbsp;
