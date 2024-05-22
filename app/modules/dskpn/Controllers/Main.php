@@ -235,21 +235,21 @@ class Main extends BaseController
     {
         $data = [];
 
-        $dskpn_id = $this->request->getVar('dskpn');
-        if (!empty($dskpn_id)) {
+        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
                 ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
                 ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                ->where('dskpn.dskpn_id', $dskpn_id)->first();
+                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
 
             //steps 1 - get all subjects related to iterate horizontally
             //steps 1.1 - get learning standard to get list of subject.
             $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                 ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                ->where('ls.dskpn_id', $dskpn_id)->find();
+                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
         }
 
-        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $script = ['kompetensi-teras'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_kompetensi_teras', $data, $script, $style);
     }
@@ -385,6 +385,74 @@ class Main extends BaseController
         return redirect()->back();
     }
 
+    public function store_core_mapping()
+    {
+        $allData = $this->request->getPost();
+        $dskpn_id = $this->request->getVar('dskpn');
+
+        //check if not exist create new one
+        $kompetensi_domain_group = $this->domain_group_model->where('dg_title', 'Kompetensi Teras')->first();
+
+        if (empty($kompetensi_domain_group)) {
+            $this->domain_group_model->insert([
+                'dg_title' => 'Kompetensi Teras'
+            ]);
+
+            $kompetensi_domain_group['dg_id'] = $this->domain_group_model->insertID();
+        }
+    
+        $processedData = [];
+    
+        //structure data first
+        foreach ($allData as $key => $data) {
+            $parts = explode('-', $key);
+            if ($parts[0] == 'input') {
+                $inputIndex = $parts[1];
+                foreach ($data as $index => $value) {
+                    $processedData[$inputIndex][] = [
+                        'value' => $value,
+                        'checked' => (($allData['checked-' . $inputIndex][$index]) == 'off')?'N':'Y'
+                    ];
+                }
+            }
+        }
+    
+        //loop to store
+        //1. loop to get key - subject
+        foreach($processedData as $key => $inputCode)
+        {
+            //1.1 get sm_id based on inputCodeKey
+            $sm_id = $this->subject_model->where('sm_code', $key)->first()['sm_id'];
+
+            //1.2 get ls_id based on $sm_id
+            $ls_id = $this->learning_standard_model->where('dskpn_id', $dskpn_id)->where('sm_id', $sm_id)->first()['ls_id'];
+
+            //2. loop to get value inside that inputcode
+            foreach($inputCode as $input)
+            {
+                //3. store domain first.
+                $this->domain_model->insert([
+                    'd_name' => $input['value'],
+                    'gd_id' => $kompetensi_domain_group['dg_id'],
+                    'sm_id' => $sm_id,
+                    'dskpn_id' => $dskpn_id
+                ]);
+
+                $d_id = $this->domain_model->insertID();
+
+                //4. do mapping part
+                $this->domain_mapping_model->insert([
+                    'dm_isChecked' => $input['checked'],
+                    'd_id' => $d_id,
+                    'ls_id' => $ls_id
+                ]);
+            }
+        }
+
+        return redirect()->to(route_to('mapping_dynamic_dskpn') . "?dskpn=" . $dskpn_id);
+    }
+    
+
 
     //private routes - internal uses
     public function mappingInit()
@@ -466,7 +534,8 @@ class Main extends BaseController
                 if ($this->domain_model->insert([
                     'd_name' => $item[0],
                     'gd_id' => $lastID,
-                    'not_sureYet_id' => null //temporary first
+                    'sm_id' => null,
+                    'dskpn_id' => null
                 ])) {
                     $flag = false;
                 } else {

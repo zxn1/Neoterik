@@ -31,6 +31,10 @@
 
   }
 
+  .table> :not(caption)>*>* {
+    padding: 0rem !important;
+  }
+
   .select2-container--default .select2-selection--single .select2-selection__rendered {
     /* color: #444; */
     line-height: inherit !important;
@@ -54,7 +58,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<div class="container-fluid py-4">
+<form method="POST" action="<?= route_to('store_core_map') . "?dskpn=" . $dskpn_id ?>" class="container-fluid py-4">
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -110,209 +114,53 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SAINS</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN1) Memerhati</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN2) Mengelas</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN3) Mengukur & Menggunakan Nombor</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN4) Membuat Inferens</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN5) Meramal</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSN6) Berkomunikasi</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SEJARAH</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KPK1) Pertolongan Cemas</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KPK2) Pemakanan</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KPK3) Pendidikan Kesihatan Reproduktif dan Sosial (PEERS)</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SENI VISUAL</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSV1) Bahasa Seni Visual</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSV2) Kemahiran Seni Visual</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSV3) Kreativiti Seni Visual</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">(KSV4) Apresiasi Seni Visual</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
+              <?php 
+              if(isset($subjects))
+              foreach($subjects as $subject) { ?>
+                <div class="col-md-4">
+                  <div class="card mt-4" id="notifications">
+                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                    </div>
+                    <div class="card-body pt-0">
+                      <div class="table-responsive">
+                        <table class="table mb-0 mt-3">
+                          <tbody id="item-placing-<?= $subject['sm_code'] ?>">
+
+                            <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
+                              <td class="ps-1" colspan="4">
+                                <div class="my-auto">
+                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]" value="">
+                                </div>
+                              </td>
+                              <td width="10px">
+                                <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
+                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)">
+                                  <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden/>
+                                </div>
+                              </td>
+                              <td width="5px">
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-placing-<?= $subject['sm_code'] ?>').remove();">
+                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                </a>
+                              </td>
+                            </tr>
+
+                          </tbody>
+                        </table>
+                        <span class="btn bg-gradient-primary mt-2" onclick="addField('<?= $subject['sm_code'] ?>')">Tambah Item&nbsp;&nbsp;
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-node-plus-fill" viewBox="0 0 16 16">
+                            <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13m.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0"/>
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php } ?>
+
+              </div>
             </div>
           </div>
         </div>
@@ -322,9 +170,9 @@
   <br>
   <div class="text-end p-3">
     <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <a href="mapping-spesifikasi-dskpn" type="button" class="btn bg-gradient-info">Seterusnya</a>
+    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
   </div>
-</div>
+</form>
 <script>
   $(document).ready(function() {
     $('.select2').select2();
