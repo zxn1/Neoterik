@@ -21,8 +21,6 @@ class TopicMain extends BaseController
     {
         $data = [
             'tm_desc'       => $this->request->getVar('topik'),
-            'tm_sub_theme'  => $this->request->getVar('subtema'),
-            'tm_theme'      => $this->request->getVar('tema'),
             'tm_year'       => $this->request->getVar('year'),
             'cm_id'         => $this->request->getVar('cluster')
         ];
