@@ -89,7 +89,7 @@
     margin-left: calc(var(--bs-gutter-x)* .5);
   } */
 
-  .pagination-container {
+    .pagination-container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -116,7 +116,6 @@
     .pagination-button:hover:not(.active) {
         background-color: #d4d4d4;
     }
-
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -137,30 +136,30 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="clusterSelect">Sila Pilih Kluster anda</label>
+                            <label for="clusterSelect">Kluster</label>
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
-                                <option selected>-- Sila Pilih Kluster --</option>
+                                <option disabled selected>-- Sila Pilih Kluster --</option>
                                 <?php foreach ($cluster_listing as $item) { ?>
                                     <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="yearSelect">Tahun</label>
-                            <select name="year" class="form-control" id="yearSelect" required>
-                                <option value="" disabled selected>Sila Pilih Tahun</option>
-                                <option value="1">Tahun Satu</option>
-                                <option value="2">Tahun Dua</option>
-                                <option value="3">Tahun Tiga</option>
-                                <option value="4">Tahun Empat</option>
-                                <option value="5">Tahun Lima</option>
-                                <option value="6">Tahun Enam</option>
+                            <select style="width:100%;" name="year" class="form-control select2" id="yearSelect" required>
+                                <option value="" disabled selected>-- Sila Pilih Tahun --</option>
+                                <option value="1">Satu</option>
+                                <option value="2">Dua</option>
+                                <option value="3">Tiga</option>
+                                <option value="4">Empat</option>
+                                <option value="5">Lima</option>
+                                <option value="6">Enam</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="yearInput">Topik</label>
                             <input type="text" name="topik" class="form-control" id="yearInput" required>
@@ -217,31 +216,31 @@
                 <?php } ?>
             </div>
             <div class="card-body p-3">
-    <div class="pagination-container">
-        <?php if ($selectedYear > 1) : ?>
-            <a href="?year=<?= $selectedYear - 1; ?>" class="pagination-button">&laquo;</a>
-        <?php endif; ?>
-        
-        <?php foreach ($years as $yearItem) : ?>
-            <?php if ($yearItem == $selectedYear) : ?>
-                <span class="pagination-button active"><?= $yearItem; ?></span>
-            <?php else : ?>
-                <a href="?year=<?= $yearItem; ?>" class="pagination-button"><?= $yearItem; ?></a>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        
-        <?php if ($selectedYear < 6) : ?>
-            <a href="?year=<?= $selectedYear + 1; ?>" class="pagination-button"> &raquo;</a>
-        <?php endif; ?>
-    </div>
-</div>
+                <div class="pagination-container">
+                    <?php if ($selectedYear > 1) : ?>
+                        <a href="?year=<?= $selectedYear - 1; ?>" class="pagination-button">&laquo;</a>
+                    <?php endif; ?>
+
+                    <?php foreach ($years as $yearItem) : ?>
+                        <?php if ($yearItem == $selectedYear) : ?>
+                            <span class="pagination-button active"><?= $yearItem; ?></span>
+                        <?php else : ?>
+                            <a href="?year=<?= $yearItem; ?>" class="pagination-button"><?= $yearItem; ?></a>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <?php if ($selectedYear < 6) : ?>
+                        <a href="?year=<?= $selectedYear + 1; ?>" class="pagination-button"> &raquo;</a>
+                    <?php endif; ?>
+                </div>
+            </div>
 
         </div>
     </div>
 </div>
-<div class="text-end p-3">
+<!-- <div class="text-end p-3">
     <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
-</div>
+</div> -->
 
 <!-- alert part -->
 <?php if (session()->has('success')) : ?>
