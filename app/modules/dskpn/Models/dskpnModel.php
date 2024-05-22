@@ -6,16 +6,17 @@ use CodeIgniter\Model;
 
 class DskpnModel extends Model
 {
-    protected $table      = 'dskpn';
-    protected $primaryKey = 'dskpn_id';
+    protected $table      = 'dskpn'; // Specify the table name
+    protected $primaryKey = 'dskpn_id'; // Specify the primary key
 
-    protected $returnType     = 'array';
-    protected $useSoftDeletes = true;
+    protected $returnType     = 'array'; // Can be 'array' or 'object'
+    protected $useSoftDeletes = true; // Enable if you want to use soft deletes
 
-    protected $allowedFields = ['tm_id', 'op_id', 'aa_id'];
+    protected $allowedFields = ['dskpn_theme', 'dskpn_sub_theme', 'tm_id', 'op_id', 'aa_id', 'approved_at']; // Fields that are allowed to be inserted/updated
 
     // If you want to use timestamps
     protected $useTimestamps = true;
+
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
