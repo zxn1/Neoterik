@@ -17,6 +17,7 @@ $routes->group('dskpn', function ($routes) {
 
     $routes->post('store-standard-learning',  [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',   [Main::class,     'store_standard_performance'],  ['as' => 'store_std_perfm']);
+    $routes->post('store-domain-mapping',     [Main::class,     'store_domain_mapping'],        ['as' => 'store_domain_map']);
   
     //Topic Main
     $routes->group('topic', function ($routes) {

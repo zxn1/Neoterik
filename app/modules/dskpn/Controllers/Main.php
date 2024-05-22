@@ -11,6 +11,7 @@ use App\Modules\Dskpn\Models\SubjectMainModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
+use App\Modules\Dskpn\Models\DskpnModel;
 
 //mapping model import
 use App\Modules\Dskpn\Models\DomainGroupModel;
@@ -27,6 +28,7 @@ class Main extends BaseController
     protected $learning_standard_model;
     protected $objective_performance_model;
     protected $standard_performance_model;
+    protected $dskpn_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -44,6 +46,7 @@ class Main extends BaseController
         $this->learning_standard_model  = new LearningStandardModel();
         $this->objective_performance_model = new ObjectivePerformanceModel();
         $this->standard_performance_model  = new StandardPerformanceModel();
+        $this->dskpn_model              = new DskpnModel();
 
         //mapping model init
         $this->domain_group_model       = new DomainGroupModel();
@@ -143,7 +146,21 @@ class Main extends BaseController
     {
         $data = [];
 
-        //steps 1 - get all subjects related to iterate horizontally
+        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        $data['subjects'] = [];
+        if(!empty($data['dskpn_id']))
+        {
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
+
+            //steps 1 - get all subjects related to iterate horizontally
+            //steps 1.1 - get learning standard to get list of subject.
+            $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+                                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
+        }
 
         //steps 2 - get 4 mapping group components
         //steps 2.1 - get all id for 4 group_name
@@ -153,7 +170,7 @@ class Main extends BaseController
         //steps 2.3 - store all retrieved item
         foreach($allGroup as $group)
         {
-            $data[$group['dg_title']] = $this->domain_model->select('d_name')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+            $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
         }
         
         $script = ['data', 'dynamic-input'];
@@ -165,6 +182,22 @@ class Main extends BaseController
     public function mapping_kompetensi_teras()
     {
         $data = [];
+
+        $dskpn_id = $this->request->getVar('dskpn');
+        if(!empty($dskpn_id))
+        {
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                                ->where('dskpn.dskpn_id', $dskpn_id)->first();
+
+            //steps 1 - get all subjects related to iterate horizontally
+            //steps 1.1 - get learning standard to get list of subject.
+            $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+                                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                                ->where('ls.dskpn_id', $dskpn_id)->find();
+        }
+
         $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_kompetensi_teras', $data, $script, $style);
@@ -199,6 +232,15 @@ class Main extends BaseController
             {
                 $data['objective_performance_id'] = $this->objective_performance_model->insertID();
 
+                //create DSKPN
+                $this->dskpn_model->insert([
+                    'tm_id' => $data['topic_id'],
+                    'op_id' => $data['objective_performance_id'],
+                    'aa_id' => null
+                ]);
+
+                $data['dskpn_id'] = $this->dskpn_model->insertID();
+
                 foreach($allSubject as $index => $subject)
                 {
                     //step 1 - temporary only - need UI later to register subject
@@ -215,7 +257,7 @@ class Main extends BaseController
                     $this->learning_standard_model->insert([
                         'ls_details' => $allDescription[$index],
                         'sm_id' => $lastID,
-                        'dskpn_id' => null //temporary null
+                        'dskpn_id' => $data['dskpn_id'] //temporary null
                     ]);
                     
                     $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
@@ -232,6 +274,7 @@ class Main extends BaseController
     public function store_standard_performance()
     {
         $allData = $this->request->getPost();
+        $dskpn_id = $this->request->getVar('dskpn');
 
         foreach($allData as $key => $data)
         {
@@ -246,12 +289,50 @@ class Main extends BaseController
                     'sp_tp_level' => $tpLevel,
                     'sp_tp_level_desc' => $item,
                     'sm_id' => $tempSubject['sm_id'],
-                    'dskpn_id' => null
+                    'dskpn_id' => $dskpn_id
                 ]);
             }
         }
         
-        return redirect()->to(route_to('mapping_dynamic_dskpn'));
+        return redirect()->to(route_to('domain_mapping') . "?dskpn=" . $dskpn_id);
+    }
+
+    public function store_domain_mapping()
+    {
+        $allData = $this->request->getPost();
+        $dskpn_id = $this->request->getVar('dskpn');
+
+        $success = true;
+
+        //probably loop 2/3/4 time only. because input were put in arrays.
+        foreach($allData as $key => $data)
+        {
+            $parts = explode('-', $key);
+            if($parts[0] == 'input')
+            {
+                //first repeatition max is only 4/5.
+                $ls_id = $this->learning_standard_model->select('learning_standard.ls_id')
+                                                        ->join('subject_main', 'subject_main.sm_code = ' . $this->db->escape($parts[1]))
+                                                        ->where('learning_standard.sm_id = subject_main.sm_id')->first();
+
+                foreach($data as $d_id)
+                {
+                    if($this->domain_mapping_model->insert([
+                        'dm_isChecked' => 'Y',
+                        'd_id' => $d_id,
+                        'ls_id' => $ls_id['ls_id']
+                    ])) {
+                        // do nothing
+                    } else {
+                        $success = false;
+                    }
+                }
+            }
+        }
+
+        if($success)
+            return redirect()->to(route_to('mapping_core') . "?dskpn=" . $dskpn_id);
+        return redirect()->back();
     }
 
 

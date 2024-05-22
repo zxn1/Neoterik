@@ -64,18 +64,24 @@
       <div class="row">
         <div class="col">
           <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster">
+          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
+            <?php if(isset($topikncluster)) { ?>
+              <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
+            <?php } else { ?>
             <option value="AL">Alabama</option>
-            <!-- Other options here -->
             <option value="WY">Wyoming</option>
+            <?php } ?>
           </select>
         </div>
         <div class="col">
           <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun">
+          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
+            <?php if(isset($topikncluster)) { ?>
+              <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
+            <?php } else { ?>
             <option value="AL">Alabama</option>
-            <!-- Other options here -->
             <option value="WY">Wyoming</option>
+            <?php } ?>
           </select>
         </div>
       </div>
