@@ -123,36 +123,36 @@
 
 <div class="container-fluid py-4 accordion">
     <!-- Button trigger modal -->
-    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
-  Tambah Kluster
-</button>
 
-<!-- Modal Structure -->
-<div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="addClusterModalLabel">Tambah Kluster</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
-          <div class="mb-3">
-            <label for="clusterName" class="form-label">Kod Kluster</label>
-            <input type="text" class="form-control" id="clusterName" name="cm_code" required>
-          </div>
-          <div class="mb-3">
-            <label for="clusterName" class="form-label">Nama Kluster</label>
-            <input type="text" class="form-control" id="clusterName" name="cm_desc" required>
-          </div>
-          <div class="text-end">
-            <button type="submit" class="btn bg-gradient-info">Tambah</button>
-          </div>
-        </form>
-      </div>
+    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
+        Tambah Kluster
+    </button>
+    <!-- Modal Structure -->
+    <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addClusterModalLabel">Tambah Kluster</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
+                        <div class="mb-3">
+                            <label for="clusterName" class="form-label">Kod Kluster</label>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterName" name="cm_code" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="clusterName" class="form-label">Nama Kluster</label>
+                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="cm_desc" required>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn bg-gradient-info">Tambah</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
     <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
         <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -194,7 +194,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="yearInput">Topik</label>
-                            <input type="text" name="topik" class="form-control" id="yearInput" required>
+                            <input type="text" name="topik" class="form-control" Placeholder="Sila Masukkan Topik" id="yearInput" required>
                         </div>
                     </div>
                 </div>
@@ -211,7 +211,7 @@
             <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
         </div>
         <div class="card-body p-3">
-            <?php if ($hasData): ?>
+            <?php if ($hasData) : ?>
                 <div class="accordion" id="accordionRental">
                     <?php foreach ($cluster as $clust) { ?>
                         <div class="accordion-item mb-3">
@@ -231,7 +231,7 @@
                                                     <div id="collection1-<?= $topik['tm_id']; ?>">
                                                         <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
                                                             <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
-                                                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
+                                                            <a class="btn btn-link text-info text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
                                                                 <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
                                                             </a>
                                                             <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
@@ -248,10 +248,10 @@
                         </div>
                     <?php } ?>
                 </div>
-                <?php else: ?>
-                    <div class="text-center py-4">
-                        <strong>Tiada data yang didaftarkan bagi tahun yang dipilih</strong>
-                    </div>
+            <?php else : ?>
+                <div class="text-center py-4">
+                    <strong>Tiada data yang didaftarkan bagi tahun yang dipilih</strong>
+                </div>
             <?php endif; ?>
 
             <div class="card-body p-3">
