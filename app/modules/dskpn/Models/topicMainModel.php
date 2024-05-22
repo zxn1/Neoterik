@@ -12,7 +12,7 @@ class TopicMainModel extends Model
     protected $returnType     = 'array'; // Can be 'array' or 'object'
     protected $useSoftDeletes = true; // Enable if you want to use soft deletes
 
-    protected $allowedFields = ['tm_desc', 'tm_sub_theme', 'tm_theme', 'tm_year', 'cm_id']; // Fields that are allowed to be inserted/updated
+    protected $allowedFields = ['tm_desc', 'tm_year', 'cm_id']; // Fields that are allowed to be inserted/updated
 
     // If you want to use timestamps
     protected $useTimestamps = true;
