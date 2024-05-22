@@ -14,12 +14,12 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('domain-mapping',            [Main::class,     'domain_mapping'],              ['as' => 'domain_mapping']);
     $routes->get('mapping-kompetensi-teras',  [Main::class,     'mapping_kompetensi_teras'],    ['as' => 'mapping_core']);
     $routes->get('mapping-spesifikasi-dskpn', [Main::class,     'mapping_spesifikasi_dskpn'],   ['as' => 'mapping_dynamic_dskpn']);
+    $routes->get('dskpn-by-topic/(:any)',     [Main::class,     'dskpn_by_topic/$1'],           ['as' => 'dskpn_by_topic']);
 
     $routes->post('store-standard-learning',  [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',   [Main::class,     'store_standard_performance'],  ['as' => 'store_std_perfm']);
 
-    $routes->get('dskpn-by-topic/(:any)',     [Main::class,     'dskpn_by_topic/$1'],    ['as' => 'dskpn_by_topic']);
-
+    $routes->post('store-domain-mapping',     [Main::class,     'store_domain_mapping'],        ['as' => 'store_domain_map']);
 
     //Topic Main
     $routes->group('topic', function ($routes) {
