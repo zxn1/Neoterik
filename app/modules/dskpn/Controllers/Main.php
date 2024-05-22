@@ -110,16 +110,16 @@ class Main extends BaseController
         $data = [];
         $data['cluster_listing'] = $this->cluster_model->findAll();
         $data['years'] = range(1, 6); // Hardcoding years from 1 to 6
-        
+
         $selectedYear = $this->request->getGet('year');
-        if(empty($selectedYear))
+        if (empty($selectedYear))
             return redirect()->to(route_to('cluster_topic') . '?year=1');
-        
+
         if ($selectedYear) {
             // Filter topics by selected year
             $data['topik_main'] = $this->topic_model->where('tm_year', $selectedYear)->findAll();
             $data['selectedYear'] = $selectedYear;
-        
+
             // Get clusters that have topics for the selected year
             $data['cluster'] = $this->cluster_model->select('cluster_main.*')
                 ->join('topic_main', 'cluster_main.cm_id = topic_main.cm_id', 'inner')
@@ -129,11 +129,11 @@ class Main extends BaseController
         } else {
             $data['topik_main'] = $this->topic_model->findAll();
             $data['selectedYear'] = '';
-        
+
             // Get all clusters
             $data['cluster'] = $data['cluster_listing'];
         }
-        
+
         $script = ['data', 'topic_list_in_cluster'];
         $style = ['topic_list_in_cluster'];
         $this->render_jscss('topic_list_in_cluster', $data, $script, $style);
@@ -167,18 +167,17 @@ class Main extends BaseController
 
         $data['dskpn_id'] = $this->request->getVar('dskpn');
         $data['subjects'] = [];
-        if(!empty($data['dskpn_id']))
-        {
+        if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
+                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
 
             //steps 1 - get all subjects related to iterate horizontally
             //steps 1.1 - get learning standard to get list of subject.
             $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
+                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
         }
 
         //steps 2 - get 4 mapping group components
@@ -188,8 +187,7 @@ class Main extends BaseController
         //steps 2.2 - get all item for all group
         //steps 2.3 - store all retrieved item
 
-        foreach($allGroup as $group)
-        {
+        foreach ($allGroup as $group) {
             $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
         }
 
@@ -203,18 +201,17 @@ class Main extends BaseController
         $data = [];
 
         $dskpn_id = $this->request->getVar('dskpn');
-        if(!empty($dskpn_id))
-        {
+        if (!empty($dskpn_id)) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                                ->where('dskpn.dskpn_id', $dskpn_id)->first();
+                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                ->where('dskpn.dskpn_id', $dskpn_id)->first();
 
             //steps 1 - get all subjects related to iterate horizontally
             //steps 1.1 - get learning standard to get list of subject.
             $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                                ->where('ls.dskpn_id', $dskpn_id)->find();
+                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                ->where('ls.dskpn_id', $dskpn_id)->find();
         }
 
         $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
@@ -233,11 +230,13 @@ class Main extends BaseController
     {
         $data = [];
 
-        $allSubject = $this->request->getPost('subject');
+        $allSubject     = $this->request->getPost('subject');
         $allDescription = $this->request->getPost('subject_description');
-        $objective = $this->request->getPost('objective');
-        $kluster = $this->request->getPost('kluster');
-        $topik = $this->request->getPost('topik');
+        $objective      = $this->request->getPost('objective');
+        $kluster        = $this->request->getPost('kluster');
+        $topik          = $this->request->getPost('topik');
+        $tema           = $this->request->getPost('tema');
+        $subtema        = $this->request->getPost('subtema');
 
         $data['cluster_id'] = $kluster;
         $data['topic_id'] = $topik;
@@ -251,15 +250,16 @@ class Main extends BaseController
 
                 //create DSKPN
                 $this->dskpn_model->insert([
-                    'tm_id' => $data['topic_id'],
-                    'op_id' => $data['objective_performance_id'],
-                    'aa_id' => null
+                    'dskpn_theme'       => $tema,
+                    'dskpn_sub_theme'   => $subtema,
+                    'tm_id'             => $data['topic_id'],
+                    'op_id'             => $data['objective_performance_id'],
+                    'aa_id'             => null
                 ]);
 
                 $data['dskpn_id'] = $this->dskpn_model->insertID();
 
-                foreach($allSubject as $index => $subject)
-                {
+                foreach ($allSubject as $index => $subject) {
                     //step 1 - temporary only - need UI later to register subject
                     $this->subject_model->insert([
                         'sm_code' => $this->_generateRandomString(7),
@@ -319,19 +319,16 @@ class Main extends BaseController
         $success = true;
 
         //probably loop 2/3/4 time only. because input were put in arrays.
-        foreach($allData as $key => $data)
-        {
+        foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
-            if($parts[0] == 'input')
-            {
+            if ($parts[0] == 'input') {
                 //first repeatition max is only 4/5.
                 $ls_id = $this->learning_standard_model->select('learning_standard.ls_id')
-                                                        ->join('subject_main', 'subject_main.sm_code = ' . $this->db->escape($parts[1]))
-                                                        ->where('learning_standard.sm_id = subject_main.sm_id')->first();
+                    ->join('subject_main', 'subject_main.sm_code = ' . $this->db->escape($parts[1]))
+                    ->where('learning_standard.sm_id = subject_main.sm_id')->first();
 
-                foreach($data as $d_id)
-                {
-                    if($this->domain_mapping_model->insert([
+                foreach ($data as $d_id) {
+                    if ($this->domain_mapping_model->insert([
                         'dm_isChecked' => 'Y',
                         'd_id' => $d_id,
                         'ls_id' => $ls_id['ls_id']
@@ -344,7 +341,7 @@ class Main extends BaseController
             }
         }
 
-        if($success)
+        if ($success)
             return redirect()->to(route_to('mapping_core') . "?dskpn=" . $dskpn_id);
         return redirect()->back();
     }
