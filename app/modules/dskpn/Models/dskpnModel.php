@@ -15,7 +15,8 @@ class DskpnModel extends Model
     protected $allowedFields = ['dskpn_theme', 'dskpn_sub_theme', 'tm_id', 'op_id', 'aa_id', 'approved_at']; // Fields that are allowed to be inserted/updated
 
     // If you want to use timestamps
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
+
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';

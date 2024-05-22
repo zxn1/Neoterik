@@ -17,14 +17,14 @@ $routes->group('dskpn', function ($routes) {
 
     $routes->post('store-standard-learning',    [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',     [Main::class,     'store_standard_performance'],  ['as' => 'store_std_perfm']);
-
+    $routes->post('store-domain-mapping',       [Main::class,     'store_domain_mapping'],        ['as' => 'store_domain_map']);
+  
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],           ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],         ['as' => 'dskpn_by_topic_list']);
     
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],          ['as' => 'create_dskpn']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],     ['as' => 'dskpn_learning_standard']);
-    
-    
+   
     //Topic Main
     $routes->group('topic', function ($routes) {
         $routes->post('create',                         [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
