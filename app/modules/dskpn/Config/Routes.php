@@ -17,7 +17,10 @@ $routes->group('dskpn', function ($routes) {
 
     $routes->post('store-standard-learning',  [Main::class,     'store_standard_learning'],     ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',   [Main::class,     'store_standard_performance'],  ['as' => 'store_std_perfm']);
-  
+
+    $routes->get('dskpn-by-topic/(:any)',     [Main::class,     'dskpn_by_topic/$1'],    ['as' => 'dskpn_by_topic']);
+
+
     //Topic Main
     $routes->group('topic', function ($routes) {
         $routes->post('create',                         [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
@@ -25,7 +28,7 @@ $routes->group('dskpn', function ($routes) {
         $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
     });
 
-    
+
     //SETTING MAPPING INITIALIZER
     $routes->get('initialize-domain-mapping-database', [Main::class,   'mappingInit']);
 });

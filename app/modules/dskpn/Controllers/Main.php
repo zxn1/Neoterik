@@ -56,8 +56,8 @@ class Main extends BaseController
     public function index()
     {
         $data = [];
-        $this->render_login('login',$data);
-        
+        $this->render_login('login', $data);
+
         // return view('App\\Modules\\Login\\Views\\login');
     }
 
@@ -76,19 +76,17 @@ class Main extends BaseController
         $data = [];
 
         $data['parameters'] = $this->request->getGet();
-        if(!empty($data['parameters']))
-        {
+        if (!empty($data['parameters'])) {
             //step 1 - get Cluster
             $data['cluster_desc'] = $this->cluster_model
-                                    ->where('cm_id', $data['parameters']['cluster_id'])->first();
+                ->where('cm_id', $data['parameters']['cluster_id'])->first();
 
             //step 2 - get Topic
             $data['topic_desc'] = $this->topic_model
-                                    ->where('tm_id', $data['parameters']['topic_id'])->first();
+                ->where('tm_id', $data['parameters']['topic_id'])->first();
 
             //step 3 - get Subject Via Learning Standard
-            foreach($data['parameters']['learning_standard_id'] as $ls_id)
-            {
+            foreach ($data['parameters']['learning_standard_id'] as $ls_id) {
                 $query = $this->db->table('subject_main')
                     ->select('subject_main.*')
                     ->join('learning_standard', 'learning_standard.sm_id = subject_main.sm_id')
@@ -110,7 +108,7 @@ class Main extends BaseController
         $data['cluster'] = $this->cluster_model->findAll();
         $data['topik_main'] = $this->topic_model->findAll();
 
-        $script = ['data','topic_list_in_cluster'];
+        $script = ['data', 'topic_list_in_cluster'];
         $style = ['topic_list_in_cluster'];
         $this->render_jscss('topic_list_in_cluster', $data, $script, $style);
     }
@@ -119,8 +117,8 @@ class Main extends BaseController
     {
         $data = [];
         $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
-        ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
-        ->findAll();
+            ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+            ->findAll();
 
         // dd($data['cluster']);
 
@@ -148,27 +146,24 @@ class Main extends BaseController
         //steps 2 - get 4 mapping group components
         //steps 2.1 - get all id for 4 group_name
         $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
-    
+
         //steps 2.2 - get all item for all group
         //steps 2.3 - store all retrieved item
-        foreach($allGroup as $group)
-        {
+        foreach ($allGroup as $group) {
             $data[$group['dg_title']] = $this->domain_model->select('d_name')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
         }
-        
+
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
         $this->render_jscss('domain_mapping', $data, $script, $style);
-
     }
-    
+
     public function mapping_kompetensi_teras()
     {
         $data = [];
         $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_kompetensi_teras', $data, $script, $style);
-
     }
     public function mapping_spesifikasi_dskpn()
     {
@@ -192,15 +187,13 @@ class Main extends BaseController
         $data['topic_id'] = $topik;
 
         //step 1 - add objective performance
-        if($this->objective_performance_model->insert([
+        if ($this->objective_performance_model->insert([
             'op_desc' => $objective
         ]))
-            if(is_array($allSubject) && is_array($allDescription))
-            {
+            if (is_array($allSubject) && is_array($allDescription)) {
                 $data['objective_performance_id'] = $this->objective_performance_model->insertID();
 
-                foreach($allSubject as $index => $subject)
-                {
+                foreach ($allSubject as $index => $subject) {
                     //step 1 - temporary only - need UI later to register subject
                     $this->subject_model->insert([
                         'sm_code' => $this->_generateRandomString(7),
@@ -217,11 +210,11 @@ class Main extends BaseController
                         'sm_id' => $lastID,
                         'dskpn_id' => null //temporary null
                     ]);
-                    
+
                     $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
                 }
             }
-        
+
         $parameters = http_build_query($data);
         return redirect()->to(route_to('tp_maintenance') . '?' . $parameters);
 
@@ -233,14 +226,12 @@ class Main extends BaseController
     {
         $allData = $this->request->getPost();
 
-        foreach($allData as $key => $data)
-        {
+        foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             //first repeatition max is only 4/5.
             $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
 
-            foreach($data as $index => $item)
-            {
+            foreach ($data as $index => $item) {
                 $tpLevel = $index + 1;
                 $this->standard_performance_model->insert([
                     'sp_tp_level' => $tpLevel,
@@ -250,7 +241,7 @@ class Main extends BaseController
                 ]);
             }
         }
-        
+
         return redirect()->to(route_to('mapping_dynamic_dskpn'));
     }
 
@@ -302,17 +293,21 @@ class Main extends BaseController
         ];
 
         //before start - check if exist no need
-        if(!empty($this->domain_group_model->where('dg_title', $tempAName)->first()) &&
+        if (
+            !empty($this->domain_group_model->where('dg_title', $tempAName)->first()) &&
             !empty($this->domain_group_model->where('dg_title', $tempBName)->first()) &&
             !empty($this->domain_group_model->where('dg_title', $tempCName)->first()) &&
-            !empty($this->domain_group_model->where('dg_title', $tempDName)->first()))
+            !empty($this->domain_group_model->where('dg_title', $tempDName)->first())
+        )
             return "Already initiated";
 
         //calling
-        if($this->_mappingInitializer($tempAName, $tempAAtt) && 
-            $this->_mappingInitializer($tempBName, $tempBAtt) && 
+        if (
+            $this->_mappingInitializer($tempAName, $tempAAtt) &&
+            $this->_mappingInitializer($tempBName, $tempBAtt) &&
             $this->_mappingInitializer($tempCName, $tempCAtt) &&
-            $this->_mappingInitializer($tempDName, $tempDAtt))
+            $this->_mappingInitializer($tempDName, $tempDAtt)
+        )
             return "OK!";
         return "Fails!";
     }
@@ -321,33 +316,31 @@ class Main extends BaseController
     private function _mappingInitializer($name, $attributes) //attributes is array of an array of 2 elements (domain name and not_sureYet_id).
     {
         //steps 1 - domain group
-        if($this->domain_group_model->insert([
+        if ($this->domain_group_model->insert([
             'dg_title' => $name
-        ]))
-        {
+        ])) {
             //step 2 - add domain inside domain_group
             $lastID = $this->domain_group_model->insertID();
             $flag = false;
-            foreach($attributes as $item)
-            {
-                if($this->domain_model->insert([
+            foreach ($attributes as $item) {
+                if ($this->domain_model->insert([
                     'd_name' => $item[0],
                     'gd_id' => $lastID,
                     'not_sureYet_id' => null //temporary first
-                ]))
-                {
+                ])) {
                     $flag = false;
                 } else {
                     $flag = true;
                 }
             }
-            if($flag == false)
+            if ($flag == false)
                 return true;
         }
         return false;
     }
 
-    private function _generateRandomString($length = 10) {
+    private function _generateRandomString($length = 10)
+    {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -355,5 +348,17 @@ class Main extends BaseController
             $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+    // Display List of DSKPN by ID
+    public function dskpn_by_topic($id)
+    {
+        $data['dskpn'] = $this->dskpn_model->where('dskpn_id', $id)->first();
+        $data['learning_standard'] = $this->learning_standard_model->where('dskpn_id', $id)->findAll();
+        $data['standard_performance'] = $this->standard_performance_model->where('dskpn_id', $id)->findAll();
+        $data['objective_performance'] = $this->objective_performance_model->where('dskpn_id', $id)->findAll();
+        $data['subject'] = $this->subject_model->where('dskpn_id', $id)->findAll();
+
+        dd($data);
     }
 }
