@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS `domain` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`d_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.domain: 23 rows
+-- Dumping data for table neoterik.domain: 28 rows
 /*!40000 ALTER TABLE `domain` DISABLE KEYS */;
 REPLACE INTO `domain` (`d_id`, `d_name`, `gd_id`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(32, '(DKM13) Kegigihan', 9, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
@@ -84,7 +84,12 @@ REPLACE INTO `domain` (`d_id`, `d_name`, `gd_id`, `sm_id`, `dskpn_id`, `created_
 	(39, '(KI4) Kemahiran Kerja Berpasukan', 10, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
 	(40, '(KI5) Pembelajaran Berterusan Dan Pengurusan Maklu', 10, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
 	(41, '(KI6) Kemahiran Keusahawanan', 10, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(42, '(KI7) Moral dan Etika Profesional', 10, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL);
+	(42, '(KI7) Moral dan Etika Profesional', 10, NULL, NULL, '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
+	(43, 'Kri', 11, 46, 8, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(44, 'Tri', 11, 46, 8, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(45, 'Pr', 11, 46, 8, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(46, 'TTi', 11, 45, 8, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(47, 'Sr', 11, 45, 8, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL);
 /*!40000 ALTER TABLE `domain` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.domain_group
@@ -95,15 +100,16 @@ CREATE TABLE IF NOT EXISTS `domain_group` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`dg_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.domain_group: 4 rows
+-- Dumping data for table neoterik.domain_group: 5 rows
 /*!40000 ALTER TABLE `domain_group` DISABLE KEYS */;
 REPLACE INTO `domain_group` (`dg_id`, `dg_title`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(9, 'Kualiti Keperibadian', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
 	(8, 'Kemandirian', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
 	(7, 'Pengetahuan Asas', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
-	(10, '7 Kemahiran Insaniah', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL);
+	(10, '7 Kemahiran Insaniah', '2024-05-21 13:09:12', '2024-05-21 13:09:12', NULL),
+	(11, 'Kompetensi Teras', '2024-05-23 01:56:16', '2024-05-23 01:56:16', NULL);
 /*!40000 ALTER TABLE `domain_group` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.domain_mapping
@@ -116,10 +122,27 @@ CREATE TABLE IF NOT EXISTS `domain_mapping` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`dm_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.domain_mapping: 0 rows
+-- Dumping data for table neoterik.domain_mapping: 16 rows
 /*!40000 ALTER TABLE `domain_mapping` DISABLE KEYS */;
+REPLACE INTO `domain_mapping` (`dm_id`, `dm_isChecked`, `d_id`, `ls_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+	(1, 'Y', 22, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(2, 'Y', 23, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(3, 'Y', 27, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(4, 'Y', 29, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(5, 'Y', 34, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(6, 'Y', 35, 45, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(7, 'Y', 24, 44, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(8, 'Y', 28, 44, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(9, 'Y', 29, 44, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(10, 'Y', 32, 44, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(11, 'Y', 33, 44, '2024-05-22 18:19:38', '2024-05-22 18:19:38', NULL),
+	(12, 'Y', 43, 45, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(13, 'Y', 44, 45, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(14, 'N', 45, 45, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(15, 'Y', 46, 44, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL),
+	(16, 'N', 47, 44, '2024-05-22 18:24:21', '2024-05-22 18:24:21', NULL);
 /*!40000 ALTER TABLE `domain_mapping` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.dskpn
@@ -177,24 +200,8 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
 -- Dumping data for table neoterik.learning_standard: 16 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 REPLACE INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(27, '2. Algebra', 28, 1, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(26, '1. Kejuruteraan', 27, 1, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(28, 'asdasd', 29, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(29, 'asdasd', 30, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(30, 'asdasd', 31, NULL, '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(31, 'Test', 32, 2, '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
-	(32, 'CUbcubasdas', 33, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(33, 'asdasd', 34, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(34, 'asdasda', 35, 3, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(35, 'TEST', 36, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(36, 'SETSET', 37, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(37, 'SETSET', 38, 4, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(38, 'asdasd', 39, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(39, 'asdasd', 40, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(40, 'Jamilsd', 41, 5, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(41, 'sasda', 42, 6, '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL),
-	(42, '1. How are you doing?', 43, 7, '2024-05-22 15:41:12', '2024-05-22 15:41:12', NULL),
-	(43, '2. good also', 44, 7, '2024-05-22 15:41:12', '2024-05-22 15:41:12', NULL);
+	(45, '2. Algebra', 46, 8, '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL),
+	(44, '1. Belajar Respirasi', 45, 8, '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL);
 /*!40000 ALTER TABLE `learning_standard` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.objective_performance
@@ -210,15 +217,7 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
 -- Dumping data for table neoterik.objective_performance: 8 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
 REPLACE INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(14, 'Kejuruteraan Algebra', '2024-05-22 02:34:13', '2024-05-22 02:34:13', NULL),
-	(15, 'asdasds', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(16, 'asdasd', '2024-05-22 08:46:13', '2024-05-22 08:46:13', NULL),
-	(17, 'asdasd', '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
-	(18, 'asdasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(19, 'SADASD', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(20, 'asdsadas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(21, 'sadsa', '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL),
-	(22, 'Good to hear~', '2024-05-22 15:41:09', '2024-05-22 15:41:09', NULL);
+	(23, 'Menilai Respirasi menggunakan ungkapan algebra.', '2024-05-22 18:18:20', '2024-05-22 18:18:20', NULL);
 /*!40000 ALTER TABLE `objective_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.standard_performance
@@ -237,13 +236,11 @@ CREATE TABLE IF NOT EXISTS `standard_performance` (
 -- Dumping data for table neoterik.standard_performance: 5 rows
 /*!40000 ALTER TABLE `standard_performance` DISABLE KEYS */;
 REPLACE INTO `standard_performance` (`sp_id`, `sp_tp_level`, `sp_tp_level_desc`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(25, 2, 'Mencipta 2', 28, 1, '2024-05-22 02:48:44', '2024-05-22 02:48:44', NULL),
-	(24, 1, 'Mencipta 1', 28, 1, '2024-05-22 02:48:44', '2024-05-22 02:48:44', NULL),
-	(23, 3, 'Menilai 3', 27, 1, '2024-05-22 02:48:44', '2024-05-22 02:48:44', NULL),
-	(22, 2, 'Menilai 2', 27, 1, '2024-05-22 02:48:44', '2024-05-22 02:48:44', NULL),
-	(21, 1, 'Menilai 1', 27, 1, '2024-05-22 02:48:44', '2024-05-22 02:48:44', NULL),
-	(26, 1, '', 43, 7, '2024-05-22 16:07:25', '2024-05-22 16:07:25', NULL),
-	(27, 1, '', 44, 7, '2024-05-22 16:07:25', '2024-05-22 16:07:25', NULL);
+	(31, 1, 'Menulis ungkapan algebra', 46, 8, '2024-05-22 18:19:03', '2024-05-22 18:19:03', NULL),
+	(30, 3, 'Mensyukuri kehidupan', 45, 8, '2024-05-22 18:19:03', '2024-05-22 18:19:03', NULL),
+	(29, 2, 'Menilai Kehidupan', 45, 8, '2024-05-22 18:19:03', '2024-05-22 18:19:03', NULL),
+	(28, 1, 'Menilai kejuruteraan', 45, 8, '2024-05-22 18:19:03', '2024-05-22 18:19:03', NULL),
+	(32, 2, 'Merumuskan formula matematik', 46, 8, '2024-05-22 18:19:03', '2024-05-22 18:19:03', NULL);
 /*!40000 ALTER TABLE `standard_performance` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.subject_main
@@ -260,24 +257,8 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
 -- Dumping data for table neoterik.subject_main: 16 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
 REPLACE INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
-	(28, 'nhG6iJw', 'Matematik', '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(27, '7IfO8I0', 'Sains', '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL),
-	(29, 'ztK4dp3', 'Sains', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(30, '2HSHEo5', 'Sejarah', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(31, 'rugRtk5', 'Ayam', '2024-05-22 07:47:37', '2024-05-22 07:47:37', NULL),
-	(32, 'ajwcYn1', 'Test', '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL),
-	(33, 'VdR5zP6', 'Cuba', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(34, 'Izhwdzy', 'sadasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(35, 'U4MtBLB', 'asdasdasd', '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL),
-	(36, '1MQAD8q', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(37, 'OEfo4e5', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(38, 'X0g2VoJ', 'TEST', '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL),
-	(39, '65XOsnG', 'asdas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(40, 'OaXeJc4', 'asdasd', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(41, 'IFGVnnr', 'asdas', '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL),
-	(42, 'hji085X', 'sadsa', '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL),
-	(43, '11w917K', 'Hello Everybody', '2024-05-22 15:41:12', '2024-05-22 15:41:12', NULL),
-	(44, 'CbO0t7K', 'I am good, how are you?', '2024-05-22 15:41:12', '2024-05-22 15:41:12', NULL);
+	(46, 'CBUeqbW', 'Matematik', '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL),
+	(45, '62JFYVG', 'Sains', '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL);
 /*!40000 ALTER TABLE `subject_main` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.topic_main
