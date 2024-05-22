@@ -160,12 +160,17 @@ CREATE TABLE IF NOT EXISTS `dskpn` (
   `created_by` varchar(50) DEFAULT NULL,
   `approved_by` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`dskpn_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.dskpn: 2 rows
+-- Dumping data for table neoterik.dskpn: 6 rows
 /*!40000 ALTER TABLE `dskpn` DISABLE KEYS */;
 REPLACE INTO `dskpn` (`dskpn_id`, `dskpn_theme`, `dskpn_sub_theme`, `tm_id`, `op_id`, `aa_id`, `created_at`, `updated_at`, `deleted_at`, `approved_at`, `created_by`, `approved_by`) VALUES
-	(8, 'Keluarga', 'test', 7, 23, NULL, '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL, NULL, NULL, NULL),
+	(1, '', '', 9, 14, NULL, '2024-05-22 02:34:15', '2024-05-22 02:34:15', NULL, NULL, NULL, NULL),
+	(2, '', '', 7, 17, NULL, '2024-05-22 08:47:37', '2024-05-22 08:47:37', NULL, NULL, NULL, NULL),
+	(3, 'Individu', 'cubaan kali ke 2', 9, 18, NULL, '2024-05-22 08:50:51', '2024-05-22 08:50:51', NULL, NULL, NULL, NULL),
+	(4, 'Keluarga', 'asdasdasd', 10, 19, NULL, '2024-05-22 13:28:42', '2024-05-22 13:28:42', NULL, NULL, NULL, NULL),
+	(5, 'Masyarakat', 'apa2 je la', 7, 20, NULL, '2024-05-22 13:57:24', '2024-05-22 13:57:24', NULL, NULL, NULL, NULL),
+	(6, 'Keluarga', 'test', 7, 21, NULL, '2024-05-22 14:05:58', '2024-05-22 14:05:58', NULL, NULL, NULL, NULL),
 	(7, 'Individu', 'test', 8, 22, NULL, '2024-05-22 15:41:12', '2024-05-22 15:41:12', NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `dskpn` ENABLE KEYS */;
 
@@ -190,9 +195,9 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ls_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.learning_standard: 2 rows
+-- Dumping data for table neoterik.learning_standard: 16 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 REPLACE INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(45, '2. Algebra', 46, 8, '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL),
@@ -207,9 +212,9 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`op_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.objective_performance: 1 rows
+-- Dumping data for table neoterik.objective_performance: 8 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
 REPLACE INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(23, 'Menilai Respirasi menggunakan ungkapan algebra.', '2024-05-22 18:18:20', '2024-05-22 18:18:20', NULL);
@@ -226,7 +231,7 @@ CREATE TABLE IF NOT EXISTS `standard_performance` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table neoterik.standard_performance: 5 rows
 /*!40000 ALTER TABLE `standard_performance` DISABLE KEYS */;
@@ -247,9 +252,9 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`sm_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.subject_main: 2 rows
+-- Dumping data for table neoterik.subject_main: 16 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
 REPLACE INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(46, 'CBUeqbW', 'Matematik', '2024-05-22 18:18:22', '2024-05-22 18:18:22', NULL),
