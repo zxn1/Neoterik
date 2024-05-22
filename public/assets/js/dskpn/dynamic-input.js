@@ -23,9 +23,9 @@ $('#add-subject-button').on('click', function() {
     $('#standard-pembelajaran').append(`
         <div class="col-md-4 subject-card">
             <div class="card mt-4">
-                <div class="card-header d-flex p-3 bg-gradient-primary align-items-center">
-                    <input type="text" name="subject[]" class="form-control" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
-                    <button type="button" class="btn btn-link text-white ms-auto delete-subject">
+                <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+                    <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                    <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 </div>
