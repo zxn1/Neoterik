@@ -28,7 +28,6 @@
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         border: 1px solid #d2d6da;
-
     }
 
     .select2-container--default .select2-selection--single .select2-selection__rendered {
@@ -48,7 +47,6 @@
         flex-grow: 1;
     }
 
-
     /* Media query for screens smaller than a certain width (e.g., phones) */
     @media (max-width: 768px) {
         .d-flex {
@@ -64,7 +62,6 @@
             margin-bottom: 5%;
             /* Ensure each ul takes up the full width */
         }
-
     }
 
     .zero-top-border {
@@ -91,11 +88,39 @@
     margin-right: calc(var(--bs-gutter-x)* .5);
     margin-left: calc(var(--bs-gutter-x)* .5);
   } */
+
+  .pagination-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .pagination-button {
+        background-color: #e9ecef;
+        border: none;
+        color: #6c757d;
+        padding: 8px 12px;
+        margin: 0 2px;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .pagination-button.active {
+        background-color: #888a88;
+        color: white;
+        font-weight: bold;
+    }
+
+    .pagination-button:hover:not(.active) {
+        background-color: #d4d4d4;
+    }
+
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 
 <div class="container-fluid py-4 accordion">
     <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
@@ -112,33 +137,33 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="clusterSelect">Select your cluster</label>
+                            <label for="clusterSelect">Sila Pilih Kluster anda</label>
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
                                 <option selected>-- Sila Pilih Kluster --</option>
-                                <?php foreach ($cluster as $item) { ?>
+                                <?php foreach ($cluster_listing as $item) { ?>
                                     <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="yearInput">Topik</label>
-                            <input type="text" name="topik" class="form-control" placeholder="Sila Masukkan Topik" id="yearInput" required>
+                            <label for="yearSelect">Tahun</label>
+                            <select name="year" class="form-control" id="yearSelect" required>
+                                <option value="" disabled selected>Sila Pilih Tahun</option>
+                                <option value="1">Tahun Satu</option>
+                                <option value="2">Tahun Dua</option>
+                                <option value="3">Tahun Tiga</option>
+                                <option value="4">Tahun Empat</option>
+                                <option value="5">Tahun Lima</option>
+                                <option value="6">Tahun Enam</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
-                            <label for="yearInput">Year</label>
-                            <select style="width:100%;" name="year" class="form-control select2" id="year" aria-label="Default select example" required>
-                                <option selected>-- Sila Pilih Darjah --</option>
-                                <option value="1">Satu</option>
-                                <option value="2">Dua</option>
-                                <option value="3">Tiga</option>
-                                <option value="4">Empat</option>
-                                <option value="5">Lima</option>
-                                <option value="6">Enam</option>
-                            </select>
+                            <label for="yearInput">Topik</label>
+                            <input type="text" name="topik" class="form-control" id="yearInput" required>
                         </div>
                     </div>
                 </div>
@@ -157,7 +182,6 @@
         <div class="card-body p-3">
             <div class="accordion" id="accordionRental">
                 <?php foreach ($cluster as $clust) { ?>
-
                     <div class="accordion-item mb-3">
                         <h5 class="accordion-header" id="headingOne">
                             <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
@@ -167,11 +191,9 @@
                             </button>
                         </h5>
                         <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
-                            <div class="accordion-body" class="custom row" id="tahap-penguasaan">
-
+                            <div class="accordion-body custom row" id="tahap-penguasaan">
                                 <?php foreach ($topik_main as $topik) {
-                                    if ($topik['cm_id'] == $clust['cm_id']) {
-                                ?>
+                                    if ($topik['cm_id'] == $clust['cm_id']) { ?>
                                         <div class="col-md-12">
                                             <div class="d-flex flex-column h-100">
                                                 <div id="collection1-<?= $topik['tm_id']; ?>">
@@ -189,14 +211,31 @@
                                         </div>
                                 <?php }
                                 } ?>
-
                             </div>
                         </div>
                     </div>
-
                 <?php } ?>
-
             </div>
+            <div class="card-body p-3">
+    <div class="pagination-container">
+        <?php if ($selectedYear > 1) : ?>
+            <a href="?year=<?= $selectedYear - 1; ?>" class="pagination-button">&laquo;</a>
+        <?php endif; ?>
+        
+        <?php foreach ($years as $yearItem) : ?>
+            <?php if ($yearItem == $selectedYear) : ?>
+                <span class="pagination-button active"><?= $yearItem; ?></span>
+            <?php else : ?>
+                <a href="?year=<?= $yearItem; ?>" class="pagination-button"><?= $yearItem; ?></a>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        
+        <?php if ($selectedYear < 6) : ?>
+            <a href="?year=<?= $selectedYear + 1; ?>" class="pagination-button"> &raquo;</a>
+        <?php endif; ?>
+    </div>
+</div>
+
         </div>
     </div>
 </div>
@@ -231,5 +270,17 @@
         if (lastAccordionItem) {
             lastAccordionItem.querySelector(".accordion-button").classList.add("collapsed");
         }
+
+        // Handle year filter change
+        document.getElementById('filterYear').addEventListener('change', function() {
+            var selectedYear = this.value;
+            var url = new URL(window.location.href);
+            if (selectedYear) {
+                url.searchParams.set('year', selectedYear);
+            } else {
+                url.searchParams.delete('year');
+            }
+            window.location.href = url.toString();
+        });
     });
 </script>
