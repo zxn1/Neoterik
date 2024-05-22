@@ -114,37 +114,31 @@
                         <div class="form-group">
                             <label for="clusterSelect">Select your cluster</label>
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
+                                <option selected>-- Sila Pilih Kluster --</option>
                                 <?php foreach ($cluster as $item) { ?>
                                     <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="subtemaInput">Subtema</label>
-                            <input type="text" name="subtema" class="form-control" id="subtemaInput" required>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="yearInput">Year</label>
-                            <input type="text" name="year" class="form-control" id="yearInput" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="subtemaInput">Tema</label>
-                            <input type="text" name="tema" class="form-control" id="subtemaInput" required>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="yearInput">Topik</label>
-                            <input type="text" name="topik" class="form-control" id="yearInput" required>
+                            <input type="text" name="topik" class="form-control" placeholder="Sila Masukkan Topik" id="yearInput" required>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="yearInput">Year</label>
+                            <select style="width:100%;" name="year" class="form-control select2" id="year" aria-label="Default select example" required>
+                                <option selected>-- Sila Pilih Darjah --</option>
+                                <option value="1">Satu</option>
+                                <option value="2">Dua</option>
+                                <option value="3">Tiga</option>
+                                <option value="4">Empat</option>
+                                <option value="5">Lima</option>
+                                <option value="6">Enam</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -183,6 +177,9 @@
                                                 <div id="collection1-<?= $topik['tm_id']; ?>">
                                                     <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
                                                         <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
+                                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
+                                                            <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
+                                                        </a>
                                                         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
                                                             <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                                         </a>
