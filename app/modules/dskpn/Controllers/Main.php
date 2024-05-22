@@ -112,8 +112,9 @@ class Main extends BaseController
         $data['years'] = range(1, 6); // Hardcoding years from 1 to 6
 
         $selectedYear = $this->request->getGet('year');
-        if (empty($selectedYear))
+        if (empty($selectedYear)) {
             return redirect()->to(route_to('cluster_topic') . '?year=1');
+        }
 
         if ($selectedYear) {
             // Filter topics by selected year
@@ -126,12 +127,18 @@ class Main extends BaseController
                 ->where('topic_main.tm_year', $selectedYear)
                 ->groupBy('cluster_main.cm_id')
                 ->findAll();
+            
+            // Set the hasData flag
+            $data['hasData'] = !empty($data['topik_main']);
         } else {
             $data['topik_main'] = $this->topic_model->findAll();
             $data['selectedYear'] = '';
 
             // Get all clusters
             $data['cluster'] = $data['cluster_listing'];
+
+            // Set the hasData flag
+            $data['hasData'] = !empty($data['topik_main']);
         }
 
         $script = ['data', 'topic_list_in_cluster'];
@@ -520,5 +527,19 @@ class Main extends BaseController
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
         $this->render_jscss('learning_standard', $data, $script, $style);
+    }
+
+    public function store_create_cluster()
+    {
+        $data = [
+            'cm_code' => $this->request->getVar('cm_code'),
+            'cm_desc' => $this->request->getVar('cm_desc')
+        ];
+
+        if ($this->cluster_model->insert($data)) {
+            return redirect()->back()->with('success', 'Berjaya menambah Cluster!');
+        }
+
+        return redirect()->back()->with('fail', 'Maaf, aksi menambah Cluster tidak berjaya!');
     }
 }

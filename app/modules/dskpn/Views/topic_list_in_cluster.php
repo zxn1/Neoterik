@@ -122,6 +122,38 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <div class="container-fluid py-4 accordion">
+    <!-- Button trigger modal -->
+    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
+  Tambah Kluster
+</button>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addClusterModalLabel">Tambah Kluster</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
+          <div class="mb-3">
+            <label for="clusterName" class="form-label">Kod Kluster</label>
+            <input type="text" class="form-control" id="clusterName" name="cm_code" required>
+          </div>
+          <div class="mb-3">
+            <label for="clusterName" class="form-label">Nama Kluster</label>
+            <input type="text" class="form-control" id="clusterName" name="cm_desc" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn bg-gradient-info">Tambah</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
     <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
         <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             <div class="col-md-10">
@@ -179,42 +211,49 @@
             <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
         </div>
         <div class="card-body p-3">
-            <div class="accordion" id="accordionRental">
-                <?php foreach ($cluster as $clust) { ?>
-                    <div class="accordion-item mb-3">
-                        <h5 class="accordion-header" id="headingOne">
-                            <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
-                                <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                <?= $clust['cm_desc']; ?>
-                            </button>
-                        </h5>
-                        <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
-                            <div class="accordion-body custom row" id="tahap-penguasaan">
-                                <?php foreach ($topik_main as $topik) {
-                                    if ($topik['cm_id'] == $clust['cm_id']) { ?>
-                                        <div class="col-md-12">
-                                            <div class="d-flex flex-column h-100">
-                                                <div id="collection1-<?= $topik['tm_id']; ?>">
-                                                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
-                                                        <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
-                                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
-                                                            <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
-                                                        </a>
-                                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
-                                                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                                        </a>
+            <?php if ($hasData): ?>
+                <div class="accordion" id="accordionRental">
+                    <?php foreach ($cluster as $clust) { ?>
+                        <div class="accordion-item mb-3">
+                            <h5 class="accordion-header" id="headingOne">
+                                <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
+                                    <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                    <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                    <?= $clust['cm_desc']; ?>
+                                </button>
+                            </h5>
+                            <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                                <div class="accordion-body custom row" id="tahap-penguasaan">
+                                    <?php foreach ($topik_main as $topik) {
+                                        if ($topik['cm_id'] == $clust['cm_id']) { ?>
+                                            <div class="col-md-12">
+                                                <div class="d-flex flex-column h-100">
+                                                    <div id="collection1-<?= $topik['tm_id']; ?>">
+                                                        <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
+                                                            <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
+                                                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
+                                                                <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
+                                                            </a>
+                                                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
+                                                                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                <?php }
-                                } ?>
+                                    <?php }
+                                    } ?>
+                                </div>
                             </div>
                         </div>
+                    <?php } ?>
+                </div>
+                <?php else: ?>
+                    <div class="text-center py-4">
+                        <strong>Tiada data yang didaftarkan bagi tahun yang dipilih</strong>
                     </div>
-                <?php } ?>
-            </div>
+            <?php endif; ?>
+
             <div class="card-body p-3">
                 <div class="pagination-container">
                     <?php if ($selectedYear > 1) : ?>
@@ -238,6 +277,7 @@
         </div>
     </div>
 </div>
+
 <!-- <div class="text-end p-3">
     <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
 </div> -->
