@@ -110,4 +110,5 @@ abstract class BaseController extends Controller
 
         echo view('render/main/main', $array);
     }
+    
 }
