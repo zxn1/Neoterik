@@ -5,19 +5,20 @@ namespace App\Modules\Dskpn\Controllers;
 use App\Controllers\BaseController;
 
 //model
+use App\Modules\Dskpn\Models\DskpnModel;
 use App\Modules\Dskpn\Models\DomainModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\ClusterMainModel;
 use App\Modules\Dskpn\Models\DomainGroupModel;
-use App\Modules\Dskpn\Models\SubjectMainModel;
 
+use App\Modules\Dskpn\Models\SubjectMainModel;
+use App\Modules\Dskpn\Models\DomainMappingModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
-use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
-use App\Modules\Dskpn\Models\StandardPerformanceModel;
-use App\Modules\Dskpn\Models\DskpnModel;
+use App\Modules\Dskpn\Models\ActivityAssessmentModel;
 
 //mapping model import
-use App\Modules\Dskpn\Models\DomainMappingModel;
+use App\Modules\Dskpn\Models\StandardPerformanceModel;
+use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 //-----
 
 class Main extends BaseController
@@ -28,6 +29,7 @@ class Main extends BaseController
     protected $subject_model;
     protected $learning_standard_model;
     protected $objective_performance_model;
+    protected $activity_assessment_model;
     protected $standard_performance_model;
     protected $dskpn_model;
 
@@ -46,6 +48,7 @@ class Main extends BaseController
         $this->subject_model                = new SubjectMainModel();
         $this->learning_standard_model      = new LearningStandardModel();
         $this->objective_performance_model  = new ObjectivePerformanceModel();
+        $this->activity_assessment_model    = new ActivityAssessmentModel();
         $this->standard_performance_model   = new StandardPerformanceModel();
         $this->dskpn_model                  = new dskpnModel();
         //mapping model init
@@ -127,7 +130,7 @@ class Main extends BaseController
                 ->where('topic_main.tm_year', $selectedYear)
                 ->groupBy('cluster_main.cm_id')
                 ->findAll();
-            
+
             // Set the hasData flag
             $data['hasData'] = !empty($data['topik_main']);
         } else {
@@ -160,10 +163,35 @@ class Main extends BaseController
         $this->render_jscss('list_registered_dskpn', $data, $script, $style);
     }
 
-    public function dskpn_view()
+    public function dskpn_view($dskpn_id)
+    {
+        // Store tm_id in session
+        $this->session->set('dskpn_id', $dskpn_id);
+        // Redirect or load a view if needed
+        return redirect()->to(route_to('dskpn_details'));
+    }
+
+    public function dskpn_details()
     {
         $data = [];
-        $this->render('dskpn_view', $data);
+        $dskpn_id = $this->session->get('dskpn_id');
+        $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
+        // Get DSKPN learning_standard
+        $learning_standard = $this->learning_standard_model
+            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+            ->where('dskpn_id', $dskpn_id)
+            ->findAll();
+
+        // Get standard_performance
+        $standard_performance = $this->standard_performance_model
+            ->join('subject_main', 'subject_main.sm_id = standard_performance.sm_id')
+            ->where('dskpn_id', $dskpn_id)
+            ->findAll();
+
+        $objective_performance = $this->objective_performance_model->where('op_id', $dskpn_details['op_id'])->first();
+        $activity_assessment = $this->activity_assessment_model->where('aa_id', $dskpn_details['aa_id'])->first();
+
+        dd('keluar');
     }
 
 
@@ -237,6 +265,9 @@ class Main extends BaseController
     {
         $data = [];
 
+        // Retrieve tm_id from session
+        $sm_id          = $this->session->get('sm_id');
+
         $allSubject     = $this->request->getPost('subject');
         $allDescription = $this->request->getPost('subject_description');
         $objective      = $this->request->getPost('objective');
@@ -261,6 +292,7 @@ class Main extends BaseController
                     'dskpn_sub_theme'   => $subtema,
                     'tm_id'             => $data['topic_id'],
                     'op_id'             => $data['objective_performance_id'],
+                    'created_by'        => $sm_id,
                     'aa_id'             => null
                 ]);
 
@@ -514,12 +546,11 @@ class Main extends BaseController
         $tm_id = $this->session->get('tm_id');
         $data['flag'] = $this->request->getVar('flag');
         // Query get topic data
-        if(!empty($data['flag']))
-        {
+        if (!empty($data['flag'])) {
             $data['topic'] = $this->topic_model
-                            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
-                            ->where('topic_main.tm_id', $tm_id)
-                            ->first();
+                ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+                ->where('topic_main.tm_id', $tm_id)
+                ->first();
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
         }
