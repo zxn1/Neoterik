@@ -176,6 +176,8 @@ class Main extends BaseController
 
     public function dskpn_details()
     {
+        $db = \Config\Database::connect();
+
         $dskpn_id = $this->session->get('dskpn_id');
         $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
         // Get DSKPN learning_standard
@@ -202,19 +204,54 @@ class Main extends BaseController
 
         $core_competency    = $this->domain_model->where('dskpn_id', $dskpn_id)->findAll();
 
+        // Get 16 Domain List by tahap
+        // Tahap Pengetahuan Asas
+        $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 21);
+
+        // dd($domain_pengetahuan_asas);
+        // Tahap Kemandirian
+        $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 22);
+
+        // Tahap Pengetahuan Asas
+        $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 23);
+
+        // Get 7 Kemahiran Insaniah
+        $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, 24);
+
+
         $data = [
-            'dskpn_details'             => $dskpn_details,
-            'learning_standard_subject' => $learning_standard_subject,
-            'learning_standard'         => $learning_standard,
-            'standard_performance'      => $standard_performance,
-            'objective_performance'     => $objective_performance,
-            'activity_assessment'       => $activity_assessment,
-            'core_competency'           => $core_competency,
-            'dskpn_id'                  => $dskpn_id,
+            'dskpn_details'                 => $dskpn_details,
+            'learning_standard_subject'     => $learning_standard_subject,
+            'learning_standard'             => $learning_standard,
+            'standard_performance'          => $standard_performance,
+            'objective_performance'         => $objective_performance,
+            'activity_assessment'           => $activity_assessment,
+            'core_competency'               => $core_competency,
+            'dskpn_id'                      => $dskpn_id,
+            'domain_pengetahuan_asas'       => $domain_pengetahuan_asas,
+            'domain_kemandirian'            => $domain_kemandirian,
+            'domain_kualiti_keperibadian'   => $domain_kualiti_keperibadian,
+            'kemahiran_insaniah'            => $kemahiran_insaniah,
+
         ];
 
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
+
+
+        // $db = \Config\Database::connect();
+
+        // $builder = $db->table('domain_mapping');
+        // $builder->select('*');
+        // $builder->join('domain', 'domain_mapping.d_id = domain.d_id');
+        // $builder->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id');
+        // $builder->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id');
+        // $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+        // $builder->where('domain_mapping.dskpn_id', 9);
+        // $builder->where('domain_group.dg_id', 21);
+
+        // $query = $builder->get();
+        // dd($query->getResultArray());
 
         $this->render_jscss('dskpn_view', $data, $script, $style);
     }
@@ -334,8 +371,7 @@ class Main extends BaseController
 
         //structure data first
         foreach ($allData as $key => $data) {
-            if($key != 'input-lain')
-            {
+            if ($key != 'input-lain') {
                 $parts = explode('-', $key);
                 if ($parts[0] == 'input') {
                     $d_id = $parts[1];
@@ -360,11 +396,10 @@ class Main extends BaseController
                 ])) {
                     // insert lain2 information
                     $inputlain = $allData['lain-lain-input'];
-                    if($this->extra_additional_field_model->insert([
+                    if ($this->extra_additional_field_model->insert([
                         'eaf_desc' => $inputlain,
                         'dm_id' => $this->domain_mapping_model->insertID()
-                    ]))
-                    {
+                    ])) {
                         //do nothing
                     } else {
                         $success = false;
