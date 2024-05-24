@@ -101,7 +101,7 @@
             <ul class="nav nav-pills nav-fill p-1" role="tablist">
               <li class="nav-item" role="presentation">
                 <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#spesifikasi_pengajaran" role="tab" aria-controls="spesifikasi_pengajaran" aria-selected="false" tabindex="-1">
-                  PENGETAHUAN ASAS
+                  KOMPETENSI TERAS
                 </a>
               </li>
               <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 155px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="true">-</a></div>
