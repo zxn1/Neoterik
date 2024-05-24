@@ -7,6 +7,7 @@ use App\Controllers\BaseController;
 //model
 use App\Modules\Dskpn\Models\DskpnModel;
 use App\Modules\Dskpn\Models\DomainModel;
+use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\ClusterMainModel;
 use App\Modules\Dskpn\Models\DomainGroupModel;
@@ -38,6 +39,7 @@ class Main extends BaseController
     protected $domain_model;
     protected $domain_mapping_model;
     //-----------------
+    protected $extra_additional_field_model;
     protected $db;
 
     public function __construct()
@@ -56,6 +58,7 @@ class Main extends BaseController
         $this->domain_model             = new DomainModel();
         $this->domain_mapping_model     = new DomainMappingModel();
         //-----------------
+        $this->extra_additional_field_model = new ExtraAdditionalFieldModel();
         $this->db                       = $this->db = \Config\Database::connect();
     }
 
@@ -256,9 +259,103 @@ class Main extends BaseController
     public function mapping_spesifikasi_dskpn()
     {
         $data = [];
+        $data['dskpn_id'] = $this->request->getVar('dskpn');
+
+        if (!empty($data['dskpn_id'])) {
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
+        }
+
+        //steps 1 - get 4 mapping group components
+        //steps 1.1 - get all id for 4 group_name
+        $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
+
+        //steps 2.1 - get all item for all group
+        //steps 2.2 - store all retrieved item
+
+        foreach ($allGroup as $group) {
+            $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+        }
+
         $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_spesifikasi_dskpn', $data, $script, $style);
+    }
+
+    public function activity_and_assessment()
+    {
+        $data = [];
+        $data['dskpn_id'] = $this->request->getVar('dskpn');
+
+        if (!empty($data['dskpn_id'])) {
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
+        }
+
+        $script = [];
+        $style = ['static-field'];
+        $this->render_jscss('mapping_assessment_and_activity', $data, $script, $style);
+    }
+
+    public function store_specification_mapping()
+    {
+        $data = [];
+        $dskpn_id = $this->request->getVar('dskpn');
+
+        $allData = $this->request->getPost();
+
+        $success = true;
+
+        //structure data first
+        foreach ($allData as $key => $data) {
+            if($key != 'input-lain')
+            {
+                $parts = explode('-', $key);
+                if ($parts[0] == 'input') {
+                    $d_id = $parts[1];
+
+                    if ($this->domain_mapping_model->insert([
+                        'dm_isChecked' => 'Y',
+                        'd_id' => $d_id,
+                        'ls_id' => null,
+                        'dskpn_id' => $dskpn_id
+                    ])) {
+                        // do nothing
+                    } else {
+                        $success = false;
+                    }
+                }
+            } else {
+                if ($this->domain_mapping_model->insert([
+                    'dm_isChecked' => 'Y',
+                    'd_id' => $data,
+                    'ls_id' => null,
+                    'dskpn_id' => $dskpn_id
+                ])) {
+                    // insert lain2 information
+                    $inputlain = $allData['lain-lain-input'];
+                    if($this->extra_additional_field_model->insert([
+                        'eaf_desc' => $inputlain,
+                        'dm_id' => $this->domain_mapping_model->insertID()
+                    ]))
+                    {
+                        //do nothing
+                    } else {
+                        $success = false;
+                    }
+                } else {
+                    $success = false;
+                }
+            }
+        }
+
+        if ($success)
+            return redirect()->to(route_to('activity_n_assessment') . "?dskpn=" . $dskpn_id);
+        return redirect()->back();
     }
 
     public function store_standard_learning()
@@ -370,7 +467,8 @@ class Main extends BaseController
                     if ($this->domain_mapping_model->insert([
                         'dm_isChecked' => 'Y',
                         'd_id' => $d_id,
-                        'ls_id' => $ls_id['ls_id']
+                        'ls_id' => $ls_id['ls_id'],
+                        'dskpn_id' => $dskpn_id
                     ])) {
                         // do nothing
                     } else {
@@ -444,7 +542,8 @@ class Main extends BaseController
                 $this->domain_mapping_model->insert([
                     'dm_isChecked' => $input['checked'],
                     'd_id' => $d_id,
-                    'ls_id' => $ls_id
+                    'ls_id' => $ls_id,
+                    'dskpn_id' => $dskpn_id
                 ]);
             }
         }
@@ -500,12 +599,57 @@ class Main extends BaseController
             ['(KI7) Moral dan Etika Profesional', 0]
         ];
 
+        //5. Reka Bentuk Instruksi
+        $tempEName = "Reka Bentuk Instruksi";
+        $tempEAtt = [
+            ['Active Learning', 0],
+            ['Collaborative Learning', 0],
+            ['Constructive Learning', 0],
+            ['Authentic Learning', 0],
+            ['Goal-Directed Learning', 0]
+        ];
+
+        //6. Integrasi Teknologi
+        $tempFName = "Integrasi Teknologi";
+        $tempFAtt = [
+            ['Entry Level', 0],
+            ['Adaptation Level', 0],
+            ['Infussion Level', 0],
+            ['Transformation Level', 0],
+            ['Goal-Directed Learning', 0]
+        ];
+
+        //7. Pendekatan
+        $tempGName = "Pendekatan";
+        $tempGAtt = [
+            ['Inkuiri', 0],
+            ['Berasaskan Masalah', 0],
+            ['Berasaskan Projek', 0],
+            ['Pembelajaran Masteri', 0],
+            ['Kontekstual', 0],
+            ['Berasaskan Pengalaman', 0]
+        ];
+
+        //8. Kaedah
+        $tempHName = "Kaedah";
+        $tempHAtt = [
+            ['Simulasi', 0],
+            ['Main Peranan', 0],
+            ['Nyanyian', 0],
+            ['Bercerita', 0],
+            ['Lain-lain', 0]
+        ];
+
         //before start - check if exist no need
         if (
             !empty($this->domain_group_model->where('dg_title', $tempAName)->first()) &&
             !empty($this->domain_group_model->where('dg_title', $tempBName)->first()) &&
             !empty($this->domain_group_model->where('dg_title', $tempCName)->first()) &&
-            !empty($this->domain_group_model->where('dg_title', $tempDName)->first())
+            !empty($this->domain_group_model->where('dg_title', $tempDName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempEName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempFName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempGName)->first()) &&
+            !empty($this->domain_group_model->where('dg_title', $tempHName)->first())
         )
             return "Already initiated";
 
@@ -514,7 +658,11 @@ class Main extends BaseController
             $this->_mappingInitializer($tempAName, $tempAAtt) &&
             $this->_mappingInitializer($tempBName, $tempBAtt) &&
             $this->_mappingInitializer($tempCName, $tempCAtt) &&
-            $this->_mappingInitializer($tempDName, $tempDAtt)
+            $this->_mappingInitializer($tempDName, $tempDAtt) &&
+            $this->_mappingInitializer($tempEName, $tempEAtt) &&
+            $this->_mappingInitializer($tempFName, $tempFAtt) &&
+            $this->_mappingInitializer($tempGName, $tempGAtt) &&
+            $this->_mappingInitializer($tempHName, $tempHAtt)
         )
             return "OK!";
         return "Fails!";

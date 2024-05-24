@@ -4,16 +4,15 @@ namespace App\Modules\Dskpn\Models;
 
 use CodeIgniter\Model;
 
-class DomainMappingModel extends Model
+class ExtraAdditionalFieldModel extends Model
 {
-    protected $table      = 'domain_mapping';
-    protected $primaryKey = 'dm_id';
+    protected $table      = 'extra_additional_field';
+    protected $primaryKey = 'eaf_id';
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    //if ls_id is missing it refers to specification part (not related to subject mapping - ex: Reka bentuk instruksi, Kaedah, Integrasi Teknologi and Pendekatan part)
-    protected $allowedFields = ['dm_isChecked', 'd_id', 'ls_id', 'dskpn_id'];
+    protected $allowedFields = ['eaf_desc', 'dm_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
