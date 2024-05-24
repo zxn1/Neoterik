@@ -10,17 +10,19 @@ function getKompetensi($gd_id, $sm_id, $dskpn_id)
 
     // Build the query to select the desired row
     $query = $db->table('domain')
-                ->select('d_name')
-                ->where('gd_id', $gd_id)
-                ->where('sm_id', $sm_id)
-                ->where('dskpn_id', $dskpn_id)
-                ->get();
+        ->select('d_name')
+        ->where('gd_id', $gd_id)
+        ->where('sm_id', $sm_id)
+        ->where('dskpn_id', $dskpn_id)
+        ->get();
 
     // Fetch the row as an array
     $row = $query->getRowArray();
 
     return $row;
 }
+
+
 
 
 // Function get 16 Domain

@@ -173,14 +173,20 @@ class Main extends BaseController
 
     public function dskpn_details()
     {
-        $data = [];
         $dskpn_id = $this->session->get('dskpn_id');
         $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
         // Get DSKPN learning_standard
         $learning_standard = $this->learning_standard_model
-            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
             ->where('dskpn_id', $dskpn_id)
             ->findAll();
+
+        $learning_standard_subject = $this->learning_standard_model
+            ->select('learning_standard.sm_id, subject_main.sm_desc')
+            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+            ->where('dskpn_id', $dskpn_id)
+            ->groupBy('sm_id')
+            ->findAll();
+
 
         // Get standard_performance
         $standard_performance = $this->standard_performance_model
@@ -191,7 +197,23 @@ class Main extends BaseController
         $objective_performance = $this->objective_performance_model->where('op_id', $dskpn_details['op_id'])->first();
         $activity_assessment = $this->activity_assessment_model->where('aa_id', $dskpn_details['aa_id'])->first();
 
-        dd('keluar');
+        $core_competency    = $this->domain_model->where('dskpn_id', $dskpn_id)->findAll();
+
+        $data = [
+            'dskpn_details'             => $dskpn_details,
+            'learning_standard_subject' => $learning_standard_subject,
+            'learning_standard'         => $learning_standard,
+            'standard_performance'      => $standard_performance,
+            'objective_performance'     => $objective_performance,
+            'activity_assessment'       => $activity_assessment,
+            'core_competency'           => $core_competency,
+            'dskpn_id'                  => $dskpn_id,
+        ];
+
+        $script = ['data', 'dynamic-input'];
+        $style = ['static-field'];
+
+        $this->render_jscss('dskpn_view', $data, $script, $style);
     }
 
 
@@ -400,9 +422,9 @@ class Main extends BaseController
 
             $kompetensi_domain_group['dg_id'] = $this->domain_group_model->insertID();
         }
-    
+
         $processedData = [];
-    
+
         //structure data first
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
@@ -411,16 +433,15 @@ class Main extends BaseController
                 foreach ($data as $index => $value) {
                     $processedData[$inputIndex][] = [
                         'value' => $value,
-                        'checked' => (($allData['checked-' . $inputIndex][$index]) == 'off')?'N':'Y'
+                        'checked' => (($allData['checked-' . $inputIndex][$index]) == 'off') ? 'N' : 'Y'
                     ];
                 }
             }
         }
-    
+
         //loop to store
         //1. loop to get key - subject
-        foreach($processedData as $key => $inputCode)
-        {
+        foreach ($processedData as $key => $inputCode) {
             //1.1 get sm_id based on inputCodeKey
             $sm_id = $this->subject_model->where('sm_code', $key)->first()['sm_id'];
 
@@ -428,8 +449,7 @@ class Main extends BaseController
             $ls_id = $this->learning_standard_model->where('dskpn_id', $dskpn_id)->where('sm_id', $sm_id)->first()['ls_id'];
 
             //2. loop to get value inside that inputcode
-            foreach($inputCode as $input)
-            {
+            foreach ($inputCode as $input) {
                 //3. store domain first.
                 $this->domain_model->insert([
                     'd_name' => $input['value'],
@@ -451,7 +471,7 @@ class Main extends BaseController
 
         return redirect()->to(route_to('mapping_dynamic_dskpn') . "?dskpn=" . $dskpn_id);
     }
-    
+
 
 
     //private routes - internal uses

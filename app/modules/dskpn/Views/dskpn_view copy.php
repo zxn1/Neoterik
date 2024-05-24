@@ -160,87 +160,121 @@
             <!-- Standard Pembelajaran -->
             <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
               <div class="d-flex top-0 w-100">
-                <!-- foreach subjek -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
-                    </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
-                    <?php foreach ($learning_standard as $ls_desc) : ?>
-                      <?php if ($row['sm_id'] == $ls_desc['ls_id']) : ?>
-                        <?= $ls_desc['ls_details']; ?>
-                      <?php endif ?>
-                    <?php endforeach ?>
+                <!-- standard Pembelajaran -->
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
+2.1.1 Mengenal pasti organ yang terlibat dalam proses pernafasan.
+2.1.2 Memerihalkan proses pernafasan dari aspek laluan udara dan
+pertukaran gas yang berlaku di peparu melalui pemerhatian menerusi
+pelbagai media.
+2.1.3 Membezakan kandungan oksigen dan karbon dioksida semasa
+menarik dan menghembus nafas.
+2.1.4 Memerihalkan pergerakan dada semasa menarik dan menghembus
+nafas dengan menjalankan aktiviti.
+2.1.5 Mengitlak bahawa kadar pernafasan bergantung kepada jenis aktiviti
+yang dilakukan.
+2.1.6 Menjelaskan pemerhatian tentang proses pernafasan manusia
+melalui lakaran, TMK, penulisan atau lisan secara kreatif.
                 </textarea>
-                  </ul>
-                <?php endforeach; ?>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
+6.1.1 Menyatakan contoh penyakit tidak berjangkit.
+6.1.2 Menghubungkait punca dan kesan penyakit tidak berjangkit.
+6.1.3 Berkomunikasi mengenai cara pencegahan penyakit tidak berjangkit.
+                </textarea>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
+1.1.1 Mengenal pasti jenis peta pemikiran yang sesuai diaplikasikan untuk
+menghasilkan karya kreatif dalam Bidang Menggambar:
+(iii) Poster - Peta Minda
+                </textarea>
+                </ul>
               </div>
             </div>
             <!-- Tahap Penguasaan -->
             <div class="tab-pane fade position-relative border-radius-lg" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
               <div class="d-flex top-0 w-100">
-                <!-- Tahap Penguasaan-->
-                <!-- foreach tahap penguasaan -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
-                    </div>
-                    <?php foreach ($standard_performance as $sp_desc) : ?>
-                      <?php if ($row['sm_id'] == $sp_desc['sm_id']) : ?>
-                        <li class="list-group-item"><?= $sp_desc['sp_tp_level'] . ' ' . $sp_desc['sp_tp_level_desc']; ?></li>
-                      <?php endif ?>
-                    <?php endforeach ?>
-                  </ul>
-                <?php endforeach; ?>
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item">Melabel organ yang terlibat semasa proses pernafasan.</li>
+                  <li class="list-group-item">Menerangkan proses pernafasan dari aspek laluan udara.</li>
+                  <li class="list-group-item">Mengitlak pergerakan dada semasa proses pernafasan.</li>
+                  <li class="list-group-item">Membezakan kandungan oksigen dan karbon dioksida semasa proses pernafasan.</li>
+                  <li class="list-group-item">Merumuskan kadar pernafasan bergantung kepada jenis aktiviti.</li>
+                  <li class="list-group-item">Berkomunikasi secara kreatif dan inovatif tentang situasi yang memberi kesan baik dan kesan buruk kepada pernafasan manusia dan cadangan penjagaan kesihatan peparu.</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item">Menyatakan punca penyakit tidak berjangkit seperti penyakit jantung, asma, penyakit buah pinggang dan diabetes.</li>
+                  <li class="list-group-item">Menerangkan punca penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Membezakan kesan setiap penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Menjelaskan melalui contoh cara mengurangkan risiko penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Mengesyorkan gaya hidup yang boleh diamalkan untuk mencegah risiko penyakit tidak berjangkit.</li>
+                  <li class="list-group-item">Merancang aktiviti harian yang boleh dilakukan untuk mengelakkan penyakit tidak berjangkit.</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item">Mengenal bahasa seni visual pada karya.</li>
+                  <li class="list-group-item">Menerangkan penggunaan bahasa seni visual yang terdapat pada karya.</li>
+                  <li class="list-group-item">Mengaplikasi kemahiran dan pengetahuan bahasa seni dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menganalisis karya seni menggunakan pengetahuan dan kemahiran seni dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menentukan penggunaan bahasa seni visual, media, teknik dan proses yang sesuai dalam aktiviti penerokaan.</li>
+                  <li class="list-group-item">Menjana idea kreatif dalam aktiviti penerokaan.</li>
+                </ul>
               </div>
             </div>
             <!-- Kompetensi Teras -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kompetensi_teras" role="tabpanel" aria-labelledby="kompetensi_teras">
               <div class="d-flex top-0 w-100">
-                <!-- kompetensi teras -->
-                <!-- foreach kompetensi teras -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
-                    </div>
-                    <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sm_id'] == $cc_desc['sm_id']) : ?>
-                        <li class="list-group-item"><?= $cc_desc['d_name']; ?></li>
-                      <?php endif ?>
-                    <?php endforeach ?>
-                  </ul>
-                <?php endforeach; ?>
+                <!-- standard Prestasi (Tahap Penguasaan) -->
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SAINS</h6>
+                  </div>
+                  <li class="list-group-item">(KSN1) Memerhati</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
+                  </div>
+                  <li class="list-group-item">(KPK3) Pendidikan Kesihatan Reproduktif dan Sosial (PEERS)</li>
+                </ul>
+                <ul class="list-group flex-grow-1 mx-2">
+                  <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <h6 class="my-auto text-white">SENI VISUAL</h6>
+                  </div>
+                  <li class="list-group-item">(KSV1) Bahasa Seni Visual</li>
+                  <li class="list-group-item">(KSV2) Kemahiran Seni Visual</li>
+                </ul>
               </div>
             </div>
             <!-- 16 Domain kemenjadian murid -->
             <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
               <div class="d-flex top-0 w-100">
-                <?php foreach ($learning_standard_subject as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
-                    </div>
-                    <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sm_id'] == $cc_desc['sm_id']) : ?>
-                        <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
-                        <!-- call helper -->
-                          <?= getDomain(7,$cc_desc['sm_id']); ?>
-                        <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
-                        <!-- call helper -->
-                        <li class="list-group-item bg-light"><b>KUALITI KEPERIBADIAN</b></li>
-                        <!-- Call helper -->
-                      <?php endif ?>
-                    <?php endforeach ?>
-                  </ul>
-                <?php endforeach; ?>
+                <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
                   <div class="card-header d-flex p-3 bg-gradient-primary">
                     <h6 class="my-auto text-white">SAINS</h6>
                   </div>
-                  
+                  <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
                   <li class="list-group-item">(DKM2) Numerasi (N)</li>
                   <li class="list-group-item">(DKM3) Literasi Saintifik (LS)</li>
                 </ul>
@@ -335,7 +369,15 @@
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                        <?= $objective_performance['op_desc']; ?>
+1.1.1 Menyatakan organ yang terlibat dalam proses pernafasan (S 2.1.1)
+1.1.2 Memerihalkan proses pertukaran gas yang berlaku di paru-paru (S 2.1.2)
+1.1.3 Membezakan kandungan gas semasa menarik dan menghembus nafas melalui lukisan (S 2.1.3, SV1.1.1)
+1.1.4 Memerihalkan pergerakan dada semasa menarik dan menghembus nafas melalui pemerhatian (S 2.1.2, S
+2.1.4, S 2.1.6)
+1.1.5 Merumuskan kadar pernafasan bergantung kepada jenis aktiviti yang dilakukan (S 2.1.5)
+1.1.6 Mengenali contoh penyakit tidak berjangkit berkaitan sistem pernafasan manusia (PK 6.1.1)
+1.1.7 Menghubungkait punca dan kesan penyakit tidak berjangkit terhadap pernafasan manusia (PK 6.1.2)
+1.1.8 Berkomunikasi mengenai cara pencegahan penyakit (PK 6.1.3)
                   </textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
@@ -349,9 +391,21 @@
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?= isset($activity_assessment['aa_activity_desc']) ? htmlspecialchars($activity_assessment['aa_activity_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
-                  </textarea>
 
+Murid:
+1. Memerhatikan demonstrasi guru yang menunjukkan sistem pernafasan manusia dengan menggunakan belon dalam botol sebagai
+simulasi pernafasan.
+2. Menyatakan organ yang terlibat dalam sistem pernafasan manusia berdasarkan demonstrasi tersebut.
+3. Mengenal pasti pertukaran gas dalam paru-paru melalui tayangan video.
+4. Melakar rupa paru-paru dan kandungan gas semasa menarik dan menghembus nafas.
+5. Memerhatikan pergerakan dada semasa menarik dan menghembus nafas sebelum dan selepas melakukan aktiviti seperti duduk,
+lari, lompat dan sebagainya.
+5. Mendengar bunyi pernafasan melalui stetokop sebelum dan selepas melakukan aktiviti.
+6. Merumuskan kadar pernafasan bergantung kepada aktiviti yang dilakukan melalui perbincangan.
+7. Memerhatikan penyakit pernafasan yang tidak berjangkit (Asma) melalui tayangan video.
+8. Melakukan Think-Pair-Share untuk membincangkan punca, kesan dan cara pencegahan bagi penyakit pernafasan yang tidak
+berjangkit (Asma).
+                  </textarea>
 
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
@@ -383,7 +437,14 @@
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?= isset($activity_assessment['aa_aasessment_desc']) ? htmlspecialchars($activity_assessment['aa_aasessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
+1. Kognitif
+- Menguji minda dengan aktiviti padanan gambar (tarik dan hembus nafas)
+2. Psikomotor
+- Membuat pemerhatian terhadap imej paru-paru melalui paparan slaid.
+- Melakar rupa paru-paru dan kandungan gas, Melakukan aktiviti seperti duduk, lari,
+lompat
+3. Afektif
+- Berkomunikasi tentang punca dan kesan penyakit
                   </textarea>
                 </ul>
               </div>
@@ -396,7 +457,7 @@
                   Penglibatan Ibu Bapa
                 </label>
                 <div class="form-check form-switch ms-2">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" <?php echo (isset($activity_assessment['aa_is_parental_involved']) && $activity_assessment['aa_is_parental_involved'] == 'Y') ? 'checked' : ''; ?> readonly>
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" checked="" onchange="visible()">
                 </div>
               </div>
 
