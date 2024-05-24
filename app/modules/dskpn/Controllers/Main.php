@@ -11,6 +11,7 @@ use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\ClusterMainModel;
 use App\Modules\Dskpn\Models\DomainGroupModel;
+use App\Modules\Dskpn\Models\LearningAidModel;
 
 use App\Modules\Dskpn\Models\SubjectMainModel;
 use App\Modules\Dskpn\Models\DomainMappingModel;
@@ -40,6 +41,7 @@ class Main extends BaseController
     protected $domain_mapping_model;
     //-----------------
     protected $extra_additional_field_model;
+    protected $learning_aid_model;
     protected $db;
 
     public function __construct()
@@ -59,6 +61,7 @@ class Main extends BaseController
         $this->domain_mapping_model     = new DomainMappingModel();
         //-----------------
         $this->extra_additional_field_model = new ExtraAdditionalFieldModel();
+        $this->learning_aid_model       = new LearningAidModel();
         $this->db                       = $this->db = \Config\Database::connect();
     }
 
@@ -318,9 +321,58 @@ class Main extends BaseController
                 ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
         }
 
-        $script = [];
+        $script = ['activity_assessment'];
         $style = ['static-field'];
         $this->render_jscss('mapping_assessment_and_activity', $data, $script, $style);
+    }
+
+    public function store_activity_assessment()
+    {
+        $dskpn_id = $this->request->getVar('dskpn');
+
+        $abm = $this->request->getPost('abm');
+        $pentaksiran = $this->request->getPost('pentaksiran');
+        $idea_pengajaran = $this->request->getPost('idea-pengajaran');
+        $parent_involve = $this->request->getPost('parent-involvement');
+
+        if(!isset($parent_involve))
+            $parent_involve = 'N';
+
+        $success = true;
+
+        if($this->activity_assessment_model->insert([
+            'aa_activity_desc' => $idea_pengajaran,
+            'aa_assessment_desc' => $pentaksiran,
+            'aa_is_parental_involved' => $parent_involve
+        ]))
+        {
+            if($this->dskpn_model->update($dskpn_id, ['aa_id' => $this->learning_aid_model->insertID()]))
+            {} else {
+                $success = false;
+            }
+            foreach ($abm as $data) {
+                if($this->learning_aid_model->insert([
+                    'la_desc' => $data,
+                    'dskpn_id' => $dskpn_id
+                ]))
+                {} else {
+                    $success = false;
+                }
+            }
+        }
+
+        if ($success)
+            return redirect()->to(route_to('dskpn_complete'));
+        return redirect()->back();
+    }
+
+    public function mapping_successfully()
+    {
+        $data = [];
+
+        $script = [];
+        $style = [];
+        $this->render_jscss('mapping_successfully', $data, $script, $style);
     }
 
     public function store_specification_mapping()
