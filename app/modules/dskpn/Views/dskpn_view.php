@@ -223,65 +223,58 @@
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
                     </div>
-                    <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sm_id'] == $cc_desc['sm_id']) : ?>
-                        <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
-                        <!-- call helper -->
-                          <?= getDomain(7,$cc_desc['sm_id']); ?>
-                        <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
-                        <!-- call helper -->
-                        <li class="list-group-item bg-light"><b>KUALITI KEPERIBADIAN</b></li>
-                        <!-- Call helper -->
-                      <?php endif ?>
-                    <?php endforeach ?>
+
+                    <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
+                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
+                      <?php foreach ($domain_pengetahuan_asas as $dpa) : ?>
+                        <?php if ($row['sm_id'] == $dpa['sm_id']) : ?>
+                          <li class="list-group-item"><?= $dpa['d_name'] ?></li>
+                        <?php endif; ?>
+                      <?php endforeach ?>
+                    <?php endif; ?>
+                    <!-- call helper -->
+                    <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
+                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
+                      <?php foreach ($domain_kemandirian as $dk) : ?>
+                        <?php if ($row['sm_id'] == $dk['sm_id']) : ?>
+                          <li class="list-group-item"><?= $dk['d_name'] ?></li>
+                        <?php endif; ?>
+                      <?php endforeach ?>
+                    <?php endif; ?>
+
+                    <!-- call helper -->
+                    <li class="list-group-item bg-light"><b>KUALITI KEPERIBADIAN</b></li>
+                    <!-- Call helper -->
+                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
+                      <?php foreach ($domain_kualiti_keperibadian as $dkk) : ?>
+                        <?php if ($row['sm_id'] == $dkk['sm_id']) : ?>
+                          <li class="list-group-item"><?= $dkk['d_name'] ?></li>
+                        <?php endif; ?>
+                      <?php endforeach ?>
+                    <?php endif; ?>
                   </ul>
                 <?php endforeach; ?>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SAINS</h6>
-                  </div>
-                  
-                  <li class="list-group-item">(DKM2) Numerasi (N)</li>
-                  <li class="list-group-item">(DKM3) Literasi Saintifik (LS)</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                  </div>
-                  <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
-                  <li class="list-group-item">(DKM9) Komunikasi (Kom)</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SENI VISUAL</h6>
-                  </div>
-                  <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
-                  <li class="list-group-item">(DKM8) Kreativiti (Kr)</li>
-                </ul>
               </div>
             </div>
             <!-- 7 Kemahiran Insaniah -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SAINS</h6>
-                  </div>
-                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">PENDIDIKAN KESIHATAN</h6>
-                  </div>
-                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
-                </ul>
-                <ul class="list-group flex-grow-1 mx-2">
-                  <div class="card-header d-flex p-3 bg-gradient-primary">
-                    <h6 class="my-auto text-white">SENI VISUAL</h6>
-                  </div>
-                  <li class="list-group-item">(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah</li>
-                </ul>
+                <?php foreach ($learning_standard_subject as $row) : ?>
+                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+                    </div>
+                    <!-- Call helper -->
+                    <?php if (!empty($kemahiran_insaniah)) : ?>
+                      <?php foreach ($kemahiran_insaniah as $ki) : ?>
+                        <?php if ($row['sm_id'] == $ki['sm_id']) : ?>
+                          <li class="list-group-item"><?= $ki['d_name'] ?></li>
+                        <?php endif; ?>
+                      <?php endforeach ?>
+                    <?php endif; ?>
+                  </ul>
+                <?php endforeach; ?>
               </div>
             </div>
           </div>
