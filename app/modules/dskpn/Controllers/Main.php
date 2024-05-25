@@ -221,6 +221,20 @@ class Main extends BaseController
         // Get 7 Kemahiran Insaniah
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, 24);
 
+        // Reka bentuk Instruksi
+        $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 25);
+
+        // Integrasi Teknologi
+        $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 26);
+
+        // Pendekatan
+        $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 27);
+
+        // Kaedah
+        $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 28);
+
+        // abm
+        $abm = $this->learning_aid_model->where('dskpn_id', $dskpn_id)->findAll();
 
         $data = [
             'dskpn_details'                 => $dskpn_details,
@@ -235,8 +249,14 @@ class Main extends BaseController
             'domain_kemandirian'            => $domain_kemandirian,
             'domain_kualiti_keperibadian'   => $domain_kualiti_keperibadian,
             'kemahiran_insaniah'            => $kemahiran_insaniah,
-
+            'rekabentuk_instruksi'          => $rekabentuk_instruksi,
+            'integrasi_teknologi'           => $integrasi_teknologi,
+            'pendekatan'                    => $pendekatan,
+            'kaedah'                        => $kaedah,
+            'abm'                           => $abm
         ];
+
+        // dd($data);
 
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
@@ -372,27 +392,26 @@ class Main extends BaseController
         $idea_pengajaran = $this->request->getPost('idea-pengajaran');
         $parent_involve = $this->request->getPost('parent-involvement');
 
-        if(!isset($parent_involve))
+        if (!isset($parent_involve))
             $parent_involve = 'N';
 
         $success = true;
 
-        if($this->activity_assessment_model->insert([
+        if ($this->activity_assessment_model->insert([
             'aa_activity_desc' => $idea_pengajaran,
             'aa_assessment_desc' => $pentaksiran,
             'aa_is_parental_involved' => $parent_involve
-        ]))
-        {
-            if($this->dskpn_model->update($dskpn_id, ['aa_id' => $this->learning_aid_model->insertID()]))
-            {} else {
+        ])) {
+            if ($this->dskpn_model->update($dskpn_id, ['aa_id' => $this->learning_aid_model->insertID()])) {
+            } else {
                 $success = false;
             }
             foreach ($abm as $data) {
-                if($this->learning_aid_model->insert([
+                if ($this->learning_aid_model->insert([
                     'la_desc' => $data,
                     'dskpn_id' => $dskpn_id
-                ]))
-                {} else {
+                ])) {
+                } else {
                     $success = false;
                 }
             }
