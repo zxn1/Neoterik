@@ -166,7 +166,7 @@
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15">
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly>
                     <?php foreach ($learning_standard as $ls_desc) : ?>
                       <?php if ($row['sm_id'] == $ls_desc['ls_id']) : ?>
                         <?= $ls_desc['ls_details']; ?>
@@ -360,12 +360,11 @@
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-1. Bahan Demonstrasi (botol, straw, belon, gam)
-2. Video berkaitan pertukaran gas dalam paru-paru
-3. Kertas lukisan dan pensel warna dan tablet
-4. Stetoskop
-5. Video berkaitan ciri penyakit pernafasan(Asma)
-6. Flash-card
+                    <?php if (!empty($abm)) : ?>
+                      <?php foreach ($abm as $abm) : ?>
+                        <?= $abm['la_desc'] ?>
+                      <?php endforeach ?>
+                    <?php endif; ?>
                   </textarea>
                 </ul>
               </div>
@@ -376,7 +375,7 @@
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?= isset($activity_assessment['aa_aasessment_desc']) ? htmlspecialchars($activity_assessment['aa_aasessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
+                    <?= isset($activity_assessment['aa_assessment_desc']) ? htmlspecialchars($activity_assessment['aa_assessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
                   </textarea>
                 </ul>
               </div>
@@ -403,66 +402,22 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Active Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Collaborative Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Constructive Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Authentic Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Goal-Directed Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php if (!empty($rekabentuk_instruksi)) : ?>
+                              <?php foreach ($rekabentuk_instruksi as $rbi) : ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $rbi['d_name'] ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php endforeach ?>
+                            <?php endif; ?>
                           </tbody>
                         </table>
                       </div>
@@ -478,66 +433,22 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Entry Level</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Adaptation Level</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Infussion Level</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Transformation Level</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Goal-Directed Learning</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php if (!empty($integrasi_teknologi)) : ?>
+                              <?php foreach ($integrasi_teknologi as $it) : ?>
+                                  <tr>
+                                    <td class="ps-1" colspan="4">
+                                      <div class="my-auto">
+                                        <span class="text-dark d-block text-sm"><?= $it['d_name'] ?></span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      </div>
+                                    </td>
+                                  </tr>
+                              <?php endforeach ?>
+                            <?php endif; ?>
                           </tbody>
                         </table>
                       </div>
@@ -553,78 +464,22 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Inkuiri</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Berasaskan Masalah</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Berasaskan Projek</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Pembelajaran Masteri</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Kontekstual</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Berasaskan Pengalaman</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php if (!empty($pendekatan)) : ?>
+                              <?php foreach ($pendekatan as $pendekatan) : ?>
+                                  <tr>
+                                    <td class="ps-1" colspan="4">
+                                      <div class="my-auto">
+                                        <span class="text-dark d-block text-sm"><?= $pendekatan['d_name'] ?></span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      </div>
+                                    </td>
+                                  </tr>
+                              <?php endforeach ?>
+                            <?php endif; ?>
                           </tbody>
                         </table>
                       </div>
@@ -640,66 +495,22 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Simulasi</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Main Peranan</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault14">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Nyanyian</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Bercerita</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm">Lain-lain:</span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
+                            <?php if (!empty($kaedah)) : ?>
+                              <?php foreach ($kaedah as $kaedah) : ?>
+                                  <tr>
+                                    <td class="ps-1" colspan="4">
+                                      <div class="my-auto">
+                                        <span class="text-dark d-block text-sm"><?= $kaedah['d_name'] ?></span>
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      </div>
+                                    </td>
+                                  </tr>
+                              <?php endforeach ?>
+                            <?php endif; ?>
                           </tbody>
                         </table>
                       </div>

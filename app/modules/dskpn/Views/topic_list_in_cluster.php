@@ -159,7 +159,7 @@
             <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
-            <div class="col-md-2 text-end">
+            <div class="col-md-2 text-end text-white">
                 <i id="collapseIcon" class="fa fa-plus"></i>
             </div>
         </div>
