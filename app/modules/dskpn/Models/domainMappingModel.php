@@ -40,4 +40,17 @@ class DomainMappingModel extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+
+    public function getAtribute($dskpn_id, $dg_id)
+    {
+        $builder = $this->db->table('domain_mapping');
+        $builder->select('*');
+        $builder->join('domain', 'domain_mapping.d_id = domain.d_id');
+        $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+        $builder->where('domain_mapping.dskpn_id', $dskpn_id);
+        $builder->where('domain_group.dg_id', $dg_id);
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
 }
