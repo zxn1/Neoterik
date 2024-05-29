@@ -188,8 +188,8 @@ class Main extends BaseController
             ->where('dskpn_id', $dskpn_id)
             ->findAll();
 
-        $learning_standard_subject = $this->learning_standard_model
-            ->select('learning_standard.sm_id, subject_main.sm_desc')
+        $subjects = $this->learning_standard_model
+            ->select('learning_standard.sm_id, subject_main.sm_desc, subject_main.sm_code')
             ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
             ->where('dskpn_id', $dskpn_id)
             ->groupBy('sm_id')
@@ -209,13 +209,15 @@ class Main extends BaseController
 
         // Get 16 Domain List by tahap
         // Tahap Pengetahuan Asas
+        $template_domain_pengetahuan_asas = $this->domain_model->where('gd_id', 21)->orderBy('d_id', 'ASC')->findAll();
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 21);
 
-        // dd($domain_pengetahuan_asas);
         // Tahap Kemandirian
+        $template_domain_kemandirian = $this->domain_model->where('gd_id', 22)->orderBy('d_id', 'ASC')->findAll();
         $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 22);
 
         // Tahap Pengetahuan Asas
+        $template_domain_kualiti_keperibadian  = $this->domain_model->where('gd_id', 23)->orderBy('d_id', 'ASC')->findAll();
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 23);
 
         // Get 7 Kemahiran Insaniah
@@ -238,7 +240,7 @@ class Main extends BaseController
 
         $data = [
             'dskpn_details'                 => $dskpn_details,
-            'learning_standard_subject'     => $learning_standard_subject,
+            'subjects'                      => $subjects,
             'learning_standard'             => $learning_standard,
             'standard_performance'          => $standard_performance,
             'objective_performance'         => $objective_performance,
@@ -253,7 +255,12 @@ class Main extends BaseController
             'integrasi_teknologi'           => $integrasi_teknologi,
             'pendekatan'                    => $pendekatan,
             'kaedah'                        => $kaedah,
-            'abm'                           => $abm
+            'abm'                           => $abm,
+
+            // Template Atribute/Domain
+            'template_domain_pengetahuan_asas'      => $template_domain_pengetahuan_asas,
+            'template_domain_kemandirian'           => $template_domain_kemandirian,
+            'template_domain_kualiti_keperibadian'  => $template_domain_kualiti_keperibadian,
         ];
 
         // dd($data);
@@ -261,21 +268,7 @@ class Main extends BaseController
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
 
-
-        // $db = \Config\Database::connect();
-
-        // $builder = $db->table('domain_mapping');
-        // $builder->select('*');
-        // $builder->join('domain', 'domain_mapping.d_id = domain.d_id');
-        // $builder->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id');
-        // $builder->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id');
-        // $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
-        // $builder->where('domain_mapping.dskpn_id', 9);
-        // $builder->where('domain_group.dg_id', 21);
-
-        // $query = $builder->get();
-        // dd($query->getResultArray());
-
+        // dd($data);
         $this->render_jscss('dskpn_view', $data, $script, $style);
     }
 

@@ -161,18 +161,12 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
               <div class="d-flex top-0 w-100">
                 <!-- foreach subjek -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
+                <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly>
-                    <?php foreach ($learning_standard as $ls_desc) : ?>
-                      <?php if ($row['sm_id'] == $ls_desc['ls_id']) : ?>
-                        <?= $ls_desc['ls_details']; ?>
-                      <?php endif ?>
-                    <?php endforeach ?>
-                </textarea>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sm_id'] == $ls_desc['sm_id']) : ?><?= $ls_desc['ls_details']; ?><?php endif ?><?php endforeach ?></textarea>
                   </ul>
                 <?php endforeach; ?>
               </div>
@@ -182,7 +176,7 @@
               <div class="d-flex top-0 w-100">
                 <!-- Tahap Penguasaan-->
                 <!-- foreach tahap penguasaan -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
+                <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
@@ -201,7 +195,7 @@
               <div class="d-flex top-0 w-100">
                 <!-- kompetensi teras -->
                 <!-- foreach kompetensi teras -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
+                <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
@@ -217,50 +211,149 @@
             </div>
             <!-- 16 Domain kemenjadian murid -->
             <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
-              <div class="d-flex top-0 w-100">
-                <?php foreach ($learning_standard_subject as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+              <div class="row">
+                <?php foreach ($subjects as $subject) { ?>
+                  <div class="col-md-4">
+                    <div class="card mt-4" id="notifications">
+                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <tbody>
+                              <!-- PENGETAHUAN ASAS -->
+                              <tr>
+                                <th class="bg-light" colspan="5">
+                                  <b>PENGETAHUAN ASAS</b>
+                                </th>
+                              </tr>
+                              <?php foreach ($template_domain_pengetahuan_asas as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <?php
+                                        $found = false; // Initialize a flag
+                                        foreach ($domain_pengetahuan_asas as $index => $dpa) :
+                                          if ($subject['sm_id'] == $dpa['sm_id'] && $item['d_id'] == $dpa['d_id'] && $dpa['dm_isChecked'] == 'Y') :
+                                            $found = true; // Set the flag if the condition is met
+                                        ?>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                        <?php
+                                            break; // Exit the loop if the condition is met
+                                          endif;
+                                        endforeach;
+                                        ?>
+
+                                        <?php if (!$found) : // Check the flag after the loop 
+                                        ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                        <?php endif; ?>
+                                      </div>
+
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
+                              <!-- KEMANDIRIAN -->
+                              <tr>
+                                <th class="bg-light" colspan="5">
+                                  <b>KEMANDIRIAN</b>
+                                </th>
+                              </tr>
+                              <?php foreach ($template_domain_kemandirian as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <?php
+                                        $found = false; // Initialize a flag
+                                        foreach ($domain_kemandirian as $index => $dkem) :
+                                          if ($subject['sm_id'] == $dkem['sm_id'] && $item['d_id'] == $dkem['d_id'] && $dkem['dm_isChecked'] == 'Y') :
+                                            $found = true; // Set the flag if the condition is met
+                                        ?>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                        <?php
+                                            break; // Exit the loop if the condition is met
+                                          endif;
+                                        endforeach;
+                                        ?>
+
+                                        <?php if (!$found) : // Check the flag after the loop 
+                                        ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                        <?php endif; ?>
+                                      </div>
+
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
+                              <!-- KUALITI KEPERIBADIAN -->
+                              <tr>
+                                <th class="bg-light" colspan="5">
+                                  <b>KUALITI KEPERIBADIAN</b>
+                                </th>
+                              </tr>
+                              <?php foreach ($template_domain_kualiti_keperibadian as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                        <?php
+                                        $found = false; // Initialize a flag
+                                        foreach ($domain_kualiti_keperibadian as $index => $dkk) :
+                                          if ($subject['sm_id'] == $dkk['sm_id'] && $item['d_id'] == $dkk['d_id'] && $dkk['dm_isChecked'] == 'Y') :
+                                            $found = true; // Set the flag if the condition is met
+                                        ?>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                        <?php
+                                            break; // Exit the loop if the condition is met
+                                          endif;
+                                        endforeach;
+                                        ?>
+
+                                        <?php if (!$found) : // Check the flag after the loop 
+                                        ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                        <?php endif; ?>
+                                      </div>
+
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
+
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
-
-                    <li class="list-group-item bg-light"><b>PENGETAHUAN ASAS</b></li>
-                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
-                      <?php foreach ($domain_pengetahuan_asas as $dpa) : ?>
-                        <?php if ($row['sm_id'] == $dpa['sm_id']) : ?>
-                          <li class="list-group-item"><?= $dpa['d_name'] ?></li>
-                        <?php endif; ?>
-                      <?php endforeach ?>
-                    <?php endif; ?>
-                    <!-- call helper -->
-                    <li class="list-group-item bg-light"><b>KEMANDIRIAN</b></li>
-                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
-                      <?php foreach ($domain_kemandirian as $dk) : ?>
-                        <?php if ($row['sm_id'] == $dk['sm_id']) : ?>
-                          <li class="list-group-item"><?= $dk['d_name'] ?></li>
-                        <?php endif; ?>
-                      <?php endforeach ?>
-                    <?php endif; ?>
-
-                    <!-- call helper -->
-                    <li class="list-group-item bg-light"><b>KUALITI KEPERIBADIAN</b></li>
-                    <!-- Call helper -->
-                    <?php if (!empty($domain_pengetahuan_asas)) : ?>
-                      <?php foreach ($domain_kualiti_keperibadian as $dkk) : ?>
-                        <?php if ($row['sm_id'] == $dkk['sm_id']) : ?>
-                          <li class="list-group-item"><?= $dkk['d_name'] ?></li>
-                        <?php endif; ?>
-                      <?php endforeach ?>
-                    <?php endif; ?>
-                  </ul>
-                <?php endforeach; ?>
+                  </div>
+                <?php } ?>
               </div>
             </div>
             <!-- 7 Kemahiran Insaniah -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
-                <?php foreach ($learning_standard_subject as $row) : ?>
+                <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
@@ -435,18 +528,18 @@
                           <tbody>
                             <?php if (!empty($integrasi_teknologi)) : ?>
                               <?php foreach ($integrasi_teknologi as $it) : ?>
-                                  <tr>
-                                    <td class="ps-1" colspan="4">
-                                      <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $it['d_name'] ?></span>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                      </div>
-                                    </td>
-                                  </tr>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $it['d_name'] ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                    </div>
+                                  </td>
+                                </tr>
                               <?php endforeach ?>
                             <?php endif; ?>
                           </tbody>
@@ -466,18 +559,18 @@
                           <tbody>
                             <?php if (!empty($pendekatan)) : ?>
                               <?php foreach ($pendekatan as $pendekatan) : ?>
-                                  <tr>
-                                    <td class="ps-1" colspan="4">
-                                      <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $pendekatan['d_name'] ?></span>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                      </div>
-                                    </td>
-                                  </tr>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $pendekatan['d_name'] ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                    </div>
+                                  </td>
+                                </tr>
                               <?php endforeach ?>
                             <?php endif; ?>
                           </tbody>
@@ -497,18 +590,18 @@
                           <tbody>
                             <?php if (!empty($kaedah)) : ?>
                               <?php foreach ($kaedah as $kaedah) : ?>
-                                  <tr>
-                                    <td class="ps-1" colspan="4">
-                                      <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $kaedah['d_name'] ?></span>
-                                      </div>
-                                    </td>
-                                    <td>
-                                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
-                                      </div>
-                                    </td>
-                                  </tr>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $kaedah['d_name'] ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                    </div>
+                                  </td>
+                                </tr>
                               <?php endforeach ?>
                             <?php endif; ?>
                           </tbody>
