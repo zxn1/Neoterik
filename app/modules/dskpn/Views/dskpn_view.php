@@ -1,4 +1,8 @@
 <style>
+  .form-check-input:disabled {
+    opacity: 1 !important;
+  }
+
   /* Custom Css to overwrite select2 style */
   .select2-container .select2-selection__rendered {
     display: flex;
@@ -244,7 +248,7 @@
                                           if ($subject['sm_id'] == $dpa['sm_id'] && $item['d_id'] == $dpa['d_id'] && $dpa['dm_isChecked'] == 'Y') :
                                             $found = true; // Set the flag if the condition is met
                                         ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
                                         <?php
                                             break; // Exit the loop if the condition is met
                                           endif;
@@ -253,7 +257,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -283,7 +287,7 @@
                                           if ($subject['sm_id'] == $dkem['sm_id'] && $item['d_id'] == $dkem['d_id'] && $dkem['dm_isChecked'] == 'Y') :
                                             $found = true; // Set the flag if the condition is met
                                         ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
                                         <?php
                                             break; // Exit the loop if the condition is met
                                           endif;
@@ -292,7 +296,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -322,7 +326,7 @@
                                           if ($subject['sm_id'] == $dkk['sm_id'] && $item['d_id'] == $dkk['d_id'] && $dkk['dm_isChecked'] == 'Y') :
                                             $found = true; // Set the flag if the condition is met
                                         ?>
-                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked>
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
                                         <?php
                                             break; // Exit the loop if the condition is met
                                           endif;
@@ -331,7 +335,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>">
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -351,23 +355,56 @@
             </div>
             <!-- 7 Kemahiran Insaniah -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
-              <div class="d-flex top-0 w-100">
-                <!-- standard Prestasi (Tahap Penguasaan) -->
-                <?php foreach ($subjects as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+              <div class="row">
+                <?php foreach ($subjects as $subject) { ?>
+                  <div class="col-md-4">
+                    <div class="card mt-4" id="notifications">
+                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <?php foreach ($template_kemahiran_insaniah as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <?php
+                                      $found = false; // Initialize a flag
+                                      foreach ($kemahiran_insaniah as $index => $ki) :
+                                        if ($subject['sm_id'] == $ki['sm_id'] && $item['d_id'] == $ki['d_id'] && $ki['dm_isChecked'] == 'Y') :
+                                          $found = true; // Set the flag if the condition is met
+                                      ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
+                                      <?php
+                                          break; // Exit the loop if the condition is met
+                                        endif;
+                                      endforeach;
+                                      ?>
+
+                                      <?php if (!$found) : // Check the flag after the loop 
+                                      ?>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                      <?php endif; ?>
+                                    </div>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            <?php } ?>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
-                    <!-- Call helper -->
-                    <?php if (!empty($kemahiran_insaniah)) : ?>
-                      <?php foreach ($kemahiran_insaniah as $ki) : ?>
-                        <?php if ($row['sm_id'] == $ki['sm_id']) : ?>
-                          <li class="list-group-item"><?= $ki['d_name'] ?></li>
-                        <?php endif; ?>
-                      <?php endforeach ?>
-                    <?php endif; ?>
-                  </ul>
-                <?php endforeach; ?>
+                  </div>
+                <?php } ?>
               </div>
             </div>
           </div>
@@ -420,9 +457,7 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                        <?= $objective_performance['op_desc']; ?>
-                  </textarea>
+                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= $objective_performance['op_desc']; ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;">300</span></strong>
@@ -434,11 +469,7 @@
             <div class="tab-pane fade position-relative border-radius-lg" id="idea_pengajaran" role="tabpanel" aria-labelledby="idea_pengajaran">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?= isset($activity_assessment['aa_activity_desc']) ? htmlspecialchars($activity_assessment['aa_activity_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
-                  </textarea>
-
-
+                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= isset($activity_assessment['aa_activity_desc']) ? htmlspecialchars($activity_assessment['aa_activity_desc'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     <strong>CATATAN:</strong>
@@ -452,13 +483,14 @@
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?php if (!empty($abm)) : ?>
-                      <?php foreach ($abm as $abm) : ?>
-                        <?= $abm['la_desc'] ?>
-                      <?php endforeach ?>
-                    <?php endif; ?>
-                  </textarea>
+                  <?php if (!empty($abm)) : ?>
+                    <ul class="list-group mt-3">
+                      <?php foreach ($abm as $item) : ?>
+                        <li class="list-group-item"><?= htmlspecialchars($item['la_desc']) ?></li>
+                      <?php endforeach; ?>
+                    </ul>
+                  <?php endif; ?>
+                  <!-- <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?php if (!empty($abm)) : ?><?php foreach ($abm as $abm) : ?><?= $abm['la_desc'] ?><?php endforeach ?><?php endif; ?></textarea> -->
                 </ul>
               </div>
             </div>
@@ -467,9 +499,7 @@
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly>
-                    <?= isset($activity_assessment['aa_assessment_desc']) ? htmlspecialchars($activity_assessment['aa_assessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?>
-                  </textarea>
+                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= isset($activity_assessment['aa_assessment_desc']) ? htmlspecialchars($activity_assessment['aa_assessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
                 </ul>
               </div>
             </div>
@@ -481,7 +511,7 @@
                   Penglibatan Ibu Bapa
                 </label>
                 <div class="form-check form-switch ms-2">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" <?php echo (isset($activity_assessment['aa_is_parental_involved']) && $activity_assessment['aa_is_parental_involved'] == 'Y') ? 'checked' : ''; ?> readonly>
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault23" <?php echo (isset($activity_assessment['aa_is_parental_involved']) && $activity_assessment['aa_is_parental_involved'] == 'Y') ? 'checked' : ''; ?> disabled>
                 </div>
               </div>
 
@@ -495,22 +525,37 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <?php if (!empty($rekabentuk_instruksi)) : ?>
-                              <?php foreach ($rekabentuk_instruksi as $rbi) : ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $rbi['d_name'] ?></span>
-                                    </div>
-                                  </td>
-                                  <td>
+                            <?php foreach ($template_rekabentuk_instruksi as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      <?php
+                                      $found = false; // Initialize a flag
+                                      foreach ($rekabentuk_instruksi as $index => $rbi) :
+                                        if ($item['d_id'] == $rbi['d_id'] && $rbi['dm_isChecked'] == 'Y') :
+                                          $found = true; // Set the flag if the condition is met
+                                      ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
+                                      <?php
+                                          break; // Exit the loop if the condition is met
+                                        endif;
+                                      endforeach;
+                                      ?>
+                                      <?php if (!$found) : // Check the flag after the loop 
+                                      ?>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                      <?php endif; ?>
                                     </div>
-                                  </td>
-                                </tr>
-                              <?php endforeach ?>
-                            <?php endif; ?>
+                                  </div>
+                                </td>
+                              </tr>
+                            <?php } ?>
                           </tbody>
                         </table>
                       </div>
@@ -526,22 +571,37 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <?php if (!empty($integrasi_teknologi)) : ?>
-                              <?php foreach ($integrasi_teknologi as $it) : ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $it['d_name'] ?></span>
-                                    </div>
-                                  </td>
-                                  <td>
+                            <?php foreach ($template_integrasi_teknologi as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      <?php
+                                      $found = false; // Initialize a flag
+                                      foreach ($integrasi_teknologi as $index => $it) :
+                                        if ($item['d_id'] == $it['d_id'] && $it['dm_isChecked'] == 'Y') :
+                                          $found = true; // Set the flag if the condition is met
+                                      ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
+                                      <?php
+                                          break; // Exit the loop if the condition is met
+                                        endif;
+                                      endforeach;
+                                      ?>
+                                      <?php if (!$found) : // Check the flag after the loop 
+                                      ?>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                      <?php endif; ?>
                                     </div>
-                                  </td>
-                                </tr>
-                              <?php endforeach ?>
-                            <?php endif; ?>
+                                  </div>
+                                </td>
+                              </tr>
+                            <?php } ?>
                           </tbody>
                         </table>
                       </div>
@@ -557,22 +617,37 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <?php if (!empty($pendekatan)) : ?>
-                              <?php foreach ($pendekatan as $pendekatan) : ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $pendekatan['d_name'] ?></span>
-                                    </div>
-                                  </td>
-                                  <td>
+                            <?php foreach ($template_pendekatan as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      <?php
+                                      $found = false; // Initialize a flag
+                                      foreach ($pendekatan as $index => $pdktn) :
+                                        if ($item['d_id'] == $pdktn['d_id'] && $pdktn['dm_isChecked'] == 'Y') :
+                                          $found = true; // Set the flag if the condition is met
+                                      ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
+                                      <?php
+                                          break; // Exit the loop if the condition is met
+                                        endif;
+                                      endforeach;
+                                      ?>
+                                      <?php if (!$found) : // Check the flag after the loop 
+                                      ?>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                      <?php endif; ?>
                                     </div>
-                                  </td>
-                                </tr>
-                              <?php endforeach ?>
-                            <?php endif; ?>
+                                  </div>
+                                </td>
+                              </tr>
+                            <?php } ?>
                           </tbody>
                         </table>
                       </div>
@@ -588,24 +663,57 @@
                       <div class="table-responsive">
                         <table class="table mb-0">
                           <tbody>
-                            <?php if (!empty($kaedah)) : ?>
-                              <?php foreach ($kaedah as $kaedah) : ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $kaedah['d_name'] ?></span>
-                                    </div>
-                                  </td>
-                                  <td>
+                            <?php foreach ($template_kaedah as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input class="form-check-input" checked="" type="checkbox" id="flexSwitchCheckDefault11">
+                                      <?php
+                                      $found = false; // Initialize a flag
+                                      foreach ($kaedah as $index => $method) :
+                                        if ($item['d_id'] == $method['d_id'] && $method['dm_isChecked'] == 'Y') :
+                                          $found = true; // Set the flag if the condition is met
+                                      ?>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" checked disabled>
+                                      <?php
+                                          break; // Exit the loop if the condition is met
+                                        endif;
+                                      endforeach;
+                                      ?>
+                                      <?php if (!$found) : // Check the flag after the loop 
+                                      ?>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                      <?php endif; ?>
                                     </div>
-                                  </td>
-                                </tr>
-                              <?php endforeach ?>
-                            <?php endif; ?>
+                                  </div>
+                                </td>
+                              </tr>
+                            <?php } ?>
                           </tbody>
                         </table>
+
+                        <?php foreach ($kaedah as $index => $method) :
+                          if ($method['d_id'] == '140') :
+                            if (!function_exists('get_lain_lain')) {
+                              helper('dskpn_helper');
+                            }
+                            // Call the helper function and get the data
+                            $extra_additional_field = get_lain_lain($method['dm_id']);
+                        ?>
+                        <?php
+                            break; // Exit the loop if the condition is met
+                          endif;
+                        endforeach; ?>
+
+                        <?php if (!empty($extra_additional_field)) : ?>
+                          <textarea class="multisteps-form__textarea form-control" rows="2" readonly><?= htmlspecialchars($extra_additional_field['eaf_desc']) ?></textarea>
+                        <?php else : ?>
+                        <?php endif; ?>
                       </div>
                     </div>
                   </div>
