@@ -61,26 +61,26 @@
       <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
     </div>
     <div class="card-body">
-    <div class="row">
+      <div class="row">
         <div class="col">
           <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
         <div class="col">
           <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
@@ -88,12 +88,12 @@
     </div>
   </div>
   <br>
-  <!-- PENGETAHUAN ASAS -->
   <div class="row">
-    <div class="col-md-4">
+    <!-- REKA BENTUK INSTRUKSI-->
+    <div class="col-md-6">
       <div class="card mt-4" style="min-height:400px;" id="notifications">
         <div class="card-header d-flex p-3 bg-gradient-primary">
-          <h6 class="my-auto text-white">REKA BENTUK INTRUKSI</h6>
+          <h6 class="my-auto text-white">REKA BENTUK INSTRUKSI</h6>
         </div>
         <div class="card-body pt-0">
           <div class="table-responsive">
@@ -109,23 +109,23 @@
                 </tr>
               </thead>
               <tbody>
-                
-              <?php 
-              if(isset($data['Reka Bentuk Instruksi']))
-              foreach($data['Reka Bentuk Instruksi'] as $item) { ?>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-              <?php } ?>
+
+                <?php
+                if (isset($data['Reka Bentuk Instruksi']))
+                  foreach ($data['Reka Bentuk Instruksi'] as $item) { ?>
+                  <tr>
+                    <td class="ps-1" colspan="4">
+                      <div class="my-auto">
+                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
+                      </div>
+                    </td>
+                  </tr>
+                <?php } ?>
 
               </tbody>
             </table>
@@ -133,7 +133,8 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+    <!-- INTEGRASI TEKNOLOGI -->
+    <div class="col-md-6">
       <div class="card mt-4" style="min-height:400px;" id="notifications">
         <div class="card-header d-flex p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">INTEGRASI TEKNOLOGI</h6>
@@ -153,22 +154,22 @@
               </thead>
               <tbody>
 
-              <?php 
-              if(isset($data['Integrasi Teknologi']))
-              foreach($data['Integrasi Teknologi'] as $item) { ?>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-              <?php } ?>
+                <?php
+                if (isset($data['Integrasi Teknologi']))
+                  foreach ($data['Integrasi Teknologi'] as $item) { ?>
+                  <tr>
+                    <td class="ps-1" colspan="4">
+                      <div class="my-auto">
+                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
+                      </div>
+                    </td>
+                  </tr>
+                <?php } ?>
 
               </tbody>
             </table>
@@ -176,7 +177,11 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4">
+  </div>
+  <!-- KAEDAH -->
+  <div class="row">
+    <!-- PENDEKATAN -->
+    <div class="col-md-6">
       <div class="card mt-4" style="min-height:400px;" id="notifications">
         <div class="card-header d-flex p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">PENDEKATAN</h6>
@@ -196,22 +201,22 @@
               </thead>
               <tbody>
 
-              <?php 
-              if(isset($data['Pendekatan']))
-              foreach($data['Pendekatan'] as $item) { ?>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-              <?php } ?>
+                <?php
+                if (isset($data['Pendekatan']))
+                  foreach ($data['Pendekatan'] as $item) { ?>
+                  <tr>
+                    <td class="ps-1" colspan="4">
+                      <div class="my-auto">
+                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
+                      </div>
+                    </td>
+                  </tr>
+                <?php } ?>
 
               </tbody>
             </table>
@@ -219,8 +224,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
+    <!-- KAEDAH -->
     <div class="col-md-6">
       <div class="card mt-4" id="notifications">
         <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -241,39 +245,39 @@
               </thead>
               <tbody>
 
-              <?php 
-              if(isset($data['Kaedah']))
-              foreach($data['Kaedah'] as $item) { ?>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                    </div>
-                  </td>
-                </tr>
-              <?php 
-              if($item['d_name'] == 'Lain-lain') { ?>
-                <tr>
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?>:</span>
-                      <textarea name="lain-lain-input"></textarea>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault17">
-                    </div>
-                  </td>
-                </tr>
-              <?php }
-              } ?>
-                
+                <?php
+                if (isset($data['Kaedah']))
+                  foreach ($data['Kaedah'] as $item) { ?>
+                  <tr>
+                    <td class="ps-1" colspan="4">
+                      <div class="my-auto">
+                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
+                      </div>
+                    </td>
+                  </tr>
+                  <?php
+                    if ($item['d_name'] == 'Lain-lain') { ?>
+                    <tr>
+                      <td class="ps-1" colspan="4">
+                        <div class="my-auto">
+                          <span class="text-dark d-block text-sm"><?= $item['d_name']; ?>:</span>
+                          <textarea name="lain-lain-input"></textarea>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                          <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault17">
+                        </div>
+                      </td>
+                    </tr>
+                <?php }
+                  } ?>
+
               </tbody>
             </table>
           </div>
