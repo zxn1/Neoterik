@@ -54,7 +54,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form action="<?= route_to('store_domain_map') ?><?= isset($dskpn_id)?"?dskpn=" . $dskpn_id:""; ?>" method="POST" class="container-fluid py-4">
+<form action="<?= route_to('store_domain_map') ?><?= isset($dskpn_id) ? "?dskpn=" . $dskpn_id : ""; ?>" method="POST" class="container-fluid py-4">
   <?= csrf_field() ?>
 
   <div class="card">
@@ -65,25 +65,25 @@
       <div class="row">
         <div class="col">
           <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <!-- Other options here -->
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
         <div class="col">
           <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <!-- Other options here -->
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <!-- Other options here -->
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
@@ -114,40 +114,40 @@
 
               <div class="row">
 
-              <?php foreach($subjects as $subject) { ?>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
+                <?php foreach ($subjects as $subject) { ?>
+                  <div class="col-md-4">
+                    <div class="card mt-4" id="notifications">
+                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <tbody>
 
-                            <?php foreach($data['Pengetahuan Asas'] as $item) { ?>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <?php } ?>
+                              <?php foreach ($data['Pengetahuan Asas'] as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
 
-                          </tbody>
-                        </table>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
                 <?php } ?>
-                
+
               </div>
 
             </div>
@@ -180,39 +180,39 @@
 
               <div class="row">
 
-              <?php foreach($subjects as $subject) { ?>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
+                <?php foreach ($subjects as $subject) { ?>
+                  <div class="col-md-4">
+                    <div class="card mt-4" id="notifications">
+                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <tbody>
 
-                            <?php foreach($data['Kemandirian'] as $item) { ?>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <?php } ?>
-                            
-                          </tbody>
-                        </table>
+                              <?php foreach ($data['Kemandirian'] as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
+
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              <?php } ?>
+                <?php } ?>
 
               </div>
             </div>
@@ -244,40 +244,40 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
-                
-              <?php foreach($subjects as $subject) { ?>
-                <div class="col-md-4">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SAINS</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
 
-                            <?php foreach($data['Kualiti Keperibadian'] as $item) { ?>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                </div>
-                              </td>
-                            </tr>
-                            <?php } ?>
-                            
-                          </tbody>
-                        </table>
+                <?php foreach ($subjects as $subject) { ?>
+                  <div class="col-md-4">
+                    <div class="card mt-4" id="notifications">
+                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                      </div>
+                      <div class="card-body pt-0">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <tbody>
+
+                              <?php foreach ($data['Kualiti Keperibadian'] as $item) { ?>
+                                <tr>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                    </div>
+                                  </td>
+                                </tr>
+                              <?php } ?>
+
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              <?php } ?>
+                <?php } ?>
 
               </div>
             </div>

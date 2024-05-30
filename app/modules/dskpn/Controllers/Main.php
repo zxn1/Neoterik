@@ -158,11 +158,17 @@ class Main extends BaseController
     public function list_registered_dskpn()
     {
         $data = [];
-        $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
-            ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+        // $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
+        //     ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+        //     ->findAll();
+
+        // Query to get the list of DSKPN
+        $data['dskpn'] = $this->dskpn_model
+            ->join('topic_main', 'dskpn.tm_id = topic_main.tm_id', 'left')
+            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
             ->findAll();
 
-        // dd($data['cluster']);
+        // dd($data['dskpn']);
 
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
