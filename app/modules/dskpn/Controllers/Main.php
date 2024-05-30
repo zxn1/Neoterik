@@ -221,18 +221,23 @@ class Main extends BaseController
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 23);
 
         // Get 7 Kemahiran Insaniah
+        $template_kemahiran_insaniah = $this->domain_model->where('gd_id', 24)->orderBy('d_id', 'ASC')->findAll();
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, 24);
 
         // Reka bentuk Instruksi
+        $template_rekabentuk_instruksi = $this->domain_model->where('gd_id', 25)->orderBy('d_id', 'ASC')->findAll();
         $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 25);
 
         // Integrasi Teknologi
+        $template_integrasi_teknologi = $this->domain_model->where('gd_id', 26)->orderBy('d_id', 'ASC')->findAll();
         $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 26);
 
         // Pendekatan
+        $template_pendekatan = $this->domain_model->where('gd_id', 27)->orderBy('d_id', 'ASC')->findAll();
         $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 27);
 
         // Kaedah
+        $template_kaedah = $this->domain_model->where('gd_id', 28)->orderBy('d_id', 'ASC')->findAll();
         $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 28);
 
         // abm
@@ -261,8 +266,14 @@ class Main extends BaseController
             'template_domain_pengetahuan_asas'      => $template_domain_pengetahuan_asas,
             'template_domain_kemandirian'           => $template_domain_kemandirian,
             'template_domain_kualiti_keperibadian'  => $template_domain_kualiti_keperibadian,
+            'template_kemahiran_insaniah'           => $template_kemahiran_insaniah,
+            'template_rekabentuk_instruksi'         => $template_rekabentuk_instruksi,
+            'template_integrasi_teknologi'          => $template_integrasi_teknologi,
+            'template_pendekatan'                   => $template_pendekatan,
+            'template_kaedah'                       => $template_kaedah,
         ];
 
+        // dd($kemahiran_insaniah);
         // dd($data);
 
         $script = ['data', 'dynamic-input'];
