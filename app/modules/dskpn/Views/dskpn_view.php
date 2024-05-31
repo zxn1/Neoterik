@@ -257,7 +257,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -296,7 +296,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -335,7 +335,7 @@
 
                                         <?php if (!$found) : // Check the flag after the loop 
                                         ?>
-                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                          <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                         <?php endif; ?>
                                       </div>
 
@@ -390,7 +390,7 @@
 
                                       <?php if (!$found) : // Check the flag after the loop 
                                       ?>
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                       <?php endif; ?>
                                     </div>
 
@@ -549,7 +549,7 @@
                                       ?>
                                       <?php if (!$found) : // Check the flag after the loop 
                                       ?>
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                       <?php endif; ?>
                                     </div>
                                   </div>
@@ -595,7 +595,7 @@
                                       ?>
                                       <?php if (!$found) : // Check the flag after the loop 
                                       ?>
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                       <?php endif; ?>
                                     </div>
                                   </div>
@@ -641,7 +641,7 @@
                                       ?>
                                       <?php if (!$found) : // Check the flag after the loop 
                                       ?>
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                       <?php endif; ?>
                                     </div>
                                   </div>
@@ -687,7 +687,7 @@
                                       ?>
                                       <?php if (!$found) : // Check the flag after the loop 
                                       ?>
-                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault<?php echo $index; ?>" disabled>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" disabled>
                                       <?php endif; ?>
                                     </div>
                                   </div>
@@ -722,6 +722,78 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Check if user ada role pentadbir (guna helper)-->
+    <?php if (!function_exists('get_user_role')) {
+      helper('dskpn_helper');
+    }
+    ?>
+    <?php if (get_user_role() == 'INSTITUSI') : ?>
+      <div class="text-end p-3">
+        <?php if ($dskpn_details['dskpn_status'] != 1 && $dskpn_details['dskpn_status'] != 2) : ?>
+          <!-- Reject Button -->
+          <button class="btn bg-gradient-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+            </svg>
+          </button>
+          <!-- Approve Button -->
+          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-gradient-info mt-2">Lulus&nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM6.97 10.97a.75.75 0 0 1-1.07 0L3.75 8.8a.75.75 0 1 1 1.07-1.05l1.65 1.65 3.58-3.58a.75.75 0 0 1 1.07 1.06l-4.24 4.24z" />
+            </svg>
+          </a>
+        <?php endif; ?>
+      </div>
+    <?php endif ?>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <?php if ($dskpn_details['dskpn_status'] == 1) : ?>
+        <!-- Display Approved By -->
+        <p class="badge badge-sm bg-gradient-info">Approved By: <?= get_user_name($dskpn_details['approved_by']) ?></p>
+      <?php endif; ?>
+      <?php if ($dskpn_details['dskpn_status'] == 2) : ?>
+        <!-- Display Approved By -->
+        <p class="badge badge-sm bg-gradient-danger">Rejected By: <?= get_user_name($dskpn_details['approved_by']) ?></p><br>
+        <div class="card-body" style="height: auto;">
+          <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_remarks'] ?></textarea>
+        </div>
+      <?php endif; ?>
+    </div>
+  </div>
+
+
+
+
+</div>
+<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectModalLabel">Alasan penolakan DSKPN</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="rejectForm" action="<?= route_to('reject_dskpn') ?>" method="post">
+          <input type="hidden" name="dskpn_id" value="<?= $dskpn_details['dskpn_id'] ?>">
+          <div class="mb-3">
+            <label for="remarks" class="form-label">Catatan</label>
+            <textarea class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
+          </div>
+          <div class="text-end">
+            <button class="btn bg-gradient-info mt-2" type="submit">Simpan&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
+                <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

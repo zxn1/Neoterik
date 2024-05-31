@@ -53,6 +53,7 @@
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TEMA</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">SUB-TEMA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
@@ -63,30 +64,16 @@
                         <tr>
                             <td class="text-center"><?= esc($dskpnItem['dskpn_code']) ?></td>
                             <td class="text-center">
-                                <?php
-                                // Sample value for dskpn_theme
-                                $dskpn_theme = $dskpnItem['dskpn_theme'];
-
-                                // Determine the badge class based on the value of dskpn_theme
-                                $badgeClass = '';
-                                switch ($dskpn_theme) {
-                                    case 'Individu':
-                                        $badgeClass = 'bg-gradient-success';
-                                        break;
-                                    case 'Keluarga':
-                                        $badgeClass = 'bg-gradient-info';
-                                        break;
-                                    case 'Masyarakat':
-                                        $badgeClass = 'bg-gradient-primary';
-                                        break;
-                                    default:
-                                        $badgeClass = 'bg-gradient-secondary'; // default class if none of the cases match
-                                        break;
-                                }
-                                ?>
-                                <span class="badge badge-sm <?= esc($badgeClass) ?>"><?= esc($dskpn_theme) ?></span>
+                                <?php if (!function_exists('get_dskpn_tema')) {
+                                    helper('dskpn_helper');
+                                } ?>
+                                <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
                             </td>
                             <td class="text-center"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
+                            <?php if (!function_exists('get_dskpn_status')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
                             <?php if (!function_exists('get_user_name')) {
                                 helper('dskpn_helper');
                             } ?>

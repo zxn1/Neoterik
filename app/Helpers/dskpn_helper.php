@@ -21,7 +21,7 @@ function get_lain_lain($dm_id)
 
 function get_user_name($sm_id)
 {
-    if (empty($sm_id)){
+    if (empty($sm_id)) {
         return '';
     }
     // Find user name from the database
@@ -29,4 +29,37 @@ function get_user_name($sm_id)
     // dummy 
     $session = \Config\Services::session();
     return $session->get('fullname');
+}
+
+function get_user_role()
+{
+    $session = \Config\Services::session();
+    return $session->get('current_role');
+}
+
+function get_dskpn_status($status)
+{
+    if ($status == NULL) {
+        return '<span class="badge badge-sm bg-gradient-secondary">Menunggu Kelulusan</span>';
+    } else if ($status == 1) {
+        return '<span class="badge badge-sm bg-gradient-info">Lulus</span>';
+    } else if ($status == 2) {
+        return '<span class="badge badge-sm bg-gradient-danger">Ditolak</span>';
+    } else {
+        return 'Unknown';
+    }
+}
+
+function get_dskpn_tema($dskpn_theme)
+{
+    switch ($dskpn_theme) {
+        case 'Individu':
+            return '<span class="badge badge-sm bg-gradient-success">Individu</span>';
+        case 'Keluarga':
+            return '<span class="badge badge-sm bg-gradient-info">Keluarga</span>';
+        case 'Masyarakat':
+            return '<span class="badge badge-sm bg-gradient-primary">Masyarakat</span>';
+        default:
+            return '<span class="badge badge-sm bg-gradient-secondary">'.$dskpn_theme.'</span>';
+    }
 }

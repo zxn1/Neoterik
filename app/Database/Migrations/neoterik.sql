@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `cluster_main` (
   PRIMARY KEY (`cm_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.cluster_main: 2 rows
+-- Dumping data for table neoterik.cluster_main: 3 rows
 /*!40000 ALTER TABLE `cluster_main` DISABLE KEYS */;
 INSERT INTO `cluster_main` (`cm_id`, `cm_code`, `cm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(1, 'A2000', 'Perkembangan Manusia', NULL, NULL, NULL),
@@ -299,19 +299,21 @@ CREATE TABLE IF NOT EXISTS `dskpn` (
   `approved_at` datetime DEFAULT NULL,
   `created_by` varchar(50) DEFAULT NULL,
   `approved_by` varchar(50) DEFAULT NULL,
+  `dskpn_status` varchar(50) DEFAULT NULL,
+  `dskpn_remarks` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`dskpn_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.dskpn: 6 rows
+-- Dumping data for table neoterik.dskpn: 7 rows
 /*!40000 ALTER TABLE `dskpn` DISABLE KEYS */;
-INSERT INTO `dskpn` (`dskpn_id`, `dskpn_code`, `dskpn_theme`, `dskpn_sub_theme`, `tm_id`, `op_id`, `aa_id`, `created_at`, `updated_at`, `deleted_at`, `approved_at`, `created_by`, `approved_by`) VALUES
-	(9, NULL, 'Individu', 'Respirasi', 8, 25, 3, '2024-05-24 09:12:28', '2024-05-24 11:07:50', NULL, NULL, '48283', NULL),
-	(10, NULL, 'Individu', 'anak ayam', 7, 26, 4, '2024-05-29 14:40:22', '2024-05-29 14:43:01', NULL, NULL, '48283', NULL),
-	(11, NULL, '-- Sila Pilih Tema --', '', 7, 27, NULL, '2024-05-29 14:59:11', '2024-05-29 14:59:11', NULL, NULL, '48283', NULL),
-	(12, NULL, 'Masyarakat', 'sadasdasd', 7, 28, 5, '2024-05-30 17:01:53', '2024-05-30 17:03:01', NULL, NULL, '48283', NULL),
-	(13, NULL, 'Keluarga', '', 7, 32, NULL, '2024-05-30 17:26:05', '2024-05-30 17:26:05', NULL, NULL, '48283', NULL),
-	(14, NULL, 'Keluarga', 'cubaanjay', 7, 33, NULL, '2024-05-31 14:14:18', '2024-05-31 14:14:18', NULL, NULL, '48283', NULL),
-	(15, 'K1T1-006', 'Individu', 'ayam', 7, 34, NULL, '2024-05-31 14:16:39', '2024-05-31 14:16:39', NULL, NULL, '48283', NULL);
+INSERT INTO `dskpn` (`dskpn_id`, `dskpn_code`, `dskpn_theme`, `dskpn_sub_theme`, `tm_id`, `op_id`, `aa_id`, `created_at`, `updated_at`, `deleted_at`, `approved_at`, `created_by`, `approved_by`, `dskpn_status`, `dskpn_remarks`) VALUES
+	(9, NULL, 'Individu', 'Respirasi', 8, 25, 3, '2024-05-24 09:12:28', '2024-05-24 11:07:50', NULL, NULL, '48283', NULL, NULL, NULL),
+	(10, NULL, 'Individu', 'anak ayam', 7, 26, 4, '2024-05-29 14:40:22', '2024-05-31 15:38:27', NULL, '2024-05-31 15:38:27', '48283', '48283', '1', NULL),
+	(11, NULL, '-- Sila Pilih Tema --', '', 7, 27, NULL, '2024-05-29 14:59:11', '2024-05-31 16:13:49', NULL, '2024-05-31 16:13:49', '48283', '48283', '1', 'aku tak suka mung! aku reject'),
+	(12, NULL, 'Masyarakat', 'sadasdasd', 7, 28, 5, '2024-05-30 17:01:53', '2024-05-31 16:01:38', NULL, '2024-05-31 16:01:38', '48283', '48283', '2', 'asdasd'),
+	(13, NULL, 'Keluarga', '', 7, 32, NULL, '2024-05-30 17:26:05', '2024-05-31 16:08:38', NULL, '2024-05-31 16:08:38', '48283', '48283', '1', NULL),
+	(14, NULL, 'Keluarga', 'cubaanjay', 7, 33, NULL, '2024-05-31 14:14:18', '2024-05-31 16:14:55', NULL, '2024-05-31 16:14:55', '48283', '48283', '2', 'asdasd'),
+	(15, 'K1T1-006', 'Individu', 'ayam', 7, 34, NULL, '2024-05-31 14:16:39', '2024-05-31 16:17:51', NULL, '2024-05-31 16:17:51', '48283', '48283', '2', 'perlu membaiki beberapa perkara, antaranya lorem i');
 /*!40000 ALTER TABLE `dskpn` ENABLE KEYS */;
 
 -- Dumping structure for table neoterik.extra_additional_field
@@ -344,7 +346,7 @@ CREATE TABLE IF NOT EXISTS `learning_aid` (
   PRIMARY KEY (`la_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.learning_aid: 6 rows
+-- Dumping data for table neoterik.learning_aid: 9 rows
 /*!40000 ALTER TABLE `learning_aid` DISABLE KEYS */;
 INSERT INTO `learning_aid` (`la_id`, `la_desc`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(6, 'Kertas Mahjong', 9, '2024-05-24 11:07:50', '2024-05-24 11:07:50', NULL),
@@ -370,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `learning_standard` (
   PRIMARY KEY (`ls_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.learning_standard: 8 rows
+-- Dumping data for table neoterik.learning_standard: 12 rows
 /*!40000 ALTER TABLE `learning_standard` DISABLE KEYS */;
 INSERT INTO `learning_standard` (`ls_id`, `ls_details`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(49, '3. Murid boleh mengungkapkan ekspresi', 50, 9, '2024-05-24 09:12:28', '2024-05-24 09:12:28', NULL),
@@ -397,7 +399,7 @@ CREATE TABLE IF NOT EXISTS `objective_performance` (
   PRIMARY KEY (`op_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.objective_performance: 3 rows
+-- Dumping data for table neoterik.objective_performance: 10 rows
 /*!40000 ALTER TABLE `objective_performance` DISABLE KEYS */;
 INSERT INTO `objective_performance` (`op_id`, `op_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(25, 'Menjadikan murid mampu berfikir aras tinggi', '2024-05-24 09:12:26', '2024-05-24 09:12:26', NULL),
@@ -425,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `standard_performance` (
   PRIMARY KEY (`sp_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.standard_performance: 14 rows
+-- Dumping data for table neoterik.standard_performance: 17 rows
 /*!40000 ALTER TABLE `standard_performance` DISABLE KEYS */;
 INSERT INTO `standard_performance` (`sp_id`, `sp_tp_level`, `sp_tp_level_desc`, `sm_id`, `dskpn_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(42, 2, 'membentuk matematik', 50, 9, '2024-05-24 09:15:02', '2024-05-24 09:15:02', NULL),
@@ -458,7 +460,7 @@ CREATE TABLE IF NOT EXISTS `subject_main` (
   PRIMARY KEY (`sm_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
--- Dumping data for table neoterik.subject_main: 8 rows
+-- Dumping data for table neoterik.subject_main: 12 rows
 /*!40000 ALTER TABLE `subject_main` DISABLE KEYS */;
 INSERT INTO `subject_main` (`sm_id`, `sm_code`, `sm_desc`, `created_at`, `updated_at`, `deleted_at`) VALUES
 	(50, 'nHLKCo2', 'Matematik', '2024-05-24 09:12:28', '2024-05-24 09:12:28', NULL),
