@@ -190,24 +190,24 @@
                           <table class="table mb-0">
                             <tbody>
 
-<<<<<<< HEAD
-                            <?php foreach($data['Kemandirian'] as $item) { ?>
-                            <tr>
-                              <td class="ps-1" colspan="4">
-                                <div class="my-auto">
-                                  <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                                </div>
-                              </td>
-                              <td>
-                                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'],$domain_map_session["'" . $subject['sm_code'] . "'"]))?'checked':''; ?>>
-                                </div>
-                              </td>
-                            </tr>
-                            <?php } ?>
+                              <?php foreach($data['Kemandirian'] as $item) { ?>
+                              <tr>
+                                <td class="ps-1" colspan="4">
+                                  <div class="my-auto">
+                                    <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                                    <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'],$domain_map_session["'" . $subject['sm_code'] . "'"]))?'checked':''; ?>>
+                                  </div>
+                                </td>
+                              </tr>
+                              <?php } ?>
                             
-                          </tbody>
-                        </table>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -243,7 +243,6 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
               <div class="row">
-<<<<<<< HEAD
                 
               <?php foreach($subjects as $subject) { ?>
                 <div class="col-md-4">
@@ -273,41 +272,11 @@
                             
                           </tbody>
                         </table>
-=======
 
-                <?php foreach ($subjects as $subject) { ?>
-                  <div class="col-md-4">
-                    <div class="card mt-4" id="notifications">
-                      <div class="card-header d-flex p-3 bg-gradient-primary">
-                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
-                      </div>
-                      <div class="card-body pt-0">
-                        <div class="table-responsive">
-                          <table class="table mb-0">
-                            <tbody>
-
-                              <?php foreach ($data['Kualiti Keperibadian'] as $item) { ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
-                                    </div>
-                                  </td>
-                                </tr>
-                              <?php } ?>
-
-                            </tbody>
-                          </table>
-                        </div>
->>>>>>> dev
                       </div>
                     </div>
                   </div>
+                </div>
                 <?php } ?>
 
               </div>
