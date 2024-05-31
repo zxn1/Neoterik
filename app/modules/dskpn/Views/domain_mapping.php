@@ -54,7 +54,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form action="<?= route_to('store_domain_map') ?><?= isset($dskpn_id)?"?dskpn=" . $dskpn_id:""; ?>" method="POST" class="container-fluid py-4">
+<form action="<?= route_to('store_domain_map') ?>" method="POST" class="container-fluid py-4">
   <?= csrf_field() ?>
 
   <div class="card">
@@ -134,7 +134,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17" <?= ( isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'],$domain_map_session["'" . $subject['sm_code'] . "'"]))?'checked':''; ?>>
                                 </div>
                               </td>
                             </tr>
@@ -200,7 +200,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'],$domain_map_session["'" . $subject['sm_code'] . "'"]))?'checked':''; ?>>
                                 </div>
                               </td>
                             </tr>
@@ -249,7 +249,7 @@
                 <div class="col-md-4">
                   <div class="card mt-4" id="notifications">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">SAINS</h6>
+                      <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
                     </div>
                     <div class="card-body pt-0">
                       <div class="table-responsive">
@@ -265,7 +265,7 @@
                               </td>
                               <td>
                                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17">
+                                  <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault17" <?= ( isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'],$domain_map_session["'" . $subject['sm_code'] . "'"]))?'checked':''; ?>>
                                 </div>
                               </td>
                             </tr>
@@ -286,13 +286,25 @@
       </div>
     </div>
   </div>
-  <div class="text-end p-3">
-    <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+
+  <div class="d-flex justify-content-between align-items-center p-2">
+    <a href="<?= route_to('tp_maintenance'); ?>" class="btn bg-gradient-danger mt-2">
+      <span>Ke Belakang</span>
+    </a>
+    <div class="text-end p-3">
+      <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a>
+      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+    </div>
   </div>
+
 </form>
 <script>
   $(document).ready(function() {
     $('.select2').select2();
   });
 </script>
+
+  <!-- <div class="text-end p-3">
+    <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a>
+    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+  </div> -->

@@ -87,7 +87,9 @@ class Main extends BaseController
     {
         $data = [];
 
-        $data['parameters'] = $this->request->getGet();
+        $data['tp_session'] = $this->session->get("tp_sess_data");
+
+        $data['parameters'] = $this->session->get();
         if (!empty($data['parameters'])) {
             //step 1 - get Cluster
             $data['cluster_desc'] = $this->cluster_model
@@ -285,7 +287,9 @@ class Main extends BaseController
     {
         $data = [];
 
-        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        $data['domain_map_session'] = $this->session->get("domain_map_session");
+
+        $data['dskpn_id'] = $this->session->get("dskpn_id");
         $data['subjects'] = [];
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -320,7 +324,10 @@ class Main extends BaseController
     {
         $data = [];
 
-        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        $data['core_map_sess'] = $this->session->get("core_map_sess");
+        // $data['core_maplist_sess'] = $this->session->get("core_maplist_sess");
+
+        $data['dskpn_id'] = $this->session->get("dskpn_id");
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
                 ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
@@ -341,7 +348,10 @@ class Main extends BaseController
     public function mapping_spesifikasi_dskpn()
     {
         $data = [];
-        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        $data['dskpn_id'] = $this->session->get("dskpn_id");
+
+        $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
+        $data['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
 
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -369,7 +379,12 @@ class Main extends BaseController
     public function activity_and_assessment()
     {
         $data = [];
-        $data['dskpn_id'] = $this->request->getVar('dskpn');
+        $data['dskpn_id'] = $this->session->get("dskpn_id");
+
+        $data['act_assess_abm'] = $this->session->get("act_assess_abm");
+        $data['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
+        $data['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
+        $data['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
 
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -385,12 +400,31 @@ class Main extends BaseController
 
     public function store_activity_assessment()
     {
-        $dskpn_id = $this->request->getVar('dskpn');
+        $dskpn_id = $this->session->get("dskpn_id");
 
         $abm = $this->request->getPost('abm');
         $pentaksiran = $this->request->getPost('pentaksiran');
         $idea_pengajaran = $this->request->getPost('idea-pengajaran');
         $parent_involve = $this->request->getPost('parent-involvement');
+        
+        $get_actvty_assess_map_id = $this->session->get("actvty_assess_map_id_sess");
+        $get_actvty_assess_learning_aid_id = $this->session->get("actvty_assess_learning_aid_id_sess");
+
+        if(isset($get_actvty_assess_map_id) && isset($get_actvty_assess_learning_aid_id))
+        {
+            $this->activity_assessment_model->where('aa_id', $get_actvty_assess_map_id)
+                ->delete();
+            $this->learning_aid_model->whereIn('la_id', $get_actvty_assess_learning_aid_id)
+                ->delete();
+        }
+
+        $this->session->set('act_assess_abm', $abm);
+        $this->session->set('act_assess_pentaksiran', $pentaksiran);
+        $this->session->set('act_assess_idea_pengajaran', $idea_pengajaran);
+        $this->session->set('act_assess_parent_involve', $parent_involve);
+
+        $actvty_assess_map_id = "";
+        $actvty_assess_learning_aid_id = [];
 
         if (!isset($parent_involve))
             $parent_involve = 'N';
@@ -402,7 +436,8 @@ class Main extends BaseController
             'aa_assessment_desc' => $pentaksiran,
             'aa_is_parental_involved' => $parent_involve
         ])) {
-            if ($this->dskpn_model->update($dskpn_id, ['aa_id' => $this->learning_aid_model->insertID()])) {
+            $actvty_assess_map_id = $this->activity_assessment_model->insertID();
+            if ($this->dskpn_model->update($dskpn_id, ['aa_id' => $actvty_assess_map_id])) {
             } else {
                 $success = false;
             }
@@ -411,11 +446,15 @@ class Main extends BaseController
                     'la_desc' => $data,
                     'dskpn_id' => $dskpn_id
                 ])) {
+                    $actvty_assess_learning_aid_id[] = $this->learning_aid_model->insertID();
                 } else {
                     $success = false;
                 }
             }
         }
+
+        $this->session->set('actvty_assess_map_id_sess', $actvty_assess_map_id);
+        $this->session->set('actvty_assess_learning_aid_id_sess', $actvty_assess_learning_aid_id);
 
         if ($success)
             return redirect()->to(route_to('dskpn_complete'));
@@ -425,6 +464,7 @@ class Main extends BaseController
     public function mapping_successfully()
     {
         $data = [];
+        $data['dskpn_id'] = $this->session->get("dskpn_id");
 
         $script = [];
         $style = [];
@@ -434,11 +474,29 @@ class Main extends BaseController
     public function store_specification_mapping()
     {
         $data = [];
-        $dskpn_id = $this->request->getVar('dskpn');
+        $dskpn_id = $this->session->get("dskpn_id");
 
         $allData = $this->request->getPost();
 
         $success = true;
+
+        $specification_mapist_data = [];
+        $specification_mapping_id_list = [];
+        $specification_lain_lain_id = "";
+        $specification_lain_lain_data = "";
+
+        $get_sess_specification_mapping_id_list = $this->session->get("specification_mapping_id_list_sess");
+        $get_sess_specification_lain_lain_id = $this->session->get("specification_lain_lain_id_sess");
+
+        if(isset($get_sess_specification_mapping_id_list) && isset($get_sess_specification_lain_lain_id))
+        {
+            $this->domain_mapping_model->whereIn('dm_id', $get_sess_specification_mapping_id_list)
+                ->delete();
+
+            //need to delete also as domain_mapping is deleted.
+            $this->extra_additional_field_model->where('eaf_id', $get_sess_specification_lain_lain_id)
+                ->delete();
+        }
 
         //structure data first
         foreach ($allData as $key => $data) {
@@ -453,7 +511,8 @@ class Main extends BaseController
                         'ls_id' => null,
                         'dskpn_id' => $dskpn_id
                     ])) {
-                        // do nothing
+                        $specification_mapist_data[] = $d_id;
+                        $specification_mapping_id_list[] = $this->domain_mapping_model->insertID();
                     } else {
                         $success = false;
                     }
@@ -467,11 +526,15 @@ class Main extends BaseController
                 ])) {
                     // insert lain2 information
                     $inputlain = $allData['lain-lain-input'];
+                    $lain_dm_id = $this->domain_mapping_model->insertID();
                     if ($this->extra_additional_field_model->insert([
                         'eaf_desc' => $inputlain,
-                        'dm_id' => $this->domain_mapping_model->insertID()
+                        'dm_id' => $lain_dm_id
                     ])) {
-                        //do nothing
+                        $specification_mapist_data[] = $data;
+                        $specification_mapping_id_list[] = $lain_dm_id;
+                        $specification_lain_lain_data = $inputlain;
+                        $specification_lain_lain_id = $this->extra_additional_field_model->insertID();
                     } else {
                         $success = false;
                     }
@@ -481,8 +544,13 @@ class Main extends BaseController
             }
         }
 
+        $this->session->set('specification_mapist_sess', $specification_mapist_data);
+        $this->session->set('specification_lain_lain_sess', $specification_lain_lain_data);
+        $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list);
+        $this->session->set('specification_lain_lain_id_sess', $specification_lain_lain_id);
+
         if ($success)
-            return redirect()->to(route_to('activity_n_assessment') . "?dskpn=" . $dskpn_id);
+            return redirect()->to(route_to('activity_n_assessment'));
         return redirect()->back();
     }
 
@@ -501,52 +569,102 @@ class Main extends BaseController
         $tema           = $this->request->getPost('tema');
         $subtema        = $this->request->getPost('subtema');
 
+        //set in session
+        $this->session->set('subject', $allSubject);
+        $this->session->set('subject_description', $allDescription);
+        $this->session->set('objective', $objective);
+        $this->session->set('tema', $tema);
+        $this->session->set('subtema', $subtema);
+
         $data['cluster_id'] = $kluster;
         $data['topic_id'] = $topik;
 
-        //step 1 - add objective performance
-        if ($this->objective_performance_model->insert([
-            'op_desc' => $objective
-        ]))
-            if (is_array($allSubject) && is_array($allDescription)) {
-                $data['objective_performance_id'] = $this->objective_performance_model->insertID();
+        if(empty($this->session->get('tm_id')))
+            $this->session->set('tm_id', $topik);
 
-                //create DSKPN
-                $this->dskpn_model->insert([
-                    'dskpn_theme'       => $tema,
-                    'dskpn_sub_theme'   => $subtema,
-                    'tm_id'             => $data['topic_id'],
-                    'op_id'             => $data['objective_performance_id'],
-                    'created_by'        => $sm_id,
-                    'aa_id'             => null
-                ]);
-
-                $data['dskpn_id'] = $this->dskpn_model->insertID();
-
-                foreach ($allSubject as $index => $subject) {
-                    //step 1 - temporary only - need UI later to register subject
-                    $this->subject_model->insert([
-                        'sm_code' => $this->_generateRandomString(7),
-                        'sm_desc' => $subject
+        //means need to update
+        if($this->session->get('objective_performance_id'))
+        {
+            //step 1 - update objective performance
+            if ($this->objective_performance_model->update($this->session->get('objective_performance_id'), [
+                'op_desc' => $objective
+            ]))
+                if (is_array($allSubject) && is_array($allDescription)) {
+                    //update DSKPN
+                    $this->dskpn_model->update($this->session->get('dskpn_id'), [
+                        'dskpn_theme'       => $tema,
+                        'dskpn_sub_theme'   => $subtema
                     ]);
 
-                    // Get the last inserted ID
-                    $lastID = $this->subject_model->insertID();
-                    //end temporary
+                    foreach ($allSubject as $index => $subject) {
+                        //step 1 - temporary only - need UI later to register subject
+                        // $this->subject_model->insert([
+                        //     'sm_code' => $this->_generateRandomString(7),
+                        //     'sm_desc' => $subject
+                        // ]);
 
-                    //step 2 - insert learning-standard
-                    $this->learning_standard_model->insert([
-                        'ls_details' => $allDescription[$index],
-                        'sm_id' => $lastID,
-                        'dskpn_id' => $data['dskpn_id'] //temporary null
-                    ]);
+                        // Get the last inserted ID
+                        // $lastID = $this->subject_model->insertID();
+                        //end temporary
 
-                    $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
+                        //step 2 - insert learning-standard
+                        $this->learning_standard_model->update($this->session->get('learning_standard_id')[$index], [
+                            'ls_details' => $allDescription[$index]
+                        ]);
+                    }
                 }
-            }
+        } else {
+            //step 1 - add objective performance
+            if ($this->objective_performance_model->insert([
+                'op_desc' => $objective
+            ]))
+                if (is_array($allSubject) && is_array($allDescription)) {
+                    $data['objective_performance_id'] = $this->objective_performance_model->insertID();
 
-        $parameters = http_build_query($data);
-        return redirect()->to(route_to('tp_maintenance') . '?' . $parameters);
+                    //create DSKPN
+                    $this->dskpn_model->insert([
+                        'dskpn_theme'       => $tema,
+                        'dskpn_sub_theme'   => $subtema,
+                        'tm_id'             => $data['topic_id'],
+                        'op_id'             => $data['objective_performance_id'],
+                        'created_by'        => $sm_id,
+                        'aa_id'             => null
+                    ]);
+
+                    $data['dskpn_id'] = $this->dskpn_model->insertID();
+
+                    foreach ($allSubject as $index => $subject) {
+                        //step 1 - temporary only - need UI later to register subject
+                        $this->subject_model->insert([
+                            'sm_code' => $this->_generateRandomString(7),
+                            'sm_desc' => $subject
+                        ]);
+
+                        // Get the last inserted ID
+                        $lastID = $this->subject_model->insertID();
+                        //end temporary
+
+                        //step 2 - insert learning-standard
+                        $this->learning_standard_model->insert([
+                            'ls_details' => $allDescription[$index],
+                            'sm_id' => $lastID,
+                            'dskpn_id' => $data['dskpn_id'] //temporary null
+                        ]);
+
+                        $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
+                    }
+                }
+
+            //$parameters = http_build_query($data);
+
+            //http_build_query reverse process
+            foreach($data as $key => $val)
+            {
+                $this->session->set($key, $val);
+            }
+        }
+
+        return redirect()->to(route_to('tp_maintenance'));
 
         // var_dump($parameters);
         //var_dump($data); //data ni perlu simpan dalam table baru called Steps. 'Standard Pembelajaran Insertion'.
@@ -555,12 +673,22 @@ class Main extends BaseController
     public function store_standard_performance()
     {
         $allData = $this->request->getPost();
-        $dskpn_id = $this->request->getVar('dskpn');
+        $dskpn_id = $this->session->get("dskpn_id");
+
+        $sess_data = [];
+
+        $tp_session = $this->session->get("tp_sess_data");
+        if(isset($tp_session) && !empty($tp_session))
+            $this->standard_performance_model->where('dskpn_id', $dskpn_id)
+            ->delete();
+       
 
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             //first repeatition max is only 4/5.
             $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
+
+            $sess_data_desc = [];
 
             foreach ($data as $index => $item) {
                 $tpLevel = $index + 1;
@@ -570,17 +698,39 @@ class Main extends BaseController
                     'sm_id' => $tempSubject['sm_id'],
                     'dskpn_id' => $dskpn_id
                 ]);
+
+                $sess_data_desc[] = $item;
             }
+
+            $sess_data[$tempSubject['sm_desc']][] = [
+                $tempSubject['sm_id'],
+                $sess_data_desc
+            ];
         }
-        return redirect()->to(route_to('domain_mapping') . "?dskpn=" . $dskpn_id);
+
+        $this->session->set('tp_sess_data', $sess_data);
+
+        return redirect()->to(route_to('domain_mapping'));
     }
 
     public function store_domain_mapping()
     {
         $allData = $this->request->getPost();
-        $dskpn_id = $this->request->getVar('dskpn');
+        $dskpn_id = $this->session->get("dskpn_id");
 
         $success = true;
+
+        $domain_map_session_data = [];
+        $domain_map_id_session_data = [];
+
+        $domain_map_sess = $this->session->get("domain_map_session");
+        $domain_map_id_sess = $this->session->get("domain_map_id_session_data");
+        
+        if(isset($domain_map_sess) && (!empty($domain_map_sess) || $domain_map_sess != null) && isset($domain_map_id_sess))
+        {
+            $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
+                ->delete();
+        }
 
         //probably loop 2/3/4 time only. because input were put in arrays.
         foreach ($allData as $key => $data) {
@@ -599,6 +749,8 @@ class Main extends BaseController
                         'dskpn_id' => $dskpn_id
                     ])) {
                         // do nothing
+                        $domain_map_session_data[$this->db->escape($parts[1])][] = $d_id;
+                        $domain_map_id_session_data[] = $this->domain_mapping_model->insertID();
                     } else {
                         $success = false;
                     }
@@ -606,15 +758,28 @@ class Main extends BaseController
             }
         }
 
+        $this->session->set('domain_map_session', $domain_map_session_data);
+        $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
+
         if ($success)
-            return redirect()->to(route_to('mapping_core') . "?dskpn=" . $dskpn_id);
+            return redirect()->to(route_to('mapping_core'));
         return redirect()->back();
     }
 
     public function store_core_mapping()
     {
         $allData = $this->request->getPost();
-        $dskpn_id = $this->request->getVar('dskpn');
+        $dskpn_id = $this->session->get("dskpn_id");
+
+        $core_mapping_sess = $this->session->get("core_map_sess");
+        $core_mapping_id_sess = $this->session->get("core_mapping_id_session_data");
+        if(isset($core_mapping_sess) && !empty($core_mapping_sess) && $core_mapping_sess != null && isset($core_mapping_id_sess))
+        {
+            $this->domain_model->where('dskpn_id', $dskpn_id)
+                ->delete();
+            $this->domain_mapping_model->whereIn('dm_id', $core_mapping_id_sess)
+                ->delete();
+        }
 
         //check if not exist create new one
         $kompetensi_domain_group = $this->domain_group_model->where('dg_title', 'Kompetensi Teras')->first();
@@ -628,6 +793,9 @@ class Main extends BaseController
         }
 
         $processedData = [];
+
+        $core_map_session_data = [];
+        $core_mapping_id_session_data = [];
 
         //structure data first
         foreach ($allData as $key => $data) {
@@ -647,7 +815,8 @@ class Main extends BaseController
         //1. loop to get key - subject
         foreach ($processedData as $key => $inputCode) {
             //1.1 get sm_id based on inputCodeKey
-            $sm_id = $this->subject_model->where('sm_code', $key)->first()['sm_id'];
+            $subject_data = $this->subject_model->where('sm_code', $key)->first();
+            $sm_id = $subject_data['sm_id'];
 
             //1.2 get ls_id based on $sm_id
             $ls_id = $this->learning_standard_model->where('dskpn_id', $dskpn_id)->where('sm_id', $sm_id)->first()['ls_id'];
@@ -671,10 +840,19 @@ class Main extends BaseController
                     'ls_id' => $ls_id,
                     'dskpn_id' => $dskpn_id
                 ]);
+
+                $core_mapping_id_session_data[] = $this->domain_model->insertID();
+
+                $core_map_session_data[$subject_data['sm_code']][$d_id] = [$input['value'],$input['checked']];
+                //$core_map_session_list[$subject_data['sm_code']][] = $d_id;
             }
         }
 
-        return redirect()->to(route_to('mapping_dynamic_dskpn') . "?dskpn=" . $dskpn_id);
+        $this->session->set('core_map_sess', $core_map_session_data);
+        $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
+        //$this->session->set('core_maplist_sess', $core_map_session_list);
+
+        return redirect()->to(route_to('mapping_dynamic_dskpn'));
     }
 
 
@@ -886,14 +1064,28 @@ class Main extends BaseController
     public function dskpn_learning_standard()
     {
 
+        $data = [];
+        //set in session
+        $data['subject'] = "";
+        $data['subject_description'] = "";
+        $data['objective'] = "";
+        $data['tema'] = "";
+        $data['subtema'] = "";
+
         $tm_id = $this->session->get('tm_id');
         $data['flag'] = $this->request->getVar('flag');
         // Query get topic data
-        if (!empty($data['flag'])) {
+        if (!empty($data['flag']) && ($tm_id != NULL)) {
             $data['topic'] = $this->topic_model
                 ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
                 ->where('topic_main.tm_id', $tm_id)
                 ->first();
+
+            $data['subject'] = $this->session->get('subject');
+            $data['subject_description'] = $this->session->get('subject_description');
+            $data['objective'] = $this->session->get('objective');
+            $data['tema'] = $this->session->get('tema');
+            $data['subtema'] = $this->session->get('subtema');
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
         }
@@ -915,5 +1107,10 @@ class Main extends BaseController
         }
 
         return redirect()->back()->with('fail', 'Maaf, aksi menambah Cluster tidak berjaya!');
+    }
+
+    public function debugcheckallsession()
+    {
+        print_r(json_encode($this->session->get()));
     }
 }

@@ -5,6 +5,7 @@ $(document).ready(function() {
 $(document).ready(function() {
     subjectData.forEach(function(item){
         item = item[0];
+
         $('#tahap-penguasaan').append(`
             <ul class="list-group flex-grow-1 mx-2">
                 <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -23,6 +24,32 @@ $(document).ready(function() {
                 </div>
             </ul>
         `);
+
+        if(tpDatas.length !== 0)
+        {
+            if (tpDatas[item.sm_desc] && tpDatas[item.sm_desc][0] !== undefined)
+            {
+                var collSubCollzs = $('#collection-' + item.sm_code);
+                collSubCollzs.empty();
+
+                tpDatas[item.sm_desc][0][1].forEach(function(itemz) {
+                    // Get the collection container
+                    var collSubject = $('#collection-' + item.sm_code);
+        
+                    // Generate a unique ID for the new field
+                    var newFieldColl = Math.floor(Math.random() * 1000000);
+                    
+                    let newInputHTMLField = `<div class="d-flex w-100 align-items-center mb-2" id="${newFieldColl}-${item.sm_code}">
+                    <input type="text" name="input-${item.sm_code}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${itemz}">
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldColl}-${item.sm_code}').remove();">
+                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        </a>
+                    </div>`;
+        
+                    collSubject.append(newInputHTMLField);
+                });
+            }
+        }
     });
  });
 
