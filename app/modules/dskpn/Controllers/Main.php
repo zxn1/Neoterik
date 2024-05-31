@@ -160,11 +160,17 @@ class Main extends BaseController
     public function list_registered_dskpn()
     {
         $data = [];
-        $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
-            ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+        // $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
+        //     ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
+        //     ->findAll();
+
+        // Query to get the list of DSKPN
+        $data['dskpn'] = $this->dskpn_model
+            ->join('topic_main', 'dskpn.tm_id = topic_main.tm_id', 'left')
+            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
             ->findAll();
 
-        // dd($data['cluster']);
+        // dd($data['dskpn']);
 
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
@@ -190,8 +196,8 @@ class Main extends BaseController
             ->where('dskpn_id', $dskpn_id)
             ->findAll();
 
-        $learning_standard_subject = $this->learning_standard_model
-            ->select('learning_standard.sm_id, subject_main.sm_desc')
+        $subjects = $this->learning_standard_model
+            ->select('learning_standard.sm_id, subject_main.sm_desc, subject_main.sm_code')
             ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
             ->where('dskpn_id', $dskpn_id)
             ->groupBy('sm_id')
@@ -211,28 +217,35 @@ class Main extends BaseController
 
         // Get 16 Domain List by tahap
         // Tahap Pengetahuan Asas
+        $template_domain_pengetahuan_asas = $this->domain_model->where('gd_id', 21)->orderBy('d_id', 'ASC')->findAll();
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 21);
 
-        // dd($domain_pengetahuan_asas);
         // Tahap Kemandirian
+        $template_domain_kemandirian = $this->domain_model->where('gd_id', 22)->orderBy('d_id', 'ASC')->findAll();
         $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 22);
 
         // Tahap Pengetahuan Asas
+        $template_domain_kualiti_keperibadian  = $this->domain_model->where('gd_id', 23)->orderBy('d_id', 'ASC')->findAll();
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 23);
 
         // Get 7 Kemahiran Insaniah
+        $template_kemahiran_insaniah = $this->domain_model->where('gd_id', 24)->orderBy('d_id', 'ASC')->findAll();
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, 24);
 
         // Reka bentuk Instruksi
+        $template_rekabentuk_instruksi = $this->domain_model->where('gd_id', 25)->orderBy('d_id', 'ASC')->findAll();
         $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 25);
 
         // Integrasi Teknologi
+        $template_integrasi_teknologi = $this->domain_model->where('gd_id', 26)->orderBy('d_id', 'ASC')->findAll();
         $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 26);
 
         // Pendekatan
+        $template_pendekatan = $this->domain_model->where('gd_id', 27)->orderBy('d_id', 'ASC')->findAll();
         $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 27);
 
         // Kaedah
+        $template_kaedah = $this->domain_model->where('gd_id', 28)->orderBy('d_id', 'ASC')->findAll();
         $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 28);
 
         // abm
@@ -240,7 +253,7 @@ class Main extends BaseController
 
         $data = [
             'dskpn_details'                 => $dskpn_details,
-            'learning_standard_subject'     => $learning_standard_subject,
+            'subjects'                      => $subjects,
             'learning_standard'             => $learning_standard,
             'standard_performance'          => $standard_performance,
             'objective_performance'         => $objective_performance,
@@ -255,30 +268,65 @@ class Main extends BaseController
             'integrasi_teknologi'           => $integrasi_teknologi,
             'pendekatan'                    => $pendekatan,
             'kaedah'                        => $kaedah,
-            'abm'                           => $abm
+            'abm'                           => $abm,
+
+            // Template Atribute/Domain
+            'template_domain_pengetahuan_asas'      => $template_domain_pengetahuan_asas,
+            'template_domain_kemandirian'           => $template_domain_kemandirian,
+            'template_domain_kualiti_keperibadian'  => $template_domain_kualiti_keperibadian,
+            'template_kemahiran_insaniah'           => $template_kemahiran_insaniah,
+            'template_rekabentuk_instruksi'         => $template_rekabentuk_instruksi,
+            'template_integrasi_teknologi'          => $template_integrasi_teknologi,
+            'template_pendekatan'                   => $template_pendekatan,
+            'template_kaedah'                       => $template_kaedah,
         ];
 
+        // dd($kemahiran_insaniah);
         // dd($data);
 
         $script = ['data', 'dynamic-input'];
         $style = ['static-field'];
 
-
-        // $db = \Config\Database::connect();
-
-        // $builder = $db->table('domain_mapping');
-        // $builder->select('*');
-        // $builder->join('domain', 'domain_mapping.d_id = domain.d_id');
-        // $builder->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id');
-        // $builder->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id');
-        // $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
-        // $builder->where('domain_mapping.dskpn_id', 9);
-        // $builder->where('domain_group.dg_id', 21);
-
-        // $query = $builder->get();
-        // dd($query->getResultArray());
-
+        // dd($data);
         $this->render_jscss('dskpn_view', $data, $script, $style);
+    }
+
+    public function approve_dskpn($dskpn_id)
+    {
+        $staff_main_id = $this->session->get('sm_id');
+
+        // Update DSKPN table
+        $this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 1,
+            'approved_by'   => $staff_main_id,
+            'approved_at'   => date('Y-m-d H:i:s')
+        ]);
+
+        // Set success message and redirect back
+        session()->setFlashdata('swal_success', 'DSKPN has been approved successfully.');
+
+        return redirect()->back();
+    }
+
+    public function reject_dskpn()
+    {
+        $remarks        = $this->request->getPost('remarks');
+        $dskpn_id       = $this->request->getPost('dskpn_id');
+        $staff_main_id  = $this->session->get('sm_id');
+
+        // Update DSKPN table
+        $this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 2,
+            'approved_by'   => $staff_main_id,
+            'approved_at'   => date('Y-m-d H:i:s'),
+            'dskpn_remarks' => $remarks
+        ]);
+
+
+        // Set success message and redirect back
+        session()->setFlashdata('swal_success', 'DSKPN has been rejected.');
+
+        return redirect()->back();
     }
 
 
@@ -614,6 +662,20 @@ class Main extends BaseController
                     }
                 }
         } else {
+            // Retrieve tm_year from db to be used in dskpn code
+            $tm_data = $this->topic_model->where('tm_id', $topik)->first();
+
+            // Count dskpn by topic
+            $dskpn_by_topic_count = $this->dskpn_model
+                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                ->where('dskpn.tm_id', $topik)
+                ->where('topic_main.tm_year', $tm_data['tm_year'])
+                ->countAllResults();
+            // ->findAll();
+
+            // Create dskpn code
+            $dskpn_code = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
+            
             //step 1 - add objective performance
             if ($this->objective_performance_model->insert([
                 'op_desc' => $objective
@@ -623,6 +685,7 @@ class Main extends BaseController
 
                     //create DSKPN
                     $this->dskpn_model->insert([
+                        'dskpn_code'        => $dskpn_code,
                         'dskpn_theme'       => $tema,
                         'dskpn_sub_theme'   => $subtema,
                         'tm_id'             => $data['topic_id'],

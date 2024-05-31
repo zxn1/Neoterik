@@ -7,26 +7,36 @@
             <table class="table align-items-center mb-0">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">ID</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Kluster</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Topik</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Attribute</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Aksi</th>
+                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">KLUSTER</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TOPIK</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($cluster as $clusterItem): ?>
+                    <?php foreach ($dskpn as $clusterItem) : ?>
                         <tr>
-                            <td class="text-center"></td>
+                            <td class="text-center"><?= $clusterItem['dskpn_code'] ?></td>
                             <td class="text-center"><?= esc($clusterItem['cm_desc']) ?></td>
                             <td class="text-center"><?= esc($clusterItem['tm_desc']) ?></td>
-                            <td class="text-center"></td>
+                            <?php if (!function_exists('get_dskpn_status')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_dskpn_status($clusterItem['dskpn_status']) ?></td>
+                            <?php if (!function_exists('get_user_name')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_user_name($clusterItem['created_by']) ?></td>
+                            <td class="text-center"><?= get_user_name($clusterItem['approved_by']) ?></td>
                             <td class="text-center">
-                                <div class="col-2" style="display: inline-block;">
-                                    <a href="dskpn-view" class="dropdown-item"><i class="fa fa-eye"></i></a>
+                                <div class="col-2 text-info" style="display: inline-block;">
+                                    <a href="<?= route_to('dskpn_view', esc($clusterItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
                                 </div>
                                 &nbsp;&nbsp;
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $clusterItem['tm_id']; ?>').remove(); deleteTopic(<?= $clusterItem['tm_id']; ?>);">
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $clusterItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $clusterItem['dskpn_id']; ?>);">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -35,8 +45,5 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="text-end pt-3">
-        <a href="#" class="btn bg-gradient-primary btn-sm mb-0">Seterusnya</a>
     </div>
 </div>

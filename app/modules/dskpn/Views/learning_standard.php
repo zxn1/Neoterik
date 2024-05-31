@@ -57,14 +57,15 @@
             <?php if ($flag) { ?>
               <input name="topik_desc" class="form-control" value="<?= $topic['tm_desc'] ?>" readonly>
             <?php } else { ?>
-              <select name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example">
-                <option selected>-- Sila Pilih Topic --</option>
+              <select name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example" required>
+                <option disabled>-- Sila Pilih Topic --</option>
               </select>
             <?php } ?>
           </div>
           <div class="col-md-2">
             <label for="tema">TEMA</label>
-            <select name="tema" id="tema-selection" class="form-control select2" aria-label="Default select example">
+            <select name="tema" id="tema-selection" class="form-control select2" aria-label="Default select example" required>
+              <option disabled>-- Sila Pilih Tema --</option>
               <?php
               $arrS = [
                 'Individu',
