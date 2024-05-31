@@ -10,7 +10,7 @@ class LearningAidModel extends Model
     protected $primaryKey = 'la_id';
 
     protected $returnType     = 'array';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
 
     protected $allowedFields = ['la_desc', 'dskpn_id'];
 

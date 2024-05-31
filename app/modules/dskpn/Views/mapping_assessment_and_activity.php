@@ -54,7 +54,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form action="<?= route_to('store_actv_asses') . "?dskpn=" . $dskpn_id; ?>" method="POST" class="container-fluid py-4">
+<form action="<?= route_to('store_actv_asses') ?>" method="POST" class="container-fluid py-4">
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -96,6 +96,7 @@
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
         <textarea rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border">
+          <?= $act_assess_idea_pengajaran; ?>
         </textarea>
       </div>
     </div>
@@ -108,6 +109,7 @@
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
         <textarea rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border">
+          <?= $act_assess_pentaksiran; ?>
         </textarea>
       </div>
     </div>
@@ -125,18 +127,41 @@
               <table class="table mb-0">
                 <tbody id="item-abm">
 
-                  <tr id="0-item-abm">
-                    <td class="ps-1" colspan="4">
-                      <div class="my-auto">
-                        <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="">
-                      </div>
-                    </td>
-                    <td width="5px">
-                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-abm').remove();">
-                          <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                      </a>
-                    </td>
-                  </tr>
+                <?php
+                if(!empty($act_assess_abm))
+                {
+                  foreach($act_assess_abm as $abm)
+                  { 
+                    $random_number = rand(100000, 999999);
+                    ?>
+                    <tr id="<?= $random_number; ?>-item-abm">
+                      <td class="ps-1" colspan="4">
+                        <div class="my-auto">
+                          <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="<?= $abm; ?>">
+                        </div>
+                      </td>
+                      <td width="5px">
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#<?= $random_number; ?>-item-abm').remove();">
+                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  <?php 
+                  }
+                } else { ?>
+                <tr id="0-item-abm">
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="">
+                    </div>
+                  </td>
+                  <td width="5px">
+                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-abm').remove();">
+                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                    </a>
+                  </td>
+                </tr>
+                <?php } ?>
 
                 </tbody>
               </table>
@@ -156,7 +181,7 @@
         <tr>
           <td>
             <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-              <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11">
+              <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (!empty($act_assess_parent_involve) && $act_assess_parent_involve == 'Y')?'checked':''; ?>>
             </div>
           </td>
           <td>
@@ -168,10 +193,16 @@
     </div>
   </div>
 
-  <div class="text-end p-3">
-    <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <button type="submit" class="btn bg-gradient-info">Simpan</button>
+  <div class="d-flex justify-content-between align-items-center p-2">
+    <a href="<?= route_to('mapping_dynamic_dskpn'); ?>" class="btn bg-gradient-danger mt-2">
+      <span>Ke Belakang</span>
+    </a>
+    <div class="text-end p-3">
+      <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
+      <button type="submit" class="btn bg-gradient-info">Simpan</button>
+    </div>
   </div>
+
 </form>
 <script>
   $(document).ready(function() {

@@ -48,4 +48,5 @@ $routes->group('dskpn', function ($routes) {
 
     //SETTING MAPPING INITIALIZER
     $routes->get('initialize-domain-mapping-database', [Main::class,   'mappingInit']);
+    $routes->get('debugcheckallsession', [Main::class, 'debugcheckallsession']);
 });

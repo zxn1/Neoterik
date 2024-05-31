@@ -58,7 +58,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form method="POST" action="<?= route_to('store_core_map') . "?dskpn=" . $dskpn_id ?>" class="container-fluid py-4">
+<form method="POST" action="<?= route_to('store_core_map') ?>" class="container-fluid py-4">
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -128,10 +128,35 @@
                         <table class="table mb-0 mt-3">
                           <tbody id="item-placing-<?= $subject['sm_code'] ?>">
 
+                          <?php 
+                          if(isset($core_map_sess[$subject['sm_code']]))
+                          {
+                          foreach($core_map_sess[$subject['sm_code']] as $core_map)
+                          { ?>
                             <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
-                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]" value="">
+                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]" value="<?= $core_map[0]; ?>">
+                                </div>
+                              </td>
+                              <td width="10px">
+                                <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
+                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)" <?= $core_map[1]=='Y'?'checked':''; ?>>
+                                  <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden/>
+                                </div>
+                              </td>
+                              <td width="5px">
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-placing-<?= $subject['sm_code'] ?>').remove();">
+                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                </a>
+                              </td>
+                            </tr>
+                          <?php }} else { ?>
+                            
+                            <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
+                              <td class="ps-1" colspan="4">
+                                <div class="my-auto">
+                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]">
                                 </div>
                               </td>
                               <td width="10px">
@@ -146,6 +171,8 @@
                                 </a>
                               </td>
                             </tr>
+
+                          <?php } ?>
 
                           </tbody>
                         </table>
@@ -168,10 +195,17 @@
     </div>
   </div>
   <br>
-  <div class="text-end p-3">
-    <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+
+  <div class="d-flex justify-content-between align-items-center p-2">
+    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-gradient-danger mt-2">
+      <span>Ke Belakang</span>
+    </a>
+    <div class="text-end p-3">
+      <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
+      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+    </div>
   </div>
+
 </form>
 <script>
   $(document).ready(function() {
