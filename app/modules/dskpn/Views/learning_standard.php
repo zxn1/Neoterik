@@ -66,15 +66,24 @@
             <label for="tema">TEMA</label>
             <select name="tema" id="tema-selection" class="form-control select2" aria-label="Default select example" required>
               <option disabled>-- Sila Pilih Tema --</option>
-              <option value="Individu">Individu</option>
-              <option value="Keluarga">Keluarga</option>
-              <option value="Masyarakat">Masyarakat</option>
-            </select>
+              <?php
+              $arrS = [
+                'Individu',
+                'Keluarga',
+                'Masyarakat'
+              ];
 
+              foreach($arrS as $itemz)
+              { ?>
+                <option value="<?= $itemz; ?>" <?= ($itemz == $tema)?'selected':''; ?>><?= $itemz; ?></option>
+              <?php
+              }
+              ?>
+            </select>
           </div>
           <div class="col-md-2">
             <label for="subtema">SUB-TEMA</label>
-            <input name="subtema" class="form-control" placeholder="Sila Masukkan Sub-Tema">
+            <input name="subtema" class="form-control" placeholder="Sila Masukkan Sub-Tema" value="<?= $subtema; ?>">
           </div>
         </div>
       </div>
@@ -93,14 +102,37 @@
       </div>
       <div class="card-body py-2">
         <div class="row pb-4" id="standard-pembelajaran">
-          <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+          <?php
+          if(empty($subject))
+          {
+          ?>
+            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+          <?php
+          } else { 
+            foreach($subject as $index => $sub)
+            {
+            ?>
+            <div class="col-md-4 subject-card">
+                <div class="card mt-4">
+                    <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+                        <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= $sub; ?>">
+                        <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= $subject_description[$index]; ?></textarea>
+                </div>
+            </div>
+          <?php
+            }
+          }
+          ?>
         </div>
-
         <div class="card">
           <div class="card-header d-flex bg-gradient-secondary objektif-prestasi">
             <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
           </div>
-          <textarea name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"></textarea>
+          <textarea name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea>
         </div>
       </div>
     </div>
