@@ -289,6 +289,44 @@ class Main extends BaseController
         $this->render_jscss('dskpn_view', $data, $script, $style);
     }
 
+    public function approve_dskpn($dskpn_id)
+    {
+        $staff_main_id = $this->session->get('sm_id');
+
+        // Update DSKPN table
+        $this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 1,
+            'approved_by'   => $staff_main_id,
+            'approved_at'   => date('Y-m-d H:i:s')
+        ]);
+
+        // Set success message and redirect back
+        session()->setFlashdata('swal_success', 'DSKPN has been approved successfully.');
+
+        return redirect()->back();
+    }
+
+    public function reject_dskpn()
+    {
+        $remarks        = $this->request->getPost('remarks');
+        $dskpn_id       = $this->request->getPost('dskpn_id');
+        $staff_main_id  = $this->session->get('sm_id');
+
+        // Update DSKPN table
+        $this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 2,
+            'approved_by'   => $staff_main_id,
+            'approved_at'   => date('Y-m-d H:i:s'),
+            'dskpn_remarks' => $remarks
+        ]);
+
+
+        // Set success message and redirect back
+        session()->setFlashdata('swal_success', 'DSKPN has been rejected.');
+
+        return redirect()->back();
+    }
+
 
     // 16 Domain Mapping View
     public function domain_mapping()

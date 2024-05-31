@@ -36,9 +36,9 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <?php
-  if(!empty($style))
-    foreach($style as $css){ ?>
-      <link href="../assets/css/<?= $css ?>.css" rel="stylesheet" />
+  if (!empty($style))
+    foreach ($style as $css) { ?>
+    <link href="../assets/css/<?= $css ?>.css" rel="stylesheet" />
   <?php } ?>
 </head>
 
@@ -74,9 +74,9 @@
   </script>
 
   <?php
-  if(!empty($script))
-    foreach($script as $js){ ?>
-      <script src="../assets/js/<?= $js ?>.js"></script>
+  if (!empty($script))
+    foreach ($script as $js) { ?>
+    <script src="../assets/js/<?= $js ?>.js"></script>
   <?php } ?>
 
   <script>
@@ -93,6 +93,18 @@
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <!-- success message -->
+  <?php if (session('swal_success')) : ?>
+    <script>
+      Swal.fire({
+        icon: 'success',
+        text: '<?= session('swal_success') ?>',
+        timer: 3000,
+        showConfirmButton: false
+      });
+    </script>
+
+  <?php endif; ?>
 </body>
 
 </html>
