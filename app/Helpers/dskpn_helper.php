@@ -18,3 +18,15 @@ function get_lain_lain($dm_id)
     $row = $query->getRowArray();
     return $row;
 }
+
+function get_user_name($sm_id)
+{
+    if (empty($sm_id)){
+        return '';
+    }
+    // Find user name from the database
+
+    // dummy 
+    $session = \Config\Services::session();
+    return $session->get('fullname');
+}
