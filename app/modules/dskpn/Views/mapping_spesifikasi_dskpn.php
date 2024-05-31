@@ -54,7 +54,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form action="<?= route_to('store-spec-map') . "?dskpn=" . $dskpn_id; ?>" method="POST" class="container-fluid py-4">
+<form action="<?= route_to('store-spec-map') ?>" method="POST" class="container-fluid py-4">
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -109,23 +109,23 @@
                 </tr>
               </thead>
               <tbody>
-
-                <?php
-                if (isset($data['Reka Bentuk Instruksi']))
-                  foreach ($data['Reka Bentuk Instruksi'] as $item) { ?>
-                  <tr>
-                    <td class="ps-1" colspan="4">
-                      <div class="my-auto">
-                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                      </div>
-                    </td>
-                  </tr>
-                <?php } ?>
+                
+              <?php 
+              if(isset($data['Reka Bentuk Instruksi']))
+              foreach($data['Reka Bentuk Instruksi'] as $item) { ?>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['d_id'],$specification_maplist))?'checked':''; ?>>
+                    </div>
+                  </td>
+                </tr>
+              <?php } ?>
 
               </tbody>
             </table>
@@ -154,22 +154,22 @@
               </thead>
               <tbody>
 
-                <?php
-                if (isset($data['Integrasi Teknologi']))
-                  foreach ($data['Integrasi Teknologi'] as $item) { ?>
-                  <tr>
-                    <td class="ps-1" colspan="4">
-                      <div class="my-auto">
-                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                      </div>
-                    </td>
-                  </tr>
-                <?php } ?>
+              <?php 
+              if(isset($data['Integrasi Teknologi']))
+              foreach($data['Integrasi Teknologi'] as $item) { ?>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['d_id'],$specification_maplist))?'checked':''; ?>>
+                    </div>
+                  </td>
+                </tr>
+              <?php } ?>
 
               </tbody>
             </table>
@@ -201,22 +201,22 @@
               </thead>
               <tbody>
 
-                <?php
-                if (isset($data['Pendekatan']))
-                  foreach ($data['Pendekatan'] as $item) { ?>
-                  <tr>
-                    <td class="ps-1" colspan="4">
-                      <div class="my-auto">
-                        <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
-                      </div>
-                    </td>
-                    <td>
-                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
-                      </div>
-                    </td>
-                  </tr>
-                <?php } ?>
+              <?php 
+              if(isset($data['Pendekatan']))
+              foreach($data['Pendekatan'] as $item) { ?>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['d_id'],$specification_maplist))?'checked':''; ?>>
+                    </div>
+                  </td>
+                </tr>
+              <?php } ?>
 
               </tbody>
             </table>
@@ -245,9 +245,11 @@
               </thead>
               <tbody>
 
-                <?php
-                if (isset($data['Kaedah']))
-                  foreach ($data['Kaedah'] as $item) { ?>
+              <?php 
+              if(isset($data['Kaedah']))
+              foreach($data['Kaedah'] as $item) {
+                if($item['d_name'] != 'Lain-lain') {
+              ?>
                   <tr>
                     <td class="ps-1" colspan="4">
                       <div class="my-auto">
@@ -256,28 +258,29 @@
                     </td>
                     <td>
                       <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11">
+                        <input class="form-check-input" name="input-<?= $item['d_id'] ?>" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['d_id'],$specification_maplist))?'checked':''; ?>>
                       </div>
                     </td>
                   </tr>
-                  <?php
-                    if ($item['d_name'] == 'Lain-lain') { ?>
-                    <tr>
-                      <td class="ps-1" colspan="4">
-                        <div class="my-auto">
-                          <span class="text-dark d-block text-sm"><?= $item['d_name']; ?>:</span>
-                          <textarea name="lain-lain-input"></textarea>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                          <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault17">
-                        </div>
-                      </td>
-                    </tr>
-                <?php }
-                  } ?>
-
+                <?php
+                }
+              if($item['d_name'] == 'Lain-lain') { ?>
+                <tr>
+                  <td class="ps-1" colspan="4">
+                    <div class="my-auto">
+                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?>:</span>
+                      <textarea name="lain-lain-input"><?= empty($specification_lain_lain)?'':$specification_lain_lain; ?></textarea>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault17" <?= (!empty($specification_lain_lain))?'checked':''; ?>>
+                    </div>
+                  </td>
+                </tr>
+              <?php }
+              } ?>
+                
               </tbody>
             </table>
           </div>
@@ -286,10 +289,17 @@
     </div>
   </div>
   <br>
-  <div class="text-end p-3">
-    <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+
+  <div class="d-flex justify-content-between align-items-center p-2">
+    <a href="<?= route_to('mapping_core'); ?>" class="btn bg-gradient-danger mt-2">
+      <span>Ke Belakang</span>
+    </a>
+    <div class="text-end p-3">
+      <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
+      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+    </div>
   </div>
+
 </form>
 <script>
   $(document).ready(function() {
