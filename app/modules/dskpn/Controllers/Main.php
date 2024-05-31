@@ -514,6 +514,20 @@ class Main extends BaseController
         $data['cluster_id'] = $kluster;
         $data['topic_id'] = $topik;
 
+        // Retrieve tm_year from db to be used in dskpn code
+        $tm_data = $this->topic_model->where('tm_id', $topik)->first();
+
+        // Count dskpn by topic
+        $dskpn_by_topic_count = $this->dskpn_model
+            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+            ->where('dskpn.tm_id', $topik)
+            ->where('topic_main.tm_year', $tm_data['tm_year'])
+            ->countAllResults();
+        // ->findAll();
+
+        // Create dskpn code
+        $dskpn_code = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
+
         //step 1 - add objective performance
         if ($this->objective_performance_model->insert([
             'op_desc' => $objective
@@ -523,6 +537,7 @@ class Main extends BaseController
 
                 //create DSKPN
                 $this->dskpn_model->insert([
+                    'dskpn_code'        => $dskpn_code,
                     'dskpn_theme'       => $tema,
                     'dskpn_sub_theme'   => $subtema,
                     'tm_id'             => $data['topic_id'],

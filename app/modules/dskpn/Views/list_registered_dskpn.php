@@ -7,20 +7,25 @@
             <table class="table align-items-center mb-0">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">Kod Dskpn</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Kluster</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Topik</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Attribute</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Aksi</th>
+                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">KLUSTER</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TOPIK</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">AKSI</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($dskpn as $clusterItem) : ?>
                         <tr>
-                            <td class="text-center"></td>
+                            <td class="text-center"><?= $clusterItem['dskpn_code'] ?></td>
                             <td class="text-center"><?= esc($clusterItem['cm_desc']) ?></td>
                             <td class="text-center"><?= esc($clusterItem['tm_desc']) ?></td>
-                            <td class="text-center"></td>
+                            <?php if (!function_exists('get_user_name')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_user_name($clusterItem['created_by']) ?></td>
+                            <td class="text-center"><?= get_user_name($clusterItem['approved_by']) ?></td>
                             <td class="text-center">
                                 <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="<?= route_to('dskpn_view', esc($clusterItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
