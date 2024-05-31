@@ -10,6 +10,7 @@
                         <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">KLUSTER</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TOPIK</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">AKSI</th>
@@ -21,6 +22,10 @@
                             <td class="text-center"><?= $clusterItem['dskpn_code'] ?></td>
                             <td class="text-center"><?= esc($clusterItem['cm_desc']) ?></td>
                             <td class="text-center"><?= esc($clusterItem['tm_desc']) ?></td>
+                            <?php if (!function_exists('get_dskpn_status')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_dskpn_status($clusterItem['dskpn_status']) ?></td>
                             <?php if (!function_exists('get_user_name')) {
                                 helper('dskpn_helper');
                             } ?>
