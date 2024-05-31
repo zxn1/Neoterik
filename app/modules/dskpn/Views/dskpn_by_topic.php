@@ -50,17 +50,18 @@
             <table class="table align-items-center mb-0">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">ID</th>
+                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TEMA</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">SUB-TEMA</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">ATRIBUT</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($dskpn as $dskpnItem) : ?>
                         <tr>
-                            <td class="text-center"><?= esc($dskpnItem['dskpn_id']) ?></td>
+                            <td class="text-center"><?= esc($dskpnItem['dskpn_code']) ?></td>
                             <td class="text-center">
                                 <?php
                                 // Sample value for dskpn_theme
@@ -86,7 +87,11 @@
                                 <span class="badge badge-sm <?= esc($badgeClass) ?>"><?= esc($dskpn_theme) ?></span>
                             </td>
                             <td class="text-center"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
-                            <td class="text-center"></td>
+                            <?php if (!function_exists('get_user_name')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <td class="text-center"><?= get_user_name($dskpnItem['created_by']) ?></td>
+                            <td class="text-center"><?= get_user_name($dskpnItem['approved_by']) ?></td>
                             <td class="text-center">
                                 <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
