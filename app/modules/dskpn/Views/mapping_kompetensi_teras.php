@@ -168,8 +168,8 @@
                               </td>
                               <td width="10px">
                                 <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sm_code'] ?>', this.value)">
-                                  <input type="text" value="<?= $core_map[1]=='Y'?$subject['sm_code']:'off'; ?>" name="checked-<?= $subject['sm_code'] ?>[]" id="<?= $randomString . $subject['sm_code'] ?>" hidden/>
+                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)">
+                                  <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden/>
                                 </div>
                               </td>
                               <td width="5px">
