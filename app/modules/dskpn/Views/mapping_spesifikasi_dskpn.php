@@ -291,7 +291,7 @@
   <br>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('mapping_core'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-gradient-danger mt-2">
       <span>Ke Belakang</span>
     </a>
     <div class="text-end p-3">

@@ -783,7 +783,7 @@ class Main extends BaseController
 
         $this->session->set('tp_sess_data', $sess_data);
 
-        return redirect()->to(route_to('domain_mapping'));
+        return redirect()->to(route_to('mapping_core'));
     }
 
     public function store_domain_mapping()
@@ -835,7 +835,7 @@ class Main extends BaseController
         $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
 
         if ($success)
-            return redirect()->to(route_to('mapping_core'));
+            return redirect()->to(route_to('mapping_dynamic_dskpn'));
         return redirect()->back();
     }
 
@@ -925,7 +925,7 @@ class Main extends BaseController
         $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
         //$this->session->set('core_maplist_sess', $core_map_session_list);
 
-        return redirect()->to(route_to('mapping_dynamic_dskpn'));
+        return redirect()->to(route_to('domain_mapping'));
     }
 
 
