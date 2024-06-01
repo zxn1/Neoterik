@@ -4,6 +4,9 @@
     opacity: 1;
     /* Firefox */
   }
+  .dropdown-item {
+      color: black !important;
+  }
 </style>
 
 <form action="<?= route_to('store_std_learn'); ?>" method="POST">
@@ -115,10 +118,22 @@
             <div class="col-md-4 subject-card">
                 <div class="card mt-4">
                     <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
-                        <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= $sub; ?>">
-                        <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
+                      <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                        <?php foreach($subject_list as $item_list)
+                          {
+                            $flag = false;
+                            if($item_list['sm_id'] == $sub)
+                            {
+                              $flag = true;
+                            }
+                            ?>
+                            <option class="dropdown-item" value='<?= $item_list['sm_id'] ?>' <?= ($flag)?'selected':'' ?>><?= $item_list['sm_desc'] ?></option>
+                          <?php } ?>
+                      </select>
+                      <!-- <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= $sub; ?>"> -->
+                      <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                          <i class="fas fa-trash-alt"></i>
+                      </button>
                     </div>
                     <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= $subject_description[$index]; ?></textarea>
                 </div>
@@ -169,3 +184,7 @@
   <dotlottie-player style="position : fixed; right : -100px; top : 20px; z-index : 3;" src="https://lottie.host/82b8666a-afa5-4659-8a0e-6faedb04158f/vlZwAM82T0.json" background="transparent" speed="1" style="width: 500px; height: 500px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
   <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
 </div>
+
+<script>
+  const subject_list = <?= json_encode($subject_list); ?>;
+</script>
