@@ -2,6 +2,7 @@
 
 use App\Modules\Dskpn\Controllers\Main;
 use App\Modules\Dskpn\Controllers\TopicMain;
+use App\Modules\Dskpn\Controllers\SubjectMain;
 
 $routes->group('dskpn', function ($routes) {
     /*           Route Path                   Class Controller  function                        Route Name        */
@@ -26,6 +27,7 @@ $routes->group('dskpn', function ($routes) {
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
+    $routes->get('view-subject',                [Main::class,     'view_subject'],                  ['as' => 'view_subject']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
@@ -43,6 +45,12 @@ $routes->group('dskpn', function ($routes) {
         $routes->delete('delete/(:num)',                [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
         $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
         $routes->get('get-year-by-tm-id/(:num)',        [TopicMain::class,     'getYear/$1'],              ['as' => 'get_year_by_tm_id']);
+    });
+
+      // Subject Main
+    $routes->group('subject', function ($routes) {
+        $routes->post('store-create-subject',           [SubjectMain::class,     'store_create_subject'],         ['as' => 'store_create_subject']);
+        $routes->delete('delete/(:num)',                [SubjectMain::class,     'delete_subject/$1'],            ['as' => 'delete_subject']);
     });
 
 
