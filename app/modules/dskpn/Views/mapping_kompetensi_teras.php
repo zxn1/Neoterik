@@ -132,7 +132,14 @@
                           if(isset($core_map_sess[$subject['sm_code']]))
                           {
                           foreach($core_map_sess[$subject['sm_code']] as $core_map)
-                          { ?>
+                          {
+                            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                            $charactersLength = strlen($characters);
+                            $randomString = '';
+                            for ($i = 0; $i < 10; $i++) {
+                                $randomString .= $characters[rand(0, $charactersLength - 1)];
+                            }
+                            ?>
                             <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
@@ -141,8 +148,8 @@
                               </td>
                               <td width="10px">
                                 <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)" <?= $core_map[1]=='Y'?'checked':''; ?>>
-                                  <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden/>
+                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sm_code'] ?>', this.value)" <?= $core_map[1]=='Y'?'checked':''; ?>>
+                                  <input type="text" value="<?= $core_map[1]=='Y'?$subject['sm_code']:'off'; ?>" name="checked-<?= $subject['sm_code'] ?>[]" id="<?= $randomString . $subject['sm_code'] ?>" hidden/>
                                 </div>
                               </td>
                               <td width="5px">
@@ -161,8 +168,8 @@
                               </td>
                               <td width="10px">
                                 <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
-                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)">
-                                  <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden/>
+                                  <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sm_code'] ?>', this.value)">
+                                  <input type="text" value="<?= $core_map[1]=='Y'?$subject['sm_code']:'off'; ?>" name="checked-<?= $subject['sm_code'] ?>[]" id="<?= $randomString . $subject['sm_code'] ?>" hidden/>
                                 </div>
                               </td>
                               <td width="5px">
@@ -197,7 +204,7 @@
   <br>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('tp_maintenance'); ?>" class="btn bg-gradient-danger mt-2">
       <span>Ke Belakang</span>
     </a>
     <div class="text-end p-3">
