@@ -711,6 +711,9 @@ class Main extends BaseController
 
                         $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
                     }
+
+                    //re-initialize learning_standard_id
+                    $this->session->set('learning_standard_id', $data['learning_standard_id']);
                 }
         } else {
             // Retrieve tm_year from db to be used in dskpn code
