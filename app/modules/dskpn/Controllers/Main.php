@@ -359,7 +359,7 @@ class Main extends BaseController
             //steps 1.1 - get learning standard to get list of subject.
             $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                 ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
+                ->where('ls.dskpn_id', $data['dskpn_id'])->where('ls.deleted_at', null)->findAll();
         }
 
         //steps 2 - get 4 mapping group components
@@ -396,7 +396,7 @@ class Main extends BaseController
             //steps 1.1 - get learning standard to get list of subject.
             $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                 ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                ->where('ls.dskpn_id', $data['dskpn_id'])->find();
+                ->where('ls.dskpn_id', $data['dskpn_id'])->where('ls.deleted_at', null)->findAll();
         }
 
         $script = ['kompetensi-teras'];
@@ -666,8 +666,6 @@ class Main extends BaseController
         $subtema        = $this->request->getPost('subtema');
 
         //set in session
-        $this->session->set('subject', $allSubject);
-        $this->session->set('subject_description', $allDescription);
         $this->session->set('objective', $objective);
         $this->session->set('tema', $tema);
         $this->session->set('subtema', $subtema);
@@ -697,25 +695,40 @@ class Main extends BaseController
                         'dskpn_sub_theme'   => $subtema
                     ]);
 
-                    //step 1 - remove all related learning-standard first
-                    $this->learning_standard_model->where('dskpn_id', $dskpn_id)
-                        ->delete();
+                    $tp_done = $this->session->get('tp_sess_data');
+                    if(!isset($tp_done))
+                    {
+                        $this->session->set('subject', $allSubject);
+                        $this->session->set('subject_description', $allDescription);
+                        //step 1 - remove all related learning-standard first
+                        $this->learning_standard_model->where('dskpn_id', $dskpn_id)
+                            ->delete();
 
-                    foreach ($allSubject as $index => $subject) {
-                        //step 2 - re-insert learning-standard
-                        $this->learning_standard_model->insert([
-                            'ls_details' => $allDescription[$index],
-                            'sm_id' => $subject,
-                            'dskpn_id' => $dskpn_id
-                        ]);
+                        foreach ($allSubject as $index => $subject) {
+                            //step 2 - re-insert learning-standard
+                            $this->learning_standard_model->insert([
+                                'ls_details' => $allDescription[$index],
+                                'sm_id' => $subject,
+                                'dskpn_id' => $dskpn_id
+                            ]);
 
-                        $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
+                            $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
+                        }
+
+                        //re-initialize learning_standard_id
+                        $this->session->set('learning_standard_id', $data['learning_standard_id']);
+                    } else {
+                        if(count($this->session->get('subject')) != count($allSubject))
+                        {
+                            //redirect user with temporary session - letting them know not allow change after TP were set
+                            $this->session->setFlashdata('warning_message', 'Penambahan/Penolakan Subjek tidak boleh dilakukan, kerana Tahap Penguasaan (TP) telah dikonfigurasi.');
+                            return redirect()->to(route_to('tp_maintenance'));
+                        }
                     }
-
-                    //re-initialize learning_standard_id
-                    $this->session->set('learning_standard_id', $data['learning_standard_id']);
                 }
         } else {
+            $this->session->set('subject', $allSubject);
+            $this->session->set('subject_description', $allDescription);
             // Retrieve tm_year from db to be used in dskpn code
             $tm_data = $this->topic_model->where('tm_id', $topik)->first();
 
@@ -1289,7 +1302,7 @@ class Main extends BaseController
                     //steps 1.1 - get learning standard to get list of subject.
                     $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                         ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
                 }
 
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_core";
@@ -1310,7 +1323,7 @@ class Main extends BaseController
                         
                     $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                         ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
                 }
 
                 $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
