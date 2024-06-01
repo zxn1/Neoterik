@@ -437,6 +437,7 @@ class Main extends BaseController
     public function activity_and_assessment()
     {
         $data = [];
+        $data['review'] = $this->request->getVar('review');
         $data['dskpn_id'] = $this->session->get("dskpn_id");
 
         $data['act_assess_abm'] = $this->session->get("act_assess_abm");
@@ -515,7 +516,7 @@ class Main extends BaseController
         $this->session->set('actvty_assess_learning_aid_id_sess', $actvty_assess_learning_aid_id);
 
         if ($success)
-            return redirect()->to(route_to('dskpn_complete'));
+            return redirect()->to(route_to('activity_n_assessment') . "?review=true");
         return redirect()->back();
     }
 
@@ -523,6 +524,43 @@ class Main extends BaseController
     {
         $data = [];
         $data['dskpn_id'] = $this->session->get("dskpn_id");
+        $data['dskpn_code'] = $this->session->get("dskpn_code");
+
+        //remove all session
+         $sess_keys = [
+            'subject',
+            'subject_description',
+            'objective',
+            'tema',
+            'subtema',
+            'tm_id',
+            'cluster_id',
+            'topic_id',
+            'objective_performance_id',
+            'dskpn_id',
+            'learning_standard_id',
+            'tp_sess_data',
+            'core_map_sess',
+            'core_mapping_id_session_data',
+            'domain_map_session',
+            'domain_map_id_session_data',
+            'specification_mapist_sess',
+            'specification_lain_lain_sess',
+            'specification_mapping_id_list_sess',
+            'specification_lain_lain_id_sess',
+            'act_assess_abm',
+            'act_assess_pentaksiran',
+            'act_assess_idea_pengajaran',
+            'act_assess_parent_involve',
+            'actvty_assess_map_id_sess',
+            'actvty_assess_learning_aid_id_sess',
+            'dskpn_code'
+        ];
+
+        // Remove each session key
+        foreach ($sess_keys as $key) {
+            $this->session->remove($key);
+        }
 
         $script = [];
         $style = [];
@@ -736,6 +774,8 @@ class Main extends BaseController
                 $this->session->set($key, $val);
             }
         }
+
+        $this->session->set('dskpn_code', $this->dskpn_model->where('dskpn_id', $data['dskpn_id'])->first()['dskpn_code']);
 
         return redirect()->to(route_to('tp_maintenance'));
 
@@ -1180,6 +1220,157 @@ class Main extends BaseController
         }
 
         return redirect()->back()->with('fail', 'Maaf, aksi menambah Cluster tidak berjaya!');
+    }
+
+    public function review_dskpn()
+    {
+        $data = [];
+
+        // Scripts and styles
+        $script = [];
+        $style = [];
+
+        $page = $this->request->getVar('page');
+        $data['page'] = $page;
+
+        switch ($page) {
+        case 1:
+            //code block
+            {
+                //tp part
+                $data['data']['parameters'] = $this->session->get();
+                $data['data']['tp_session'] = $this->session->get("tp_sess_data");
+                //step 1 - get Cluster
+                $data['data']['cluster_desc'] = $this->cluster_model
+                    ->where('cm_id', $data['data']['parameters']['cluster_id'])->first();
+
+                //step 2 - get Topic
+                $data['data']['topic_desc'] = $this->topic_model
+                    ->where('tm_id', $data['data']['parameters']['topic_id'])->first();
+
+                //step 3 - get Subject Via Learning Standard
+                foreach ($data['data']['parameters']['learning_standard_id'] as $ls_id) {
+                    $query = $this->db->table('subject_main')
+                        ->select('subject_main.*')
+                        ->join('learning_standard', 'learning_standard.sm_id = subject_main.sm_id')
+                        ->where('learning_standard.ls_id', $ls_id)
+                        ->get();
+
+                    $data['data']['subjects'][] = $query->getResult();
+                }
+
+                $script[] = 'review/tp-dynamic-field';
+                //end - tp part
+
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\tp_maintenance";
+                break;
+            }
+        case 2:
+            //code block;
+            {
+                $data['data']['core_map_sess'] = $this->session->get("core_map_sess");
+
+                $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+                if (!empty($data['data']['dskpn_id'])) {
+                    $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                        ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                        ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+
+                    //steps 1 - get all subjects related to iterate horizontally
+                    //steps 1.1 - get learning standard to get list of subject.
+                    $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+                        ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                }
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_core";
+                break;
+            }
+        case 3:
+            //code block
+            {
+                $data['data']['domain_map_session'] = $this->session->get("domain_map_session");
+
+                $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+                $data['data']['subjects'] = [];
+                if (!empty($data['data']['dskpn_id'])) {
+                    $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                        ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                        ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                        
+                    $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+                        ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                }
+
+                $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
+
+                foreach ($allGroup as $group) {
+                    $data['data']['data'][$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+                }
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\sixteen_domain";
+                break;
+            }
+        case 4:
+            //code block
+            {
+                $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+
+                $data['data']['specification_maplist'] = $this->session->get("specification_mapist_sess");
+                $data['data']['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
+
+                if (!empty($data['data']['dskpn_id'])) {
+                    $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                        ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                        ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                }
+
+                $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
+
+                foreach ($allGroup as $group) {
+                    $data['data']['data'][$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+                }
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_specs";
+                break;
+            }
+        case 5:
+            //code block
+            {
+                $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+
+                $data['data']['act_assess_abm'] = $this->session->get("act_assess_abm");
+                $data['data']['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
+                $data['data']['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
+                $data['data']['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
+
+                if (!empty($data['data']['dskpn_id'])) {
+                    $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                        ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                        ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                }
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_actvt_assess";
+                break;
+            }
+        default:
+            //code block
+            echo "fail";
+        }
+
+        $load_page = [
+            'data'  => $data,
+            'script' => $script,
+            'style' => $style,
+        ];
+
+        echo view('App\\Modules\\dskpn\\Views\\review\\index', $load_page);
     }
 
     public function debugcheckallsession()
