@@ -717,6 +717,13 @@ class Main extends BaseController
 
                         //re-initialize learning_standard_id
                         $this->session->set('learning_standard_id', $data['learning_standard_id']);
+                    } else {
+                        if(count($this->session->get('subject')) != count($allSubject))
+                        {
+                            //redirect user with temporary session - letting them know not allow change after TP were set
+                            $this->session->setFlashdata('warning_message', 'Penambahan/Penolakan Subjek tidak boleh dilakukan, kerana Tahap Penguasaan (TP) telah dikonfigurasi.');
+                            return redirect()->to(route_to('tp_maintenance'));
+                        }
                     }
                 }
         } else {
@@ -1295,7 +1302,7 @@ class Main extends BaseController
                     //steps 1.1 - get learning standard to get list of subject.
                     $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                         ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
                 }
 
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_core";
@@ -1316,7 +1323,7 @@ class Main extends BaseController
                         
                     $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
                         ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->find();
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
                 }
 
                 $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();

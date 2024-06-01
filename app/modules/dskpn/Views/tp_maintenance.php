@@ -87,6 +87,15 @@
 <script>
   const subjectData = <?= json_encode(!empty($subjects) ? $subjects : []); ?>;
   const tpDatas = <?= json_encode(!empty($tp_session)?$tp_session : []); ?>
+
+  <?php if (session()->has('warning_message')) : ?>
+    Swal.fire({
+        icon: "fail",
+        title: "Maaf!",
+        text: "<?= session('warning_message'); ?>"
+    });
+  <?php endif; ?>
+
 </script>
 
  <!-- <div class="card-header d-flex p-3 bg-gradient-primary">
