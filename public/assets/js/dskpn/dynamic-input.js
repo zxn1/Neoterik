@@ -2,29 +2,26 @@ $(document).ready(function() {
     $('.select2').select2();
 });
 
-// $(document).ready(function() {
-//     StandardData.forEach(function(item){
-//         $('#standard-pembelajaran').append(`
-//             <div class="col-md-4">
-//                 <div class="card mt-4">
-//                     <div class="card-header d-flex p-3 bg-gradient-primary">
-//                         <input type="text" name="subtema" class="form-control" style="background-color: transparent;border: 0px; outline: none; color: white; font-size: 1em; font-weight:bold;" placeholder="Sains & Kemanusiaan" required></input>
-//                     </div>
-//                     <textarea class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="${item.hint}"></textarea>
-//                 </div>
-//             </div>
-//         `);
-//     });
-//  });
-
 //listener
 $('#add-subject-button').on('click', function() {
-    document.getElementById("hinting-no-subject").style.display = "none";
+    try {
+        document.getElementById("hinting-no-subject").style.display = "none";
+    } catch (err) {
+        //do nothing
+    }
+
+    let htmlOptions = ``;
+    subject_list.forEach(function(item) {
+        htmlOptions += `<option class="dropdown-item" value='${item.sm_id}'>${item.sm_desc}</option>`;
+    });
+
     $('#standard-pembelajaran').append(`
         <div class="col-md-4 subject-card">
             <div class="card mt-4">
                 <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
-                    <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                        ${htmlOptions}
+                    </select>
                     <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
                         <i class="fas fa-trash-alt"></i>
                     </button>
@@ -141,6 +138,21 @@ $('#kluster-selection').on('change', function() {
 //                 <div class="card mt-4">
 //                     <div class="card-header d-flex p-3 bg-gradient-primary">
 //                         <h6 class="my-auto text-white">${ item.name }</h6>
+//                     </div>
+//                     <textarea class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="${item.hint}"></textarea>
+//                 </div>
+//             </div>
+//         `);
+//     });
+//  });
+
+// $(document).ready(function() {
+//     StandardData.forEach(function(item){
+//         $('#standard-pembelajaran').append(`
+//             <div class="col-md-4">
+//                 <div class="card mt-4">
+//                     <div class="card-header d-flex p-3 bg-gradient-primary">
+//                         <input type="text" name="subtema" class="form-control" style="background-color: transparent;border: 0px; outline: none; color: white; font-size: 1em; font-weight:bold;" placeholder="Sains & Kemanusiaan" required></input>
 //                     </div>
 //                     <textarea class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="${item.hint}"></textarea>
 //                 </div>

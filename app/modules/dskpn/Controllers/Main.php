@@ -678,36 +678,42 @@ class Main extends BaseController
         if(empty($this->session->get('tm_id')))
             $this->session->set('tm_id', $topik);
 
+        $performance_objective = $this->session->get('objective_performance_id');
         //means need to update
-        if($this->session->get('objective_performance_id'))
+        if(isset($performance_objective))
         {
+            //init to zero once again
+            $data['learning_standard_id'] = [];
+
             //step 1 - update objective performance
             if ($this->objective_performance_model->update($this->session->get('objective_performance_id'), [
                 'op_desc' => $objective
             ]))
                 if (is_array($allSubject) && is_array($allDescription)) {
                     //update DSKPN
-                    $this->dskpn_model->update($this->session->get('dskpn_id'), [
+                    $dskpn_id = $this->session->get('dskpn_id');
+                    $this->dskpn_model->update($dskpn_id, [
                         'dskpn_theme'       => $tema,
                         'dskpn_sub_theme'   => $subtema
                     ]);
 
+                    //step 1 - remove all related learning-standard first
+                    $this->learning_standard_model->where('dskpn_id', $dskpn_id)
+                        ->delete();
+
                     foreach ($allSubject as $index => $subject) {
-                        //step 1 - temporary only - need UI later to register subject
-                        // $this->subject_model->insert([
-                        //     'sm_code' => $this->_generateRandomString(7),
-                        //     'sm_desc' => $subject
-                        // ]);
-
-                        // Get the last inserted ID
-                        // $lastID = $this->subject_model->insertID();
-                        //end temporary
-
-                        //step 2 - insert learning-standard
-                        $this->learning_standard_model->update($this->session->get('learning_standard_id')[$index], [
-                            'ls_details' => $allDescription[$index]
+                        //step 2 - re-insert learning-standard
+                        $this->learning_standard_model->insert([
+                            'ls_details' => $allDescription[$index],
+                            'sm_id' => $subject,
+                            'dskpn_id' => $dskpn_id
                         ]);
+
+                        $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
                     }
+
+                    //re-initialize learning_standard_id
+                    $this->session->set('learning_standard_id', $data['learning_standard_id']);
                 }
         } else {
             // Retrieve tm_year from db to be used in dskpn code
@@ -746,19 +752,19 @@ class Main extends BaseController
 
                     foreach ($allSubject as $index => $subject) {
                         //step 1 - temporary only - need UI later to register subject
-                        $this->subject_model->insert([
-                            'sm_code' => $this->_generateRandomString(7),
-                            'sm_desc' => $subject
-                        ]);
+                        // $this->subject_model->insert([
+                        //     'sm_code' => $this->_generateRandomString(7),
+                        //     'sm_desc' => $subject
+                        // ]);
 
                         // Get the last inserted ID
-                        $lastID = $this->subject_model->insertID();
+                        // $lastID = $this->subject_model->insertID();
                         //end temporary
 
                         //step 2 - insert learning-standard
                         $this->learning_standard_model->insert([
                             'ls_details' => $allDescription[$index],
-                            'sm_id' => $lastID,
+                            'sm_id' => $subject,
                             'dskpn_id' => $data['dskpn_id'] //temporary null
                         ]);
 
@@ -775,7 +781,7 @@ class Main extends BaseController
             }
         }
 
-        $this->session->set('dskpn_code', $this->dskpn_model->where('dskpn_id', $data['dskpn_id'])->first()['dskpn_code']);
+        $this->session->set('dskpn_code', $this->dskpn_model->where('dskpn_id', $this->session->get('dskpn_id'))->first()['dskpn_code']);
 
         return redirect()->to(route_to('tp_maintenance'));
 
@@ -1184,6 +1190,7 @@ class Main extends BaseController
         $data['objective'] = "";
         $data['tema'] = "";
         $data['subtema'] = "";
+        $data['subject_list'] = $this->subject_model->findAll();
 
         $tm_id = $this->session->get('tm_id');
         $data['flag'] = $this->request->getVar('flag');
