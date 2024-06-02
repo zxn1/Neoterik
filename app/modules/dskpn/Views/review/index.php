@@ -29,7 +29,7 @@
 <nav aria-label="semakan">
   <ul class="pagination pagination-sm justify-content-center mt-5">
   <li class="page-item <?= ($data['page'] > 1)?'':'disabled' ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($data['page']-1); ?>"><<</a></li>
-    <?php for($i = 0; $i < 5; $i++)
+    <?php for($i = 0; $i < 6; $i++)
     { ?>
         <li class="page-item <?= ($data['page'] == ($i+1))?'active':''; ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($i+1); ?>"><?= ($i+1) ?></a></li>
     <?php }?>
