@@ -718,11 +718,22 @@ class Main extends BaseController
                         //re-initialize learning_standard_id
                         $this->session->set('learning_standard_id', $data['learning_standard_id']);
                     } else {
-                        if(count($this->session->get('subject')) != count($allSubject))
+                        if($this->session->get('subject') != $allSubject) //that array must be same!
                         {
                             //redirect user with temporary session - letting them know not allow change after TP were set
                             $this->session->setFlashdata('warning_message', 'Penambahan/Penolakan Subjek tidak boleh dilakukan, kerana Tahap Penguasaan (TP) telah dikonfigurasi.');
                             return redirect()->to(route_to('tp_maintenance'));
+                        } else {
+                            $learning_standard_id_list = $this->session->get('learning_standard_id');
+                            foreach ($allSubject as $index => $subject) {
+                                //step 2 - re-insert learning-standard
+                                $this->learning_standard_model->update($learning_standard_id_list[$index], [
+                                    'ls_details' => $allDescription[$index],
+                                    'sm_id' => $subject,
+                                    'dskpn_id' => $dskpn_id
+                                ]);
+                            }
+                            $this->session->set('subject_description', $allDescription);
                         }
                     }
                 }
