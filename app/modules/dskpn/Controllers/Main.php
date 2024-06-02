@@ -1266,6 +1266,40 @@ class Main extends BaseController
 
         switch ($page) {
         case 1:
+            {
+                $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+                if (!empty($data['data']['dskpn_id'])) {
+                    $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
+                        ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
+                        ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+
+                    //steps 1 - get all subjects related to iterate horizontally
+                    //steps 1.1 - get learning standard to get list of subject.
+                    $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+                        ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
+                        ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
+                }
+
+                $data['data']['subject_list'] = $this->subject_model->findAll();
+
+                $tm_id = $this->session->get('tm_id');
+                // Query get topic data
+                $data['data']['topic'] = $this->topic_model
+                    ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+                    ->where('topic_main.tm_id', $tm_id)
+                    ->first();
+
+                $data['data']['subject'] = $this->session->get('subject');
+                $data['data']['subject_description'] = $this->session->get('subject_description');
+                $data['data']['objective'] = $this->session->get('objective');
+                $data['data']['tema'] = $this->session->get('tema');
+                $data['data']['subtema'] = $this->session->get('subtema');
+
+                $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\standard_learning";
+                break;
+            }
+        case 2:
             //code block
             {
                 //tp part
@@ -1297,7 +1331,7 @@ class Main extends BaseController
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\tp_maintenance";
                 break;
             }
-        case 2:
+        case 3:
             //code block;
             {
                 $data['data']['core_map_sess'] = $this->session->get("core_map_sess");
@@ -1319,7 +1353,7 @@ class Main extends BaseController
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_core";
                 break;
             }
-        case 3:
+        case 4:
             //code block
             {
                 $data['data']['domain_map_session'] = $this->session->get("domain_map_session");
@@ -1346,7 +1380,7 @@ class Main extends BaseController
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\sixteen_domain";
                 break;
             }
-        case 4:
+        case 5:
             //code block
             {
                 $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
@@ -1370,7 +1404,7 @@ class Main extends BaseController
                 $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_specs";
                 break;
             }
-        case 5:
+        case 6:
             //code block
             {
                 $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
