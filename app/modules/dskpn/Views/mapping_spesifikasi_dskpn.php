@@ -269,12 +269,12 @@
                   <td class="ps-1" colspan="4">
                     <div class="my-auto">
                       <span class="text-dark d-block text-sm"><?= $item['d_name']; ?>:</span>
-                      <textarea name="lain-lain-input"><?= empty($specification_lain_lain)?'':$specification_lain_lain; ?></textarea>
+                      <textarea name="lain-lain-input" id="lain-lain-input-text"><?= empty($specification_lain_lain)?'':$specification_lain_lain; ?></textarea>
                     </div>
                   </td>
                   <td>
                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                      <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexSwitchCheckDefault17" <?= (!empty($specification_lain_lain))?'checked':''; ?>>
+                      <input class="form-check-input" name="input-lain" value="<?= $item['d_id'] ?>" type="checkbox" id="flexCheckboxLainLain" <?= (!empty($specification_lain_lain))?'checked':''; ?>>
                     </div>
                   </td>
                 </tr>
