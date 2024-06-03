@@ -429,7 +429,7 @@ class Main extends BaseController
             $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
         }
 
-        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $script = ['mapping_spesification'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_spesifikasi_dskpn', $data, $script, $style);
     }
