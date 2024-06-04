@@ -52,6 +52,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 
 <form action="<?= route_to('store_actv_asses') ?>" method="POST" class="container-fluid py-4">
@@ -95,7 +96,8 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
-        <textarea rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border">
+        
+        <textarea id="editor-idea-pengajaran" rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border">
           <?= $act_assess_idea_pengajaran; ?>
         </textarea>
       </div>
@@ -108,7 +110,7 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
-        <textarea rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border">
+        <textarea id="editor-pentaksiran" rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border">
           <?= $act_assess_pentaksiran; ?>
         </textarea>
       </div>
@@ -243,4 +245,6 @@ if($review)
   $(document).ready(function() {
     $('.select2').select2();
   });
+
+  const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
 </script>

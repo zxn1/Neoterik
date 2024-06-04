@@ -24,8 +24,18 @@
     padding: 0.5rem !important;
   }
 
-  .objektif-prestasi-text {
+  .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
     background-color: #edf1fd;
+  }
+
+  .ck-editor__editable_inline {
+      min-height: 220px;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    border-radius: 1rem !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
   }
 
   .select2-container--default .select2-selection--single .select2-selection__arrow {

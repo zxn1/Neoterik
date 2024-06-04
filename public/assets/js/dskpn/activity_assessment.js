@@ -1,5 +1,43 @@
 $(document).ready(function() {
     $('.select2').select2();
+
+    let editor_idea_pengajaran, editor_pentaksiran;
+
+    ClassicEditor
+    .create( document.querySelector('#editor-idea-pengajaran'), {
+        simpleUpload: {
+        // Feature configuration.
+        uploadUrl: ckeditor_upload_url,
+        headers: {
+            //later put csrf_token
+        }
+        }
+    } )
+    .then( newEditor => {
+        //ni incase ada nak adjust editor ni nanti
+        editor_idea_pengajaran = newEditor;
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
+
+    ClassicEditor
+    .create( document.querySelector('#editor-pentaksiran'), {
+        simpleUpload: {
+        // Feature configuration.
+        uploadUrl: ckeditor_upload_url,
+        headers: {
+            //later put csrf_token
+        }
+        }
+    } )
+    .then( newEditor => {
+        //ni incase ada nak adjust editor ni nanti
+        editor_pentaksiran = newEditor;
+    } )
+    .catch( error => {
+        console.error( error );
+    } );
 });
 
  function addField() {

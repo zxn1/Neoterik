@@ -8,6 +8,7 @@
       color: black !important;
   }
 </style>
+<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 <form action="<?= route_to('store_std_learn'); ?>" method="POST">
   <?= csrf_field() ?>
@@ -147,7 +148,7 @@
           <div class="card-header d-flex bg-gradient-secondary objektif-prestasi">
             <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
           </div>
-          <textarea name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea>
+          <textarea id="editor-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea>
         </div>
       </div>
     </div>
@@ -161,6 +162,16 @@
     </div>
   </div>
 </form>
+
+<div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
+  <dotlottie-player style="position : fixed; right : -100px; top : 20px; z-index : 3;" src="https://lottie.host/82b8666a-afa5-4659-8a0e-6faedb04158f/vlZwAM82T0.json" background="transparent" speed="1" style="width: 500px; height: 500px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+  <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
+</div>
+
+<script>
+  const subject_list = <?= json_encode($subject_list); ?>;
+  const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
+</script>
 
 <!-- <div class="row pt-5">
 
@@ -178,13 +189,3 @@
             </div>
         </div> -->
 <!-- </div> -->
-
-
-<div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
-  <dotlottie-player style="position : fixed; right : -100px; top : 20px; z-index : 3;" src="https://lottie.host/82b8666a-afa5-4659-8a0e-6faedb04158f/vlZwAM82T0.json" background="transparent" speed="1" style="width: 500px; height: 500px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
-  <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
-</div>
-
-<script>
-  const subject_list = <?= json_encode($subject_list); ?>;
-</script>

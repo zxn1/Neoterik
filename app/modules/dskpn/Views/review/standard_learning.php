@@ -1,3 +1,19 @@
+<style>
+  .ck-editor__editable_inline {
+      min-height: 220px;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    border-radius: 1rem !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  .card .card-header {
+    padding: 0.5rem;
+  }
+</style>
+<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <div>
   <div class="container-fluid py-4">
     <div class="card">
@@ -112,9 +128,25 @@
           <div class="card-header d-flex bg-gradient-secondary objektif-prestasi">
             <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
           </div>
-          <textarea name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai" disabled><?= $objective; ?></textarea>
+          <textarea id="view-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border objektif-prestasi-text" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai" disabled><?= $objective; ?></textarea>
         </div>
       </div>
     </div>
   </div>
 </div>
+<div id="custom-freetext-id"><!-- nothing here --></div>
+<script>
+  $(document).ready(function() {
+      ClassicEditor
+      .create( document.querySelector('#view-objectif-pentaksiran'), {
+        toolbar: [], // Remove the toolbar
+        disabled: true,
+      } )
+      .then( editor => {
+        editor.enableReadOnlyMode('custom-freetext-id');
+      } )
+      .catch( error => {
+          console.log( error );
+      } );
+  });
+</script>
