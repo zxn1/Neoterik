@@ -23,8 +23,9 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('store-domain-mapping',       [Main::class,     'store_domain_mapping'],          ['as' => 'store_domain_map']);
     $routes->post('store-create-cluster',       [Main::class,     'store_create_cluster'],          ['as' => 'store_create_cluster']);
     $routes->post('store-core-mapping',         [Main::class,     'store_core_mapping'],            ['as' => 'store_core_map']);
-    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],  ['as' => 'store-spec-map']);
+    $routes->post('store-specification-mapping',[Main::class,     'store_specification_mapping'],   ['as' => 'store-spec-map']);
     $routes->post('store-activity-assessment',  [Main::class,     'store_activity_assessment'],     ['as' => 'store_actv_asses']);
+    $routes->post('store-image-return-url',     [Main::class,     'store_image_ckeditor'],          ['as' => 'store_image_ckedit']);
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
