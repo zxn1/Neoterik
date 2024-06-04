@@ -1154,6 +1154,36 @@ class Main extends BaseController
         return $randomString;
     }
 
+    public function store_image_ckeditor()
+    {
+        $file = $this->request->getFile('upload');
+
+        // Set validation rules
+        $validationRules = [
+            'upload' => [
+                'uploaded[upload]',
+                'mime_in[upload,image/jpg,image/jpeg,image/gif,image/png]', //image mimetype only
+                'max_size[upload,4096]', //4MB max size
+            ]
+        ];
+
+        if ($this->validate($validationRules)) {
+            if (!$file->isValid()) {
+                return $this->fail($file->getErrorString());
+            }
+    
+            $file->move(ROOTPATH . 'public\neoterik\uploads');
+    
+            $name = $file->getName();
+
+            return $this->response->setJSON([
+                'url' => '/neoterik/uploads/' . $name
+            ]);
+        }
+
+        return null;
+    }
+
     // Display List of DSKPN by ID
     public function dskpn_by_topic($tm_id)
     {
@@ -1206,7 +1236,6 @@ class Main extends BaseController
 
     public function dskpn_learning_standard()
     {
-
         $data = [];
         //set in session
         $data['subject'] = "";
@@ -1234,7 +1263,7 @@ class Main extends BaseController
             $data['kluster'] = $this->cluster_model->findAll();
         }
 
-        $script = ['data', 'dynamic-input'];
+        $script = ['dynamic-input', 'learning_standard'];
         $style = ['static-field'];
         $this->render_jscss('learning_standard', $data, $script, $style);
     }

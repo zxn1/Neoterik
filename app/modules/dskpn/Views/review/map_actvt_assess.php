@@ -1,3 +1,19 @@
+<style>
+  .ck-editor__editable_inline {
+      min-height: 220px;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    border-radius: 1rem !important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+
+  .card .card-header {
+    padding: 0.5rem;
+  }
+</style>
+<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <div class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -32,9 +48,7 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
-        <textarea rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border" disabled>
-          <?= $act_assess_idea_pengajaran; ?>
-        </textarea>
+        <textarea id="view-idea-pentaksiran" rows="5" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border" disabled><?= $act_assess_idea_pengajaran; ?></textarea>
       </div>
     </div>
   </div>
@@ -45,9 +59,7 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
-        <textarea rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border" disabled>
-          <?= $act_assess_pentaksiran; ?>
-        </textarea>
+        <textarea id="view-pentaksiran" rows="5" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border" disabled><?= $act_assess_pentaksiran; ?></textarea>
       </div>
     </div>
   </div>
@@ -107,3 +119,31 @@
     </div>
   </div>
 </div>
+<div id="custom-freetext-id"><!-- nothing here --></div>
+<script>
+  $(document).ready(function() {
+      ClassicEditor
+      .create( document.querySelector('#view-pentaksiran'), {
+        toolbar: [], // Remove the toolbar
+        disabled: true,
+      } )
+      .then( editor => {
+        editor.enableReadOnlyMode('custom-freetext-id');
+      } )
+      .catch( error => {
+          console.log( error );
+      } );
+
+      ClassicEditor
+      .create( document.querySelector('#view-idea-pentaksiran'), {
+        toolbar: [], // Remove the toolbar
+        disabled: true,
+      } )
+      .then( editor => {
+        editor.enableReadOnlyMode('custom-freetext-id');
+      } )
+      .catch( error => {
+          console.log( error );
+      } );
+  });
+</script>
