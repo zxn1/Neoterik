@@ -39,7 +39,9 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('approve-dskpn/(:any)',        [Main::class,     'approve_dskpn/$1'],              ['as' => 'approve_dskpn']);
     $routes->post('reject-dskpn',               [Main::class,     'reject_dskpn'],                  ['as' => 'reject_dskpn']);
 
+    $routes->post('store-cluster-subject-mapping',               [Main::class,     'store_cluster_subject_mapping'],                  ['as' => 'store_cluster_subject_mapping']);
 
+    
 
     //Topic Main
     $routes->group('topic', function ($routes) {
