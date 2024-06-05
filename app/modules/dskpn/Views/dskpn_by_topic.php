@@ -1,3 +1,9 @@
+<style>
+    .select2-container--open .select2-dropdown {
+        z-index: 9999 !important;
+        left: 0;
+    }
+</style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -37,12 +43,23 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
             <h6 class="my-auto text-white">SENARAI DSKPN</h6>
-            <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
-                Tambah Dskpn&nbsp;&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
-                </svg>
-            </a>
+
+            <?php if ($register_subject_status == true) : ?>
+                <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
+                    Tambah Dskpn&nbsp;&nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
+                    </svg>
+                </a>
+            <?php else : ?>
+                <button class="btn bg-gradient-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
+                    Tambah Dskpn&nbsp;&nbsp;
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
+                    </svg>
+                </button>
+            <?php endif ?>
+
         </div>
 
 
@@ -102,8 +119,97 @@
     <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
 </div>
 
+<div class="modal fade" id="clusterSubjectMappingModal" tabindex="-1" aria-labelledby="clusterSubjectMappingModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan Subjek bagi Kluster:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="rejectForm" action="<?= route_to('store_cluster_subject_mapping') ?>" method="post">
+
+                    <input type="text" name="cm_id" value="<?= $topic['cm_id'] ?>" hidden>
+                    <input type="text" name="tm_id" value="<?= $topic['tm_id'] ?>" hidden>
+                    <div class="row pb-4" id="standard-pembelajaran">
+                        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+
+                    </div>
+                    <div class="text-end">
+                        <span id="add-subject-btn" class="btn bg-gradient-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
+                            </svg>
+                        </span>
+                        <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit" style="display: none;">Simpan&nbsp;
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                                <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
+                                <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function() {
+        // Initialize select2 for existing elements
         $('.select2').select2();
+
+        let counter = 0; // Initialize a counter outside of the click handler
+
+        // Listener for add subject button
+        $('#add-subject-btn').on('click', function() {
+            try {
+                document.getElementById("hinting-no-subject").style.display = "none";
+            } catch (err) {
+                // Do nothing
+            }
+
+            let subjects = <?= json_encode($subjects) ?>; // Pass PHP variable to JavaScript
+            let options = '';
+            subjects.forEach(function(subject) {
+                options += `<option value="${subject.sm_id}">${subject.sm_code} - ${subject.sm_desc}</option>`;
+            });
+
+            counter++; // Increment the counter
+
+            $('#standard-pembelajaran').append(`
+                <div class="col-md-12 subject-card">
+                    <div class="card mt-4">
+                        <div class="d-flex p-2 bg-gradient-primary">
+                            <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Subjek" required>
+                                <option value="" selected disabled>--Select Subject--</option>
+                                ${options}
+                            </select>
+                            <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            // Initialize Select2 on the new select element
+            $(`#subject-${counter}`).select2();
+        });
+
+        // Show the submit button after adding a subject
+        $('#add-subject-btn').on('click', function() {
+            try {
+                document.getElementById("submit-btn").style.display = "inline";
+            } catch (err) {
+                // Do nothing
+            }
+        });
+
+        // Attach a delegated event listener for the delete buttons
+        $(document).on('click', '.delete-subject', function() {
+            $(this).closest('.subject-card').remove();
+        });
     });
 </script>
