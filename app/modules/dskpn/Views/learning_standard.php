@@ -29,7 +29,7 @@
             <?php if ($flag) { ?>
               <input name="kluster_desc" class="form-control" value="<?= $topic['cm_desc'] ?>" readonly>
             <?php } else { ?>
-              <select name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example">
+              <select name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example" required>
                 <option selected>-- Sila Pilih Kluster --</option>
                 <?php foreach ($kluster as $item) { ?>
                   <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
@@ -87,7 +87,7 @@
           </div>
           <div class="col-md-2">
             <label for="subtema">SUB-TEMA</label>
-            <input name="subtema" class="form-control" placeholder="Sila Masukkan Sub-Tema" value="<?= $subtema; ?>">
+            <input name="subtema" class="form-control" placeholder="Sila Masukkan Sub-Tema" value="<?= $subtema; ?>" required>
           </div>
         </div>
       </div>
