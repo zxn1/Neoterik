@@ -216,12 +216,12 @@
             <div class="row">
                 <div class="col-sm-2">
                     <div class="pagination-container">
-                    <p class="text-center mb-2"><strong style="font-size: 1.0rem; color: black;">Pilih Tahap</strong></p>
+                    <p class="text-center mb-2"><strong style="font-size: 1.0rem; color: black;">Pilih Tahun</strong></p>
                         <?php foreach ($years as $yearItem) : ?>
                             <?php if ($yearItem == $selectedYear) : ?>
-                                <span class="pagination-button active">Tahap <?= $yearItem; ?></span>
+                                <span class="pagination-button active">Tahun <?= $yearItem; ?></span>
                             <?php else : ?>
-                                <a href="?year=<?= $yearItem; ?>" class="pagination-button">Tahap <?= $yearItem; ?></a>
+                                <a href="?year=<?= $yearItem; ?>" class="pagination-button">Tahun <?= $yearItem; ?></a>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
