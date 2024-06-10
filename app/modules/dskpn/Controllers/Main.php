@@ -300,7 +300,7 @@ class Main extends BaseController
         // dd($kemahiran_insaniah);
         // dd($data);
 
-        $script = ['data', 'dynamic-input'];
+        $script = ['dynamic-input', 'dskpn_view'];
         $style = ['static-field'];
 
         // dd($data);
