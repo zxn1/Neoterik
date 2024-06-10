@@ -26,7 +26,7 @@
               </g>
             </svg>
           </div>
-          <span class="nav-link-text ms-1">Papan Pemuka</span>
+          <span class="nav-link-text ms-1">Utama</span>
         </a>
       </li>
       <li class="nav-item">
