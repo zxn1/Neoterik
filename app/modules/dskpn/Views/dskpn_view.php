@@ -85,7 +85,7 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 <div class="container-fluid py-4">
 
@@ -783,7 +783,7 @@
           <input type="hidden" name="dskpn_id" value="<?= $dskpn_details['dskpn_id'] ?>">
           <div class="mb-3">
             <label for="remarks" class="form-label">Catatan</label>
-            <textarea class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
+            <textarea id="catatan" class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
           </div>
           <div class="text-end">
             <button class="btn bg-gradient-info mt-2" type="submit">Simpan&nbsp;
@@ -798,8 +798,11 @@
     </div>
   </div>
 </div>
+<div id="custom-freetext-id"><!-- nothing here --></div>
 <script>
   $(document).ready(function() {
     $('.select2').select2();
   });
+
+  const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
 </script>
