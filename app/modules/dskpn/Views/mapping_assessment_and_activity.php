@@ -97,9 +97,7 @@
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
         
-        <textarea id="editor-idea-pengajaran" rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border">
-          <?= $act_assess_idea_pengajaran; ?>
-        </textarea>
+        <textarea id="editor-idea-pengajaran" rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border"><?= $act_assess_idea_pengajaran; ?></textarea>
       </div>
     </div>
   </div>
@@ -110,9 +108,7 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
-        <textarea id="editor-pentaksiran" rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border">
-          <?= $act_assess_pentaksiran; ?>
-        </textarea>
+        <textarea id="editor-pentaksiran" rows="9" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border"><?= $act_assess_pentaksiran; ?></textarea>
       </div>
     </div>
   </div>
