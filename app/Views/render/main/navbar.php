@@ -5,7 +5,7 @@
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Halaman</a></li>
             <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Papan Pemuka</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Papan Pemuka</h6>
+          <h6 class="font-weight-bolder mb-0">Utama</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <?php if(!empty(session('dskpn_code')))
