@@ -1290,6 +1290,24 @@ class Main extends BaseController
                 ->first();
 
             $data['subject'] = $this->session->get('subject');
+            $data['getDefaultSubject'] = $this->cluster_subject_mapping_model->where('cm_id', $data['topic']['cm_id'])
+                                    ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
+                                    ->findAll();
+                                    
+            $arrDefaultSubject = [];
+            foreach($data['getDefaultSubject'] as $item)
+            {
+                $arrDefaultSubject[] = $item['sm_id'];
+            }
+
+            if(empty($data['subject']))
+            {    
+                $this->session->set('subject', $arrDefaultSubject);
+                $data['subject'] = $arrDefaultSubject;
+            }
+
+            $data['getDefaultSubject'] = $arrDefaultSubject;
+
             $data['subject_description'] = $this->session->get('subject_description');
             $data['objective'] = $this->session->get('objective');
             $data['tema'] = $this->session->get('tema');

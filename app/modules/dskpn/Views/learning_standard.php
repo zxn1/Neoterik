@@ -136,7 +136,7 @@
                           <i class="fas fa-trash-alt"></i>
                       </button>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= $subject_description[$index]; ?></textarea>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= isset($subject_description[$index])?$subject_description[$index]:''; ?></textarea>
                 </div>
             </div>
           <?php
@@ -171,6 +171,7 @@
 <script>
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
+  let get_default_subject = JSON.parse('<?= isset($getDefaultSubject)?json_encode($getDefaultSubject):'null'; ?>');
 </script>
 
 <!-- <div class="row pt-5">
