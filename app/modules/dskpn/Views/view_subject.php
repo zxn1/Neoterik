@@ -38,7 +38,7 @@
                     <tr>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Subjek Kode</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Subjek</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Aksi</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>

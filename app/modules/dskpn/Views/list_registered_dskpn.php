@@ -13,7 +13,7 @@
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
                         <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">AKSI</th>
+                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
