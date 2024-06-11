@@ -5,16 +5,18 @@ namespace App\Modules\Dskpn\Controllers;
 use App\Controllers\BaseController;
 
 use App\Modules\Dskpn\Models\SubjectMainModel;
+use App\Modules\Dskpn\Models\clusterSubjectMappingModel;
 
 class SubjectMain extends BaseController
 {
 
-    protected $subject_model;
+    protected $subject_model, $cluster_subject_mapping_model;
 
     public function __construct()
     {
-        $this->session          = service('session');
-        $this->subject_model = new SubjectMainModel();
+        $this->session                          = service('session');
+        $this->subject_model                    = new SubjectMainModel();
+        $this->cluster_subject_mapping_model    = new clusterSubjectMappingModel();
     }
 
     public function store_create_subject()
@@ -40,6 +42,30 @@ class SubjectMain extends BaseController
             $response = ['status' => 'success'];
         }
         
+        return $this->response->setJSON($response);
+    }
+
+    public function get_default_subject_ID($id = null)
+    {
+        $response = ['status' => 'fail'];
+        $defaultSubject = $this->cluster_subject_mapping_model->where('cm_id', $id)
+                            ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
+                            ->findAll();
+
+        if($defaultSubject)
+        {
+            $arrDefaultSubject = [];
+            foreach($defaultSubject as $item)
+            {
+                $arrDefaultSubject[] = $item['sm_id'];
+            }
+
+            $response = [
+                            'status' => 'success',
+                            'data' => $defaultSubject,
+                            'clean_data' => $arrDefaultSubject
+                        ];
+        }
         return $this->response->setJSON($response);
     }
 }
