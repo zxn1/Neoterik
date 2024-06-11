@@ -8,19 +8,11 @@
 
 <div class="container-fluid py-4">
   <div class="row">
-    <div class="col-lg-6">
-      <div class="d-flex flex-column h-100">
-        <h4 class="font-weight-bolder mb-0">Guru 1: Puan Herlina Binti Basiran</h4>
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="row">
     <div class="col-lg-4 col-12">
       <div class="card card-background card-background-mask-info h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('../../../assets/img/curved-images/white-curved.jpeg')"></div>
+        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
         <div class="card-body pt-4 text-center">
-          <h2 class="text-white mb-0 mt-2 up">Pelajar Terdaftar</h2>
+          <h2 class="text-white mb-0 mt-2 up">Pelajar</h2>
           <h1 class="text-white mb-0 up">67</h1>
           <a href="javascript:;" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
         </div>
@@ -28,7 +20,7 @@
     </div>
     <div class="col-lg-4 col-12">
       <div class="card card-background card-background-mask-primary h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('../../../assets/img/curved-images/white-curved.jpeg')"></div>
+        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
         <div class="card-body pt-4 text-center">
           <h2 class="text-white mb-0 mt-2 up">Subjek</h2>
           <h1 class="text-white mb-0 up">1</h1>
@@ -38,7 +30,7 @@
     </div>
     <div class="col-lg-4 col-12">
       <div class="card card-background card-background-mask-success h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('../../../assets/img/curved-images/white-curved.jpeg')"></div>
+        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
         <div class="card-body pt-4 text-center">
           <h2 class="text-white mb-0 mt-2 up">Kelas</h2>
           <h1 class="text-white mb-0 up">4</h1>

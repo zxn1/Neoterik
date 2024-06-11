@@ -7,6 +7,8 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
+<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 
 <div class="container-fluid py-4">
     <div class="card">
@@ -62,53 +64,80 @@
 
         </div>
 
-
         <div class="table-responsive">
-            <table class="table align-items-center mb-0">
-                <thead>
-                    <tr>
-                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TEMA</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">SUB-TEMA</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($dskpn as $dskpnItem) : ?>
-                        <tr>
-                            <td class="text-center"><?= esc($dskpnItem['dskpn_code']) ?></td>
-                            <td class="text-center">
-                                <?php if (!function_exists('get_dskpn_tema')) {
-                                    helper('dskpn_helper');
-                                } ?>
-                                <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
-                            </td>
-                            <td class="text-center"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
-                            <?php if (!function_exists('get_dskpn_status')) {
-                                helper('dskpn_helper');
-                            } ?>
-                            <td class="text-center"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
-                            <?php if (!function_exists('get_user_name')) {
-                                helper('dskpn_helper');
-                            } ?>
-                            <td class="text-center"><?= get_user_name($dskpnItem['created_by']) ?></td>
-                            <td class="text-center"><?= get_user_name($dskpnItem['approved_by']) ?></td>
-                            <td class="text-center">
-                                <div class="col-2 text-info" style="display: inline-block;">
-                                    <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
-                                </div>
-                                &nbsp;&nbsp;
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
-                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+            <div class="dataTable-wrapper dataTable-loading no-footer sortable fixed-height fixed-columns">
+                <!-- <div class="dataTable-top">
+                    <div class="dataTable-dropdown"><label><select class="dataTable-selector">
+                                <option value="5">5</option>
+                                <option value="10" selected="">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                            </select> entries per page</label></div>
+                </div> -->
+                <div class="dataTable-container" style="height: 500.641px;">
+                    <table class="table table-flush dataTable-table" id="datatable-basic">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="text-uppercase text-secondary text-m font-weight-bolder text-center">KOD DSKPN</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">TEMA</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">SUB-TEMA</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">STATUS</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">PENYEDIA</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">PENGESAH</th>
+                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">TINDAKAN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($dskpn as $dskpnItem) : ?>
+                                <tr>
+                                    <td class="text-sm font-weight-normal"><?= esc($dskpnItem['dskpn_code']) ?></td>
+                                    <td class="text-sm font-weight-normal">
+                                        <?php if (!function_exists('get_dskpn_tema')) {
+                                            helper('dskpn_helper');
+                                        } ?>
+                                        <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
+                                    </td>
+                                    <td class="text-sm font-weight-normal"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
+                                    <?php if (!function_exists('get_dskpn_status')) {
+                                        helper('dskpn_helper');
+                                    } ?>
+                                    <td class="text-sm font-weight-normal"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
+                                    <?php if (!function_exists('get_user_name')) {
+                                        helper('dskpn_helper');
+                                    } ?>
+                                    <td class="text-sm font-weight-normal"><?= get_user_name($dskpnItem['created_by']) ?></td>
+                                    <td class="text-sm font-weight-normal"><?= get_user_name($dskpnItem['approved_by']) ?></td>
+                                    <td class="text-sm font-weight-normal">
+                                        <div class="col-2 text-info" style="display: inline-block;">
+                                            <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
+                                        </div>
+                                        &nbsp;&nbsp;
+                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
+                                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div class="dataTable-bottom">
+                    <div class="dataTable-info">Showing 1 to 10 of 57 entries</div>
+                    <nav class="dataTable-pagination">
+                        <ul class="dataTable-pagination-list">
+                            <li class="pager"><a href="#" data-page="1">‹</a></li>
+                            <li class="active"><a href="#" data-page="1">1</a></li>
+                            <li class=""><a href="#" data-page="2">2</a></li>
+                            <li class=""><a href="#" data-page="3">3</a></li>
+                            <li class=""><a href="#" data-page="4">4</a></li>
+                            <li class=""><a href="#" data-page="5">5</a></li>
+                            <li class=""><a href="#" data-page="6">6</a></li>
+                            <li class="pager"><a href="#" data-page="2">›</a></li>
+                        </ul>
+                    </nav>
+                </div> -->
+            </div>
         </div>
     </div>
 </div>
@@ -211,5 +240,8 @@
         $(document).on('click', '.delete-subject', function() {
             $(this).closest('.subject-card').remove();
         });
+
+        $('#datatable-basic').DataTable();
+
     });
 </script>
