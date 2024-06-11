@@ -62,7 +62,7 @@
               <input name="topik_desc" class="form-control" value="<?= $topic['tm_desc'] ?>" readonly>
             <?php } else { ?>
               <select name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example" required>
-                <option disabled selected>-- Sila Pilih Topic --</option>
+                <option disabled selected>-- Sila Pilih Topik --</option>
               </select>
             <?php } ?>
           </div>
