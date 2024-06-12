@@ -74,6 +74,7 @@
   <script src="<?= base_url() ?>assets/js/plugins/chartjs.min.js"></script>
   <script src="<?= base_url() ?>assets/js/plugins/threejs.js"></script>
   <script src="<?= base_url() ?>assets/js/plugins/orbit-controls.js"></script>
+  <script src="<?= base_url() ?>assets/js/plugins/datatables.js"></script>
   <script>
     var csrfToken = '<?= csrf_token(); ?>';
   </script>

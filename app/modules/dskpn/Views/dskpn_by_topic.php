@@ -3,13 +3,118 @@
         z-index: 9999 !important;
         left: 0;
     }
+
+    .dt-container .dt-paging .dt-paging-button {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #8392ab !important;
+        padding: 0 !important;
+        margin: 0 3px !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 50% !important;
+        width: 36px !important;
+        height: 36px !important;
+        font-size: .875rem !important;
+        background: #fff !important;
+        margin-left: 0 !important;
+    }
+
+    .dt-container .dt-paging .dt-paging-button:hover {
+        background: rgba(131, 146, 171, 0.2) !important;
+    }
+
+    div.dt-container .dt-paging .dt-paging-button.current,
+    div.dt-container .dt-paging .dt-paging-button.current:hover {
+        background: transparent !important;
+        background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
+        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .09), 0 2px 3px -1px rgba(0, 0, 0, .07) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 50% !important;
+    }
+
+    div.dt-container div.dt-layout-row {
+        display: table !important;
+        clear: both !important;
+        width: 100% !important;
+    }
+
+    .dt-layout-row {
+        padding: 20px !important;
+    }
+
+    .dt-info {
+        color: #8392ab !important;
+        font-size: .875rem !important;
+    }
+
+    .dt-length>label {
+        color: #8392ab !important;
+        font-size: .875rem !important;
+        font-weight: 400 !important;
+    }
+
+    .dt-input {
+        border-color: #e9ecef !important;
+        border-radius: .25rem !important;
+    }
+
+    div.dt-container div.dt-layout-cell.dt-end {
+        text-align: right !important;
+    }
+
+    div.dt-container div.dt-layout-cell.dt-start {
+        text-align: left !important;
+    }
+
+    div.dt-container div.dt-layout-cell {
+        display: table-cell !important;
+        vertical-align: middle !important;
+        padding: 5px 0 !important;
+    }
+
+    /* More specific selector to override the default style */
+    div.dt-container div.dt-paging button.dt-paging-button,
+    div.dt-container div.dt-paging button.dt-paging-button:hover {
+        color: rgba(0, 0, 0, 0.5) !important;
+        /* Set color to black */
+    }
+
+    /* Ensure the current button has white color */
+    div.dt-container div.dt-paging button.dt-paging-button.current,
+    div.dt-container div.dt-paging button.dt-paging-button.current:hover {
+        color: #fff !important;
+        /* Set color to white */
+    }
+
+    table.dataTable>tbody>tr:hover {
+        box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.082);
+        box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.082);
+    }
+
+    div.dt-container .dt-paging .dt-paging-button {
+        box-sizing: border-box !important;
+        display: inline-block !important;
+        min-width: 1.5em !important;
+        padding: 0.5em 1em !important;
+        margin-left: 2px !important;
+        text-align: center !important;
+    }
+
+    div.dt-paging-button {
+        color: #7928ca !important;
+    }
+
+    .dt-paging {
+        color: #fff !important;
+    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
 <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
-
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -64,81 +169,52 @@
 
         </div>
 
-        <div class="table-responsive">
-            <div class="dataTable-wrapper dataTable-loading no-footer sortable fixed-height fixed-columns">
-                <!-- <div class="dataTable-top">
-                    <div class="dataTable-dropdown"><label><select class="dataTable-selector">
-                                <option value="5">5</option>
-                                <option value="10" selected="">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="25">25</option>
-                            </select> entries per page</label></div>
-                </div> -->
-                <div class="dataTable-container" style="height: 500.641px;">
-                    <table class="table table-flush dataTable-table" id="datatable-basic">
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="text-uppercase text-secondary text-m font-weight-bolder text-center">KOD DSKPN</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">TEMA</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">SUB-TEMA</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">STATUS</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">PENYEDIA</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">PENGESAH</th>
-                                <th class="text-center text-uppercase text-secondary text-m font-weight-bolder text-center">TINDAKAN</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($dskpn as $dskpnItem) : ?>
-                                <tr>
-                                    <td class="text-sm font-weight-normal"><?= esc($dskpnItem['dskpn_code']) ?></td>
-                                    <td class="text-sm font-weight-normal">
-                                        <?php if (!function_exists('get_dskpn_tema')) {
-                                            helper('dskpn_helper');
-                                        } ?>
-                                        <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
-                                    </td>
-                                    <td class="text-sm font-weight-normal"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
-                                    <?php if (!function_exists('get_dskpn_status')) {
-                                        helper('dskpn_helper');
-                                    } ?>
-                                    <td class="text-sm font-weight-normal"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
-                                    <?php if (!function_exists('get_user_name')) {
-                                        helper('dskpn_helper');
-                                    } ?>
-                                    <td class="text-sm font-weight-normal"><?= get_user_name($dskpnItem['created_by']) ?></td>
-                                    <td class="text-sm font-weight-normal"><?= get_user_name($dskpnItem['approved_by']) ?></td>
-                                    <td class="text-sm font-weight-normal">
-                                        <div class="col-2 text-info" style="display: inline-block;">
-                                            <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
-                                        </div>
-                                        &nbsp;&nbsp;
-                                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
-                                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- <div class="dataTable-bottom">
-                    <div class="dataTable-info">Showing 1 to 10 of 57 entries</div>
-                    <nav class="dataTable-pagination">
-                        <ul class="dataTable-pagination-list">
-                            <li class="pager"><a href="#" data-page="1">‹</a></li>
-                            <li class="active"><a href="#" data-page="1">1</a></li>
-                            <li class=""><a href="#" data-page="2">2</a></li>
-                            <li class=""><a href="#" data-page="3">3</a></li>
-                            <li class=""><a href="#" data-page="4">4</a></li>
-                            <li class=""><a href="#" data-page="5">5</a></li>
-                            <li class=""><a href="#" data-page="6">6</a></li>
-                            <li class="pager"><a href="#" data-page="2">›</a></li>
-                        </ul>
-                    </nav>
-                </div> -->
-            </div>
-        </div>
+        <table class="table table-flush dataTable-table" id="datatable-basic">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">KOD DSKPN</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TEMA</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">SUB-TEMA</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">STATUS</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 30%; text-align: left;">PENYEDIA</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 30%; text-align: left;">PENGESAH</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TINDAKAN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($dskpn as $dskpnItem) : ?>
+                    <tr>
+                        <td class="text-m font-weight-normal"><?= esc($dskpnItem['dskpn_code']) ?></td>
+                        <td class="text-m font-weight-normal">
+                            <?php if (!function_exists('get_dskpn_tema')) {
+                                helper('dskpn_helper');
+                            } ?>
+                            <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
+                        </td>
+                        <td class="text-m font-weight-normal"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
+                        <?php if (!function_exists('get_dskpn_status')) {
+                            helper('dskpn_helper');
+                        } ?>
+                        <td class="text-m font-weight-normal"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
+                        <?php if (!function_exists('get_user_name')) {
+                            helper('dskpn_helper');
+                        } ?>
+                        <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($dskpnItem['created_by']) ?></td>
+                        <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($dskpnItem['approved_by']) ?></td>
+                        <td class="text-m font-weight-normal">
+                            <div class="col-2 text-info" style="display: inline-block;">
+                                <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
+                            </div>
+                            &nbsp;&nbsp;
+                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
+                                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
     </div>
 </div>
 
@@ -182,7 +258,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     $(document).ready(function() {
