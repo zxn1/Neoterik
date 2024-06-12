@@ -45,6 +45,10 @@ function get_dskpn_status($status)
         return '<span class="badge badge-sm bg-gradient-info">Lulus</span>';
     } else if ($status == 2) {
         return '<span class="badge badge-sm bg-gradient-danger">Ditolak</span>';
+    } else if ($status == 3) {
+        return '<span class="badge badge-sm bg-gradient-secondary">Menunggu Kelulusan<br>Memadam DSKPN</span>';
+    } else if ($status == 4) {
+        return '<span class="badge badge-sm bg-gradient-danger">Dipadam</span>';
     } else {
         return 'Unknown';
     }

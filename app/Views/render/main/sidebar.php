@@ -9,6 +9,17 @@
   <hr class="horizontal dark mt-0">
   <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
     <ul class="navbar-nav">
+      <?php
+      $both_roles = [
+        'GURU_BESAR',
+        'PENYELARAS'
+      ];
+
+      if (!function_exists('get_user_role')) {
+        helper('dskpn_helper');
+      }
+
+      if(in_array(get_user_role(), $both_roles)): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('dashboard'))) ? 'active' : ''; ?>" href="<?= route_to('dashboard'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -29,6 +40,8 @@
           <span class="nav-link-text ms-1">Utama</span>
         </a>
       </li>
+      <?php endif; ?>
+      <?php if(get_user_role() == $both_roles[0]): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('cluster_topic'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -49,6 +62,8 @@
           <span class="nav-link-text ms-1">Kluster & Topik</span>
         </a>
       </li>
+      <?php endif; ?>
+      <?php if(get_user_role() == $both_roles[0]): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('view_subject'))) ? 'active' : ''; ?>" href="<?= route_to('view_subject'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -69,6 +84,8 @@
           <span class="nav-link-text ms-1">Subjek</span>
         </a>
       </li>
+      <?php endif; ?>
+      <?php if(in_array(get_user_role(), $both_roles)): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -89,6 +106,8 @@
           <span class="nav-link-text ms-1">Senarai DSKPN</span>
         </a>
       </li>
+      <?php endif; ?>
+      <?php if(get_user_role() == $both_roles[0]): ?>
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#standardPembelajaran" class="nav-link " aria-controls="standardPembelajaran" role="button" aria-expanded="false">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -167,6 +186,17 @@
             </li>
           </ul>
         </div>
+      </li>
+      <?php endif; ?>
+      <hr style="border: 1px solid">
+      <li class="nav-item">
+        <a class="nav-link" href="<?= site_url('login/logout') ?>">
+          <div class="icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+            <!-- Font Awesome icon for Sign Out -->
+            <i class="fa fa-sign-out-alt" style="font-size:0.8rem;"></i>
+          </div>
+          <span class="nav-link-text ms-1 d-flex">Sign Out</span>
+        </a>
       </li>
     </ul>
   </div>
