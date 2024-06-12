@@ -731,9 +731,9 @@
       helper('dskpn_helper');
     }
     ?>
-    <?php if (get_user_role() == 'INSTITUSI') : ?>
+    <?php if (get_user_role() == 'PENYELARAS') : ?>
       <div class="text-end p-3">
-        <?php if ($dskpn_details['dskpn_status'] != 1 && $dskpn_details['dskpn_status'] != 2) : ?>
+        <?php if (!in_array($dskpn_details['dskpn_status'], [1,2,3,4])) : ?>
           <!-- Reject Button -->
           <button class="btn bg-gradient-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">

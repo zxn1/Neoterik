@@ -158,6 +158,20 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- fail message -->
+    <?php if (session('swal_fail')) : ?>
+        <script>
+        Swal.fire({
+            icon: 'error',
+            text: "<?= session('swal_fail') ?>",
+            timer: 3000,
+            showConfirmButton: false
+        });
+        </script>
+
+    <?php endif; ?>
 </body>
 
 </html>
