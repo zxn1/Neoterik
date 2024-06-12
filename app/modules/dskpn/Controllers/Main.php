@@ -193,6 +193,58 @@ class Main extends BaseController
         $this->render_jscss('list_registered_dskpn', $data, $script, $style);
     }
 
+    public function request_to_delete_dskpn()
+    {
+        $dskpn_id = $this->request->getVar('dskpn_id');
+        if(empty($dskpn_id))
+            return "Tiada parameter DSKPN dihantar! Gagal!";
+
+        if($this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 3
+        ]))
+        {
+            return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dihantar');
+        }
+
+        return redirect()->back()->with('fail', 'Permintaan memadam DSKPN gagal!');
+    }
+
+    public function to_delete_dskpn()
+    {
+        $dskpn_id = $this->request->getVar('dskpn_id');
+        if(empty($dskpn_id))
+            return "Tiada parameter DSKPN dihantar! Gagal!";
+
+        if($this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => 4
+        ]))
+        if($this->dskpn_model->where('dskpn_id', $dskpn_id)->delete())
+        {
+            return redirect()->back()->with('success', 'DSKPN berjaya dipadam');
+        }
+
+        return redirect()->back()->with('fail', 'DSKPN gagal dipadam!');
+    }
+
+    public function cancel_to_delete_dskpn()
+    {
+        $dskpn_id = $this->request->getVar('dskpn_id');
+        if(empty($dskpn_id))
+            return "Tiada parameter DSKPN dihantar! Gagal!";
+
+        if($this->dskpn_model->update($dskpn_id, [
+            'dskpn_status'  => null,
+            'approved_by'   => null,
+            'deleted_at'    => null,
+            'dskpn_remarks' => null
+        ]))
+        {
+            return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dibatalkan');
+        }
+
+        return redirect()->back()->with('fail', 'Permintaan memadam DSKPN gagal dibatalkan!');
+    }
+
     public function dskpn_view($dskpn_id)
     {
         // Store tm_id in session

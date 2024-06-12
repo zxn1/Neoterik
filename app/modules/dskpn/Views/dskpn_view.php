@@ -731,7 +731,7 @@
       helper('dskpn_helper');
     }
     ?>
-    <?php if (get_user_role() == 'INSTITUSI') : ?>
+    <?php if (get_user_role() == 'PENYELARAS') : ?>
       <div class="text-end p-3">
         <?php if ($dskpn_details['dskpn_status'] != 1 && $dskpn_details['dskpn_status'] != 2) : ?>
           <!-- Reject Button -->
