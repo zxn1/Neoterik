@@ -31,6 +31,26 @@ class Main extends BaseController
                 'password'  => $this->request->getPost('um_password'),
             ];
 
+            if($userData['username'] != $userData['password'])
+                return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
+
+            $role = "";
+            $user_id = "";
+            if($userData['username'] == 'penyelaras1')
+            {
+                $user_id = '48283';
+                $role = "PENYELARAS";
+            }
+
+            if($userData['username'] == 'bighead1')
+            {
+                $user_id = '18285';
+                $role = "GURU_BESAR";
+            }
+
+            if(empty($role))
+                return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
+
             // $user = $this->staffModel->where('username', $userData['username'])->first();
             $user = true;
             if ($user) {
@@ -48,12 +68,12 @@ class Main extends BaseController
                 // }
                 // Add data to the session
                 $this->session->set([
-                    'sm_id' => '48283',
-                    'by_id' => '48283',
+                    'sm_id' => $user_id,
+                    'by_id' => $user_id,
                     'icno' => '000000000001',
                     'nickname' => '00001',
                     'fullname' => '000000000001',
-                    'current_role' => 'INSTITUSI',
+                    'current_role' => $role,//'INSTITUSI',
                     'ccm_id' => '11245',
                     'ccm_name' => 'Sekolah Rendah Seri Budiman'
                 ]);

@@ -48,14 +48,14 @@
 
             <?php if ($register_subject_status == true) : ?>
                 <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
-                    Tambah Dskpn&nbsp;&nbsp;
+                    Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
                     </svg>
                 </a>
             <?php else : ?>
                 <button class="btn bg-gradient-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
-                    Tambah Dskpn&nbsp;&nbsp;
+                    Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
                     </svg>
@@ -202,7 +202,7 @@
             let subjects = <?= json_encode($subjects) ?>; // Pass PHP variable to JavaScript
             let options = '';
             subjects.forEach(function(subject) {
-                options += `<option value="${subject.sm_id}">${subject.sm_code} - ${subject.sm_desc}</option>`;
+                options += `<option value="${subject.sm_id}">${subject.sm_desc}</option>`;
             });
 
             counter++; // Increment the counter

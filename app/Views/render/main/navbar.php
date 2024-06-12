@@ -34,11 +34,18 @@
       </a>
     </div>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-      <?php if (!empty(session('dskpn_code'))) { ?>
+      <?php 
+      if (!function_exists('get_user_role')) {
+        helper('dskpn_helper');
+      }
+      echo "<h5 class=\"ms-md-auto pe-md-3 d-flex align-items-center\">". get_user_role() . "</h5>";
+      
+      if (!empty(session('dskpn_code'))) { ?>
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           <span class="btn btn-outline-primary btn-sm mb-0 me-3">DSKPN# <?= session('dskpn_code') ?></span>
         </div>
-      <?php } ?>
+      <?php }
+      ?>
       <!-- <div class="ms-md-auto pe-md-3 d-flex align-items-center">
         <div class="input-group">
           <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
