@@ -41,7 +41,7 @@
         </a>
       </li>
       <?php endif; ?>
-      <?php if(get_user_role() == $both_roles[0]): ?>
+      <?php if(get_user_role() == $both_roles[1]): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('cluster_topic'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -63,7 +63,7 @@
         </a>
       </li>
       <?php endif; ?>
-      <?php if(get_user_role() == $both_roles[0]): ?>
+      <?php if(get_user_role() == $both_roles[1]): ?>
       <li class="nav-item">
         <a class="nav-link <?= (url_is(route_to('view_subject'))) ? 'active' : ''; ?>" href="<?= route_to('view_subject'); ?>">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -107,7 +107,7 @@
         </a>
       </li>
       <?php endif; ?>
-      <?php if(get_user_role() == $both_roles[0]): ?>
+      <?php if(get_user_role() == $both_roles[1]): ?>
       <li class="nav-item">
         <a data-bs-toggle="collapse" href="#standardPembelajaran" class="nav-link " aria-controls="standardPembelajaran" role="button" aria-expanded="false">
           <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
@@ -129,34 +129,34 @@
           <span class="nav-link-text ms-1">DSKPN</span>
         </a>
         <div class="collapse " id="standardPembelajaran">
-          <ul class="nav ms-4 ps-3">
+          <ul class="nav ms-1 ps-1">
             <li class="nav-item active">
-              <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                 </div>
-                <span class="nav-link-text ms-1">Standard Pembelajaran</span>
+                <span class="nav-link-text ms-1">Standard<br>Pembelajaran</span>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                 </div>
                 <span class="nav-link-text ms-1">Pemetaan Teras</span>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                 </div>
                 <span class="nav-link-text ms-1">Pemetaan Domain</span>
               </a>
             </li>
             <li class="nav-item ">
-              <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+              <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                 </div>
                 <span class="nav-link-text ms-1">Pemetaan Spesifikasi</span>
@@ -164,15 +164,15 @@
             </li>
             <li class="nav-item ">
               <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                 </div>
                 <span class="nav-link-text ms-1">Pemetaan Aktiviti <br>& Pentaksiran</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item ">
               <a class="nav-link <?= (url_is(route_to('dskpn_complete'))) ? 'active' : ''; ?>" style="overflow : hidden;">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                   <?php if (url_is(route_to('dskpn_complete'))) { ?>
                     <dotlottie-player src="https://lottie.host/d117b2d6-3c35-4bc4-8038-324d215e9c4c/gpXLLNRqqP.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   <?php } else { ?>

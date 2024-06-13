@@ -730,8 +730,13 @@
     <?php if (!function_exists('get_user_role')) {
       helper('dskpn_helper');
     }
+    
+    $both_roles = [
+      'GURU_BESAR',
+      'PENYELARAS'
+    ];
     ?>
-    <?php if (get_user_role() == 'PENYELARAS') : ?>
+    <?php if (get_user_role() == $both_roles[0]) : ?>
       <div class="text-end p-3">
         <?php if (!in_array($dskpn_details['dskpn_status'], [1,2,3,4])) : ?>
           <!-- Reject Button -->
