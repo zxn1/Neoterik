@@ -40,12 +40,33 @@ class Main extends BaseController
             {
                 $user_id = '48283';
                 $role = "PENYELARAS";
+                $this->session->set([
+                    'sm_id' => $user_id,
+                    'by_id' => $user_id,
+                    'icno' => '000102035265',
+                    'nickname' => 'JAMIL',
+                    'fullname' => 'MUHAMMAD JAMIL HUSNI BIN HANIF',
+                    'current_role' => $role,//'INSTITUSI',
+                    'ccm_id' => '11245',
+                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
+                ]);
             }
 
             if($userData['username'] == 'bighead1')
             {
                 $user_id = '18285';
                 $role = "GURU_BESAR";
+                $this->session->set([
+                    'sm_id' => $user_id,
+                    'by_id' => $user_id,
+                    'icno' => '980618085698',
+                    'nickname' => 'HAZLAN',
+                    'fullname' => 'MUHAMMAD HAZLAN SHAH BIN IDRIS',
+                    'current_role' => $role,//'INSTITUSI',
+                    'ccm_id' => '11245',
+                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
+                ]);
+                
             }
 
             if(empty($role))
@@ -67,16 +88,6 @@ class Main extends BaseController
                 //     return redirect()->to('staff/login');
                 // }
                 // Add data to the session
-                $this->session->set([
-                    'sm_id' => $user_id,
-                    'by_id' => $user_id,
-                    'icno' => '000000000001',
-                    'nickname' => '00001',
-                    'fullname' => '000000000001',
-                    'current_role' => $role,//'INSTITUSI',
-                    'ccm_id' => '11245',
-                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
-                ]);
 
                 return redirect()->to('dashboard');
             } else {

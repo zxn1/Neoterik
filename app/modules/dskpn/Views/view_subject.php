@@ -1,5 +1,5 @@
 <div class="container-fluid py-4">
-<button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
+    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
         Tambah Subjek
     </button>
     <!-- Modal Structure -->
@@ -29,24 +29,25 @@
         </div>
     </div>
     <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
             <h6 class="my-auto text-white">Senarai Subjek yang Didaftarkan</h6>
         </div>
+        <br>
         <div class="table-responsive">
-            <table class="table align-items-center mb-0">
+            <table class="table align-items-center mb-0" id="subject_list">
                 <thead>
                     <tr>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Subjek Kode</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Subjek</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">Tindakan</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">Subjek Kode</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 80%; text-align: left;">Subjek</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($subjects as $subject): ?>
+                    <?php foreach ($subjects as $subject) : ?>
                         <tr>
-                            <td class="text-center"><?= esc($subject['sm_code']) ?></td>
-                            <td class="text-center"><?= esc($subject['sm_desc']) ?></td>
-                            <td class="text-center">
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sm_code']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;">
                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $subject['sm_id']; ?>').remove(); deleteSubject(<?= $subject['sm_id']; ?>);">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
@@ -82,6 +83,10 @@
 <?php endif; ?>
 
 <script>
+    $(document).ready(function() {
+        $('#subject_list').DataTable();
+    });
+
     document.addEventListener("DOMContentLoaded", function() {
         var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");
         if (lastAccordionItem) {
