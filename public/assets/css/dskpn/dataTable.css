@@ -1,0 +1,117 @@
+
+.dt-container .dt-paging .dt-paging-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #8392ab !important;
+    padding: 0 !important;
+    margin: 0 3px !important;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 50% !important;
+    width: 36px !important;
+    height: 36px !important;
+    font-size: .875rem !important;
+    background: #fff !important;
+    margin-left: 0 !important;
+}
+
+table.dataTable thead>tr>th.dt-orderable-asc,
+table.dataTable thead>tr>th.dt-orderable-desc,
+table.dataTable thead>tr>td.dt-orderable-asc,
+table.dataTable thead>tr>td.dt-orderable-desc {
+    cursor: pointer;
+    background-color: lightgrey;
+    color: #344767 !important;
+}
+
+.dt-container .dt-paging .dt-paging-button:hover {
+    background: rgba(131, 146, 171, 0.2) !important;
+}
+
+div.dt-container .dt-paging .dt-paging-button.current,
+div.dt-container .dt-paging .dt-paging-button.current:hover {
+    background: transparent !important;
+    background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .09), 0 2px 3px -1px rgba(0, 0, 0, .07) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 50% !important;
+}
+
+div.dt-container div.dt-layout-row {
+    display: table !important;
+    clear: both !important;
+    width: 100% !important;
+}
+
+.dt-layout-row {
+    padding-bottom: 20px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
+
+.dt-info {
+    color: #8392ab !important;
+    font-size: .875rem !important;
+}
+
+.dt-length>label {
+    color: #8392ab !important;
+    font-size: .875rem !important;
+    font-weight: 400 !important;
+}
+
+.dt-input {
+    border-color: #e9ecef !important;
+    border-radius: .25rem !important;
+}
+
+div.dt-container div.dt-layout-cell.dt-end {
+    text-align: right !important;
+}
+
+div.dt-container div.dt-layout-cell.dt-start {
+    text-align: left !important;
+}
+
+div.dt-container div.dt-layout-cell {
+    display: table-cell !important;
+    vertical-align: middle !important;
+    padding: 5px 0 !important;
+}
+
+/* More specific selector to override the default style */
+div.dt-container div.dt-paging button.dt-paging-button,
+div.dt-container div.dt-paging button.dt-paging-button:hover {
+    color: rgba(0, 0, 0, 0.5) !important;
+    /* Set color to black */
+}
+
+/* Ensure the current button has white color */
+div.dt-container div.dt-paging button.dt-paging-button.current,
+div.dt-container div.dt-paging button.dt-paging-button.current:hover {
+    color: #fff !important;
+    /* Set color to white */
+}
+
+table.dataTable>tbody>tr:hover {
+    box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.082);
+    box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.082);
+}
+
+div.dt-container .dt-paging .dt-paging-button {
+    box-sizing: border-box !important;
+    display: inline-block !important;
+    min-width: 1.5em !important;
+    padding: 0.5em 1em !important;
+    margin-left: 2px !important;
+    text-align: center !important;
+}
+
+div.dt-paging-button {
+    color: #7928ca !important;
+}
+
+.dt-paging {
+    color: #fff !important;
+}
