@@ -46,6 +46,18 @@
         /* border-radius: 4px; */
     }
 
+    /* Icon styling */
+    .collapse-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+        /* Add transition for smooth animation */
+    }
+
+    /* Icon styling for expanded state */
+    .accordion-header[aria-expanded="true"] .collapse-icon {
+        transform: rotate(180deg);
+    }
+
 
 
     /* CSS for desktop screens */
@@ -150,7 +162,7 @@
                             <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="cm_desc" required>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn bg-gradient-info">Tambah</button>
                         </div>
                     </form>
@@ -160,12 +172,12 @@
     </div>
 
     <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
-        <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
             <div class="col-md-2 text-end text-white">
-                <i id="collapseIcon" class="fa fa-plus"></i>
+                <i id="collapseIcon" class="ni ni-bold-down collapse-icon"></i>
             </div>
         </div>
         <div id="collapseOne" class="card-body p-3 accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
