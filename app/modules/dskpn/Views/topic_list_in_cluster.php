@@ -89,20 +89,23 @@
         border-bottom-left-radius: 15px !important;
     }
 
-  .pagination-container {
+    .pagination-container {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start; /* Align items to the left */
+        justify-content: flex-start;
+        /* Align items to the left */
         align-items: flex-start;
         margin-top: 20px;
     }
 
     .pagination-button {
-        background-color: rgba(233, 236, 239, 0.2); /* Background color with 50% opacity */
+        background-color: rgba(233, 236, 239, 0.2);
+        /* Background color with 50% opacity */
         border: none;
         color: #6c757d;
         padding: 8px 12px;
-        margin: 2px 0; /* Add vertical margin between buttons */
+        margin: 2px 0;
+        /* Add vertical margin between buttons */
         text-decoration: none;
         border-radius: 5px;
         cursor: pointer;
@@ -147,6 +150,7 @@
                             <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="cm_desc" required>
                         </div>
                         <div class="text-end">
+                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn bg-gradient-info">Tambah</button>
                         </div>
                     </form>
@@ -216,7 +220,7 @@
             <div class="row">
                 <div class="col-sm-2">
                     <div class="pagination-container">
-                    <p class="text-center mb-2"><strong style="font-size: 1.0rem; color: black;">Pilih Tahun</strong></p>
+                        <p class="text-center mb-2"><strong style="font-size: 1.0rem; color: black;">Pilih Tahun</strong></p>
                         <?php foreach ($years as $yearItem) : ?>
                             <?php if ($yearItem == $selectedYear) : ?>
                                 <span class="pagination-button active">Tahun <?= $yearItem; ?></span>
@@ -229,48 +233,47 @@
 
                 <div class="col-sm">
                     <?php if ($hasData) : ?>
-                    <div class="accordion" id="accordionRental">
-                        <br>
-                    <p class="text-center"><strong style="font-size: 1.0rem; color: black;">Senarai Topik</strong></p>
-                        <?php foreach ($cluster as $clust) { ?>
-                            <div class="accordion-item mb-3">
-                                <h5 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
-                                        <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                        <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                        <?= $clust['cm_desc']; ?>
-                                    </button>
-                                </h5>
-                                <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
-                                    <div class="accordion-body custom row" id="tahap-penguasaan">
-                                        <?php foreach ($topik_main as $topik) {
-                                            if ($topik['cm_id'] == $clust['cm_id']) { ?>
-                                                <div class="col-md-12">
-                                                    <div class="d-flex flex-column h-100">
-                                                        <div id="collection1-<?= $topik['tm_id']; ?>">
-                                                            <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
-                                                                <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
-                                                                <a class="btn btn-link text-info text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
-                                                                    <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
-                                                                </a>
-                                                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
-                                                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                                                </a>
+                        <div class="accordion" id="accordionRental">
+                            <br>
+                            <p class="text-center"><strong style="font-size: 1.0rem; color: black;">Senarai Topik</strong></p>
+                            <?php foreach ($cluster as $clust) { ?>
+                                <div class="accordion-item mb-3">
+                                    <h5 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
+                                            <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                            <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
+                                            <?= $clust['cm_desc']; ?>
+                                        </button>
+                                    </h5>
+                                    <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                                        <div class="accordion-body custom row" id="tahap-penguasaan">
+                                            <?php foreach ($topik_main as $topik) {
+                                                if ($topik['cm_id'] == $clust['cm_id']) { ?>
+                                                    <div class="col-md-12">
+                                                        <div class="d-flex flex-column h-100">
+                                                            <div id="collection1-<?= $topik['tm_id']; ?>">
+                                                                <div class="d-flex w-100 align-items-center mb-2" id="1-collection1-<?= $topik['tm_id']; ?>">
+                                                                    <span class="form-control me-2"><?= $topik['tm_desc']; ?></span>
+                                                                    <a class="btn btn-link text-info text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
+                                                                        <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
+                                                                    </a>
+                                                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
+                                                                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                        <?php }
-
-                                        } ?>
+                                            <?php }
+                                            } ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
-                    </div>
+                            <?php } ?>
+                        </div>
                     <?php else : ?>
                         <div class="text-center py-4">
-                        <br><br><br>
+                            <br><br><br>
                             <strong>Tiada data yang didaftarkan bagi tahun yang dipilih</strong>
                         </div>
                     <?php endif; ?>
