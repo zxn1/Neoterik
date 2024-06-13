@@ -8,18 +8,21 @@
             <table class="table align-items-center mb-0" id="dskpn_list">
                 <thead>
                     <tr>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">KOD DSKPN</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">TOPIK</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">STATUS</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 25%; text-align: left;">PENYEDIA</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 25%; text-align: left;">PENGESAH</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 22.5%; text-align: left;">PENYEDIA</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 22.5%; text-align: left;">PENGESAH</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dskpn as $clusterItem) : ?>
+                    <?php $counter = 1;
+                    foreach ($dskpn as $clusterItem) : ?>
                         <tr>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $clusterItem['dskpn_code'] ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['cm_desc']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['tm_desc']) ?></td>

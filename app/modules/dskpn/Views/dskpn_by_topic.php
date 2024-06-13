@@ -63,18 +63,21 @@
         <table class="table table-flush dataTable-table" id="datatable-basic">
             <thead class="thead-light">
                 <tr>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
                     <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">KOD DSKPN</th>
                     <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TEMA</th>
-                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">SUB-TEMA</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 20%; text-align: left;">SUB-TEMA</th>
                     <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">STATUS</th>
-                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 30%; text-align: left;">PENYEDIA</th>
-                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 30%; text-align: left;">PENGESAH</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 25%; text-align: left;">PENYEDIA</th>
+                    <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 25%; text-align: left;">PENGESAH</th>
                     <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TINDAKAN</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($dskpn as $dskpnItem) : ?>
+                <?php $counter = 1;
+                foreach ($dskpn as $dskpnItem) : ?>
                     <tr>
+                        <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                         <td class="text-m font-weight-normal"><?= esc($dskpnItem['dskpn_code']) ?></td>
                         <td class="text-m font-weight-normal">
                             <?php if (!function_exists('get_dskpn_tema')) {
@@ -132,6 +135,7 @@
 
                     </div>
                     <div class="text-end">
+                        <button type="button" class="btn bg-gradient-secondary" style="margin-bottom:0 !important" data-bs-dismiss="modal">Close</button>
                         <span id="add-subject-btn" class="btn bg-gradient-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
