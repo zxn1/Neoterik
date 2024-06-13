@@ -3,118 +3,9 @@
         z-index: 9999 !important;
         left: 0;
     }
-
-    .dt-container .dt-paging .dt-paging-button {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        color: #8392ab !important;
-        padding: 0 !important;
-        margin: 0 3px !important;
-        border: 1px solid #dee2e6 !important;
-        border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        font-size: .875rem !important;
-        background: #fff !important;
-        margin-left: 0 !important;
-    }
-
-    .dt-container .dt-paging .dt-paging-button:hover {
-        background: rgba(131, 146, 171, 0.2) !important;
-    }
-
-    div.dt-container .dt-paging .dt-paging-button.current,
-    div.dt-container .dt-paging .dt-paging-button.current:hover {
-        background: transparent !important;
-        background-image: linear-gradient(310deg, #7928ca, #ff0080) !important;
-        box-shadow: 0 3px 5px -1px rgba(0, 0, 0, .09), 0 2px 3px -1px rgba(0, 0, 0, .07) !important;
-        color: #fff !important;
-        border: none !important;
-        border-radius: 50% !important;
-    }
-
-    div.dt-container div.dt-layout-row {
-        display: table !important;
-        clear: both !important;
-        width: 100% !important;
-    }
-
-    .dt-layout-row {
-        padding: 20px !important;
-    }
-
-    .dt-info {
-        color: #8392ab !important;
-        font-size: .875rem !important;
-    }
-
-    .dt-length>label {
-        color: #8392ab !important;
-        font-size: .875rem !important;
-        font-weight: 400 !important;
-    }
-
-    .dt-input {
-        border-color: #e9ecef !important;
-        border-radius: .25rem !important;
-    }
-
-    div.dt-container div.dt-layout-cell.dt-end {
-        text-align: right !important;
-    }
-
-    div.dt-container div.dt-layout-cell.dt-start {
-        text-align: left !important;
-    }
-
-    div.dt-container div.dt-layout-cell {
-        display: table-cell !important;
-        vertical-align: middle !important;
-        padding: 5px 0 !important;
-    }
-
-    /* More specific selector to override the default style */
-    div.dt-container div.dt-paging button.dt-paging-button,
-    div.dt-container div.dt-paging button.dt-paging-button:hover {
-        color: rgba(0, 0, 0, 0.5) !important;
-        /* Set color to black */
-    }
-
-    /* Ensure the current button has white color */
-    div.dt-container div.dt-paging button.dt-paging-button.current,
-    div.dt-container div.dt-paging button.dt-paging-button.current:hover {
-        color: #fff !important;
-        /* Set color to white */
-    }
-
-    table.dataTable>tbody>tr:hover {
-        box-shadow: inset 0 0 0 9999px rgba(0, 0, 0, 0.082);
-        box-shadow: inset 0 0 0 9999px rgba(var(--dt-row-hover), 0.082);
-    }
-
-    div.dt-container .dt-paging .dt-paging-button {
-        box-sizing: border-box !important;
-        display: inline-block !important;
-        min-width: 1.5em !important;
-        padding: 0.5em 1em !important;
-        margin-left: 2px !important;
-        text-align: center !important;
-    }
-
-    div.dt-paging-button {
-        color: #7928ca !important;
-    }
-
-    .dt-paging {
-        color: #fff !important;
-    }
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" />
-<script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -155,20 +46,20 @@
                 <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
                     Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                     </svg>
                 </a>
             <?php else : ?>
                 <button class="btn bg-gradient-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
                     Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5.5 0 0 0 1 0v-3h3a.5.5.5 0 0 0 0-1h-3z"></path>
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                     </svg>
                 </button>
             <?php endif ?>
 
         </div>
-
+        <br>
         <table class="table table-flush dataTable-table" id="datatable-basic">
             <thead class="thead-light">
                 <tr>
@@ -191,11 +82,11 @@
                             } ?>
                             <?= get_dskpn_tema($dskpnItem['dskpn_theme']) ?>
                         </td>
-                        <td class="text-m font-weight-normal"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
+                        <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($dskpnItem['dskpn_sub_theme']) ?></td>
                         <?php if (!function_exists('get_dskpn_status')) {
                             helper('dskpn_helper');
                         } ?>
-                        <td class="text-m font-weight-normal"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
+                        <td class="text-m font-weight-normal" style="text-align: left;"><?= get_dskpn_status($dskpnItem['dskpn_status']) ?></td>
                         <?php if (!function_exists('get_user_name')) {
                             helper('dskpn_helper');
                         } ?>
@@ -263,7 +154,7 @@
     $(document).ready(function() {
         // Initialize select2 for existing elements
         $('.select2').select2();
-
+        $('#datatable-basic').DataTable();
         let counter = 0; // Initialize a counter outside of the click handler
 
         // Listener for add subject button
@@ -316,7 +207,7 @@
             $(this).closest('.subject-card').remove();
         });
 
-        $('#datatable-basic').DataTable();
+
 
     });
 </script>
