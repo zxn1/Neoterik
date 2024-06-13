@@ -173,6 +173,16 @@ class Main extends BaseController
         $this->render_jscss('view_subject', $data, $script, $style);
     }
 
+    public function view_cluster()
+    {
+        $data = [];
+        $data['clusters'] = $this->cluster_model->findAll();
+        // dd($data['subjects']);
+        $script = ['data', 'view_subject'];
+        $style = ['view_subject'];
+        $this->render_jscss('view_cluster', $data, $script, $style);
+    }
+
     public function list_registered_dskpn()
     {
         $data = [];

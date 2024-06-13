@@ -22,9 +22,9 @@
       <div class="card card-background card-background-mask-primary h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
         <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
         <div class="card-body pt-4 text-center">
-          <h2 class="text-white mb-0 mt-2 up">Subjek</h2>
-          <h1 class="text-white mb-0 up">1</h1>
-          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
+          <h2 class="text-white mb-0 mt-2 up">Kluster</h2>
+          <h1 class="text-white mb-0 up"><?= $kluster ?></h1>
+          <a href="<?= route_to('view_cluster'); ?>" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
         </div>
       </div>
     </div>

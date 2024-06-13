@@ -3,35 +3,39 @@
         <div class="card-header d-flex p-3 bg-gradient-primary">
             <h6 class="my-auto text-white">Senarai DSKPN yang Didaftarkan</h6>
         </div>
+        <br>
         <div class="table-responsive">
-            <table class="table align-items-center mb-0">
+            <table class="table align-items-center mb-0" id="dskpn_list">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-xs font-weight-bolder text-center">KOD DSKPN</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">KLUSTER</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TOPIK</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">STATUS</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENYEDIA</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">PENGESAH</th>
-                        <th class="text-center text-uppercase text-secondary text-xs font-weight-bolder text-center">TINDAKAN</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">KOD DSKPN</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">KLUSTER</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 15%; text-align: left;">TOPIK</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">STATUS</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 22.5%; text-align: left;">PENYEDIA</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 22.5%; text-align: left;">PENGESAH</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($dskpn as $clusterItem) : ?>
+                    <?php $counter = 1;
+                    foreach ($dskpn as $clusterItem) : ?>
                         <tr>
-                            <td class="text-center"><?= $clusterItem['dskpn_code'] ?></td>
-                            <td class="text-center"><?= esc($clusterItem['cm_desc']) ?></td>
-                            <td class="text-center"><?= esc($clusterItem['tm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= $clusterItem['dskpn_code'] ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['cm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['tm_desc']) ?></td>
                             <?php if (!function_exists('get_dskpn_status')) {
                                 helper('dskpn_helper');
                             } ?>
-                            <td class="text-center"><?= get_dskpn_status($clusterItem['dskpn_status']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_dskpn_status($clusterItem['dskpn_status']) ?></td>
                             <?php if (!function_exists('get_user_name')) {
                                 helper('dskpn_helper');
                             } ?>
-                            <td class="text-center"><?= get_user_name($clusterItem['created_by']) ?></td>
-                            <td class="text-center"><?= get_user_name($clusterItem['approved_by']) ?></td>
-                            <td class="text-center">
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['created_by']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['approved_by']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;">
                                 <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="<?= route_to('dskpn_view', esc($clusterItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
                                 </div>
@@ -71,4 +75,8 @@
     const delete_dskpn_endpoint = '<?= route_to('delete_dskpn'); ?>';
     const reject_delete_dskpn_endpoint = '<?= route_to('reject_delete_dskpn'); ?>';
     const get_to_delete_reason = '<?= route_to('delete_dskpn_reason'); ?>';
+
+    $(document).ready(function() {
+        $('#dskpn_list').DataTable();
+    });
 </script>
