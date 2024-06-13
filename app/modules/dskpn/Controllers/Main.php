@@ -206,17 +206,37 @@ class Main extends BaseController
     public function request_to_delete_dskpn()
     {
         $dskpn_id = $this->request->getVar('dskpn_id');
+        $reason = $this->request->getVar('reason');
         if(empty($dskpn_id))
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
         if($this->dskpn_model->update($dskpn_id, [
-            'dskpn_status'  => 3
+            'dskpn_status'  => 3,
+            'dskpn_delete_reason' => $reason
         ]))
         {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dihantar');
         }
 
         return redirect()->back()->with('fail', 'Permintaan memadam DSKPN gagal!');
+    }
+
+    public function get_delete_reason()
+    {
+        $dskpn_id = $this->request->getVar('dskpn_id');
+        $response = [
+            'status' => 'fail'
+        ];
+
+        $data = $this->dskpn_model->select('dskpn_delete_reason')->where('dskpn_id', $dskpn_id)->first();
+        if(!empty($data))
+        {
+            $response = [
+                'status' => 'success',
+                'data' => $data
+            ];
+        }
+        return $this->response->setJSON($response);
     }
 
     public function to_delete_dskpn()

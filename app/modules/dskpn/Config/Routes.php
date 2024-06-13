@@ -42,6 +42,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('request-to-delete-dskpn',     [Main::class,     'request_to_delete_dskpn'],       ['as' => 'req_delete_dskpn']);
     $routes->get('delete-dskpn',                [Main::class,     'to_delete_dskpn'],               ['as' => 'delete_dskpn']);
     $routes->get('reject-to-delete-dskpn',      [Main::class,     'cancel_to_delete_dskpn'],        ['as' => 'reject_delete_dskpn']);
+    $routes->get('get-to-delete-reason',        [Main::class,     'get_delete_reason'],             ['as' => 'delete_dskpn_reason']);
 
     $routes->post('store-cluster-subject-mapping',               [Main::class,     'store_cluster_subject_mapping'],                  ['as' => 'store_cluster_subject_mapping']);
 
