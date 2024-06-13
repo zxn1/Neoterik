@@ -35,14 +35,24 @@
                                 <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="<?= route_to('dskpn_view', esc($clusterItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
                                 </div>
-                                <?php if((get_user_role() == 'GURU_BESAR') && ($clusterItem['dskpn_status'] != 3)): ?>
+                                <?php
+                                $both_roles = [
+                                    'GURU_BESAR',
+                                    'PENYELARAS'
+                                ];
+
+                                if((get_user_role() == $both_roles[1]) && ($clusterItem['dskpn_status'] != 3)): ?>
+                                &nbsp;&nbsp;
+                                <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
+                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                </a>
                                 &nbsp;&nbsp;
                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                                 <?php endif; ?>
 
-                                <?php if((get_user_role() == 'PENYELARAS') && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
+                                <?php if((get_user_role() == $both_roles[0]) && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
                                 &nbsp;&nbsp;
                                 <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
                                     <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
@@ -60,4 +70,5 @@
     const req_delete_dskpn_endpoint = '<?= route_to('req_delete_dskpn'); ?>';
     const delete_dskpn_endpoint = '<?= route_to('delete_dskpn'); ?>';
     const reject_delete_dskpn_endpoint = '<?= route_to('reject_delete_dskpn'); ?>';
+    const get_to_delete_reason = '<?= route_to('delete_dskpn_reason'); ?>';
 </script>
