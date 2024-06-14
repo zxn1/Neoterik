@@ -69,6 +69,23 @@ class Main extends BaseController
                 
             }
 
+            if($userData['username'] == 'cikgu')
+            {
+                $user_id = '12345';
+                $role = "GURU";
+                $this->session->set([
+                    'sm_id' => $user_id,
+                    'by_id' => $user_id,
+                    'icno' => '980618085698',
+                    'nickname' => 'SYAFIQ',
+                    'fullname' => 'MUHAMMAD SYAFIQ BIN IBRAHIM',
+                    'current_role' => $role,//'INSTITUSI',
+                    'ccm_id' => '12345',
+                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
+                ]);
+                
+            }
+
             if(empty($role))
                 return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
 
