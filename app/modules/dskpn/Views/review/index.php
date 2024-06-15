@@ -21,6 +21,15 @@
     foreach ($style as $css) { ?>
     <link href="../assets/css/dskpn/<?= $css ?>.css" rel="stylesheet" />
   <?php } ?>
+  <style>
+    .page-item.active .page-link {
+      color: white;
+    }
+
+    .page-item {
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <?= view($data['load_page'], $data['data']) ?>
@@ -28,12 +37,14 @@
 
 <nav aria-label="semakan">
   <ul class="pagination pagination-sm justify-content-center mt-5">
-  <li class="page-item <?= ($data['page'] > 1)?'':'disabled' ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($data['page']-1); ?>"><<</a></li>
-    <?php for($i = 0; $i < 6; $i++)
-    { ?>
-        <li class="page-item <?= ($data['page'] == ($i+1))?'active':''; ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($i+1); ?>"><?= ($i+1) ?></a></li>
-    <?php }?>
-    <li class="page-item <?= ($data['page'] < 5)?'':'disabled' ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($data['page']+1); ?>">>></a></li>
+    <li class="page-item <?= ($data['page'] > 1) ? '' : 'disabled' ?>">
+      <a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($data['page'] - 1); ?>">
+        < </a>
+    </li>
+    <?php for ($i = 0; $i < 6; $i++) { ?>
+      <li class="page-item <?= ($data['page'] == ($i + 1)) ? 'active' : ''; ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($i + 1); ?>"><?= ($i + 1) ?></a></li>
+    <?php } ?>
+    <li class="page-item <?= ($data['page'] < 5) ? '' : 'disabled' ?>"><a class="page-link" href="<?= route_to('review_dskpn') . "?page=" . ($data['page'] + 1); ?>">></a></li>
   </ul>
 </nav>
 
@@ -41,9 +52,9 @@
 <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
 <?php
-  if (!empty($script))
-    foreach ($script as $js) { ?>
-    <script src="../assets/js/dskpn/<?= $js ?>.js"></script>
+if (!empty($script))
+  foreach ($script as $js) { ?>
+  <script src="../assets/js/dskpn/<?= $js ?>.js"></script>
 <?php } ?>
 
 </html>

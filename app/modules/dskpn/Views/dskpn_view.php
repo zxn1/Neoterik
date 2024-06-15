@@ -129,33 +129,31 @@
         <div class="card-header d-flex pb-0 p-3">
           <div class="nav-wrapper position-relative w-100">
             <ul class="nav nav-pills nav-fill p-1" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#standard_pembelajaran" role="tab" aria-controls="standard_pembelajaran" aria-selected="false">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#standard_pembelajaran" role="tab" aria-controls="standard_pembelajaran" aria-selected="true">
                   STANDARD PEMBELAJARAN
                 </a>
               </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false" tabindex="-1">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false">
                   TAHAP PENGUASAAN
                 </a>
               </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kompetensi_teras" role="tab" aria-controls="kompetensi_teras" aria-selected="false" tabindex="-1">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kompetensi_teras" role="tab" aria-controls="kompetensi_teras" aria-selected="false">
                   KOMPETENSI TERAS
                 </a>
               </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#domain" role="tab" aria-controls="domain" aria-selected="false" tabindex="-1">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#domain" role="tab" aria-controls="domain" aria-selected="false">
                   16 DOMAIN KEMENJADIAN MURID
                 </a>
               </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kemahiran" role="tab" aria-controls="kemahiran" aria-selected="false" tabindex="-1">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#kemahiran" role="tab" aria-controls="kemahiran" aria-selected="false">
                   7 KEMAHIRAN INSANIAH
                 </a>
               </li>
-
-              <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 155px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="true">-</a></div>
             </ul>
           </div>
         </div>
@@ -427,27 +425,25 @@
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#idea_pengajaran" role="tab" aria-controls="idea_pengajaran" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#idea_pengajaran" role="tab" aria-controls="idea_pengajaran" aria-selected="false">
                   IDEA PENGAJARAN (AKTIVITI)
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#abm" role="tab" aria-controls="abm" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#abm" role="tab" aria-controls="abm" aria-selected="false">
                   ALAT BANTU MENGAJAR
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#pentaksiran" role="tab" aria-controls="pentaksiran" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#pentaksiran" role="tab" aria-controls="pentaksiran" aria-selected="false">
                   PENTAKSIRAN
                 </a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#spesifikasi_pengajaran" role="tab" aria-controls="spesifikasi_pengajaran" aria-selected="false" tabindex="-1">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#spesifikasi_pengajaran" role="tab" aria-controls="spesifikasi_pengajaran" aria-selected="false">
                   SPESIFIKASI PENGAJARAN
                 </a>
               </li>
-
-              <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 155px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="true">-</a></div>
             </ul>
           </div>
         </div>
@@ -730,7 +726,7 @@
     <?php if (!function_exists('get_user_role')) {
       helper('dskpn_helper');
     }
-    
+
     $both_roles = [
       'GURU_BESAR',
       'PENYELARAS'
@@ -738,7 +734,7 @@
     ?>
     <?php if (get_user_role() == $both_roles[0]) : ?>
       <div class="text-end p-3">
-        <?php if (!in_array($dskpn_details['dskpn_status'], [1,2,3,4])) : ?>
+        <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4])) : ?>
           <!-- Reject Button -->
           <button class="btn bg-gradient-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
@@ -776,7 +772,7 @@
 
 
 </div>
-<div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true">
+<div class="modal fade" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

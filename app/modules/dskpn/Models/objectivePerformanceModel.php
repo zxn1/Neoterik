@@ -12,7 +12,7 @@ class ObjectivePerformanceModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['op_desc'];
+    protected $allowedFields = ['op_desc', 'op_duration'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
