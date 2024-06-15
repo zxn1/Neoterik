@@ -1,5 +1,23 @@
 <div class="container-fluid py-4">
     <div class="card">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+            <h6 class="my-auto text-white">DSKPN</h6>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <label for="kluster">KLUSTER</label>
+                    <input class="form-control" value="PERKEMBANGAN MANUSIA" readonly>
+                </div>
+                <div class="col-md-2">
+                    <label for="kluster">TAHUN</label>
+                    <input class="form-control" value="2023" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
             <h6 class="my-auto text-white">Senarai Cikgu</h6>
         </div>
@@ -33,9 +51,6 @@
             </table>
         </div>
     </div>
-    <!-- <div class="text-end pt-3">
-        <a href="#" class="btn bg-gradient-primary btn-sm mb-0">Seterusnya</a>
-    </div> -->
 </div>
 <?php if (session()->has('success')) : ?>
     <script>

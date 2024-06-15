@@ -97,27 +97,27 @@
       <div class="row">
         <div class="col-md-10">
           <label for="kluster">KLUSTER</label>
-          <input class="form-control" value="PERKEMBANGAN MANUSIA" readonly>
+          <input class="form-control" value="<?= $cluster_details['cm_desc'] ?>" readonly>
         </div>
         <div class="col-md-2">
           <label for="kluster">TAHUN</label>
-          <input class="form-control" value="2023" readonly>
+          <input class="form-control" value="<?= $tm_details['tm_year'] ?>" readonly>
         </div>
       </div>
       <div class="row py-4">
 
         <div class="col-md-8">
           <label for="topik">TOPIK</label>
-          <input class="form-control" value="Pernafasan Manusia dan Penyakit Berkaitan" readonly>
+          <input class="form-control" value="<?= $tm_details['tm_desc'] ?>" readonly>
         </div>
         <div class="col-md-2">
           <label for="tema">TEMA</label>
-          <input class="form-control" value="Individu" readonly>
+          <input class="form-control" value="<?= $dskpn_details['dskpn_theme'] ?>" readonly>
 
         </div>
         <div class="col-md-2">
           <label for="subtema">SUB-TEMA</label>
-          <input class="form-control" value="Tubuh dan Kesihatan" readonly>
+          <input class="form-control" value="<?= $dskpn_details['dskpn_sub_theme'] ?>" readonly>
         </div>
       </div>
     </div>
