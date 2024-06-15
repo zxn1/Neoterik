@@ -25,7 +25,7 @@ class Main extends BaseController
         $this->tccm_model               = new TeacherClusterClassMappingModel();
     }
 
-    public function teacher_list()
+    public function view_teacher_cluster()
     {
         $data = [];
         //Get all teacher list data
