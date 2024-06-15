@@ -207,14 +207,13 @@ class Main extends BaseController
     {
         $dskpn_id = $this->request->getVar('dskpn_id');
         $reason = $this->request->getVar('reason');
-        if(empty($dskpn_id))
+        if (empty($dskpn_id))
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
-        if($this->dskpn_model->update($dskpn_id, [
+        if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 3,
             'dskpn_delete_reason' => $reason
-        ]))
-        {
+        ])) {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dihantar');
         }
 
@@ -229,8 +228,7 @@ class Main extends BaseController
         ];
 
         $data = $this->dskpn_model->select('dskpn_delete_reason')->where('dskpn_id', $dskpn_id)->first();
-        if(!empty($data))
-        {
+        if (!empty($data)) {
             $response = [
                 'status' => 'success',
                 'data' => $data
@@ -242,16 +240,15 @@ class Main extends BaseController
     public function to_delete_dskpn()
     {
         $dskpn_id = $this->request->getVar('dskpn_id');
-        if(empty($dskpn_id))
+        if (empty($dskpn_id))
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
-        if($this->dskpn_model->update($dskpn_id, [
+        if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 4
         ]))
-        if($this->dskpn_model->where('dskpn_id', $dskpn_id)->delete())
-        {
-            return redirect()->back()->with('success', 'DSKPN berjaya dipadam');
-        }
+            if ($this->dskpn_model->where('dskpn_id', $dskpn_id)->delete()) {
+                return redirect()->back()->with('success', 'DSKPN berjaya dipadam');
+            }
 
         return redirect()->back()->with('fail', 'DSKPN gagal dipadam!');
     }
@@ -259,16 +256,15 @@ class Main extends BaseController
     public function cancel_to_delete_dskpn()
     {
         $dskpn_id = $this->request->getVar('dskpn_id');
-        if(empty($dskpn_id))
+        if (empty($dskpn_id))
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
-        if($this->dskpn_model->update($dskpn_id, [
+        if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => null,
             'approved_by'   => null,
             'deleted_at'    => null,
             'dskpn_remarks' => null
-        ]))
-        {
+        ])) {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dibatalkan');
         }
 
@@ -301,6 +297,11 @@ class Main extends BaseController
             ->groupBy('sm_id')
             ->findAll();
 
+        //Get topic main by tm_id
+        $tm_details = $this->topic_model->where('tm_id', $dskpn_details['tm_id'])->first();
+
+        // Get cluster based on tm_id cm_id
+        $cluster_details = $this->cluster_model->where('cm_id', $tm_details['cm_id'])->first();
 
         // Get standard_performance
         $standard_performance = $this->standard_performance_model
@@ -351,6 +352,8 @@ class Main extends BaseController
 
         $data = [
             'dskpn_details'                 => $dskpn_details,
+            'tm_details'                    => $tm_details,
+            'cluster_details'               => $cluster_details,
             'subjects'                      => $subjects,
             'learning_standard'             => $learning_standard,
             'standard_performance'          => $standard_performance,
@@ -1373,17 +1376,15 @@ class Main extends BaseController
 
             $data['subject'] = $this->session->get('subject');
             $data['getDefaultSubject'] = $this->cluster_subject_mapping_model->where('cm_id', $data['topic']['cm_id'])
-                                    ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
-                                    ->findAll();
-                                    
+                ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
+                ->findAll();
+
             $arrDefaultSubject = [];
-            foreach($data['getDefaultSubject'] as $item)
-            {
+            foreach ($data['getDefaultSubject'] as $item) {
                 $arrDefaultSubject[] = $item['sm_id'];
             }
 
-            if(empty($data['subject']))
-            {    
+            if (empty($data['subject'])) {
                 $this->session->set('subject', $arrDefaultSubject);
                 $data['subject'] = $arrDefaultSubject;
             }
