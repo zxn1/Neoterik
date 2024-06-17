@@ -54,7 +54,6 @@
     <!-- Navbar -->
     <?= view('render/main/navbar'); ?>
     <!-- End Navbar -->
-
     <!-- Content/pages -->
     <?= view($view, $data); ?>
     <!-- End Content/pages -->
