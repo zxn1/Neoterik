@@ -29,6 +29,11 @@
   <link href="<?= base_url() ?>assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="<?= base_url() ?>assets/css/soft-ui-dashboard.css?v=1.1.1" rel="stylesheet" />
+
+  <!-- select 2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <!-- <script>
     //if browser support service worker
     if ('serviceWorker' in navigator) {
@@ -40,6 +45,51 @@
     foreach ($style as $css) { ?>
     <link href="../assets/css/<?= $css ?>.css" rel="stylesheet" />
   <?php } ?>
+  
+  <style>
+    /* Custom Css to overwrite select2 style */
+    .select2-container .select2-selection__rendered {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.4rem;
+      color: #344767;
+      white-space: nowrap;
+      background-color: #fff;
+      border: 1px solid #d2d6da;
+      border-radius: 0.5rem;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+      height: 38px !important;
+    }
+
+    .select2-container--open .select2-selection__rendered {
+      border-bottom: none;
+      border-bottom-right-radius: 0;
+    }
+
+    .select2-container--open .select2-dropdown--below {
+      border-top: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border: 1px solid #d2d6da;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      /* color: #444; */
+      line-height: inherit !important;
+    }
+
+    .select2-container--default .select2-selection--single {
+      /* background-color: #fff; */
+      border: 0 !important;
+      /* border-radius: 4px; */
+    }
+  </style>
 
 </head>
 
