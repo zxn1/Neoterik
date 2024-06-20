@@ -27,9 +27,7 @@ function requestToDeleteDSKPN(dskpn_id)
     if (result.isConfirmed) {
       const reason = result.value.reason;
       window.location.href = req_delete_dskpn_endpoint + "?dskpn_id=" + dskpn_id + "&reason=" + encodeURIComponent(reason);
-    } else if (result.isDenied) {
-      Swal.fire("Permintaan dibatalkan!", "", "error");
-    }
+    } 
   });
 }
 
