@@ -42,6 +42,18 @@
     /* border-radius: 4px; */
   }
 
+  .modal-dialog {
+    max-width: 80%;
+    width: 80%;
+  }
+
+  @media (max-width: 900px) {
+    .modal-dialog {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
   /* .row>* {
     padding-right: calc(var(--bs-gutter-x)* 0);
     padding-left: calc(var(--bs-gutter-x)* 0);
@@ -196,7 +208,7 @@
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a>
+      <!-- <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a> -->
       <button type="submit" class="btn bg-gradient-info">Semak</button>
     </div>
   </div>
@@ -206,8 +218,7 @@ if($review)
 { ?>
 
 <div class="modal" id="review-dskpn" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document" style="max-width: 80%;
-      width: 80%;">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Semakan dan Konfirmasi</h5>
