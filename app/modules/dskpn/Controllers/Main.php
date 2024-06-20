@@ -316,36 +316,43 @@ class Main extends BaseController
 
         // Get 16 Domain List by tahap
         // Tahap Pengetahuan Asas
-        $template_domain_pengetahuan_asas = $this->domain_model->where('gd_id', 21)->orderBy('d_id', 'ASC')->findAll();
-        $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 21);
+        $template_domain_pengetahuan_asas = $this->domain_model
+                                            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pengetahuan Asas')->orderBy('d_id', 'ASC')->findAll();
+        $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
 
         // Tahap Kemandirian
-        $template_domain_kemandirian = $this->domain_model->where('gd_id', 22)->orderBy('d_id', 'ASC')->findAll();
-        $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 22);
+        $template_domain_kemandirian = $this->domain_model
+                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kemandirian')->orderBy('d_id', 'ASC')->findAll();
+        $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kemandirian');
 
         // Tahap Pengetahuan Asas
-        $template_domain_kualiti_keperibadian  = $this->domain_model->where('gd_id', 23)->orderBy('d_id', 'ASC')->findAll();
-        $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 23);
+        $template_domain_kualiti_keperibadian  = $this->domain_model
+                                                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kualiti Keperibadian')->orderBy('d_id', 'ASC')->findAll();
+        $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kualiti Keperibadian');
 
         // Get 7 Kemahiran Insaniah
-        $template_kemahiran_insaniah = $this->domain_model->where('gd_id', 24)->orderBy('d_id', 'ASC')->findAll();
-        $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, 24);
+        $template_kemahiran_insaniah = $this->domain_model
+                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', '7 Kemahiran Insaniah')->orderBy('d_id', 'ASC')->findAll();
+        $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, '7 Kemahiran Insaniah');
 
         // Reka bentuk Instruksi
-        $template_rekabentuk_instruksi = $this->domain_model->where('gd_id', 25)->orderBy('d_id', 'ASC')->findAll();
-        $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 25);
+        $template_rekabentuk_instruksi = $this->domain_model
+                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Reka Bentuk Instruksi')->orderBy('d_id', 'ASC')->findAll();
+        $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Reka Bentuk Instruksi');
 
         // Integrasi Teknologi
-        $template_integrasi_teknologi = $this->domain_model->where('gd_id', 26)->orderBy('d_id', 'ASC')->findAll();
-        $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 26);
+        $template_integrasi_teknologi = $this->domain_model
+                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Integrasi Teknologi')->orderBy('d_id', 'ASC')->findAll();
+        $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Integrasi Teknologi');
 
         // Pendekatan
-        $template_pendekatan = $this->domain_model->where('gd_id', 27)->orderBy('d_id', 'ASC')->findAll();
-        $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 27);
+        $template_pendekatan = $this->domain_model->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pendekatan')->orderBy('d_id', 'ASC')->findAll();
+        $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Pendekatan');
 
         // Kaedah
-        $template_kaedah = $this->domain_model->where('gd_id', 28)->orderBy('d_id', 'ASC')->findAll();
-        $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 28);
+        $template_kaedah = $this->domain_model
+                            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kaedah')->orderBy('d_id', 'ASC')->findAll();
+        $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Kaedah');
 
         // abm
         $abm = $this->learning_aid_model->where('dskpn_id', $dskpn_id)->findAll();
@@ -448,7 +455,7 @@ class Main extends BaseController
 
             //steps 1 - get all subjects related to iterate horizontally
             //steps 1.1 - get learning standard to get list of subject.
-            $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
+            $data['subjects'] = $this->subject_model->select('subject_main.sm_id, subject_main.sm_code, subject_main.sm_desc')
                 ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
                 ->where('ls.dskpn_id', $data['dskpn_id'])->where('ls.deleted_at', null)->findAll();
         }
@@ -456,15 +463,83 @@ class Main extends BaseController
         //steps 2 - get 4 mapping group components
         //steps 2.1 - get all id for 4 group_name
         $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
+        $rules_7ki = [
+            '(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah' => [
+                'DKM2: Numerasi (N)',
+                'DKM3: Literasi Saintifik (LS)',
+                '(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)',
+                '(DKM8) Kreativiti (Kr)',
+                '(DKM11) Inkuiri (Ik)'
+            ],
+            '(KI2) Kemahiran Komunikasi' => [
+                'DKM1: Literasi (L)',
+                '(DKM9) Komunikasi (Kom)'
+            ],
+            '(KI3) Kemahiran Kepimpinan' => [
+                '(DKM16) Kepimpinan (Kp)'
+            ],
+            '(KI4) Kemahiran Kerja Berpasukan' => [
+                '(DKM10) Kolaborasi (K)'
+            ],
+            '(KI5) Pembelajaran Berterusan Dan Pengurusan Maklumat' => [
+                'DKM4: Literasi ICT (LICT)',
+                '(DKM12) Inisiatif',
+                '(DKM13) Kegigihan',
+                '(DKM14) Penyesuaian Diri (PD)'
+            ],
+            '(KI6) Kemahiran Keusahawanan' => [
+                '(DKM5) Literasi Kewangan (LW)'
+            ],
+            '(KI7) Moral dan Etika Profesional' => [
+                '(DKM6) Literasi Kebudayaan Sivik dan Nilai (LKSN)',
+                '(DKM15) Kesedaran Sosial & Budaya (KSB)'
+            ]
+        ];
+        $ki_rules = [];
 
         //steps 2.2 - get all item for all group
         //steps 2.3 - store all retrieved item
-
+        $tempDomainz = [];
         foreach ($allGroup as $group) {
             $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+
+            //get all domain
+            foreach($data[$group['dg_title']] as $domainz)
+            {
+                $tempDomainz[] = $domainz;
+            }
         }
 
-        $script = ['data', 'dynamic-input'];
+        //convert rules into d_id
+        foreach($rules_7ki as $key => $domainz) //loop KI
+        {
+            $cur_d_id = "";
+            foreach($tempDomainz as $d)
+            {
+                if($d['d_name'] == $key)
+                {
+                    $ki_rules[$d['d_id']] = null; //create array with related key first
+                    $cur_d_id = $d['d_id'];
+                }
+            }
+
+            //loop rules inside KI
+            foreach($domainz as $rule)
+            {
+                foreach($tempDomainz as $d)
+                {
+                    if($d['d_name'] == $rule)
+                    {
+                        $ki_rules[$cur_d_id][] = $d['d_id'];
+                    }
+                }
+            }
+        }
+
+        // dd($ki_rules);
+        $data['ki_rules'] = $ki_rules;
+
+        $script = ['data', 'dynamic-input', 'kemahiran_insaniah'];
         $style = ['static-field'];
         $this->render_jscss('domain_mapping', $data, $script, $style);
     }
