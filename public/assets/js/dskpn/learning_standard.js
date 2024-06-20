@@ -23,7 +23,13 @@ function validateAndSubmit()
 {
     if(document.getElementById("tema-selection").value != "-- Sila Pilih Tema --")
     {
-        //console.log(document.getElementById("tema-selection").value);
+        // Check if the form is valid
+        if (document.getElementById("submit_learning").checkValidity() === false) {
+            // If the form is invalid, trigger the browser's built-in validation
+            document.getElementById("submit_learning").reportValidity();
+            return false;
+        }
+
         document.getElementById("submit_learning").submit();
     } else {
         Swal.fire("Sila pilih Tema!", "", "error");
