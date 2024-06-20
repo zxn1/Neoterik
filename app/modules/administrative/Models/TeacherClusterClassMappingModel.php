@@ -13,11 +13,12 @@ class TeacherClusterClassMappingModel extends Model
     protected $useSoftDeletes = false;
 
     protected $allowedFields = [
-        'staff_main_rec_id',
+        'staff_main_recid',
         'cluster_main_id',
         'class_main_recid',
         'tccm_assigned_by',
         'tccm_assigned_date',
+        'cluster_year',
     ];
 
     // If you want to use timestamps
