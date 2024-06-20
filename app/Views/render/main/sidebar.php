@@ -131,11 +131,19 @@
           <div class="collapse " id="standardPembelajaran">
             <ul class="nav ms-1 ps-1">
               <li class="nav-item active">
-                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;">
+                <a class="nav-link  <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
                   <span class="nav-link-text ms-1">Standard<br>Pembelajaran</span>
+                </a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                    <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+                  </div>
+                  <span class="nav-link-text ms-1">Penyelenggaraan<br>Tahap Penguasaan</span>
                 </a>
               </li>
               <li class="nav-item ">

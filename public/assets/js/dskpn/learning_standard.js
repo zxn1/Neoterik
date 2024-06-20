@@ -18,3 +18,14 @@ $(document).ready(function() {
         console.log( error );
     } );
 });
+
+function validateAndSubmit()
+{
+    if(document.getElementById("tema-selection").value != "-- Sila Pilih Tema --")
+    {
+        //console.log(document.getElementById("tema-selection").value);
+        document.getElementById("submit_learning").submit();
+    } else {
+        Swal.fire("Sila pilih Tema!", "", "error");
+    }
+}
