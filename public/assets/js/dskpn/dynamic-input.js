@@ -82,7 +82,28 @@ $('#topik-dynamic-field').on('change', function() {
             // Handle success response
             if(data.status == 'success')
             {
-                document.getElementById('tahun-to-display').value = data.data.tm_year;
+                let yearz = data.data.tm_year;
+                switch(data.data.tm_year){
+                    case '1':
+                        yearz = "Satu";
+                    break;
+                    case '2':
+                        yearz = "Dua";
+                    break;
+                    case '3':
+                        yearz = "Tiga";
+                    break;
+                    case '4':
+                        yearz = "Empat";
+                    break;
+                    case '5':
+                        yearz = "Lima";
+                    break;
+                    case '6':
+                        yearz = "Enam";
+                    break;
+                }
+                document.getElementById('tahun-to-display').value = yearz;
                 // console.log(data);
             } else {
                 document.getElementById('loading-screen').style.display = "none";
