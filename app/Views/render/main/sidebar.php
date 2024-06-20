@@ -138,7 +138,7 @@
                   <span class="nav-link-text ms-1">Standard<br>Pembelajaran</span>
                 </a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item ">
                 <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
