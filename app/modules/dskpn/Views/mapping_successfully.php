@@ -9,7 +9,7 @@
         <center>
           <h2>DSKPN #<?= $dskpn_code; ?></h2>
           <dotlottie-player src="https://lottie.host/08e4f323-207d-4f1c-b002-c561616b7066/PziNlyQZGC.json" background="transparent" speed="1" style="position : relative; width: 40%; top: -50px;" direction="1" playMode="normal" loop autoplay></dotlottie-player>
-          <h3 style="position : relative; top: -50px;">DSKPN berjaya dihasilkan!</h3>
+          <h3 style="position : relative; top: -50px;">Topik DSKPN berjaya direkodkan didalam sistem!</h3>
         </center>
       </div>
     </div>
@@ -26,6 +26,6 @@
     Swal.fire({
         icon: "success",
         title: "Berjaya",
-        text: "Proses penghasilan DSKPN berjaya!"
+        text: "Proses merekodkan Topik DSKPN telah berjaya!"
     });
 </script>
