@@ -38,7 +38,7 @@ class Main extends BaseController
             $user_id = "";
             if($userData['username'] == 'penyelaras1')
             {
-                $user_id = '48283';
+                $user_id = '40365';
                 $role = "PENYELARAS";
                 $this->session->set([
                     'sm_id' => $user_id,
@@ -54,7 +54,7 @@ class Main extends BaseController
 
             if($userData['username'] == 'bighead1')
             {
-                $user_id = '18285';
+                $user_id = '40364';
                 $role = "GURU_BESAR";
                 $this->session->set([
                     'sm_id' => $user_id,
@@ -71,7 +71,7 @@ class Main extends BaseController
 
             if($userData['username'] == 'cikgu')
             {
-                $user_id = '12345';
+                $user_id = '46675';
                 $role = "GURU";
                 $this->session->set([
                     'sm_id' => $user_id,
