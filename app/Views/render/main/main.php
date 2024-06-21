@@ -45,8 +45,12 @@
     foreach ($style as $css) { ?>
     <link href="../assets/css/<?= $css ?>.css" rel="stylesheet" />
   <?php } ?>
-  
+
   <style>
+    .ck.ck-editor__main>.ck-editor__editable:not(.ck-focused) {
+      background-color: #fff !important;
+    }
+
     /* Custom Css to overwrite select2 style */
     .select2-container .select2-selection__rendered {
       display: flex;
