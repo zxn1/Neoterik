@@ -719,7 +719,8 @@ class Main extends BaseController
             'act_assess_parent_involve',
             'actvty_assess_map_id_sess',
             'actvty_assess_learning_aid_id_sess',
-            'dskpn_code'
+            'dskpn_code',
+            'dskpn_code_init'
         ];
 
         // Remove each session key
@@ -933,8 +934,10 @@ class Main extends BaseController
                 ->countAllResults();
             // ->findAll();
 
-            // Create dskpn code
-            $dskpn_code = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
+            $dskpn_code_init = $this->session->get('dskpn_code_init');
+            // backup-plan
+            if(!isset($dskpn_code_init))
+                $dskpn_code_init = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
 
             //step 1 - add objective performance
             if ($this->objective_performance_model->insert([
@@ -945,7 +948,7 @@ class Main extends BaseController
 
                     //create DSKPN
                     $this->dskpn_model->insert([
-                        'dskpn_code'        => $dskpn_code,
+                        'dskpn_code'        => $dskpn_code_init,
                         'dskpn_theme'       => $tema,
                         'dskpn_sub_theme'   => $subtema,
                         'tm_id'             => $data['topic_id'],
@@ -1470,13 +1473,33 @@ class Main extends BaseController
             $data['objective'] = $this->session->get('objective');
             $data['tema'] = $this->session->get('tema');
             $data['subtema'] = $this->session->get('subtema');
+
+            $data['dskpn_code'] = 'K' . $data['topic']['cm_id'] . 'T' . $data['topic']['tm_year'] . '-';
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
         }
 
+        $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');
+
         $script = ['dynamic-input', 'learning_standard'];
         $style = ['static-field'];
         $this->render_jscss('learning_standard', $data, $script, $style);
+    }
+
+    public function checkAndSetDSKPNCodeSession()
+    {
+        $dskpn_year = $this->request->getPost('dskpnyear');
+        $dskpn_year = isset($dskpn_year)?$dskpn_year:'';
+        $dskpn_code = $this->request->getPost('dskpncode');
+        $dskpn_code = preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year; //purified id
+
+        $dskpn = $this->dskpn_model->where('dskpn_code', $dskpn_code)->first();
+        if(!$dskpn)
+        {
+            $this->session->set('dskpn_code_init', $dskpn_code);
+            return redirect()->back();
+        }
+        return redirect()->back()->with('fail', 'Kod DSKPN yang dimasukkan telah wujud didalam rekod!');
     }
 
     public function store_create_cluster()
