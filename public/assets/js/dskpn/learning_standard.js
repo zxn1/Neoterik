@@ -17,7 +17,26 @@ $(document).ready(function() {
     .catch( error => {
         console.log( error );
     } );
+
+    if (!globalCheckingDSKPNCode)
+        $('#setDSKPNIC').modal('show');
+    $('#setDSKPNIC').on('hidden.bs.modal', function () {
+        if (!globalCheckingDSKPNCode) {
+            $('#setDSKPNIC').modal('show');
+        }
+    });
 });
+
+function yearDSKPNChecked(event) {
+    var checkbox = document.getElementById('year-dskpn-checkbox');
+    var input = document.getElementById('year-dskpn-input');
+
+    if (checkbox.checked) {
+        input.disabled = false;
+    } else {
+        input.disabled = true;
+    }
+}
 
 function validateAndSubmit()
 {
