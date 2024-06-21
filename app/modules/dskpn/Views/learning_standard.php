@@ -168,11 +168,63 @@
   <div style="position : absolute; width : 100%; height : 100%; background-color : black; opacity : 0.2;"></div>
 </div>
 
+<div class="modal fade" id="setDSKPNIC" tabindex="-1" aria-labelledby="setDSKPNIC" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan KOD DSKPN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="checkDuplicateKODDSKPN" action="<?= route_to('checkstore_dskpn_code') ?>" method="post">
+                    <div class="row pb-4" id="set-dskpn-ic">
+                        <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi topik DSKPN ini:</span>
+                        <div class="ps-3">
+                          <div class="row">
+                            <div class="col-md-8">
+                              <label for="dskpncode" class="form-label">KOD DSKPN</label>
+                              <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value="<?= (isset($dskpn_code)?$dskpn_code:'') ?>">
+                            </div>
+                            <div class="col-md-4">
+                              <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)"><label for="dskpnyear" class="form-label">Tahun DSKPN</label>
+                              <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="2099" step="1" value="<?= date("Y"); ?>" disabled/>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                      <a href="<?= route_to('list_dskpn'); ?>" class="btn bg-gradient-secondary m-0">Kembali</a>
+                      <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit">Simpan&nbsp;
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                              <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
+                              <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
+                          </svg>
+                      </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+  var globalCheckingDSKPNCode = <?= isset($dskpn_code_init)?'true':'false' ?>;
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
   let get_default_subject = JSON.parse('<?= isset($getDefaultSubject)?json_encode($getDefaultSubject):'null'; ?>');
 </script>
+
+<?php if (session()->has('fail')) : ?>
+  <script>
+    $(document).ready(function() {
+      Swal.fire({
+          icon: "error",
+          title: "Maaf",
+          text: "<?= session('fail'); ?>"
+      });
+    });
+  </script>
+<?php endif; ?>
 
 <!-- <div class="row pt-5">
 
