@@ -286,17 +286,18 @@
                             <tbody>
                               <!-- PENGETAHUAN ASAS -->
                               <?php
-                              if (!empty($domain_pengetahuan_asas)) : ?>
-                                <tr>
-                                  <th class="bg-light" colspan="5">
-                                    <b>PENGETAHUAN ASAS</b>
-                                  </th>
-                                </tr>
-                              <?php endif; ?>
-                              <?php
+                              $dpa_flag = false;
                               foreach ($domain_pengetahuan_asas as $index => $dpa) :
                                 if ($subject['sm_id'] == $dpa['sm_id'] && $dpa['dm_isChecked'] == 'Y') :
                               ?>
+                                  <?php if ($dpa_flag == false) : ?>
+                                    <tr>
+                                      <th class="bg-light" colspan="5">
+                                        <b>PENGETAHUAN ASAS</b>
+                                      </th>
+                                    </tr>
+                                  <?php $dpa_flag = true;
+                                  endif; ?>
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
@@ -309,17 +310,18 @@
                               endforeach;
                               ?>
                               <!-- KEMANDIRIAN -->
-                              <?php if (!empty($domain_kemandirian)) : ?>
-                                <tr>
-                                  <th class="bg-light" colspan="5">
-                                    <b>KEMANDIRIAN</b>
-                                  </th>
-                                </tr>
-                              <?php endif; ?>
-                              <?php
+                              <?php $dkem_flag = false;
                               foreach ($domain_kemandirian as $index => $dkem) :
                                 if ($subject['sm_id'] == $dkem['sm_id'] && $dkem['dm_isChecked'] == 'Y') :
                               ?>
+                                  <?php if ($dkem_flag == false) : ?>
+                                    <tr>
+                                      <th class="bg-light" colspan="5">
+                                        <b>KEMANDIRIAN</b>
+                                      </th>
+                                    </tr>
+                                  <?php $dkem_flag = true;
+                                  endif; ?>
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
@@ -334,19 +336,19 @@
 
 
                               <!-- KUALITI KEPERIBADIAN -->
-                              <?php if (!empty($domain_kualiti_keperibadian)) : ?>
-                                <tr>
-                                  <th class="bg-light" colspan="5">
-                                    <b>KUALITI KEPERIBADIAN</b>
-                                  </th>
-                                </tr>
-                              <?php endif; ?>
-
-                              <?php
+                              <?php $dkk_flag = false;
                               foreach ($domain_kualiti_keperibadian as $index => $dkk) :
                                 if ($subject['sm_id'] == $dkk['sm_id'] && $dkk['dm_isChecked'] == 'Y') :
                                   $found = true; // Set the flag if the condition is met
                               ?>
+                                  <?php if ($dkk_flag == false) : ?>
+                                    <tr>
+                                      <th class="bg-light" colspan="5">
+                                        <b>KUALITI KEPERIBADIAN</b>
+                                      </th>
+                                    </tr>
+                                  <?php $dkk_flag = true;
+                                  endif; ?>
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
