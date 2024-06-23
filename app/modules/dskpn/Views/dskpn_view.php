@@ -147,6 +147,7 @@
     </div>
   </div>
   <br>
+  <!-- Layer 1 (SP/OP)-->
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
@@ -159,7 +160,56 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false">
+                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#objektif_prestasi" role="tab" aria-controls="objektif_prestasi" aria-selected="false">
+                  OBJEKTIF PRESTASI
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-body p-3 mt-2" style="height: auto;">
+          <div class="tab-content" id="v-pills-tabContent">
+            <!-- Standard Pembelajaran -->
+            <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
+              <div class="d-flex top-0 w-100">
+                <!-- foreach subjek -->
+                <?php foreach ($subjects as $row) : ?>
+                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+                    </div>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sm_id'] == $ls_desc['sm_id']) : ?><?= $ls_desc['ls_details']; ?><?php endif ?><?php endforeach ?></textarea>
+                  </ul>
+                <?php endforeach; ?>
+              </div>
+            </div>
+            <!-- OBJEKTIF PRESTASI -->
+            <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
+              <div class="d-flex top-0 w-100">
+                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= $objective_performance['op_desc']; ?></textarea>
+                  <br>
+                  <div class="alert alert-dark text-white" role="alert">
+                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;">300</span></strong>
+                  </div>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <!-- Layer 2 (TP/KT/16DOMAIN/7KI)-->
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class="card-header d-flex pb-0 p-3">
+          <div class="nav-wrapper position-relative w-100">
+            <ul class="nav nav-pills nav-fill p-1" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#tahap_penguasaan" role="tab" aria-controls="tahap_penguasaan" aria-selected="false">
                   TAHAP PENGUASAAN
                 </a>
               </li>
@@ -183,22 +233,8 @@
         </div>
         <div class="card-body p-3 mt-2" style="height: auto;">
           <div class="tab-content" id="v-pills-tabContent">
-            <!-- Standard Pembelajaran -->
-            <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
-              <div class="d-flex top-0 w-100">
-                <!-- foreach subjek -->
-                <?php foreach ($subjects as $row) : ?>
-                  <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
-                    </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sm_id'] == $ls_desc['sm_id']) : ?><?= $ls_desc['ls_details']; ?><?php endif ?><?php endforeach ?></textarea>
-                  </ul>
-                <?php endforeach; ?>
-              </div>
-            </div>
             <!-- Tahap Penguasaan -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
+            <div class="tab-pane fade position-relative border-radius-lg active show" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
               <div class="d-flex top-0 w-100">
                 <!-- Tahap Penguasaan-->
                 <!-- foreach tahap penguasaan -->
@@ -374,8 +410,7 @@
       </div>
     </div>
   </div>
-
-  <!-- Objecktif Prestasi -->
+  <!-- Layer 3 -->
   <br>
   <div class="row">
     <div class="col-xl-12">
@@ -384,12 +419,7 @@
           <div class="nav-wrapper position-relative w-100">
             <ul class="nav nav-pills nav-fill p-1" role="tablist">
               <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#objektif_prestasi" role="tab" aria-controls="objektif_prestasi" aria-selected="false">
-                  OBJEKTIF PRESTASI
-                </a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1" data-bs-toggle="tab" href="#idea_pengajaran" role="tab" aria-controls="idea_pengajaran" aria-selected="false">
+                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#idea_pengajaran" role="tab" aria-controls="idea_pengajaran" aria-selected="false">
                   IDEA PENGAJARAN (AKTIVITI)
                 </a>
               </li>
@@ -413,20 +443,8 @@
         </div>
         <div class="card-body p-3 mt-2" style="height: auto;">
           <div class="tab-content" id="v-pills-tabContent">
-            <!-- OBJEKTIF PRESTASI -->
-            <div class="tab-pane fade position-relative border-radius-lg active show" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
-              <div class="d-flex top-0 w-100">
-                <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= $objective_performance['op_desc']; ?></textarea>
-                  <br>
-                  <div class="alert alert-dark text-white" role="alert">
-                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;">300</span></strong>
-                  </div>
-                </ul>
-              </div>
-            </div>
             <!-- idea_pengajaran -->
-            <div class="tab-pane fade position-relative border-radius-lg" id="idea_pengajaran" role="tabpanel" aria-labelledby="idea_pengajaran">
+            <div class="tab-pane fade position-relative border-radius-lg active show" id="idea_pengajaran" role="tabpanel" aria-labelledby="idea_pengajaran">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2">
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= isset($activity_assessment['aa_activity_desc']) ? htmlspecialchars($activity_assessment['aa_activity_desc'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
@@ -627,6 +645,7 @@
       </div>
     </div>
   </div>
+
   <div class="row">
     <!-- Check if user ada role pentadbir (guna helper)-->
     <?php if (!function_exists('get_user_role')) {
