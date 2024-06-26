@@ -240,7 +240,11 @@
                 <!-- foreach tahap penguasaan -->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <label>Kod Rujukan TP</label>
+                    <div class="mb-3">
+                      <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= get_tp_ref_code($dskpn_details['dskpn_id'], $row['sm_id']) ?>">
+                    </div>
+                    <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                       <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
                     </div>
                     <?php foreach ($standard_performance as $sp_desc) : ?>

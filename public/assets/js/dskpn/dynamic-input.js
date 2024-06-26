@@ -39,25 +39,22 @@ $('#add-subject-button').on('click', function() {
         if(get_default_subject != null && (item.sm_id == get_default_subject[countSubject]))
         {
             htmlOptions += `<option selected class="dropdown-item" value='${item.sm_id}'>${item.sm_desc}</option>`;
-        } else {
-            htmlOptions += `<option class="dropdown-item" value='${item.sm_id}'>${item.sm_desc}</option>`;
         }
     });
 
     $('#standard-pembelajaran').append(`
-        <div class="col-md-4 subject-card">
-            <div class="card mt-4">
-                <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
-                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
-                        ${htmlOptions}
-                    </select>
-                    <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-                <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
-            </div>
+    <div class="col-md-4 subject-card">
+        <div class="card mt-4">
+        <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+            <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                ${htmlOptions}
+            </select>
+            <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                <i class="fas fa-trash-alt"></i>
+            </button>
         </div>
+        <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
+    </div>
     `);
 });
 
