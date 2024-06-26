@@ -4,8 +4,9 @@
     opacity: 1;
     /* Firefox */
   }
+
   .dropdown-item {
-      color: black !important;
+    color: black !important;
   }
 </style>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
@@ -77,9 +78,8 @@
                 'Masyarakat'
               ];
 
-              foreach($arrS as $itemz)
-              { ?>
-                <option value="<?= $itemz; ?>" <?= ($itemz == $tema)?'selected':''; ?>><?= $itemz; ?></option>
+              foreach ($arrS as $itemz) { ?>
+                <option value="<?= $itemz; ?>" <?= ($itemz == $tema) ? 'selected' : ''; ?>><?= $itemz; ?></option>
               <?php
               }
               ?>
@@ -107,38 +107,31 @@
       <div class="card-body py-2">
         <div class="row pb-4" id="standard-pembelajaran">
           <?php
-          if(empty($subject))
-          {
+          if (empty($subject)) {
           ?>
             <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
-          <?php
-          } else { 
-            foreach($subject as $index => $sub)
-            {
+            <?php
+          } else {
+            foreach ($subject as $index => $sub) {
             ?>
-            <div class="col-md-4 subject-card">
-                <div class="card mt-4">
-                    <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
-                      <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
-                        <?php foreach($subject_list as $item_list)
-                          {
-                            $flag = false;
-                            if($item_list['sm_id'] == $sub)
-                            {
-                              $flag = true;
-                            }
-                            ?>
-                            <option class="dropdown-item" value='<?= $item_list['sm_id'] ?>' <?= ($flag)?'selected':'' ?>><?= $item_list['sm_desc'] ?></option>
-                          <?php } ?>
-                      </select>
-                      <!-- <input type="text" name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= $sub; ?>"> -->
-                      <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+
+              <div class="col-md-4 subject-card">
+                <?php foreach ($subject_list as $item_list) : ?>
+                  <?php if ($item_list['sm_id'] == $sub) : ?>
+                    <div class="card mt-4">
+                      <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                          <option class="dropdown-item" value='<?= $item_list['sm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sm_desc'] ?></option>
+                        </select>
+                        <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
                           <i class="fas fa-trash-alt"></i>
-                      </button>
+                        </button>
+                      </div>
+                      <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= isset($subject_description[$index]) ? $subject_description[$index] : ''; ?></textarea>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= isset($subject_description[$index])?$subject_description[$index]:''; ?></textarea>
-                </div>
-            </div>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </div>
           <?php
             }
           }
@@ -169,58 +162,58 @@
 </div>
 
 <div class="modal fade" id="setDSKPNIC" tabindex="-1" aria-labelledby="setDSKPNIC" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan KOD DSKPN</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan KOD DSKPN</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="checkDuplicateKODDSKPN" action="<?= route_to('checkstore_dskpn_code') ?>" method="post">
+          <div class="row pb-4" id="set-dskpn-ic">
+            <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi topik DSKPN ini:</span>
+            <div class="ps-3">
+              <div class="row">
+                <div class="col-md-8">
+                  <label for="dskpncode" class="form-label">KOD DSKPN</label>
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value="<?= (isset($dskpn_code) ? $dskpn_code : '') ?>">
+                </div>
+                <div class="col-md-4">
+                  <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)"><label for="dskpnyear" class="form-label">Tahun DSKPN</label>
+                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="2099" step="1" value="<?= date("Y"); ?>" disabled />
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-                <form id="checkDuplicateKODDSKPN" action="<?= route_to('checkstore_dskpn_code') ?>" method="post">
-                    <div class="row pb-4" id="set-dskpn-ic">
-                        <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi topik DSKPN ini:</span>
-                        <div class="ps-3">
-                          <div class="row">
-                            <div class="col-md-8">
-                              <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                              <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value="<?= (isset($dskpn_code)?$dskpn_code:'') ?>">
-                            </div>
-                            <div class="col-md-4">
-                              <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)"><label for="dskpnyear" class="form-label">Tahun DSKPN</label>
-                              <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="2099" step="1" value="<?= date("Y"); ?>" disabled/>
-                            </div>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="text-end">
-                      <a href="<?= route_to('list_dskpn'); ?>" class="btn bg-gradient-secondary m-0">Kembali</a>
-                      <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit">Simpan&nbsp;
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
-                              <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
-                              <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
-                          </svg>
-                      </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          </div>
+          <div class="text-end">
+            <a href="<?= route_to('list_dskpn'); ?>" class="btn bg-gradient-secondary m-0">Kembali</a>
+            <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit">Simpan&nbsp;
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
+                <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
+                <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-  var globalCheckingDSKPNCode = <?= isset($dskpn_code_init)?'true':'false' ?>;
+  var globalCheckingDSKPNCode = <?= isset($dskpn_code_init) ? 'true' : 'false' ?>;
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
-  let get_default_subject = JSON.parse('<?= isset($getDefaultSubject)?json_encode($getDefaultSubject):'null'; ?>');
+  let get_default_subject = JSON.parse('<?= isset($getDefaultSubject) ? json_encode($getDefaultSubject) : 'null'; ?>');
 </script>
 
 <?php if (session()->has('fail')) : ?>
   <script>
     $(document).ready(function() {
       Swal.fire({
-          icon: "error",
-          title: "Maaf",
-          text: "<?= session('fail'); ?>"
+        icon: "error",
+        title: "Maaf",
+        text: "<?= session('fail'); ?>"
       });
     });
   </script>
