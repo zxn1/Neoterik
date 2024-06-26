@@ -45,6 +45,28 @@ function get_user_name($sm_id)
     }
 }
 
+function get_tp_ref_code($dskpn_id, $sm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+    // Build the query to select the desired row
+    $query = $db->table('learning_standard')
+        ->select('ls_ref_code')
+        ->where('dskpn_id', $dskpn_id)
+        ->where('sm_id', $sm_id)
+        ->get();
+
+    // Fetch the row as an array
+    $row = $query->getRowArray();
+
+    // Check if the row is not empty and contains the 'sm_fullname' key
+    if (!empty($row)) {
+        return $row['ls_ref_code'];
+    } else {
+        return ''; // Return an empty string if no matching record is found
+    }
+}
+
 function get_user_role()
 {
     $session = \Config\Services::session();
