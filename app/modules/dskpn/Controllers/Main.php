@@ -843,6 +843,7 @@ class Main extends BaseController
         $topik          = $this->request->getPost('topik');
         $tema           = $this->request->getPost('tema');
         $subtema        = $this->request->getPost('subtema');
+        $duration       = $this->request->getPost('duration');
 
         //set in session
         $this->session->set('objective', $objective);
@@ -863,14 +864,15 @@ class Main extends BaseController
 
             //step 1 - update objective performance
             if ($this->objective_performance_model->update($this->session->get('objective_performance_id'), [
-                'op_desc' => $objective
+                'op_desc' => $objective,
+                'op_duration' => $duration,
             ]))
                 if (is_array($allSubject) && is_array($allDescription)) {
                     //update DSKPN
                     $dskpn_id = $this->session->get('dskpn_id');
                     $this->dskpn_model->update($dskpn_id, [
                         'dskpn_theme'       => $tema,
-                        'dskpn_sub_theme'   => $subtema
+                        'dskpn_sub_theme'   => $subtema,
                     ]);
 
                     $tp_done = $this->session->get('tp_sess_data');
@@ -935,7 +937,8 @@ class Main extends BaseController
 
             //step 1 - add objective performance
             if ($this->objective_performance_model->insert([
-                'op_desc' => $objective
+                'op_desc' => $objective,
+                'op_duration' => $duration,
             ]))
                 if (is_array($allSubject) && is_array($allDescription)) {
                     $data['objective_performance_id'] = $this->objective_performance_model->insertID();
