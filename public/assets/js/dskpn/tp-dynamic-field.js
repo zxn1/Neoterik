@@ -8,7 +8,11 @@ $(document).ready(function() {
 
         $('#tahap-penguasaan').append(`
             <ul class="list-group flex-grow-1 mx-2">
-                <div class="card-header d-flex p-3 bg-gradient-primary">
+                <label>Kod Rujukan TP</label>
+                <div class="mb-3">
+                    <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sm_code}">
+                </div>
+                <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                     <h6 class="my-auto text-white text-uppercase">${ item.sm_desc }</h6>
                 </div>
                 <div class="list-group-item" id="collection-${item.sm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">

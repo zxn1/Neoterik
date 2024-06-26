@@ -317,32 +317,32 @@ class Main extends BaseController
         // Get 16 Domain List by tahap
         // Tahap Pengetahuan Asas
         $template_domain_pengetahuan_asas = $this->domain_model
-                                            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pengetahuan Asas')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pengetahuan Asas')->orderBy('d_id', 'ASC')->findAll();
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
 
         // Tahap Kemandirian
         $template_domain_kemandirian = $this->domain_model
-                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kemandirian')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kemandirian')->orderBy('d_id', 'ASC')->findAll();
         $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kemandirian');
 
         // Tahap Pengetahuan Asas
         $template_domain_kualiti_keperibadian  = $this->domain_model
-                                                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kualiti Keperibadian')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kualiti Keperibadian')->orderBy('d_id', 'ASC')->findAll();
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kualiti Keperibadian');
 
         // Get 7 Kemahiran Insaniah
         $template_kemahiran_insaniah = $this->domain_model
-                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', '7 Kemahiran Insaniah')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', '7 Kemahiran Insaniah')->orderBy('d_id', 'ASC')->findAll();
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, '7 Kemahiran Insaniah');
 
         // Reka bentuk Instruksi
         $template_rekabentuk_instruksi = $this->domain_model
-                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Reka Bentuk Instruksi')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Reka Bentuk Instruksi')->orderBy('d_id', 'ASC')->findAll();
         $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Reka Bentuk Instruksi');
 
         // Integrasi Teknologi
         $template_integrasi_teknologi = $this->domain_model
-                                        ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Integrasi Teknologi')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Integrasi Teknologi')->orderBy('d_id', 'ASC')->findAll();
         $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Integrasi Teknologi');
 
         // Pendekatan
@@ -351,7 +351,7 @@ class Main extends BaseController
 
         // Kaedah
         $template_kaedah = $this->domain_model
-                            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kaedah')->orderBy('d_id', 'ASC')->findAll();
+            ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kaedah')->orderBy('d_id', 'ASC')->findAll();
         $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Kaedah');
 
         // abm
@@ -504,32 +504,26 @@ class Main extends BaseController
             $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
 
             //get all domain
-            foreach($data[$group['dg_title']] as $domainz)
-            {
+            foreach ($data[$group['dg_title']] as $domainz) {
                 $tempDomainz[] = $domainz;
             }
         }
 
         //convert rules into d_id
-        foreach($rules_7ki as $key => $domainz) //loop KI
+        foreach ($rules_7ki as $key => $domainz) //loop KI
         {
             $cur_d_id = "";
-            foreach($tempDomainz as $d)
-            {
-                if($d['d_name'] == $key)
-                {
+            foreach ($tempDomainz as $d) {
+                if ($d['d_name'] == $key) {
                     $ki_rules[$d['d_id']] = null; //create array with related key first
                     $cur_d_id = $d['d_id'];
                 }
             }
 
             //loop rules inside KI
-            foreach($domainz as $rule)
-            {
-                foreach($tempDomainz as $d)
-                {
-                    if($d['d_name'] == $rule)
-                    {
+            foreach ($domainz as $rule) {
+                foreach ($tempDomainz as $d) {
+                    if ($d['d_name'] == $rule) {
                         $ki_rules[$cur_d_id][] = $d['d_id'];
                     }
                 }
@@ -936,7 +930,7 @@ class Main extends BaseController
 
             $dskpn_code_init = $this->session->get('dskpn_code_init');
             // backup-plan
-            if(!isset($dskpn_code_init))
+            if (!isset($dskpn_code_init))
                 $dskpn_code_init = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
 
             //step 1 - add objective performance
@@ -999,9 +993,14 @@ class Main extends BaseController
 
     public function store_standard_performance()
     {
-        $allData = $this->request->getPost();
-        $dskpn_id = $this->session->get("dskpn_id");
+        $allData    = $this->request->getPost();
+        $dskpn_id   = $this->session->get("dskpn_id");
+        $allRefCode = $this->request->getPost('sub_ref_code');
+        // dd($allRefCode);
+        // remove sub ref code from all data
+        unset($allData['sub_ref_code']);
 
+        // dd($allData);
         $sess_data = [];
 
         $tp_session = $this->session->get("tp_sess_data");
@@ -1011,9 +1010,24 @@ class Main extends BaseController
 
 
         foreach ($allData as $key => $data) {
+
             $parts = explode('-', $key);
             //first repeatition max is only 4/5.
+
             $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
+
+            $ref_code_index = 0;
+            // get learning standard ID based on subject and dskpn id
+            $ls_id = $this->learning_standard_model
+                ->where('sm_id', $tempSubject['sm_id'])
+                ->where('dskpn_id', $dskpn_id)
+                ->first();
+            // update ref_code base on ls_id
+            $this->learning_standard_model->update($ls_id['ls_id'], [
+                'ls_ref_code' => $allRefCode[$ref_code_index]
+            ]);
+
+            $ref_code_index++;
 
             $sess_data_desc = [];
 
@@ -1489,13 +1503,12 @@ class Main extends BaseController
     public function checkAndSetDSKPNCodeSession()
     {
         $dskpn_year = $this->request->getPost('dskpnyear');
-        $dskpn_year = isset($dskpn_year)?$dskpn_year:'';
+        $dskpn_year = isset($dskpn_year) ? $dskpn_year : '';
         $dskpn_code = $this->request->getPost('dskpncode');
         $dskpn_code = preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year; //purified id
 
         $dskpn = $this->dskpn_model->where('dskpn_code', $dskpn_code)->first();
-        if(!$dskpn)
-        {
+        if (!$dskpn) {
             $this->session->set('dskpn_code_init', $dskpn_code);
             return redirect()->back();
         }
