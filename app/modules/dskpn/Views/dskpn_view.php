@@ -190,7 +190,7 @@
                   <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= $objective_performance['op_desc']; ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
-                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;">300</span></strong>
+                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $objective_performance['op_duration']; ?></span></strong>
                   </div>
                 </ul>
               </div>
