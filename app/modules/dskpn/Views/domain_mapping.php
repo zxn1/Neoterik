@@ -94,17 +94,8 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
-        <div class="card-header d-flex pb-0 p-3">
-          <div class="nav-wrapper position-relative w-100">
-            <ul class="nav nav-pills nav-fill p-1" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#spesifikasi_pengajaran" role="tab" aria-controls="spesifikasi_pengajaran" aria-selected="false" tabindex="-1">
-                  ITEM 16 DOMAIN
-                </a>
-              </li>
-              <div class="moving-tab position-absolute nav-link" style="padding: 0px; transition: all 0.5s ease 0s; transform: translate3d(0px, 0px, 0px); width: 155px;"><a class="nav-link mb-0 px-0 py-1 active" data-bs-toggle="tab" href="#cam1" role="tab" aria-controls="cam1" aria-selected="true">-</a></div>
-            </ul>
-          </div>
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">PENETAPAN 16 DOMAIN MAPPING</h6>
         </div>
         <div class="card-body p-3 mt-2" style="height: auto;">
           <div class="tab-content" id="v-pills-tabContent">

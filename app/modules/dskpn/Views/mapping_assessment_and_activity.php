@@ -77,23 +77,23 @@
       <div class="row">
         <div class="col">
           <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
         <div class="col">
           <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
+          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
+            <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
             <?php } else { ?>
-            <option value="AL">Alabama</option>
-            <option value="WY">Wyoming</option>
+              <option value="AL">Alabama</option>
+              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
@@ -108,7 +108,7 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
-        
+
         <textarea id="editor-idea-pengajaran" rows="9" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border"><?= $act_assess_idea_pengajaran; ?></textarea>
       </div>
     </div>
@@ -137,47 +137,45 @@
               <table class="table mb-0">
                 <tbody id="item-abm">
 
-                <?php
-                if(!empty($act_assess_abm))
-                {
-                  foreach($act_assess_abm as $abm)
-                  { 
-                    $random_number = rand(100000, 999999);
-                    ?>
-                    <tr id="<?= $random_number; ?>-item-abm">
+                  <?php
+                  if (!empty($act_assess_abm)) {
+                    foreach ($act_assess_abm as $abm) {
+                      $random_number = rand(100000, 999999);
+                  ?>
+                      <tr id="<?= $random_number; ?>-item-abm">
+                        <td class="ps-1" colspan="4">
+                          <div class="my-auto">
+                            <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="<?= $abm; ?>">
+                          </div>
+                        </td>
+                        <td width="5px">
+                          <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#<?= $random_number; ?>-item-abm').remove();">
+                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php
+                    }
+                  } else { ?>
+                    <tr id="0-item-abm">
                       <td class="ps-1" colspan="4">
                         <div class="my-auto">
-                          <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="<?= $abm; ?>">
+                          <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="">
                         </div>
                       </td>
                       <td width="5px">
-                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#<?= $random_number; ?>-item-abm').remove();">
-                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-abm').remove();">
+                          <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                         </a>
                       </td>
                     </tr>
-                  <?php 
-                  }
-                } else { ?>
-                <tr id="0-item-abm">
-                  <td class="ps-1" colspan="4">
-                    <div class="my-auto">
-                      <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" name="abm[]" value="">
-                    </div>
-                  </td>
-                  <td width="5px">
-                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-abm').remove();">
-                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                    </a>
-                  </td>
-                </tr>
-                <?php } ?>
+                  <?php } ?>
 
                 </tbody>
               </table>
               <span class="btn bg-gradient-primary mt-2" onclick="addField()">Tambah Item&nbsp;&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-node-plus-fill" viewBox="0 0 16 16">
-                  <path d="M11 13a5 5 0 1 0-4.975-5.5H4A1.5 1.5 0 0 0 2.5 6h-1A1.5 1.5 0 0 0 0 7.5v1A1.5 1.5 0 0 0 1.5 10h1A1.5 1.5 0 0 0 4 8.5h2.025A5 5 0 0 0 11 13m.5-7.5v2h2a.5.5 0 0 1 0 1h-2v2a.5.5 0 0 1-1 0v-2h-2a.5.5 0 0 1 0-1h2v-2a.5.5 0 0 1 1 0"/>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                 </svg>
               </span>
             </div>
@@ -185,13 +183,13 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-lg-4">
       <table class="mt-2 card" style="border-style : solid; border-width : 2px;">
         <tr>
           <td>
             <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-              <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (!empty($act_assess_parent_involve) && $act_assess_parent_involve == 'Y')?'checked':''; ?>>
+              <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (!empty($act_assess_parent_involve) && $act_assess_parent_involve == 'Y') ? 'checked' : ''; ?>>
             </div>
           </td>
           <td>
@@ -199,7 +197,7 @@
           </td>
         </tr>
       </table>
-      
+
     </div>
   </div>
 
@@ -213,39 +211,38 @@
     </div>
   </div>
 
-<?php
-if($review)
-{ ?>
+  <?php
+  if ($review) { ?>
 
-<div class="modal" id="review-dskpn" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Semakan dan Konfirmasi</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#review-dskpn').modal('hide');">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <iframe src="<?= route_to('review_dskpn') . "?page=1"; ?>" style="height: 70vh; width : 100%;">
-        </iframe>
-      </div>
-      <div class="modal-footer">
-        <a href="<?= route_to("tp_maintenance") ?>" class="btn btn-secondary">Betulkan Semula</a>
-        <a href="<?= route_to('dskpn_complete') ?>" type="button" class="btn btn-primary" data-dismiss="modal">Selesai</a>
+    <div class="modal" id="review-dskpn" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Semakan dan Konfirmasi</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#review-dskpn').modal('hide');">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <iframe src="<?= route_to('review_dskpn') . "?page=1"; ?>" style="height: 70vh; width : 100%;">
+            </iframe>
+          </div>
+          <div class="modal-footer">
+            <a href="<?= route_to("tp_maintenance") ?>" class="btn btn-secondary">Betulkan Semula</a>
+            <a href="<?= route_to('dskpn_complete') ?>" type="button" class="btn btn-primary" data-dismiss="modal">Selesai</a>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
 
-<script>
-  $(document).ready(function() {
-    $('#review-dskpn').modal('show');
-  });
-</script>
+    <script>
+      $(document).ready(function() {
+        $('#review-dskpn').modal('show');
+      });
+    </script>
 
-<?php }
-?>
+  <?php }
+  ?>
 
 </form>
 <script>

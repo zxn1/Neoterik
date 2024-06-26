@@ -53,7 +53,7 @@
               $tm_year_display = isset($year_map[$topic['tm_year']]) ? $year_map[$topic['tm_year']] : $topic['tm_year'];
             }
             ?>
-            <input id="tahun-to-display" class="form-control" value="<?= (empty($flag)) ? '' : $tm_year_display ?>" readonly>
+            <input id="tahun-to-display" name="tahun" class="form-control" value="<?= (empty($flag)) ? '' : $tm_year_display ?>" readonly>
           </div>
         </div>
         <div class="row py-4">
@@ -146,7 +146,7 @@
         <br>
         <div style="display: flex; align-items: center;">
           <h6 for="Duration" style="margin-right: 10px;">Durasi Perlaksanaan</h6>
-          <input name="duration" style="width: 200px;" class="form-control" type="number" placeholder="Sila Masukkan Durasi" value="" required>&nbsp;<b>Minit</b>
+          <input name="duration" style="width: 200px;" class="form-control" type="number" placeholder="Sila Masukkan Durasi" value="<?= $duration; ?>" required>&nbsp;<b>Minit</b>
         </div>
 
 

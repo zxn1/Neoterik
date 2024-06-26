@@ -840,13 +840,18 @@ class Main extends BaseController
         $allDescription = $this->request->getPost('subject_description');
         $objective      = $this->request->getPost('objective');
         $kluster        = $this->request->getPost('kluster');
+        $tahun          = $this->request->getPost('tahun');
         $topik          = $this->request->getPost('topik');
         $tema           = $this->request->getPost('tema');
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
 
         //set in session
+        $this->session->set('kluster', $kluster);
+        $this->session->set('tahun', $tahun);
+        $this->session->set('topik', $topik);
         $this->session->set('objective', $objective);
+        $this->session->set('duration', $duration);
         $this->session->set('tema', $tema);
         $this->session->set('subtema', $subtema);
 
@@ -1458,6 +1463,7 @@ class Main extends BaseController
         $data['objective'] = "";
         $data['tema'] = "";
         $data['subtema'] = "";
+        $data['duration'] = "";
         $data['subject_list'] = $this->subject_model->findAll();
 
         $tm_id = $this->session->get('tm_id');
@@ -1488,6 +1494,7 @@ class Main extends BaseController
 
             $data['subject_description'] = $this->session->get('subject_description');
             $data['objective'] = $this->session->get('objective');
+            $data['duration'] = $this->session->get('duration');
             $data['tema'] = $this->session->get('tema');
             $data['subtema'] = $this->session->get('subtema');
 
@@ -1571,6 +1578,7 @@ class Main extends BaseController
                     $data['data']['subject'] = $this->session->get('subject');
                     $data['data']['subject_description'] = $this->session->get('subject_description');
                     $data['data']['objective'] = $this->session->get('objective');
+                    $data['data']['duration'] = $this->session->get('duration');
                     $data['data']['tema'] = $this->session->get('tema');
                     $data['data']['subtema'] = $this->session->get('subtema');
 

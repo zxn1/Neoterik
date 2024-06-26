@@ -135,7 +135,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Standard<br>Pembelajaran</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Standard<br>Pembelajaran</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -143,7 +143,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penyelenggaraan<br>Tahap Penguasaan</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Tahap Penguasaan</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -151,7 +151,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Pemetaan Teras</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Teras</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -159,7 +159,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Pemetaan Domain</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Domain</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -167,7 +167,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Pemetaan Spesifikasi</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Spesifikasi</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -175,7 +175,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Pemetaan Aktiviti <br>& Pentaksiran</span>
+                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Aktiviti <br>& Pentaksiran</span>
                 </a>
               </li>
               <li class="nav-item ">
