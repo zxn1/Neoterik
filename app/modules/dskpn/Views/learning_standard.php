@@ -143,6 +143,13 @@
           </div>
           <textarea id="editor-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea>
         </div>
+        <br>
+        <div style="display: flex; align-items: center;">
+          <h6 for="Duration" style="margin-right: 10px;">Durasi Perlaksanaan</h6>
+          <input name="duration" style="width: 200px;" class="form-control" type="number" placeholder="Sila Masukkan Durasi" value="" required>&nbsp;<b>Minit</b>
+        </div>
+
+
       </div>
     </div>
     <div class="text-end p-3">

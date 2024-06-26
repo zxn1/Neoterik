@@ -119,7 +119,7 @@
                       <div class="card-header d-flex p-3 bg-gradient-primary">
                         <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
                       </div>
-                      <div class="card-body pt-0">
+                      <div class="card-body p-0">
                         <div class="table-responsive">
                           <table class="table mb-0">
                             <tbody>
