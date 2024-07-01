@@ -95,6 +95,9 @@ class Main extends BaseController
 
         $data['tp_session'] = $this->session->get("tp_sess_data");
 
+        $ex_dskpn = $this->session->get('ex_dskpn');
+        $sess_data_desc = [];
+
         $data['parameters'] = $this->session->get();
         if (!empty($data['parameters'])) {
             //step 1 - get Cluster
@@ -114,6 +117,29 @@ class Main extends BaseController
                     ->get();
 
                 $data['subjects'][] = $query->getResult();
+            }
+
+            if(!empty($ex_dskpn) && empty($data['tp_session']))
+            {
+                $tp_ex_data = $this->standard_performance_model->where('dskpn_id', $ex_dskpn['dskpn_id'])->orderBy('sp_tp_level', 'ASC')->findAll();
+                foreach($data['subjects'] as $item)
+                {
+                    $sess_data_desc[$item[0]->sm_desc][] = [$item[0]->sm_id];
+
+                    $tp_listing = [];
+                    foreach($tp_ex_data as $tp_item)
+                    {
+                        if($tp_item['sm_id'] == $item[0]->sm_id)
+                        {
+                            // $sess_data_desc[$item[0]->sm_desc][$item[0]->sm_id][] = $tp_item['sp_tp_level_desc'];
+                            $tp_listing[] = $tp_item['sp_tp_level_desc'];
+                        }
+                    }
+
+                    $sess_data_desc[$item[0]->sm_desc][0][] = $tp_listing;
+                }
+
+                $data['tp_session'] = $sess_data_desc;
             }
         }
 
@@ -185,6 +211,7 @@ class Main extends BaseController
 
     public function list_registered_dskpn()
     {
+        $this->session->set('ex_dskpn_code_init', null); //reset
         $data = [];
         // $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
         //     ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
@@ -445,6 +472,31 @@ class Main extends BaseController
 
         $data['domain_map_session'] = $this->session->get("domain_map_session");
 
+        //if update then, get from db
+        $is_update = $this->session->get("is_update");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+
+        if(isset($is_update) && empty($data['domain_map_session']))
+        {
+            $temp_domain_mapping_db = $this->domain_mapping_model
+                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                                    ->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id', 'left')
+                                    ->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id', 'left')
+                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                                    ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
+                                    ->findAll();
+
+            $temp_domain_map = [];
+
+            foreach($temp_domain_mapping_db as $item)
+            {
+                $temp_domain_map['\'' . $item['sm_code'] . '\''][] = $item['d_id'];
+            }
+            
+            $data['domain_map_session'] = $temp_domain_map;
+        }
+
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         $data['subjects'] = [];
         if (!empty($data['dskpn_id'])) {
@@ -545,6 +597,29 @@ class Main extends BaseController
         $data['core_map_sess'] = $this->session->get("core_map_sess");
         // $data['core_maplist_sess'] = $this->session->get("core_maplist_sess");
 
+        //if update then, get from db
+        $is_update = $this->session->get("is_update");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+
+        if(isset($is_update) && empty($data['core_map_sess']))
+        {
+            $temp_core_mapping_db = $this->domain_mapping_model
+                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                                    ->join('subject_main', 'domain.sm_id = subject_main.sm_id', 'left')
+                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                                    ->where('domain_group.dg_title', 'Kompetensi Teras')
+                                    ->findAll();
+
+            $temp_core_map = [];
+            foreach($temp_core_mapping_db as $item)
+            {
+                $temp_core_map[$item['sm_code']][$item['dm_id']] = [$item['d_name'], $item['dm_isChecked']];
+            }
+
+            $data['core_map_sess'] = $temp_core_map;
+        }
+
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -570,6 +645,31 @@ class Main extends BaseController
 
         $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
         $data['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
+
+        //if update then, get from db
+        $is_update = $this->session->get("is_update");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+
+        if(isset($is_update) && empty($data['specification_maplist']))
+        {
+            $temp_specification_mapping_db = $this->domain_mapping_model
+                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                                    ->join('extra_additional_field', 'extra_additional_field.dm_id = domain_mapping.dm_id', 'left')
+                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                                    ->whereIn('domain_group.dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])
+                                    ->findAll();
+
+            $temp_specification_map = [];
+            foreach($temp_specification_mapping_db as $item)
+            {
+                $temp_specification_map[] = $item['d_id'];
+                if($item['eaf_desc'] != null || !empty($item['eaf_desc']))
+                    $data['specification_lain_lain'] = $item['eaf_desc'];
+            }
+
+            $data['specification_maplist'] = $temp_specification_map;
+        }
 
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -604,6 +704,35 @@ class Main extends BaseController
         $data['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
         $data['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
         $data['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
+
+        //if update then, get from db
+        $is_update = $this->session->get("is_update");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+
+        if(isset($is_update) && empty($data['act_assess_idea_pengajaran']))
+        {
+            $temp_act_asses_mapping_db = $this->dskpn_model
+                                         ->join('activity_assessment', 'activity_assessment.aa_id = dskpn.aa_id')
+                                         ->where('dskpn_id', $ex_dskpn_id)
+                                         ->first();
+            
+            $temp_abm_list = $this->learning_aid_model->select('la_desc')->where('dskpn_id', $ex_dskpn_id)->findAll();
+
+            if(!empty($temp_act_asses_mapping_db))
+            {
+                $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
+                $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
+                $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
+            }
+
+            // Initialize
+            $data['act_assess_abm'] = [];
+
+            // Iterate over the results and add 'la_desc' values to the output array
+            foreach ($temp_abm_list as $result) {
+                $data['act_assess_abm'][] = $result['la_desc'];
+            }
+        }
 
         if (!empty($data['dskpn_id'])) {
             $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
@@ -714,7 +843,11 @@ class Main extends BaseController
             'actvty_assess_map_id_sess',
             'actvty_assess_learning_aid_id_sess',
             'dskpn_code',
-            'dskpn_code_init'
+            'dskpn_code_init',
+            'is_update',
+            'ex_dskpn_id',
+            'ex_dskpn',
+            'duration'
         ];
 
         // Remove each session key
@@ -725,6 +858,44 @@ class Main extends BaseController
         $script = [];
         $style = [];
         $this->render_jscss('mapping_successfully', $data, $script, $style);
+    }
+
+    public function set_session_edit_dskpn($ex_dskpn_id)
+    {
+        //set all attribute
+        $this->session->set('is_update', true); //need to check if currently update process
+        if(!empty($ex_dskpn_id))
+            $this->session->set('ex_dskpn_id', $ex_dskpn_id);
+        
+        //ex_dskpn
+        $dskpn = $this->dskpn_model->where('dskpn_id', $ex_dskpn_id)
+                ->join('objective_performance', 'objective_performance.op_id = dskpn.op_id')->first();
+
+        $this->session->set('ex_dskpn', $dskpn);
+
+        $learning_standard = $this->learning_standard_model->where('dskpn_id', $ex_dskpn_id)
+                            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+                            ->findAll();
+
+        $subject = [];
+        $subject_description = [];
+        foreach($learning_standard as $item)
+        {
+            $subject[] = $item['sm_id'];
+            $subject_description[] = $item['ls_details'];
+        }
+
+        $this->session->set('subject', $subject);
+        $this->session->set('subject_description', $subject_description);
+        $this->session->set('objective', $dskpn['op_desc']);
+        $this->session->set('duration', $dskpn['op_duration']);
+        $this->session->set('tema', $dskpn['dskpn_theme']);
+        $this->session->set('subtema', $dskpn['dskpn_sub_theme']);
+        $this->session->set('ex_dskpn_code_init', $dskpn['dskpn_code']);
+        $this->session->set('dskpn_code_init', null); //reset
+        $this->session->set('tm_id', $dskpn['tm_id']);
+
+        return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
 
     public function store_cluster_subject_mapping()
@@ -846,6 +1017,8 @@ class Main extends BaseController
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
 
+        $isUpdated      = $this->session->get('is_update');
+
         //set in session
         $this->session->set('kluster', $kluster);
         $this->session->set('tahun', $tahun);
@@ -863,7 +1036,7 @@ class Main extends BaseController
 
         $performance_objective = $this->session->get('objective_performance_id');
         //means need to update
-        if (isset($performance_objective)) {
+        if (isset($performance_objective) && (empty($isUpdated) && $isUpdated != 'true')) {
             //init to zero once again
             $data['learning_standard_id'] = [];
 
@@ -989,6 +1162,8 @@ class Main extends BaseController
             foreach ($data as $key => $val) {
                 $this->session->set($key, $val);
             }
+
+            $this->session->set('is_update', false);
         }
 
         $this->session->set('dskpn_code', $this->dskpn_model->where('dskpn_id', $this->session->get('dskpn_id'))->first()['dskpn_code']);
@@ -1504,6 +1679,7 @@ class Main extends BaseController
         }
 
         $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');
+        $data['ex_dskpn_code_init'] = $this->session->get('ex_dskpn_code_init');
 
         $script = ['dynamic-input', 'learning_standard'];
         $style = ['static-field'];
