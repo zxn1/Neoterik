@@ -47,7 +47,7 @@
 
                                 if((get_user_role() == $both_roles[1]) && ($clusterItem['dskpn_status'] != 3)): ?>
                                 &nbsp;&nbsp;
-                                <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
+                                <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])); ?>">
                                     <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
                                 </a>
                                 &nbsp;&nbsp;
