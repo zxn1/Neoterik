@@ -718,9 +718,12 @@ class Main extends BaseController
             
             $temp_abm_list = $this->learning_aid_model->select('la_desc')->where('dskpn_id', $ex_dskpn_id)->findAll();
 
-            $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
-            $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
-            $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
+            if(!empty($temp_act_asses_mapping_db))
+            {
+                $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
+                $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
+                $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
+            }
 
             // Initialize
             $data['act_assess_abm'] = [];
@@ -843,7 +846,8 @@ class Main extends BaseController
             'dskpn_code_init',
             'is_update',
             'ex_dskpn_id',
-            'ex_dskpn'
+            'ex_dskpn',
+            'duration'
         ];
 
         // Remove each session key
