@@ -178,16 +178,43 @@
       <div class="modal-body">
         <form id="checkDuplicateKODDSKPN" action="<?= route_to('checkstore_dskpn_code') ?>" method="post">
           <div class="row pb-4" id="set-dskpn-ic">
-            <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi topik DSKPN ini:</span>
+            <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi <?= isset($ex_dskpn_code_init)?'versi':'' ?> topik DSKPN ini:</span>
             <div class="ps-3">
               <div class="row">
+                <?php $part1_ex_dskpn = ""; $part2_ex_dskpn = ""; ?>
                 <div class="col-md-8">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value="<?= (isset($dskpn_code) ? $dskpn_code : '') ?>">
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value=
+                  "<?php
+                  if (!isset($ex_dskpn_code_init)) {
+                      if (isset($dskpn_code)) {
+                          echo $dskpn_code;
+                      } else {
+                          echo '';
+                      }
+                  } else {
+                    // Separate the string into two parts
+                    if(substr_count($ex_dskpn_code_init, '-') > 1)
+                    {
+                      $lastHyphenPos = strrpos($ex_dskpn_code_init, '-');
+                      $part1_ex_dskpn = substr($ex_dskpn_code_init, 0, $lastHyphenPos);
+                      $part2_ex_dskpn = substr($ex_dskpn_code_init, $lastHyphenPos + 1);
+                    } else {
+                      $part1_ex_dskpn = $ex_dskpn_code_init;
+                      $part2_ex_dskpn = date("Y");
+                    }
+                    echo $part1_ex_dskpn . '-';
+                  }
+                  ?>">
                 </div>
                 <div class="col-md-4">
-                  <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)"><label for="dskpnyear" class="form-label">Tahun DSKPN</label>
-                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="2099" step="1" value="<?= date("Y"); ?>" disabled />
+                  <?php
+                  if(empty($part2_ex_dskpn))
+                  {?>
+                  <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)">
+                  <?php } ?>
+                  <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
+                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn)?date("Y"):$part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn)?'':'disabled';?> />
                 </div>
               </div>
             </div>
