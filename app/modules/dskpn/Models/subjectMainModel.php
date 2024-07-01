@@ -12,7 +12,7 @@ class SubjectMainModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['sm_code', 'sm_desc'];
+    protected $allowedFields = ['sm_code', 'sm_desc', 'deleted_at'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
