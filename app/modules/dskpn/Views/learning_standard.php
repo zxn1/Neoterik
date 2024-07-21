@@ -14,7 +14,7 @@
 <form action="<?= route_to('store_std_learn'); ?>" method="POST" id="submit_learning">
   <?= csrf_field() ?>
   <?php if ($flag) { ?>
-    <input name="kluster" class="form-control" value="<?= $topic['cm_id'] ?>" hidden>
+    <input name="kluster" class="form-control" value="<?= $topic['tm_ctm_id'] ?>" hidden>
     <input name="topik" class="form-control" value="<?= $topic['tm_id'] ?>" hidden>
   <?php } ?>
 
@@ -28,7 +28,7 @@
           <div class="col-md-10">
             <label for="kluster">KLUSTER</label>
             <?php if ($flag) { ?>
-              <input name="kluster_desc" class="form-control" value="<?= $topic['cm_desc'] ?>" readonly>
+              <input name="kluster_desc" class="form-control" value="<?= $topic['tm_desc'] ?>" readonly>
             <?php } else { ?>
               <select name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example" required>
                 <option selected>-- Sila Pilih Kluster --</option>
@@ -117,11 +117,11 @@
 
               <div class="col-md-4 subject-card">
                 <?php foreach ($subject_list as $item_list) : ?>
-                  <?php if ($item_list['sm_id'] == $sub) : ?>
+                  <?php if ($item_list['sbm_id'] == $sub) : ?>
                     <div class="card mt-4">
                       <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
                         <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
-                          <option class="dropdown-item" value='<?= $item_list['sm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sm_desc'] ?></option>
+                          <option class="dropdown-item" value='<?= $item_list['sbm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sbm_desc'] ?></option>
                         </select>
                         <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
                           <i class="fas fa-trash-alt"></i>
