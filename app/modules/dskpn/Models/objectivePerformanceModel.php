@@ -7,18 +7,18 @@ use CodeIgniter\Model;
 class ObjectivePerformanceModel extends Model
 {
     protected $table      = 'objective_performance';
-    protected $primaryKey = 'op_id';
+    protected $primaryKey = 'opm_id';
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['op_desc', 'op_duration'];
+    protected $allowedFields = ['opm_desc', 'opm_dskpn_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'opm_created_at';
+    protected $updatedField  = 'opm_updated_at';
+    protected $deletedField  = 'opm_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];

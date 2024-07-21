@@ -12,13 +12,13 @@ class LearningStandardModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['ls_details', 'sm_id', 'dskpn_id', 'ls_ref_code'];
+    protected $allowedFields = ['ls_sbm_id', 'ls_dskpn_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'ls_created_at';
+    protected $updatedField  = 'ls_updated_at';
+    protected $deletedField  = 'ls_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];
