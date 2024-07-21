@@ -15,11 +15,12 @@ use App\Modules\Dskpn\Models\SubjectMainModel;
 
 use App\Modules\Dskpn\Models\DomainMappingModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
-use App\Modules\Dskpn\Models\ActivityAssessmentModel;
+use App\Modules\Dskpn\Models\ActivityItemModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
 //mapping model import
-use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
+//use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
+use App\Modules\Dskpn\Models\MethodExtraModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 use App\Modules\Dskpn\Models\clusterSubjectMappingModel;
 //-----
@@ -32,7 +33,8 @@ class Main extends BaseController
     protected $subject_model;
     protected $learning_standard_model;
     protected $objective_performance_model;
-    protected $activity_assessment_model;
+    //protected $activity_assessment_model;
+    protected $activity_item_model;
     protected $standard_performance_model;
     protected $dskpn_model;
 
@@ -44,7 +46,8 @@ class Main extends BaseController
     // subject cluster mapping model
     protected $cluster_subject_mapping_model;
     //-----------------
-    protected $extra_additional_field_model;
+    //protected $extra_additional_field_model;
+    protected $method_extra_model;
     protected $learning_aid_model;
     protected $db;
 
@@ -56,7 +59,8 @@ class Main extends BaseController
         $this->subject_model                = new SubjectMainModel();
         $this->learning_standard_model      = new LearningStandardModel();
         $this->objective_performance_model  = new ObjectivePerformanceModel();
-        $this->activity_assessment_model    = new ActivityAssessmentModel();
+        $this->activity_item_model          = new ActivityItemModel();
+        //$this->activity_assessment_model    = new ActivityAssessmentModel();
         $this->standard_performance_model   = new StandardPerformanceModel();
         $this->dskpn_model                  = new dskpnModel();
         //mapping model init
@@ -66,7 +70,8 @@ class Main extends BaseController
 
         $this->cluster_subject_mapping_model    = new clusterSubjectMappingModel();
         //-----------------
-        $this->extra_additional_field_model = new ExtraAdditionalFieldModel();
+        //$this->extra_additional_field_model = new ExtraAdditionalFieldModel();
+        $this->method_extra_model       = new MethodExtraModel();
         $this->learning_aid_model       = new LearningAidModel();
         $this->db                       = $this->db = \Config\Database::connect();
     }
@@ -166,9 +171,9 @@ class Main extends BaseController
 
             // Get clusters that have topics for the selected year
             $data['cluster'] = $this->cluster_model->select('cluster_main.*')
-                ->join('topic_main', 'cluster_main.cm_id = topic_main.cm_id', 'inner')
+                ->join('topic_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id', 'inner')
                 ->where('topic_main.tm_year', $selectedYear)
-                ->groupBy('cluster_main.cm_id')
+                ->groupBy('cluster_main.ctm_id')
                 ->findAll();
 
             // Set the hasData flag
@@ -909,8 +914,8 @@ class Main extends BaseController
         // Iterate over each selected subject and save to the database
         foreach ($subjects as $subjectId) {
             $data = [
-                'cm_id' => $cm_id,
-                'sm_id' => $subjectId,
+                'csm_ctm_id' => $cm_id,
+                'csm_sbm_id' => $subjectId,
             ];
 
             $this->cluster_subject_mapping_model->insert($data);
@@ -1583,8 +1588,8 @@ class Main extends BaseController
 
         // Query to get the list of DSKPN
         $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.tm_id = topic_main.tm_id', 'left')
-            ->where('dskpn.tm_id', $tm_id)
+            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+            ->where('dskpn.dskpn_tm_id', $tm_id)
             ->findAll();
 
         // Query get kluster data
@@ -1592,13 +1597,13 @@ class Main extends BaseController
 
         // Query get topic data
         $data['topic'] = $this->topic_model
-            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
             ->where('topic_main.tm_id', $tm_id)
             ->first();
 
         // check if the subject for the cluster have been registered
         $cluster_registered_subject = $this->cluster_subject_mapping_model
-            ->where('cm_id', $data['topic']['cm_id'])
+            ->where('csm_ctm_id', $data['topic']['tm_ctm_id'])
             ->first();
 
         if ($cluster_registered_subject !== null) {
@@ -1646,18 +1651,18 @@ class Main extends BaseController
         // Query get topic data
         if (!empty($data['flag']) && ($tm_id != NULL)) {
             $data['topic'] = $this->topic_model
-                ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
                 ->where('topic_main.tm_id', $tm_id)
                 ->first();
 
             $data['subject'] = $this->session->get('subject');
-            $data['getDefaultSubject'] = $this->cluster_subject_mapping_model->where('cm_id', $data['topic']['cm_id'])
-                ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
+            $data['getDefaultSubject'] = $this->cluster_subject_mapping_model->where('csm_ctm_id', $data['topic']['tm_ctm_id'])
+                ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id', 'left')
                 ->findAll();
 
             $arrDefaultSubject = [];
             foreach ($data['getDefaultSubject'] as $item) {
-                $arrDefaultSubject[] = $item['sm_id'];
+                $arrDefaultSubject[] = $item['csm_sbm_id'];
             }
 
             if (empty($data['subject'])) {
@@ -1673,7 +1678,7 @@ class Main extends BaseController
             $data['tema'] = $this->session->get('tema');
             $data['subtema'] = $this->session->get('subtema');
 
-            $data['dskpn_code'] = 'K' . $data['topic']['cm_id'] . 'T' . $data['topic']['tm_year'] . '-';
+            $data['dskpn_code'] = 'K' . $data['topic']['tm_ctm_id'] . 'T' . $data['topic']['tm_year'] . '-';
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
         }

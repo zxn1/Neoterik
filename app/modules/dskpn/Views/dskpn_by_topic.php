@@ -17,9 +17,9 @@
                     <div class="d-flex flex-column h-100 mb-2">
                         <p class="mb-1 pt-2 text-bold">Pilih Kluster</p>
                         <select disabled name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example">
-                            <option selected value="<?= $topic['cm_id'] ?>"><?= $topic['cm_desc'] ?></option>
+                            <option selected value="<?= $topic['tm_ctm_id'] ?>"><?= $topic['tm_desc'] ?></option>
                             <?php foreach ($kluster as $item) { ?>
-                                <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                                <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -128,7 +128,7 @@
             <div class="modal-body">
                 <form id="rejectForm" action="<?= route_to('store_cluster_subject_mapping') ?>" method="post">
 
-                    <input type="text" name="cm_id" value="<?= $topic['cm_id'] ?>" hidden>
+                    <input type="text" name="cm_id" value="<?= $topic['tm_ctm_id'] ?>" hidden>
                     <input type="text" name="tm_id" value="<?= $topic['tm_id'] ?>" hidden>
                     <div class="row pb-4" id="standard-pembelajaran">
                         <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
@@ -172,7 +172,7 @@
             let subjects = <?= json_encode($subjects) ?>; // Pass PHP variable to JavaScript
             let options = '';
             subjects.forEach(function(subject) {
-                options += `<option value="${subject.sm_id}">${subject.sm_desc}</option>`;
+                options += `<option value="${subject.sbm_id}">${subject.sbm_desc}</option>`;
             });
 
             counter++; // Increment the counter
