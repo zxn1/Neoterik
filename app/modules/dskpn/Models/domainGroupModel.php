@@ -16,9 +16,9 @@ class DomainGroupModel extends Model
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'dg_created_at';
+    protected $updatedField  = 'dg_updated_at';
+    protected $deletedField  = 'dg_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];

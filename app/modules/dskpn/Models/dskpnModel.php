@@ -12,14 +12,14 @@ class DskpnModel extends Model
     protected $returnType     = 'array'; // Can be 'array' or 'object'
     protected $useSoftDeletes = true; // Enable if you want to use soft deletes
 
-    protected $allowedFields = ['dskpn_code', 'dskpn_theme', 'dskpn_sub_theme', 'tm_id', 'op_id', 'aa_id', 'approved_at', 'created_by', 'approved_by', 'dskpn_status', 'dskpn_remarks', 'dskpn_delete_reason']; // Fields that are allowed to be inserted/updated
+    protected $allowedFields = ['dskpn_code', 'dskpn_theme', 'dskpn_sub_theme', 'dskpn_status', 'dskpn_remarks', 'dskpn_delete_reason', 'dskpn_approved_at', 'dskpn_created_by', 'dskpn_updated_by', 'dskpn_approved_by', 'dskpn_version', 'dskpn_duration', 'dskpn_tm_id', 'dskpn_parent_involvement', 'dskpn_notes']; // Fields that are allowed to be inserted/updated
 
     // If you want to use timestamps
     protected $useTimestamps = true;
 
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'dskpn_created_at';
+    protected $updatedField  = 'dskpn_updated_at';
+    protected $deletedField  = 'dskpn_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];

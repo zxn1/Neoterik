@@ -4,13 +4,13 @@ namespace App\Modules\Dskpn\Models;
 
 use CodeIgniter\Model;
 
-class clusterSubjectMappingModel extends Model
+class CompetencyMappingModel extends Model
 {
-    protected $table      = 'cluster_subject_mapping';
+    protected $table      = 'competency_mapping';
     protected $primaryKey = 'csm_id';
 
     protected $returnType     = 'array';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
 
     protected $allowedFields = ['csm_ctm_id', 'csm_sbm_id'];
 
