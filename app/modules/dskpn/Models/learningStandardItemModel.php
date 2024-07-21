@@ -4,21 +4,21 @@ namespace App\Modules\Dskpn\Models;
 
 use CodeIgniter\Model;
 
-class SubjectMainModel extends Model
+class LearningStandardItemModel extends Model
 {
-    protected $table      = 'subject_main';
-    protected $primaryKey = 'sbm_id';
+    protected $table      = 'learning_standard_item';
+    protected $primaryKey = 'lsi_id';
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['sbm_code', 'sbm_desc', 'sbm_deleted_at'];
+    protected $allowedFields = ['lsi_ls_id', 'lsi_desc'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'sbm_created_at';
-    protected $updatedField  = 'sbm_updated_at';
-    protected $deletedField  = 'sbm_deleted_at';
+    protected $createdField  = 'lsi_created_at';
+    protected $updatedField  = 'lsi_updated_at';
+    protected $deletedField  = 'lsi_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];

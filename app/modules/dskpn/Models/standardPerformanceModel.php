@@ -12,13 +12,13 @@ class StandardPerformanceModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['sp_tp_level', 'sp_tp_level_desc', 'sm_id', 'dskpn_id'];
+    protected $allowedFields = ['sp_tp_level', 'sp_tp_level_desc', 'sp_dskp_code'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'created_at';
-    protected $updatedField  = 'updated_at';
-    protected $deletedField  = 'deleted_at';
+    protected $createdField  = 'sp_created_at';
+    protected $updatedField  = 'sp_updated_at';
+    protected $deletedField  = 'sp_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];
