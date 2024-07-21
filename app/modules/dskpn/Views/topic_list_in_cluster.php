@@ -155,11 +155,11 @@
                     <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
                         <div class="mb-3">
                             <label for="clusterCode" class="form-label">Kod Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="cm_code" required>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="ctm_code" required>
                         </div>
                         <div class="mb-3">
                             <label for="clusterName" class="form-label">Nama Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="cm_desc" required>
+                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="ctm_desc" required>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
@@ -189,7 +189,7 @@
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
                                 <option disabled selected>-- Sila Pilih Kluster --</option>
                                 <?php foreach ($cluster_listing as $item) { ?>
-                                    <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                                    <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -251,16 +251,16 @@
                             <?php foreach ($cluster as $clust) { ?>
                                 <div class="accordion-item mb-3">
                                     <h5 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['cm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['cm_code']; ?>">
+                                        <button class="accordion-button border-bottom font-weight-bold collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?= $clust['ctm_code']; ?>" aria-expanded="false" aria-controls="collapse<?= $clust['ctm_code']; ?>">
                                             <i class="collapse-close fa fa-plus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
                                             <i class="collapse-open fa fa-minus text-xs pt-1 position-absolute end-0 me-3" aria-hidden="true"></i>
-                                            <?= $clust['cm_desc']; ?>
+                                            <?= $clust['ctm_desc']; ?>
                                         </button>
                                     </h5>
-                                    <div id="collapse<?= $clust['cm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
+                                    <div id="collapse<?= $clust['ctm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionRental">
                                         <div class="accordion-body custom row" id="tahap-penguasaan">
                                             <?php foreach ($topik_main as $topik) {
-                                                if ($topik['cm_id'] == $clust['cm_id']) { ?>
+                                                if ($topik['tm_ctm_id'] == $clust['ctm_id']) { ?>
                                                     <div class="col-md-12">
                                                         <div class="d-flex flex-column h-100">
                                                             <div id="collection1-<?= $topik['tm_id']; ?>">
