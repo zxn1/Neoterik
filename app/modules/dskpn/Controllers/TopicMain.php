@@ -48,7 +48,7 @@ class TopicMain extends BaseController
     {
         $response = ['status' => 'fail', 'data' => []];
 
-        $topikSelected = $this->topic_model->where('cm_id', $id)->find();
+        $topikSelected = $this->topic_model->where('tm_ctm_id', $id)->find();
         if(!empty($topikSelected))
         {
             $response = ['status' => 'success', 'data' => $topikSelected];
