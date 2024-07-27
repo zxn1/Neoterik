@@ -1007,13 +1007,15 @@ class Main extends BaseController
 
     public function store_standard_learning()
     {
+        dd($this->request->getPost());
         $data = [];
 
         // Retrieve tm_id from session
         $sm_id          = $this->session->get('sm_id');
 
-        $allSubject     = $this->request->getPost('subject');
-        $allDescription = $this->request->getPost('subject_description');
+        $allSubject     = $this->request->getPost('subject'); //multi-array
+        $allDescription = $this->request->getPost('subject_description'); //multi-array
+
         $objective      = $this->request->getPost('objective');
         $kluster        = $this->request->getPost('kluster');
         $tahun          = $this->request->getPost('tahun');
@@ -1022,7 +1024,7 @@ class Main extends BaseController
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
 
-        $isUpdated      = $this->session->get('is_update');
+        //$isUpdated      = $this->session->get('is_update');
 
         //set in session
         $this->session->set('kluster', $kluster);
