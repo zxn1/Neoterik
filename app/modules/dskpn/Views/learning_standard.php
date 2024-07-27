@@ -33,7 +33,7 @@
               <select name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example" required>
                 <option selected>-- Sila Pilih Kluster --</option>
                 <?php foreach ($kluster as $item) { ?>
-                  <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                  <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
                 <?php } ?>
               </select>
             <?php } ?>

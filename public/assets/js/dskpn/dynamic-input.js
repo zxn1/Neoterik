@@ -36,10 +36,10 @@ $('#add-subject-button').on('click', function() {
 
     let htmlOptions = ``;
     subject_list.forEach(function(item) {
-        if(get_default_subject != null && (item.sm_id == get_default_subject[countSubject]))
+        if(get_default_subject != null && (item.sbm_id == get_default_subject[countSubject]))
         {
-            htmlOptions += `<option selected class="dropdown-item" value='${item.sm_id}'>${item.sm_desc}</option>`;
-        }
+            htmlOptions += `<option selected class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
+        }  
     });
 
     $('#standard-pembelajaran').append(`
@@ -53,7 +53,25 @@ $('#add-subject-button').on('click', function() {
                 <i class="fas fa-trash-alt"></i>
             </button>
         </div>
-        <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
+
+        <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
+            <div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+get_default_subject[countSubject]+`">
+                <input type="text" class="form-control p-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
+                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();">
+                    <button class="input-group-text" id="btnGroupAddon">
+                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-1">
+            <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}')">Tambah &nbsp;&nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                </svg>
+            </span>
+        </div>
     </div>
     `);
 });
@@ -149,11 +167,11 @@ $('#topik-dynamic-field').on('change', function() {
                     //populate subject here
                     let htmlOptions = ``;
                     subject_list.forEach(function(itemz) {
-                        if(get_default_subject != null && (itemz.sm_id == item.sm_id))
+                        if(get_default_subject != null && (itemz.sbm_id == item.sbm_id))
                         {
-                            htmlOptions += `<option selected class="dropdown-item" value='${itemz.sm_id}'>${itemz.sm_desc}</option>`;
+                            htmlOptions += `<option selected class="dropdown-item" value='${itemz.sbm_id}'>${itemz.sbm_desc}</option>`;
                         } else {
-                            htmlOptions += `<option class="dropdown-item" value='${itemz.sm_id}'>${itemz.sm_desc}</option>`;
+                            htmlOptions += `<option class="dropdown-item" value='${itemz.sbm_id}'>${itemz.sbm_desc}</option>`;
                         }
                     });
 
@@ -168,7 +186,25 @@ $('#topik-dynamic-field').on('change', function() {
                                         <i class="fas fa-trash-alt"></i>
                                     </button>
                                 </div>
-                                <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."></textarea>
+
+                                <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
+                                    <div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+item.sbm_id+`">
+                                        <input type="text" class="form-control p-1" name="subject_description[`+item.sbm_id+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
+                                        <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-`+item.sbm_id+`').remove();">
+                                            <button class="input-group-text" id="btnGroupAddon">
+                                                <i class="fas fa-trash-alt" style="color:red;"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-1">
+                                    <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${item.sbm_id}')">Tambah &nbsp;&nbsp;
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                                        </svg>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     `);
@@ -195,6 +231,25 @@ $('#topik-dynamic-field').on('change', function() {
         }
     });
 });
+
+function addStandardPembelajaran(sm_id)
+{
+    var divStandardPembelajaran = $('#standard-subject-' + sm_id);
+        
+    // Generate a unique ID for the new field
+    var newFieldColl = Math.floor(Math.random() * 1000000);
+    
+    let newInputHTMLField = `<div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+newFieldColl+`">
+                                <input type="text" class="form-control p-1" name="subject_description[`+sm_id+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
+                                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-${newFieldColl}').remove();">
+                                    <button class="input-group-text" id="btnGroupAddon">
+                                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                                    </button>
+                                </div>
+                            </div>`;
+
+    divStandardPembelajaran.append(newInputHTMLField);
+}
 
 $('#kluster-selection').on('change', function() {
     var cm_id = $(this).val();

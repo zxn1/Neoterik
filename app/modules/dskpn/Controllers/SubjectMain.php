@@ -48,8 +48,8 @@ class SubjectMain extends BaseController
     public function get_default_subject_ID($id = null)
     {
         $response = ['status' => 'fail'];
-        $defaultSubject = $this->cluster_subject_mapping_model->where('cm_id', $id)
-                            ->join('subject_main', 'subject_main.sm_id = cluster_subject_mapping.sm_id', 'left')
+        $defaultSubject = $this->cluster_subject_mapping_model->where('csm_ctm_id', $id)
+                            ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id', 'left')
                             ->findAll();
 
         if($defaultSubject)
@@ -57,7 +57,7 @@ class SubjectMain extends BaseController
             $arrDefaultSubject = [];
             foreach($defaultSubject as $item)
             {
-                $arrDefaultSubject[] = $item['sm_id'];
+                $arrDefaultSubject[] = $item['csm_sbm_id'];
             }
 
             $response = [
