@@ -15,6 +15,7 @@ use App\Modules\Dskpn\Models\SubjectMainModel;
 
 use App\Modules\Dskpn\Models\DomainMappingModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
+use App\Modules\Dskpn\Models\LearningStandardItemModel;
 use App\Modules\Dskpn\Models\ActivityItemModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
@@ -32,6 +33,7 @@ class Main extends BaseController
     protected $topic_model;
     protected $subject_model;
     protected $learning_standard_model;
+    protected $learning_standard_item_model;
     protected $objective_performance_model;
     //protected $activity_assessment_model;
     protected $activity_item_model;
@@ -58,6 +60,7 @@ class Main extends BaseController
         $this->topic_model                  = new TopicMainModel();
         $this->subject_model                = new SubjectMainModel();
         $this->learning_standard_model      = new LearningStandardModel();
+        $this->learning_standard_item_model = new LearningStandardItemModel();
         $this->objective_performance_model  = new ObjectivePerformanceModel();
         $this->activity_item_model          = new ActivityItemModel();
         //$this->activity_assessment_model    = new ActivityAssessmentModel();
@@ -107,7 +110,7 @@ class Main extends BaseController
         if (!empty($data['parameters'])) {
             //step 1 - get Cluster
             $data['cluster_desc'] = $this->cluster_model
-                ->where('cm_id', $data['parameters']['cluster_id'])->first();
+                ->where('ctm_id', $data['parameters']['cluster_id'])->first();
 
             //step 2 - get Topic
             $data['topic_desc'] = $this->topic_model
@@ -117,7 +120,7 @@ class Main extends BaseController
             foreach ($data['parameters']['learning_standard_id'] as $ls_id) {
                 $query = $this->db->table('subject_main')
                     ->select('subject_main.*')
-                    ->join('learning_standard', 'learning_standard.sm_id = subject_main.sm_id')
+                    ->join('learning_standard', 'learning_standard.ls_sbm_id = subject_main.sbm_id')
                     ->where('learning_standard.ls_id', $ls_id)
                     ->get();
 
@@ -1007,14 +1010,13 @@ class Main extends BaseController
 
     public function store_standard_learning()
     {
-        dd($this->request->getPost());
         $data = [];
 
         // Retrieve tm_id from session
         $sm_id          = $this->session->get('sm_id');
 
         $allSubject     = $this->request->getPost('subject'); //multi-array
-        $allDescription = $this->request->getPost('subject_description'); //multi-array
+        $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
 
         $objective      = $this->request->getPost('objective');
         $kluster        = $this->request->getPost('kluster');
@@ -1024,7 +1026,7 @@ class Main extends BaseController
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
 
-        //$isUpdated      = $this->session->get('is_update');
+        $isUpdated      = $this->session->get('is_update');
 
         //set in session
         $this->session->set('kluster', $kluster);
@@ -1044,63 +1046,64 @@ class Main extends BaseController
         $performance_objective = $this->session->get('objective_performance_id');
         //means need to update
         if (isset($performance_objective) && (empty($isUpdated) && $isUpdated != 'true')) {
-            //init to zero once again
-            $data['learning_standard_id'] = [];
+            dd("test"); //update part
+            // //init to zero once again
+            // $data['learning_standard_id'] = [];
 
-            //step 1 - update objective performance
-            if ($this->objective_performance_model->update($this->session->get('objective_performance_id'), [
-                'op_desc' => $objective,
-                'op_duration' => $duration,
-            ]))
-                if (is_array($allSubject) && is_array($allDescription)) {
-                    //update DSKPN
-                    $dskpn_id = $this->session->get('dskpn_id');
-                    $this->dskpn_model->update($dskpn_id, [
-                        'dskpn_theme'       => $tema,
-                        'dskpn_sub_theme'   => $subtema,
-                    ]);
+            // //step 1 - update objective performance
+            // if ($this->objective_performance_model->update($this->session->get('objective_performance_id'), [
+            //     'op_desc' => $objective,
+            //     'op_duration' => $duration,
+            // ]))
+            //     if (is_array($allSubject) && is_array($allDescription)) {
+            //         //update DSKPN
+            //         $dskpn_id = $this->session->get('dskpn_id');
+            //         $this->dskpn_model->update($dskpn_id, [
+            //             'dskpn_theme'       => $tema,
+            //             'dskpn_sub_theme'   => $subtema,
+            //         ]);
 
-                    $tp_done = $this->session->get('tp_sess_data');
-                    if (!isset($tp_done)) {
-                        $this->session->set('subject', $allSubject);
-                        $this->session->set('subject_description', $allDescription);
-                        //step 1 - remove all related learning-standard first
-                        $this->learning_standard_model->where('dskpn_id', $dskpn_id)
-                            ->delete();
+            //         $tp_done = $this->session->get('tp_sess_data');
+            //         if (!isset($tp_done)) {
+            //             $this->session->set('subject', $allSubject);
+            //             $this->session->set('subject_description', $allDescription);
+            //             //step 1 - remove all related learning-standard first
+            //             $this->learning_standard_model->where('dskpn_id', $dskpn_id)
+            //                 ->delete();
 
-                        foreach ($allSubject as $index => $subject) {
-                            //step 2 - re-insert learning-standard
-                            $this->learning_standard_model->insert([
-                                'ls_details' => $allDescription[$index],
-                                'sm_id' => $subject,
-                                'dskpn_id' => $dskpn_id
-                            ]);
+            //             foreach ($allSubject as $index => $subject) {
+            //                 //step 2 - re-insert learning-standard
+            //                 $this->learning_standard_model->insert([
+            //                     'ls_details' => $allDescription[$index],
+            //                     'sm_id' => $subject,
+            //                     'dskpn_id' => $dskpn_id
+            //                 ]);
 
-                            $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
-                        }
+            //                 $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
+            //             }
 
-                        //re-initialize learning_standard_id
-                        $this->session->set('learning_standard_id', $data['learning_standard_id']);
-                    } else {
-                        if ($this->session->get('subject') != $allSubject) //that array must be same!
-                        {
-                            //redirect user with temporary session - letting them know not allow change after TP were set
-                            $this->session->setFlashdata('warning_message', 'Penambahan/Penolakan Subjek tidak boleh dilakukan, kerana Tahap Penguasaan (TP) telah dikonfigurasi.');
-                            return redirect()->to(route_to('tp_maintenance'));
-                        } else {
-                            $learning_standard_id_list = $this->session->get('learning_standard_id');
-                            foreach ($allSubject as $index => $subject) {
-                                //step 2 - re-insert learning-standard
-                                $this->learning_standard_model->update($learning_standard_id_list[$index], [
-                                    'ls_details' => $allDescription[$index],
-                                    'sm_id' => $subject,
-                                    'dskpn_id' => $dskpn_id
-                                ]);
-                            }
-                            $this->session->set('subject_description', $allDescription);
-                        }
-                    }
-                }
+            //             //re-initialize learning_standard_id
+            //             $this->session->set('learning_standard_id', $data['learning_standard_id']);
+            //         } else {
+            //             if ($this->session->get('subject') != $allSubject) //that array must be same!
+            //             {
+            //                 //redirect user with temporary session - letting them know not allow change after TP were set
+            //                 $this->session->setFlashdata('warning_message', 'Penambahan/Penolakan Subjek tidak boleh dilakukan, kerana Tahap Penguasaan (TP) telah dikonfigurasi.');
+            //                 return redirect()->to(route_to('tp_maintenance'));
+            //             } else {
+            //                 $learning_standard_id_list = $this->session->get('learning_standard_id');
+            //                 foreach ($allSubject as $index => $subject) {
+            //                     //step 2 - re-insert learning-standard
+            //                     $this->learning_standard_model->update($learning_standard_id_list[$index], [
+            //                         'ls_details' => $allDescription[$index],
+            //                         'sm_id' => $subject,
+            //                         'dskpn_id' => $dskpn_id
+            //                     ]);
+            //                 }
+            //                 $this->session->set('subject_description', $allDescription);
+            //             }
+            //         }
+            //     }
         } else {
             $this->session->set('subject', $allSubject);
             $this->session->set('subject_description', $allDescription);
@@ -1109,61 +1112,66 @@ class Main extends BaseController
 
             // Count dskpn by topic
             $dskpn_by_topic_count = $this->dskpn_model
-                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                ->where('dskpn.tm_id', $topik)
+                ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                ->where('dskpn.dskpn_tm_id', $topik)
                 ->where('topic_main.tm_year', $tm_data['tm_year'])
                 ->countAllResults();
             // ->findAll();
 
             $dskpn_code_init = $this->session->get('dskpn_code_init');
+
             // backup-plan
             if (!isset($dskpn_code_init))
                 $dskpn_code_init = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
 
-            //step 1 - add objective performance
-            if ($this->objective_performance_model->insert([
-                'op_desc' => $objective,
-                'op_duration' => $duration,
+            //step 1 - create DSKPN
+            if($this->dskpn_model->insert([
+                'dskpn_code'        => $dskpn_code_init,
+                'dskpn_theme'       => $tema,
+                'dskpn_sub_theme'   => $subtema,
+                'dskpn_status'      => null,
+                'dskpn_remarks'     => null,
+                'dskpn_delete_reason'=> null,
+                'dskpn_created_by'  => $sm_id, //sm_id is not subject_main ID
+                'dskpn_updated_by'  => null,
+                'dskpn_approved_by' => null,
+                'dskpn_tm_id'       => $topik,
+                'dskpn_version'     => null,
+                'dskpn_duration'    => $duration,
+                'dskpn_parent_involvement' => null,
+                'dskpn_notes'       => null
             ]))
-                if (is_array($allSubject) && is_array($allDescription)) {
-                    $data['objective_performance_id'] = $this->objective_performance_model->insertID();
+            {
+                $data['dskpn_id'] = $this->dskpn_model->insertID();
 
-                    //create DSKPN
-                    $this->dskpn_model->insert([
-                        'dskpn_code'        => $dskpn_code_init,
-                        'dskpn_theme'       => $tema,
-                        'dskpn_sub_theme'   => $subtema,
-                        'tm_id'             => $data['topic_id'],
-                        'op_id'             => $data['objective_performance_id'],
-                        'created_by'        => $sm_id,
-                        'aa_id'             => null
+                //step 2 - add objective performance
+                $this->objective_performance_model->insert([
+                    'opm_dskpn_id' => $data['dskpn_id'],
+                    'opm_desc' => $objective
+                ]);
+
+                foreach ($allSubject as $index => $subject) {
+                    //step 3 - insert learning-standard
+                    $this->learning_standard_model->insert([
+                        'ls_sbm_id' => $subject,
+                        'ls_dskpn_id' => $data['dskpn_id'] //temporary null
                     ]);
 
-                    $data['dskpn_id'] = $this->dskpn_model->insertID();
+                    $ls_id = $this->learning_standard_model->insertID();
+                    $data['learning_standard_id'][] = $ls_id;
 
-                    foreach ($allSubject as $index => $subject) {
-                        //step 1 - temporary only - need UI later to register subject
-                        // $this->subject_model->insert([
-                        //     'sm_code' => $this->_generateRandomString(7),
-                        //     'sm_desc' => $subject
-                        // ]);
-
-                        // Get the last inserted ID
-                        // $lastID = $this->subject_model->insertID();
-                        //end temporary
-
-                        //step 2 - insert learning-standard
-                        $this->learning_standard_model->insert([
-                            'ls_details' => $allDescription[$index],
-                            'sm_id' => $subject,
-                            'dskpn_id' => $data['dskpn_id'] //temporary null
+                    foreach($allDescription[$subject] as $itemDesc)
+                    {
+                        //step 4 - insert learning-standard-item
+                        $this->learning_standard_item_model->insert([
+                            'lsi_ls_id' => $ls_id,
+                            'lsi_desc' => $itemDesc
                         ]);
-
-                        $data['learning_standard_id'][] = $this->learning_standard_model->insertID();
                     }
                 }
-
-            //$parameters = http_build_query($data);
+            } else {
+                die('DSKPN failed to be created. Please refreshed and try again!');
+            }
 
             //http_build_query reverse process
             foreach ($data as $key => $val) {
