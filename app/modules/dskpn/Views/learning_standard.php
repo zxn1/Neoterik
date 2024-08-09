@@ -127,7 +127,45 @@
                           <i class="fas fa-trash-alt"></i>
                         </button>
                       </div>
-                      <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.."><?= isset($subject_description[$index]) ? $subject_description[$index] : ''; ?></textarea>
+
+                      <?php
+                      if(!empty($subject_description) && $subject_description != "")
+                      {
+                        foreach($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px;">
+                            <div class="input-group" style="margin-bottom : 5px;" id="standard-item-<?= $item_list['sbm_id']; ?>">
+                                <input type="text" class="form-control p-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;" value="<?= $desc_item; ?>">
+                                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                                    <button class="input-group-text" id="btnGroupAddon">
+                                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php 
+                        }
+                      } else { ?>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px;">
+                          <div class="input-group" style="margin-bottom : 5px;" id="standard-item-<?= $item_list['sbm_id']; ?>">
+                              <input type="text" class="form-control p-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
+                              <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                                  <button class="input-group-text" id="btnGroupAddon">
+                                      <i class="fas fa-trash-alt" style="color:red;"></i>
+                                  </button>
+                              </div>
+                          </div>
+                        </div>
+                      <?php 
+                      } ?>
+
+                      <div class="p-1">
+                          <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>')">Tambah &nbsp;&nbsp;
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                              </svg>
+                          </span>
+                      </div>
+                      
                     </div>
                   <?php endif; ?>
                 <?php endforeach; ?>

@@ -10,21 +10,21 @@ $(document).ready(function() {
             <ul class="list-group flex-grow-1 mx-2">
                 <label>Kod Rujukan TP</label>
                 <div class="mb-3">
-                    <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sm_code}">
+                    <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
                 </div>
                 <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
-                    <h6 class="my-auto text-white text-uppercase">${ item.sm_desc }</h6>
+                    <h6 class="my-auto text-white text-uppercase">${ item.sbm_desc }</h6>
                 </div>
-                <div class="list-group-item" id="collection-${item.sm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
-                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sm_code}" style="display: flex !important;flex-direction: row !important;">
-                        <input name="input-${item.sm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
-                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-${item.sm_code}').remove();">
+                <div class="list-group-item" id="collection-${item.sbm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}" style="display: flex !important;flex-direction: row !important;">
+                        <input name="input-${item.sbm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-${item.sbm_code}').remove();">
                             <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                         </a>
                     </div>
                 </div>
                 <div class="p-2 pb-3">
-                    <span class="btn bg-gradient-primary mt-2" onclick="addField('${item.sm_code}')">Tambah TP &nbsp;&nbsp;
+                    <span class="btn bg-gradient-primary mt-2" onclick="addField('${item.sbm_code}')">Tambah TP &nbsp;&nbsp;
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                         </svg>
