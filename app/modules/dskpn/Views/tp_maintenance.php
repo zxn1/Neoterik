@@ -10,7 +10,7 @@
             <p class="mb-1 pt-2 text-bold">Pilih Kluster</p>
             <select class="form-control select2" aria-label="Default select example" id="selection-kluster" <?= (!empty($cluster_desc)) ? 'disabled' : '' ?>>
               <?php if (!empty($cluster_desc)) {
-                echo "<option value=\"" . $cluster_desc['cm_id'] . "\" selected>" . $cluster_desc['cm_desc'] . "</option>";
+                echo "<option value=\"" . $cluster_desc['ctm_id'] . "\" selected>" . $cluster_desc['ctm_desc'] . "</option>";
               } else { ?>
                 <option selected>Open this select menu</option>
                 <option value="1">Sahsiah dan Akhlak</option>

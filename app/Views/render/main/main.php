@@ -25,7 +25,7 @@
   <link href="<?= base_url() ?>assets/css/nucleo-svg.css" rel="stylesheet" />
   <link href="<?= base_url() ?>assets/css/dskpn/dataTable.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b009cf6a3e.js" crossorigin="anonymous"></script>
   <link href="<?= base_url() ?>assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link id="pagestyle" href="<?= base_url() ?>assets/css/soft-ui-dashboard.css?v=1.1.1" rel="stylesheet" />
