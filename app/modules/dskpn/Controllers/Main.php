@@ -23,7 +23,7 @@ use App\Modules\Dskpn\Models\StandardPerformanceModel;
 //use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
 use App\Modules\Dskpn\Models\MethodExtraModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
-use App\Modules\Dskpn\Models\clusterSubjectMappingModel;
+use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
 //-----
 
 class Main extends BaseController
@@ -71,7 +71,7 @@ class Main extends BaseController
         $this->domain_model             = new DomainModel();
         $this->domain_mapping_model     = new DomainMappingModel();
 
-        $this->cluster_subject_mapping_model    = new clusterSubjectMappingModel();
+        $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
         //-----------------
         //$this->extra_additional_field_model = new ExtraAdditionalFieldModel();
         $this->method_extra_model       = new MethodExtraModel();
