@@ -85,6 +85,18 @@
           </a>
         </li>
       <?php endif; ?>
+      <?php if (get_user_role() == $both_roles[1]) : ?>
+        <li class="nav-item">
+          <a class="nav-link <?= (url_is(route_to('view_tp_core_setup'))) ? 'active' : ''; ?>" href="<?= route_to('view_tp_core_setup'); ?>">
+            <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
+                <path d="M8 0a1 1 0 0 1 1 1v5.268l4.562-2.634a1 1 0 1 1 1 1.732L10 8l4.562 2.634a1 1 0 1 1-1 1.732L9 9.732V15a1 1 0 1 1-2 0V9.732l-4.562 2.634a1 1 0 1 1-1-1.732L6 8 1.438 5.366a1 1 0 0 1 1-1.732L7 6.268V1a1 1 0 0 1 1-1"/>
+              </svg>
+            </div>
+            <span class="nav-link-text ms-1">Tahap Penguasaan<br>& Kompetensi Teras</span>
+          </a>
+        </li>
+      <?php endif; ?>
       <?php if (in_array(get_user_role(), $both_roles)) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
