@@ -12,7 +12,7 @@ class AssessmentItemModel extends Model
     protected $returnType     = 'array'; // Can be 'array' or 'object'
     protected $useSoftDeletes = true; // Enable if you want to use soft deletes
 
-    protected $allowedFields = ['asi_dskpn_id', 'asi_desc']; // Fields that are allowed to be inserted/updated
+    protected $allowedFields = ['asi_dskpn_id', 'asi_category_number', 'asi_desc_number', 'asi_desc', 'asi_asc_id']; // Fields that are allowed to be inserted/updated
 
     protected $createdField = 'asi_created_at';  // Custom created_at field with prefix
     protected $updatedField = 'asi_updated_at';  // Custom updated

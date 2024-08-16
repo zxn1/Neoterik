@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class CompetencyMappingModel extends Model
 {
     protected $table      = 'competency_mapping';
-    protected $primaryKey = 'csm_id';
+    protected $primaryKey = 'cmp_id';
 
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['csm_ctm_id', 'csm_sbm_id'];
+    protected $allowedFields = ['cmp_cc_code', 'cmp_dskpn_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;

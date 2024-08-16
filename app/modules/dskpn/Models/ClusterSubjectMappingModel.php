@@ -4,7 +4,7 @@ namespace App\Modules\Dskpn\Models;
 
 use CodeIgniter\Model;
 
-class clusterSubjectMappingModel extends Model
+class ClusterSubjectMappingModel extends Model
 {
     protected $table      = 'cluster_subject_mapping';
     protected $primaryKey = 'csm_id';
