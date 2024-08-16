@@ -1013,6 +1013,7 @@ class Main extends BaseController
 
         $allSubject     = $this->request->getPost('subject'); //multi-array
         $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
+        $standardNumbering = $this->request->getPost('standard-learning-number');
 
         $kluster        = $this->request->getPost('kluster');
         $tahun          = $this->request->getPost('tahun');
@@ -1166,12 +1167,12 @@ class Main extends BaseController
                     $ls_id = $this->learning_standard_model->insertID();
                     $data['learning_standard_id'][] = $ls_id;
 
-                    foreach($allDescription[$subject] as $itemDesc)
+                    foreach($allDescription[$subject] as $itemIndex => $itemDesc)
                     {
                         //step 4 - insert learning-standard-item
                         $this->learning_standard_item_model->insert([
                             'lsi_ls_id'     => $ls_id,
-                            'lsi_number'    => null,
+                            'lsi_number'    => isset($standardNumbering[$subject][$itemIndex])? $standardNumbering[$subject][$itemIndex]: null,
                             'lsi_desc'      => $itemDesc
                         ]);
                     }
