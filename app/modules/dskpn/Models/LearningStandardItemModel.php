@@ -12,7 +12,7 @@ class LearningStandardItemModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['lsi_ls_id', 'lsi_desc'];
+    protected $allowedFields = ['lsi_ls_id', 'lsi_number', 'lsi_desc'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
