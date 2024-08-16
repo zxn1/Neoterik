@@ -55,12 +55,17 @@ $('#add-subject-button').on('click', function() {
         </div>
 
         <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
-            <div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+get_default_subject[countSubject]+`">
-                <input type="text" class="form-control p-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
-                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();">
-                    <button class="input-group-text" id="btnGroupAddon">
-                        <i class="fas fa-trash-alt" style="color:red;"></i>
-                    </button>
+            <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
+                <div class="col-1 p-0 pe-1">
+                    <input type="number" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                </div>
+                <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
+                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                    <div class="input-group-prepend me-1" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();">
+                        <button class="input-group-text" id="btnGroupAddon">
+                            <i class="fas fa-trash-alt" style="color:red;"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -188,12 +193,17 @@ $('#topik-dynamic-field').on('change', function() {
                                 </div>
 
                                 <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
-                                    <div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+item.sbm_id+`">
-                                        <input type="text" class="form-control p-1" name="subject_description[`+item.sbm_id+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
-                                        <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-`+item.sbm_id+`').remove();">
-                                            <button class="input-group-text" id="btnGroupAddon">
-                                                <i class="fas fa-trash-alt" style="color:red;"></i>
-                                            </button>
+                                    <div class="row m-1" id="standard-item-`+item.sbm_id+`">
+                                        <div class="col-1 p-0 pe-1">
+                                            <input type="number" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                        </div>
+                                        <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
+                                            <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                                            <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();">
+                                                <button class="input-group-text" id="btnGroupAddon">
+                                                    <i class="fas fa-trash-alt" style="color:red;"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -238,17 +248,50 @@ function addStandardPembelajaran(sm_id)
         
     // Generate a unique ID for the new field
     var newFieldColl = Math.floor(Math.random() * 1000000);
+
+    let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
+                                <div class="col-1 p-0 pe-1">
+                                    <input type="number" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                </div>
+                                <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
+                                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                                    <div class="input-group-prepend me-1" onclick="$('#standard-item-${newFieldColl}').remove();">
+                                        <button class="input-group-text" id="btnGroupAddon">
+                                            <i class="fas fa-trash-alt" style="color:red;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+
+    divStandardPembelajaran.append(newInputHTMLField);
+}
+
+function addObjectivePrestasi()
+{
+    var divObjectivePrestasi = $('#objective-prestasi');
+        
+    // Generate a unique ID for the new field
+    var newFieldColl = Math.floor(Math.random() * 1000000);
     
-    let newInputHTMLField = `<div class="input-group" style="margin-bottom : 5px;" id="standard-item-`+newFieldColl+`">
-                                <input type="text" class="form-control p-1" name="subject_description[`+sm_id+`][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
-                                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-${newFieldColl}').remove();">
+    let newInputHTMLField = `<div class="input-group" style="margin-bottom: 5px;" id="objective-prestasi-` + newFieldColl + `">
+                                <div class="col-md-1 pe-1">
+                                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                                </div>
+                                <div class="col-md-8 pe-1">
+                                    <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+                                </div>
+                                <div class="col-md-3 d-flex">
+                                    <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
                                     <button class="input-group-text" id="btnGroupAddon">
-                                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                                        <i class="fas fa-trash-alt" style="color: red;"></i>
                                     </button>
+                                    </div>
                                 </div>
                             </div>`;
 
-    divStandardPembelajaran.append(newInputHTMLField);
+    divObjectivePrestasi.append(newInputHTMLField);
 }
 
 $('#kluster-selection').on('change', function() {
