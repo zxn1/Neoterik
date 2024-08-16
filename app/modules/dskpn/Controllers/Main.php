@@ -20,10 +20,8 @@ use App\Modules\Dskpn\Models\ActivityItemModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
 
 //mapping model import
-//use App\Modules\Dskpn\Models\ExtraAdditionalFieldModel;
-use App\Modules\Dskpn\Models\MethodExtraModel;
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
-use App\Modules\Dskpn\Models\clusterSubjectMappingModel;
+use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
 //-----
 
 class Main extends BaseController
@@ -71,10 +69,8 @@ class Main extends BaseController
         $this->domain_model             = new DomainModel();
         $this->domain_mapping_model     = new DomainMappingModel();
 
-        $this->cluster_subject_mapping_model    = new clusterSubjectMappingModel();
+        $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
         //-----------------
-        //$this->extra_additional_field_model = new ExtraAdditionalFieldModel();
-        $this->method_extra_model       = new MethodExtraModel();
         $this->learning_aid_model       = new LearningAidModel();
         $this->db                       = $this->db = \Config\Database::connect();
     }
@@ -1018,13 +1014,17 @@ class Main extends BaseController
         $allSubject     = $this->request->getPost('subject'); //multi-array
         $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
 
-        $objective      = $this->request->getPost('objective');
         $kluster        = $this->request->getPost('kluster');
         $tahun          = $this->request->getPost('tahun');
         $topik          = $this->request->getPost('topik');
         $tema           = $this->request->getPost('tema');
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
+
+        //objective part
+        $objective      = $this->request->getPost('objective-prestasi-desc');
+        $objectiveNumber= $this->request->getPost('objective-prestasi-number');
+        $objectiveRef   = $this->request->getPost('objective-prestasi-ref');
 
         $isUpdated      = $this->session->get('is_update');
 
@@ -1033,6 +1033,8 @@ class Main extends BaseController
         $this->session->set('tahun', $tahun);
         $this->session->set('topik', $topik);
         $this->session->set('objective', $objective);
+        $this->session->set('objective_number', $objectiveNumber);
+        $this->session->set('objective_ref', $objectiveRef);
         $this->session->set('duration', $duration);
         $this->session->set('tema', $tema);
         $this->session->set('subtema', $subtema);
@@ -1116,7 +1118,6 @@ class Main extends BaseController
                 ->where('dskpn.dskpn_tm_id', $topik)
                 ->where('topic_main.tm_year', $tm_data['tm_year'])
                 ->countAllResults();
-            // ->findAll();
 
             $dskpn_code_init = $this->session->get('dskpn_code_init');
 
@@ -1145,10 +1146,15 @@ class Main extends BaseController
                 $data['dskpn_id'] = $this->dskpn_model->insertID();
 
                 //step 2 - add objective performance
-                $this->objective_performance_model->insert([
-                    'opm_dskpn_id' => $data['dskpn_id'],
-                    'opm_desc' => $objective
-                ]);
+                foreach($objective as $index => $obj)
+                {
+                    $this->objective_performance_model->insert([
+                        'opm_ls_ref_number' => isset($objectiveRef[$index])? $objectiveRef[$index] : null,
+                        'opm_number'        => isset($objectiveNumber[$index])? $objectiveNumber[$index] : null,
+                        'opm_desc'          => $obj,
+                        'opm_dskpn_id'      => $data['dskpn_id']
+                    ]);
+                }
 
                 foreach ($allSubject as $index => $subject) {
                     //step 3 - insert learning-standard
@@ -1164,8 +1170,9 @@ class Main extends BaseController
                     {
                         //step 4 - insert learning-standard-item
                         $this->learning_standard_item_model->insert([
-                            'lsi_ls_id' => $ls_id,
-                            'lsi_desc' => $itemDesc
+                            'lsi_ls_id'     => $ls_id,
+                            'lsi_number'    => null,
+                            'lsi_desc'      => $itemDesc
                         ]);
                     }
                 }
@@ -1184,9 +1191,6 @@ class Main extends BaseController
         $this->session->set('dskpn_code', $this->dskpn_model->where('dskpn_id', $this->session->get('dskpn_id'))->first()['dskpn_code']);
 
         return redirect()->to(route_to('tp_maintenance'));
-
-        // var_dump($parameters);
-        //var_dump($data); //data ni perlu simpan dalam table baru called Steps. 'Standard Pembelajaran Insertion'.
     }
 
     public function store_standard_performance()

@@ -5,7 +5,7 @@ namespace App\Modules\Dskpn\Controllers;
 use App\Controllers\BaseController;
 
 use App\Modules\Dskpn\Models\SubjectMainModel;
-use App\Modules\Dskpn\Models\clusterSubjectMappingModel;
+use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
 
 class SubjectMain extends BaseController
 {
@@ -16,7 +16,7 @@ class SubjectMain extends BaseController
     {
         $this->session                          = service('session');
         $this->subject_model                    = new SubjectMainModel();
-        $this->cluster_subject_mapping_model    = new clusterSubjectMappingModel();
+        $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
     }
 
     public function store_create_subject()
