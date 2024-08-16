@@ -6,18 +6,18 @@
     <div class="card-body mb-2">
       <div class="row pb-4">
         <label>Penatapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
-        <select name="subject" id="subject-dynamic-field" class="form-control select2" aria-label="Default select example" required>
+        <select name="subject" id="subject-dynamic-field" onchange="selectSubjectToCode(this)" class="form-control select2" aria-label="Default select example" required>
           <option disabled selected>-- Sila Pilih Subjek --</option>
           <?php
           foreach($subject_list as $subject)
-            echo "<option value='". $subject['sbm_id'] ."'>" . $subject['sbm_desc'] . "</option>";
+            echo "<option value='". $subject['sbm_id'] ."' data-code='" . $subject['sbm_code'] . "'>" . $subject['sbm_desc'] . "</option>";
           ?>
         </select>
       </div>
       <div class="row pt-1">
         <label>Kod Rujukan</label>
         <div class="mb-3">
-            <input type="text" name="sub_ref_code[]" class="form-control subject-title" placeholder="Setkan Kod Rujukan" required>
+            <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" placeholder="Setkan Kod Rujukan" required>
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="row" id="tahap-penguasaan" style="display: block;">
           <ul class="list-group flex-grow-1 mx-2">
               <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
-                  <h6 class="my-auto text-white text-uppercase">AYAM</h6>
+                  <h6 id="subject-name-one" class="my-auto text-white text-uppercase">N/A</h6>
               </div>
               <div class="list-group-item" id="collection-hensembetulkamu" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                   <div class="d-flex w-100 align-items-center mb-2" id="1-collection-hensembetulkamu" style="display: flex !important;flex-direction: row !important;">
@@ -91,7 +91,7 @@
         <div class="row" id="kompetensi-teras" style="display: block;">
           <ul class="list-group flex-grow-1 mx-2">
               <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
-                  <h6 class="my-auto text-white text-uppercase">AYAM</h6>
+                  <h6 id="subject-name-two" class="my-auto text-white text-uppercase">N/A</h6>
               </div>
               <div class="list-group-item" id="collection-hensembetulkamu" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                   <div class="d-flex w-100 align-items-center mb-2" id="1-collection-hensembetulkamu" style="display: flex !important;flex-direction: row !important;">
@@ -139,5 +139,14 @@
 </div>
 
 <script>
-  
+function selectSubjectToCode(element)
+{
+  let selectedValue = element.value;
+  let selectedText = element.options[element.selectedIndex].text;
+  let subjectCode = element.options[element.selectedIndex].getAttribute('data-code');
+
+  $("#kod-rujukan").val(subjectCode);
+  $("#subject-name-one").html(selectedText);
+  $("#subject-name-two").html(selectedText);
+}
 </script>
