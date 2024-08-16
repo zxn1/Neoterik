@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Modules\Dskpn\Models;
+
+use CodeIgniter\Model;
+
+class DomainMappingModel extends Model
+{
+    protected $table      = 'domain_mapping';
+    protected $primaryKey = 'dm_id';
+
+    protected $returnType     = 'array';
+    protected $useSoftDeletes = true;
+
+    //if ls_id is missing it refers to specification part (not related to subject mapping - ex: Reka bentuk instruksi, Kaedah, Integrasi Teknologi and Pendekatan part)
+    protected $allowedFields = ['dm_sbm_id', 'dm_dmn_code', 'dm_dskpn_id'];
+
+    // If you want to use timestamps
+    protected $useTimestamps = true;
+    protected $createdField  = 'dm_created_at';
+    protected $updatedField  = 'dm_updated_at';
+    protected $deletedField  = 'dm_deleted_at';
+
+    // Validation rules
+    protected $validationRules    = [];
+    protected $validationMessages = [];
+    protected $skipValidation     = false;
+
+    public function getDomain($dskpn_id, $dg_name)
+    {
+        $builder = $this->db->table('domain_mapping');
+        $builder->select('*');
+        $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
+        $builder->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id');
+        $builder->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id');
+        $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+        $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
+        $builder->where('domain_mapping.dm_deleted_at', null);
+        $builder->where('domain_group.dg_title', $dg_name);
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getAtribute($dskpn_id, $dg_name)
+    {
+        $builder = $this->db->table('domain_mapping');
+        $builder->select('*');
+        $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
+        $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+        $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
+        $builder->where('domain_mapping.dm_deleted_at', null);
+        $builder->where('domain_group.dg_title', $dg_name);
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+}

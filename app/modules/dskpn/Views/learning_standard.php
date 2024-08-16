@@ -132,27 +132,37 @@
                       if(!empty($subject_description) && $subject_description != "")
                       {
                         foreach($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
-                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px;">
-                            <div class="input-group" style="margin-bottom : 5px;" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                                <input type="text" class="form-control p-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;" value="<?= $desc_item; ?>">
-                                <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
-                                    <button class="input-group-text" id="btnGroupAddon">
-                                        <i class="fas fa-trash-alt" style="color:red;"></i>
-                                    </button>
-                                </div>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
+                            <div class="col-1 p-0 pe-1">
+                              <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                             </div>
-                        </div>
-                        <?php 
-                        }
-                      } else { ?>
-                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px;">
-                          <div class="input-group" style="margin-bottom : 5px;" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                              <input type="text" class="form-control p-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." style="margin-right : 5px; margin-left : 5px;">
-                              <div class="input-group-prepend" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                            <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
+                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
+                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
                                   <button class="input-group-text" id="btnGroupAddon">
                                       <i class="fas fa-trash-alt" style="color:red;"></i>
                                   </button>
                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php 
+                        }
+                      } else { ?>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
+                            <div class="col-1 p-0 pe-1">
+                              <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                            </div>
+                            <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
+                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini.">
+                              <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                                <button class="input-group-text" id="btnGroupAddon">
+                                    <i class="fas fa-trash-alt" style="color:red;"></i>
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       <?php 
@@ -179,7 +189,42 @@
           <div class="card-header d-flex bg-gradient-secondary objektif-prestasi">
             <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
           </div>
-          <textarea id="editor-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea>
+          <div id="objective-prestasi" style="margin : 10px;">
+
+            <?php
+            for($i = 0; $i < 3; $i++)
+            { ?>
+            <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
+              <div class="col-md-1 pe-1">
+                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+              </div>
+              <div class="col-md-8 pe-1">
+                <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+              </div>
+              <div class="col-md-3 d-flex">
+                <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                  <button class="input-group-text" id="btnGroupAddon">
+                    <i class="fas fa-trash-alt" style="color: red;"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <?php
+            }
+            ?>
+
+          </div>
+
+          <div style="margin-left : 10px;">
+            <span class="btn bg-gradient-primary mt-2" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                </svg>
+            </span>
+          </div>
+          
+          <!-- <textarea id="editor-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea> -->
         </div>
         <br>
         <div style="display: flex; align-items: center;">
@@ -290,20 +335,3 @@
     });
   </script>
 <?php endif; ?>
-
-<!-- <div class="row pt-5">
-
-      <div class="card pt-5">
-          <div class="card-header d-flex bg-gradient-secondary">
-              <h6 class="my-auto text-white">Objektif Prestasi</h6>
-          </div>
-          <textarea class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"></textarea>
-      </div> -->
-
-<!-- <div class="col border-0 d-flex p-3 bg-gray-100 border-radius-lg">
-            <div class="d-flex flex-column w-100">
-            <p class="mb-1 text-bold">Objektif Prestasi</p>
-              <textarea class="form-control w-100" id="exampleFormControlTextarea1" rows="5" placeholder="Objectif yang hendak dicapai"></textarea>
-            </div>
-        </div> -->
-<!-- </div> -->
