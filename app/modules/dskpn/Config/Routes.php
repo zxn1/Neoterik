@@ -26,12 +26,14 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('store-specification-mapping',[Main::class,     'store_specification_mapping'],   ['as' => 'store-spec-map']);
     $routes->post('store-activity-assessment',  [Main::class,     'store_activity_assessment'],     ['as' => 'store_actv_asses']);
     $routes->post('store-image-return-url',     [Main::class,     'store_image_ckeditor'],          ['as' => 'store_image_ckedit']);
+    $routes->post('store-tp-setup',             [Main::class,     'store_tp_setup'],                ['as' => 'store_tp_setup']);
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
     $routes->get('view-subject',                [Main::class,     'view_subject'],                  ['as' => 'view_subject']);
     $routes->get('view-cluster',                [Main::class,     'view_cluster'],                  ['as' => 'view_cluster']);
     $routes->get('view-tp-core-competency-setup',[Main::class,    'view_tp_core_competency'],       ['as' => 'view_tp_core_setup']);
+    $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'],['as' => 'get_dskp_code_available']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
