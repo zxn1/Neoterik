@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 
 //model
 use App\Modules\Dskpn\Models\DskpnModel;
+use App\Modules\Dskpn\Models\DskpModel;
 use App\Modules\Dskpn\Models\DomainModel;
 use App\Modules\Dskpn\Models\TopicMainModel;
 use App\Modules\Dskpn\Models\ClusterMainModel;
@@ -37,6 +38,7 @@ class Main extends BaseController
     protected $activity_item_model;
     protected $standard_performance_model;
     protected $dskpn_model;
+    protected $dskp_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -64,6 +66,7 @@ class Main extends BaseController
         //$this->activity_assessment_model    = new ActivityAssessmentModel();
         $this->standard_performance_model   = new StandardPerformanceModel();
         $this->dskpn_model                  = new dskpnModel();
+        $this->dskp_model                   = new DskpModel();
         //mapping model init
         $this->domain_group_model       = new DomainGroupModel();
         $this->domain_model             = new DomainModel();
@@ -1712,9 +1715,72 @@ class Main extends BaseController
 
         $data['subject_list'] = $this->subject_model->findAll();
 
-        $script = ['tp-dynamic-field'];
+        $script = ['tp-dynamic-field', 'tp_core_competency_setup'];
         $style = ['static-field'];
         $this->render_jscss('tp_core_competency_setup', $data, $script, $style);
+    }
+
+    public function store_tp_setup()
+    {
+        $subject_code = $this->request->getPost('kod-rujukan');
+        $code_tp_rank = $this->request->getPost('code-tp-rank');
+        $topic_numbering = $this->request->getPost('dskpn-topic-numbering');
+        $sbm_id = $this->request->getPost('subject');
+
+        $tp_data = $this->request->getPost('input-tahap-penguasaan');
+
+        //step 1 - store dskp record
+        $code_tp_rank = sprintf('%02d', $code_tp_rank);
+        $topic_numbering = sprintf('%02d', $topic_numbering);
+        
+        $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
+        $res = $this->dskp_model->insert([
+            'dskp_code'     => $dskp_code,
+            'dskp_sbm_id'   => $sbm_id
+        ]);
+
+        //step 2 - store standard performance record
+        if($res)
+        {
+            foreach ($tp_data as $index => $item) {
+                $tpLevel = $index + 1;
+                $this->standard_performance_model->insert([
+                    'sp_dskp_code'  => $dskp_code,
+                    'sp_tp_level'   => $tpLevel,
+                    'sp_tp_level_desc' => $item
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Berjaya menetapkan Tahap Penguasaan!');
+    }
+
+    public function getDskpCodeAvailableBasedOnString()
+    {
+        $sbm_id = $this->request->getVar('sbm_id');
+        $sbm_code = $this->request->getVar('sbm_code');
+        $level = $this->request->getVar('code_tp_rank');
+
+        $data = $this->dskp_model->select('dskp_code')
+                ->where('dskp_sbm_id', $sbm_id)->like('dskp_code', $sbm_code?($sbm_code . (($level < 10) ? str_pad($level, 2, '0', STR_PAD_LEFT) : $level) . '%'):'')->findAll();
+        if (!empty($data)) {
+
+            //get 2 last digit in dskp_code
+            $getTwoLastCode = [];
+            foreach ($data as $row) {
+                $code = substr($row['dskp_code'], -2);
+                $getTwoLastCode[] = ['code' => $code];
+            }
+
+            $data = $getTwoLastCode;
+        }
+
+        $response = [
+            'status' => 'success',
+            'data' => $data
+        ];
+
+        return $this->response->setJSON($response);
     }
 
     public function checkAndSetDSKPNCodeSession()
