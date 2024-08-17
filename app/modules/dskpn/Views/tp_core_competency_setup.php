@@ -16,8 +16,16 @@
       </div>
       <div class="row pt-1">
         <label>Kod Rujukan</label>
-        <div class="mb-3">
-            <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" placeholder="Setkan Kod Rujukan" required>
+        <div class="mb-3 d-flex">
+            <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required>
+            <button type="submit" class="btn bg-gradient-success d-flex">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0"/>
+                <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1z"/>
+                <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0z"/>
+              </svg>&nbsp;
+              <span id="savetpchanges">Check</span>
+            </button>
         </div>
       </div>
     </div>
@@ -93,16 +101,16 @@
               <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                   <h6 id="subject-name-two" class="my-auto text-white text-uppercase">N/A</h6>
               </div>
-              <div class="list-group-item" id="collection-hensembetulkamu" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
-                  <div class="d-flex w-100 align-items-center mb-2" id="1-collection-hensembetulkamu" style="display: flex !important;flex-direction: row !important;">
-                      <input name="input-hensembetulkamu[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
-                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-hensembetulkamu').remove();">
+              <div class="list-group-item" id="collection-hensembetulkamu2" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                  <div class="d-flex w-100 align-items-center mb-2" id="1-collection-hensembetulkamu2" style="display: flex !important;flex-direction: row !important;">
+                      <input name="input-hensembetulkamu2[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
+                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-hensembetulkamu2').remove();">
                           <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                       </a>
                   </div>
               </div>
               <div class="p-2 pb-1">
-                  <span class="btn bg-gradient-primary mt-2" onclick="addField('hensembetulkamu')">Tambah TP &nbsp;&nbsp;
+                  <span class="btn bg-gradient-primary mt-2" onclick="addField('hensembetulkamu2')">Tambah TP &nbsp;&nbsp;
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                       </svg>
