@@ -1706,6 +1706,17 @@ class Main extends BaseController
         $this->render_jscss('learning_standard', $data, $script, $style);
     }
 
+    public function view_tp_core_competency()
+    {
+        $data = [];
+
+        $data['subject_list'] = $this->subject_model->findAll();
+
+        $script = ['tp-dynamic-field'];
+        $style = ['static-field'];
+        $this->render_jscss('tp_core_competency_setup', $data, $script, $style);
+    }
+
     public function checkAndSetDSKPNCodeSession()
     {
         $dskpn_year = $this->request->getPost('dskpnyear');
