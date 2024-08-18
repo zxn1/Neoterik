@@ -34,6 +34,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('view-cluster',                [Main::class,     'view_cluster'],                  ['as' => 'view_cluster']);
     $routes->get('view-tp-core-competency-setup',[Main::class,    'view_tp_core_competency'],       ['as' => 'view_tp_core_setup']);
     $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'],['as' => 'get_dskp_code_available']);
+    $routes->get('get-standard-performance',    [Main::class,     'getStandardPerformanceBasedOnDSKPCode'],['as' => 'get_standard_performance']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);

@@ -56,11 +56,11 @@ $('#add-subject-button').on('click', function() {
 
         <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
             <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
-                <div class="col-1 p-0 pe-1">
+                <div class="col-2 p-0 pe-1">
                     <input type="number" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                 </div>
-                <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
-                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="Objektif bagi Subjek ini.">
                     <div class="input-group-prepend me-1" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();">
                         <button class="input-group-text" id="btnGroupAddon">
                             <i class="fas fa-trash-alt" style="color:red;"></i>
@@ -194,11 +194,11 @@ $('#topik-dynamic-field').on('change', function() {
 
                                 <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
                                     <div class="row m-1" id="standard-item-`+item.sbm_id+`">
-                                        <div class="col-1 p-0 pe-1">
+                                        <div class="col-2 p-0 pe-1">
                                             <input type="number" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                                         </div>
-                                        <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
-                                            <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                                        <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                                            <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
                                             <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();">
                                                 <button class="input-group-text" id="btnGroupAddon">
                                                     <i class="fas fa-trash-alt" style="color:red;"></i>
@@ -250,11 +250,11 @@ function addStandardPembelajaran(sm_id)
     var newFieldColl = Math.floor(Math.random() * 1000000);
 
     let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
-                                <div class="col-1 p-0 pe-1">
+                                <div class="col-2 p-0 pe-1">
                                     <input type="number" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                                 </div>
-                                <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
-                                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="1. Objektif bagi Subjek ini.">
+                                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="Objektif bagi Subjek ini.">
                                     <div class="input-group-prepend me-1" onclick="$('#standard-item-${newFieldColl}').remove();">
                                         <button class="input-group-text" id="btnGroupAddon">
                                             <i class="fas fa-trash-alt" style="color:red;"></i>
