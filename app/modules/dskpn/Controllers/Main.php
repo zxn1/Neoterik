@@ -19,6 +19,7 @@ use App\Modules\Dskpn\Models\LearningStandardModel;
 use App\Modules\Dskpn\Models\LearningStandardItemModel;
 use App\Modules\Dskpn\Models\ActivityItemModel;
 use App\Modules\Dskpn\Models\StandardPerformanceModel;
+use App\Modules\Dskpn\Models\StandardPerformanceDskpMappingModel;
 
 //mapping model import
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
@@ -37,6 +38,7 @@ class Main extends BaseController
     //protected $activity_assessment_model;
     protected $activity_item_model;
     protected $standard_performance_model;
+    protected $standard_performance_dskp_mapping_model;
     protected $dskpn_model;
     protected $dskp_model;
 
@@ -65,6 +67,7 @@ class Main extends BaseController
         $this->activity_item_model          = new ActivityItemModel();
         //$this->activity_assessment_model    = new ActivityAssessmentModel();
         $this->standard_performance_model   = new StandardPerformanceModel();
+        $this->standard_performance_dskp_mapping_model = new StandardPerformanceDskpMappingModel();
         $this->dskpn_model                  = new dskpnModel();
         $this->dskp_model                   = new DskpModel();
         //mapping model init
@@ -125,32 +128,9 @@ class Main extends BaseController
 
                 $data['subjects'][] = $query->getResult();
             }
-
-            // if(!empty($ex_dskpn) && empty($data['tp_session']))
-            // {
-            //     $tp_ex_data = $this->standard_performance_model->where('dskpn_id', $ex_dskpn['dskpn_id'])->orderBy('sp_tp_level', 'ASC')->findAll();
-            //     foreach($data['subjects'] as $item)
-            //     {
-            //         $sess_data_desc[$item[0]->sm_desc][] = [$item[0]->sm_id];
-
-            //         $tp_listing = [];
-            //         foreach($tp_ex_data as $tp_item)
-            //         {
-            //             if($tp_item['sm_id'] == $item[0]->sm_id)
-            //             {
-            //                 // $sess_data_desc[$item[0]->sm_desc][$item[0]->sm_id][] = $tp_item['sp_tp_level_desc'];
-            //                 $tp_listing[] = $tp_item['sp_tp_level_desc'];
-            //             }
-            //         }
-
-            //         $sess_data_desc[$item[0]->sm_desc][0][] = $tp_listing;
-            //     }
-
-            //     $data['tp_session'] = $sess_data_desc;
-            // }
         }
 
-        $script = ['tp-dynamic-field', 'tp-autoload'];
+        $script = ['tp-dynamic-field', 'tp_loader'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
@@ -1199,63 +1179,72 @@ class Main extends BaseController
 
     public function store_standard_performance()
     {
-        $allData    = $this->request->getPost();
+        // $allData    = $this->request->getPost();
         $dskpn_id   = $this->session->get("dskpn_id");
         $allRefCode = $this->request->getPost('sub_ref_code');
-        // dd($allRefCode);
-        // remove sub ref code from all data
-        unset($allData['sub_ref_code']);
 
-        // dd($allData);
-        $sess_data = [];
-
-        $tp_session = $this->session->get("tp_sess_data");
-        if (isset($tp_session) && !empty($tp_session))
-            $this->standard_performance_model->where('dskpn_id', $dskpn_id)
-                ->delete();
-
-
-        foreach ($allData as $key => $data) {
-
-            $parts = explode('-', $key);
-            //first repeatition max is only 4/5.
-
-            $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
-
-            $ref_code_index = 0;
-            // get learning standard ID based on subject and dskpn id
-            $ls_id = $this->learning_standard_model
-                ->where('sm_id', $tempSubject['sm_id'])
-                ->where('dskpn_id', $dskpn_id)
-                ->first();
-            // update ref_code base on ls_id
-            $this->learning_standard_model->update($ls_id['ls_id'], [
-                'ls_ref_code' => $allRefCode[$ref_code_index]
+        foreach($allRefCode as $item)
+        {
+            $this->standard_performance_dskp_mapping_model->insert([
+                'spdm_dskp_code'=> $item,
+                'spdm_dskpn_id' => $dskpn_id
             ]);
-
-            $ref_code_index++;
-
-            $sess_data_desc = [];
-
-            foreach ($data as $index => $item) {
-                $tpLevel = $index + 1;
-                $this->standard_performance_model->insert([
-                    'sp_tp_level' => $tpLevel,
-                    'sp_tp_level_desc' => $item,
-                    'sm_id' => $tempSubject['sm_id'],
-                    'dskpn_id' => $dskpn_id
-                ]);
-
-                $sess_data_desc[] = $item;
-            }
-
-            $sess_data[$tempSubject['sm_desc']][] = [
-                $tempSubject['sm_id'],
-                $sess_data_desc
-            ];
         }
 
-        $this->session->set('tp_sess_data', $sess_data);
+        $this->session->set('tp_sess_refcode', $allRefCode);
+
+        // // remove sub ref code from all data
+        // unset($allData['sub_ref_code']);
+
+        // $sess_data = [];
+
+        // $tp_session = $this->session->get("tp_sess_data");
+        // if (isset($tp_session) && !empty($tp_session))
+        //     $this->standard_performance_model->where('dskpn_id', $dskpn_id)
+        //         ->delete();
+
+
+        // foreach ($allData as $key => $data) {
+
+        //     $parts = explode('-', $key);
+        //     //first repeatition max is only 4/5.
+
+        //     $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
+
+        //     $ref_code_index = 0;
+        //     // get learning standard ID based on subject and dskpn id
+        //     $ls_id = $this->learning_standard_model
+        //         ->where('sm_id', $tempSubject['sm_id'])
+        //         ->where('dskpn_id', $dskpn_id)
+        //         ->first();
+        //     // update ref_code base on ls_id
+        //     $this->learning_standard_model->update($ls_id['ls_id'], [
+        //         'ls_ref_code' => $allRefCode[$ref_code_index]
+        //     ]);
+
+        //     $ref_code_index++;
+
+        //     $sess_data_desc = [];
+
+        //     foreach ($data as $index => $item) {
+        //         $tpLevel = $index + 1;
+        //         $this->standard_performance_model->insert([
+        //             'sp_tp_level' => $tpLevel,
+        //             'sp_tp_level_desc' => $item,
+        //             'sm_id' => $tempSubject['sm_id'],
+        //             'dskpn_id' => $dskpn_id
+        //         ]);
+
+        //         $sess_data_desc[] = $item;
+        //     }
+
+        //     $sess_data[$tempSubject['sm_desc']][] = [
+        //         $tempSubject['sm_id'],
+        //         $sess_data_desc
+        //     ];
+        // }
+
+        // $this->session->set('tp_sess_data', $sess_data);
 
         return redirect()->to(route_to('mapping_core'));
     }
@@ -1729,11 +1718,20 @@ class Main extends BaseController
 
         $tp_data = $this->request->getPost('input-tahap-penguasaan');
 
+        if(!$code_tp_rank)
+            return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
+
+        if(!$topic_numbering)
+            return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
+
         //step 1 - store dskp record
-        $code_tp_rank = sprintf('%02d', $code_tp_rank);
-        $topic_numbering = sprintf('%02d', $topic_numbering);
+        $code_tp_rank = sprintf('%01d', $code_tp_rank);
+        $topic_numbering = sprintf('%03d', $topic_numbering);
         
         $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
+        if(!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
+            return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
+
         $res = $this->dskp_model->insert([
             'dskp_code'     => $dskp_code,
             'dskp_sbm_id'   => $sbm_id
@@ -1791,9 +1789,11 @@ class Main extends BaseController
         ];
 
         $dskp_code = $this->request->getVar('dskp_code');
+        $sbm_code = $this->request->getVar('sbm_code');
 
         $data = $this->standard_performance_model
-                ->where('sp_dskp_code', $dskp_code)->findAll();
+                ->where('sp_dskp_code', $dskp_code)
+                ->like('sp_dskp_code', $sbm_code . '%')->findAll();
 
         if (!empty($data)) {
             $response = [

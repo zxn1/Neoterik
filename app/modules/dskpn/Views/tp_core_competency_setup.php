@@ -119,3 +119,14 @@
       });
     </script>
 <?php endif; ?>
+<?php if (session()->has('fail')) : ?>
+    <script>
+      $(document).ready(function() {
+        Swal.fire({
+            icon: "error",
+            title: "Maaf",
+            text: "<?= session('fail'); ?>"
+        });
+      });
+    </script>
+<?php endif; ?>
