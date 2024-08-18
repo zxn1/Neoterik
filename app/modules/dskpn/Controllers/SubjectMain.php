@@ -22,9 +22,14 @@ class SubjectMain extends BaseController
     public function store_create_subject()
     {
         $data = [
-            'sm_code' => $this->request->getVar('sm_code'),
-            'sm_desc' => $this->request->getVar('sm_desc')
+            'sbm_code' => $this->request->getVar('sbm_code'),
+            'sbm_desc' => $this->request->getVar('sbm_desc')
         ];
+
+        // Debugging: Check the contents of the $data array
+        if (empty($data['sbm_code']) || empty($data['sbm_desc'])) {
+            return redirect()->back()->with('fail', 'Fields cannot be empty!');
+        }
 
         if ($this->subject_model->insert($data)) {
             return redirect()->back()->with('success', 'Berjaya menambah Subject!');
@@ -37,11 +42,10 @@ class SubjectMain extends BaseController
     public function delete_subject($id = null)
     {
         $response = ['status' => 'fail'];
-        if($this->subject_model->delete($id))
-        {
+        if ($this->subject_model->delete($id)) {
             $response = ['status' => 'success'];
         }
-        
+
         return $this->response->setJSON($response);
     }
 
@@ -49,22 +53,20 @@ class SubjectMain extends BaseController
     {
         $response = ['status' => 'fail'];
         $defaultSubject = $this->cluster_subject_mapping_model->where('csm_ctm_id', $id)
-                            ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id', 'left')
-                            ->findAll();
+            ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id', 'left')
+            ->findAll();
 
-        if($defaultSubject)
-        {
+        if ($defaultSubject) {
             $arrDefaultSubject = [];
-            foreach($defaultSubject as $item)
-            {
+            foreach ($defaultSubject as $item) {
                 $arrDefaultSubject[] = $item['csm_sbm_id'];
             }
 
             $response = [
-                            'status' => 'success',
-                            'data' => $defaultSubject,
-                            'clean_data' => $arrDefaultSubject
-                        ];
+                'status' => 'success',
+                'data' => $defaultSubject,
+                'clean_data' => $arrDefaultSubject
+            ];
         }
         return $this->response->setJSON($response);
     }

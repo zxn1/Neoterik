@@ -10,12 +10,12 @@
                 <div class="modal-body">
                     <form id="addSubjectForm" action="<?= route_to('store_create_subject'); ?>" method="POST">
                         <div class="mb-3">
-                            <label for="subjectName" class="form-label">Kod Subjek</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="subjectName" name="sm_code" required>
+                            <label for="subjectCode" class="form-label">Kod Subjek</label>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="subjectCode" name="sbm_code" required>
                         </div>
                         <div class="mb-3">
                             <label for="subjectName" class="form-label">Nama Subjek</label>
-                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="subjectName" name="sm_desc" required>
+                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="subjectName" name="sbm_desc" required>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
@@ -53,10 +53,10 @@
                     foreach ($subjects as $subject) : ?>
                         <tr>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sm_code']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_code']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_desc']) ?></td>
                             <!-- <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $subject['sm_id']; ?>').remove(); deleteSubject(<?= $subject['sm_id']; ?>);">
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $subject['sbm_id']; ?>').remove(); deleteSubject(<?= $subject['sbm_id']; ?>);">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                             </td> -->
