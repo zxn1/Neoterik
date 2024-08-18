@@ -216,6 +216,20 @@ class Main extends BaseController
         $this->render_jscss('view_cluster', $data, $script, $style);
     }
 
+    public function view_topic()
+    {
+        $data = [];
+        $data['topics'] = $this->topic_model
+            ->select('topic_main.*, cluster_main.ctm_desc') // Select columns from both tables
+            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id') // Join the 'cluster' table on the specified condition
+            ->findAll(); // Retrieve all the results
+        $data['clusters'] = $this->cluster_model->findAll();
+
+        $script = ['data', 'view_subject'];
+        $style = ['view_subject'];
+        $this->render_jscss('view_topic', $data, $script, $style);
+    }
+
     public function list_registered_dskpn()
     {
         $this->session->set('ex_dskpn_code_init', null); //reset
@@ -483,24 +497,22 @@ class Main extends BaseController
         $is_update = $this->session->get("is_update");
         $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if(isset($is_update) && empty($data['domain_map_session']))
-        {
+        if (isset($is_update) && empty($data['domain_map_session'])) {
             $temp_domain_mapping_db = $this->domain_mapping_model
-                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                                    ->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id', 'left')
-                                    ->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id', 'left')
-                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
-                                    ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
-                                    ->findAll();
+                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                ->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id', 'left')
+                ->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id', 'left')
+                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
+                ->findAll();
 
             $temp_domain_map = [];
 
-            foreach($temp_domain_mapping_db as $item)
-            {
+            foreach ($temp_domain_mapping_db as $item) {
                 $temp_domain_map['\'' . $item['sm_code'] . '\''][] = $item['d_id'];
             }
-            
+
             $data['domain_map_session'] = $temp_domain_map;
         }
 
@@ -608,19 +620,17 @@ class Main extends BaseController
         $is_update = $this->session->get("is_update");
         $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if(isset($is_update) && empty($data['core_map_sess']))
-        {
+        if (isset($is_update) && empty($data['core_map_sess'])) {
             $temp_core_mapping_db = $this->domain_mapping_model
-                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                                    ->join('subject_main', 'domain.sm_id = subject_main.sm_id', 'left')
-                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
-                                    ->where('domain_group.dg_title', 'Kompetensi Teras')
-                                    ->findAll();
+                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                ->join('subject_main', 'domain.sm_id = subject_main.sm_id', 'left')
+                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                ->where('domain_group.dg_title', 'Kompetensi Teras')
+                ->findAll();
 
             $temp_core_map = [];
-            foreach($temp_core_mapping_db as $item)
-            {
+            foreach ($temp_core_mapping_db as $item) {
                 $temp_core_map[$item['sm_code']][$item['dm_id']] = [$item['d_name'], $item['dm_isChecked']];
             }
 
@@ -657,21 +667,19 @@ class Main extends BaseController
         $is_update = $this->session->get("is_update");
         $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if(isset($is_update) && empty($data['specification_maplist']))
-        {
+        if (isset($is_update) && empty($data['specification_maplist'])) {
             $temp_specification_mapping_db = $this->domain_mapping_model
-                                    ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                                    ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                                    ->join('extra_additional_field', 'extra_additional_field.dm_id = domain_mapping.dm_id', 'left')
-                                    ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
-                                    ->whereIn('domain_group.dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])
-                                    ->findAll();
+                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+                ->join('extra_additional_field', 'extra_additional_field.dm_id = domain_mapping.dm_id', 'left')
+                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                ->whereIn('domain_group.dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])
+                ->findAll();
 
             $temp_specification_map = [];
-            foreach($temp_specification_mapping_db as $item)
-            {
+            foreach ($temp_specification_mapping_db as $item) {
                 $temp_specification_map[] = $item['d_id'];
-                if($item['eaf_desc'] != null || !empty($item['eaf_desc']))
+                if ($item['eaf_desc'] != null || !empty($item['eaf_desc']))
                     $data['specification_lain_lain'] = $item['eaf_desc'];
             }
 
@@ -716,17 +724,15 @@ class Main extends BaseController
         $is_update = $this->session->get("is_update");
         $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if(isset($is_update) && empty($data['act_assess_idea_pengajaran']))
-        {
+        if (isset($is_update) && empty($data['act_assess_idea_pengajaran'])) {
             $temp_act_asses_mapping_db = $this->dskpn_model
-                                         ->join('activity_assessment', 'activity_assessment.aa_id = dskpn.aa_id')
-                                         ->where('dskpn_id', $ex_dskpn_id)
-                                         ->first();
-            
+                ->join('activity_assessment', 'activity_assessment.aa_id = dskpn.aa_id')
+                ->where('dskpn_id', $ex_dskpn_id)
+                ->first();
+
             $temp_abm_list = $this->learning_aid_model->select('la_desc')->where('dskpn_id', $ex_dskpn_id)->findAll();
 
-            if(!empty($temp_act_asses_mapping_db))
-            {
+            if (!empty($temp_act_asses_mapping_db)) {
                 $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
                 $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
                 $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
@@ -871,23 +877,22 @@ class Main extends BaseController
     {
         //set all attribute
         $this->session->set('is_update', true); //need to check if currently update process
-        if(!empty($ex_dskpn_id))
+        if (!empty($ex_dskpn_id))
             $this->session->set('ex_dskpn_id', $ex_dskpn_id);
-        
+
         //ex_dskpn
         $dskpn = $this->dskpn_model->where('dskpn_id', $ex_dskpn_id)
-                ->join('objective_performance', 'objective_performance.op_id = dskpn.op_id')->first();
+            ->join('objective_performance', 'objective_performance.op_id = dskpn.op_id')->first();
 
         $this->session->set('ex_dskpn', $dskpn);
 
         $learning_standard = $this->learning_standard_model->where('dskpn_id', $ex_dskpn_id)
-                            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
-                            ->findAll();
+            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+            ->findAll();
 
         $subject = [];
         $subject_description = [];
-        foreach($learning_standard as $item)
-        {
+        foreach ($learning_standard as $item) {
             $subject[] = $item['sm_id'];
             $subject_description[] = $item['ls_details'];
         }
@@ -1027,7 +1032,7 @@ class Main extends BaseController
 
         //objective part
         $objective      = $this->request->getPost('objective-prestasi-desc');
-        $objectiveNumber= $this->request->getPost('objective-prestasi-number');
+        $objectiveNumber = $this->request->getPost('objective-prestasi-number');
         $objectiveRef   = $this->request->getPost('objective-prestasi-ref');
 
         $isUpdated      = $this->session->get('is_update');
@@ -1130,13 +1135,13 @@ class Main extends BaseController
                 $dskpn_code_init = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
 
             //step 1 - create DSKPN
-            if($this->dskpn_model->insert([
+            if ($this->dskpn_model->insert([
                 'dskpn_code'        => $dskpn_code_init,
                 'dskpn_theme'       => $tema,
                 'dskpn_sub_theme'   => $subtema,
                 'dskpn_status'      => null,
                 'dskpn_remarks'     => null,
-                'dskpn_delete_reason'=> null,
+                'dskpn_delete_reason' => null,
                 'dskpn_created_by'  => $sm_id, //sm_id is not subject_main ID
                 'dskpn_updated_by'  => null,
                 'dskpn_approved_by' => null,
@@ -1145,16 +1150,14 @@ class Main extends BaseController
                 'dskpn_duration'    => $duration,
                 'dskpn_parent_involvement' => null,
                 'dskpn_notes'       => null
-            ]))
-            {
+            ])) {
                 $data['dskpn_id'] = $this->dskpn_model->insertID();
 
                 //step 2 - add objective performance
-                foreach($objective as $index => $obj)
-                {
+                foreach ($objective as $index => $obj) {
                     $this->objective_performance_model->insert([
-                        'opm_ls_ref_number' => isset($objectiveRef[$index])? $objectiveRef[$index] : null,
-                        'opm_number'        => isset($objectiveNumber[$index])? $objectiveNumber[$index] : null,
+                        'opm_ls_ref_number' => isset($objectiveRef[$index]) ? $objectiveRef[$index] : null,
+                        'opm_number'        => isset($objectiveNumber[$index]) ? $objectiveNumber[$index] : null,
                         'opm_desc'          => $obj,
                         'opm_dskpn_id'      => $data['dskpn_id']
                     ]);
@@ -1170,12 +1173,11 @@ class Main extends BaseController
                     $ls_id = $this->learning_standard_model->insertID();
                     $data['learning_standard_id'][] = $ls_id;
 
-                    foreach($allDescription[$subject] as $itemIndex => $itemDesc)
-                    {
+                    foreach ($allDescription[$subject] as $itemIndex => $itemDesc) {
                         //step 4 - insert learning-standard-item
                         $this->learning_standard_item_model->insert([
                             'lsi_ls_id'     => $ls_id,
-                            'lsi_number'    => isset($standardNumbering[$subject][$itemIndex])? $standardNumbering[$subject][$itemIndex]: null,
+                            'lsi_number'    => isset($standardNumbering[$subject][$itemIndex]) ? $standardNumbering[$subject][$itemIndex] : null,
                             'lsi_desc'      => $itemDesc
                         ]);
                     }
@@ -1732,7 +1734,7 @@ class Main extends BaseController
         //step 1 - store dskp record
         $code_tp_rank = sprintf('%02d', $code_tp_rank);
         $topic_numbering = sprintf('%02d', $topic_numbering);
-        
+
         $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
         $res = $this->dskp_model->insert([
             'dskp_code'     => $dskp_code,
@@ -1740,8 +1742,7 @@ class Main extends BaseController
         ]);
 
         //step 2 - store standard performance record
-        if($res)
-        {
+        if ($res) {
             foreach ($tp_data as $index => $item) {
                 $tpLevel = $index + 1;
                 $this->standard_performance_model->insert([
@@ -1762,7 +1763,7 @@ class Main extends BaseController
         $level = $this->request->getVar('code_tp_rank');
 
         $data = $this->dskp_model->select('dskp_code')
-                ->where('dskp_sbm_id', $sbm_id)->like('dskp_code', $sbm_code?($sbm_code . (($level < 10) ? str_pad($level, 2, '0', STR_PAD_LEFT) : $level) . '%'):'')->findAll();
+            ->where('dskp_sbm_id', $sbm_id)->like('dskp_code', $sbm_code ? ($sbm_code . (($level < 10) ? str_pad($level, 2, '0', STR_PAD_LEFT) : $level) . '%') : '')->findAll();
         if (!empty($data)) {
 
             //get 2 last digit in dskp_code
@@ -1793,7 +1794,7 @@ class Main extends BaseController
         $dskp_code = $this->request->getVar('dskp_code');
 
         $data = $this->standard_performance_model
-                ->where('sp_dskp_code', $dskp_code)->findAll();
+            ->where('sp_dskp_code', $dskp_code)->findAll();
 
         if (!empty($data)) {
             $response = [
@@ -1823,9 +1824,13 @@ class Main extends BaseController
     public function store_create_cluster()
     {
         $data = [
-            'cm_code' => $this->request->getVar('cm_code'),
-            'cm_desc' => $this->request->getVar('cm_desc')
+            'ctm_code' => $this->request->getVar('ctm_code'),
+            'ctm_desc' => $this->request->getVar('ctm_desc')
         ];
+
+        if (empty($data['ctm_code']) || empty($data['ctm_desc'])) {
+            return redirect()->back()->with('fail', 'Fields cannot be empty!');
+        }
 
         if ($this->cluster_model->insert($data)) {
             return redirect()->back()->with('success', 'Berjaya menambah Cluster!');
