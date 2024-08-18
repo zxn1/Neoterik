@@ -3,6 +3,12 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
+    initializeTPField();
+ });
+
+
+ function initializeTPField()
+ {
     subjectData.forEach(function(item){
         item = item[0];
 
@@ -10,56 +16,30 @@ $(document).ready(function() {
             <ul class="list-group flex-grow-1 mx-2">
                 <label>Kod Rujukan TP</label>
                 <div class="mb-3">
-                    <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
+                    <div class="row">
+                        <div class="col-9 p-0 ps-2">
+                            <input id="dskp-code-subject-${item.sbm_id}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
+                        </div>
+                        <div class="col-3 p-0 pe-2">
+                            <button type="button" class="btn bg-gradient-success p-3" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id})">Semak</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                     <h6 class="my-auto text-white text-uppercase">${ item.sbm_desc }</h6>
                 </div>
                 <div class="list-group-item" id="collection-${item.sbm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                     <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}" style="display: flex !important;flex-direction: row !important;">
-                        <input name="input-${item.sbm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta">
-                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-${item.sbm_code}').remove();">
-                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        <input name="input-${item.sbm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta" disabled>
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
+                            <i class="fas fa-info-circle fa-lg me-2"></i>
                         </a>
                     </div>
                 </div>
-                <div class="p-2 pb-3">
-                    <span class="btn bg-gradient-primary mt-2" onclick="addField('${item.sbm_code}')">Tambah TP &nbsp;&nbsp;
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                        </svg>
-                    </span>
-                </div>
             </ul>
         `);
-
-        if(tpDatas.length !== 0)
-        {
-            if (tpDatas[item.sm_desc] && tpDatas[item.sm_desc][0] !== undefined)
-            {
-                var collSubCollzs = $('#collection-' + item.sm_code);
-                collSubCollzs.empty();
-
-                tpDatas[item.sm_desc][0][1].forEach(function(itemz) {
-                    // Get the collection container
-                    var collSubject = $('#collection-' + item.sm_code);
-        
-                    // Generate a unique ID for the new field
-                    var newFieldColl = Math.floor(Math.random() * 1000000);
-                    
-                    let newInputHTMLField = `<div class="d-flex w-100 align-items-center mb-2" id="${newFieldColl}-${item.sm_code}">
-                    <input type="text" name="input-${item.sm_code}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${itemz}">
-                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldColl}-${item.sm_code}').remove();">
-                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                        </a>
-                    </div>`;
-        
-                    collSubject.append(newInputHTMLField);
-                });
-            }
-        }
     });
- });
+ }
 
  function addField(collectionId, text = "") {
     bareBoneId = collectionId;
@@ -83,9 +63,9 @@ $(document).ready(function() {
     // Create the new field HTML
     var newFieldHTML = `
         <div class="d-flex w-100 align-items-center mb-2" id="${newFieldId}-${collectionId}">
-            <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${text}">
-            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldId}-${collectionId}').remove();">
-                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+            <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${text}" disabled>
+            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
+                <i class="fas fa-info-circle fa-lg me-2"></i>
             </a>
         </div>
     `;

@@ -116,7 +116,7 @@
                           <?php } ?>
                       </select>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="1. Objektif bagi Subjek ini.\n2. Objektif 2.." disabled><?= $subject_description[$index]; ?></textarea>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" name="subject_description[]" rows="5" placeholder="Objektif bagi Subjek ini.\n2. Objektif 2.." disabled><?= $subject_description[$index]; ?></textarea>
                 </div>
             </div>
           <?php

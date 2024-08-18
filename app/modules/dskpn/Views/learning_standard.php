@@ -134,11 +134,11 @@
                         foreach($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-1 p-0 pe-1">
+                            <div class="col-2 p-0 pe-1">
                               <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                             </div>
-                            <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
+                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
                               <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
                                   <button class="input-group-text" id="btnGroupAddon">
                                       <i class="fas fa-trash-alt" style="color:red;"></i>
@@ -152,11 +152,11 @@
                       } else { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-1 p-0 pe-1">
+                            <div class="col-2 p-0 pe-1">
                               <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                             </div>
-                            <div class="col-11 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="1. Objektif bagi Subjek ini.">
+                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
                               <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                     <i class="fas fa-trash-alt" style="color:red;"></i>
