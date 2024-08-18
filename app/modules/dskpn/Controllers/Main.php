@@ -102,8 +102,8 @@ class Main extends BaseController
 
         $data['tp_session'] = $this->session->get("tp_sess_data");
 
-        $ex_dskpn = $this->session->get('ex_dskpn');
-        $sess_data_desc = [];
+        // $ex_dskpn = $this->session->get('ex_dskpn');
+        // $sess_data_desc = [];
 
         $data['parameters'] = $this->session->get();
         if (!empty($data['parameters'])) {
@@ -126,31 +126,31 @@ class Main extends BaseController
                 $data['subjects'][] = $query->getResult();
             }
 
-            if(!empty($ex_dskpn) && empty($data['tp_session']))
-            {
-                $tp_ex_data = $this->standard_performance_model->where('dskpn_id', $ex_dskpn['dskpn_id'])->orderBy('sp_tp_level', 'ASC')->findAll();
-                foreach($data['subjects'] as $item)
-                {
-                    $sess_data_desc[$item[0]->sm_desc][] = [$item[0]->sm_id];
+            // if(!empty($ex_dskpn) && empty($data['tp_session']))
+            // {
+            //     $tp_ex_data = $this->standard_performance_model->where('dskpn_id', $ex_dskpn['dskpn_id'])->orderBy('sp_tp_level', 'ASC')->findAll();
+            //     foreach($data['subjects'] as $item)
+            //     {
+            //         $sess_data_desc[$item[0]->sm_desc][] = [$item[0]->sm_id];
 
-                    $tp_listing = [];
-                    foreach($tp_ex_data as $tp_item)
-                    {
-                        if($tp_item['sm_id'] == $item[0]->sm_id)
-                        {
-                            // $sess_data_desc[$item[0]->sm_desc][$item[0]->sm_id][] = $tp_item['sp_tp_level_desc'];
-                            $tp_listing[] = $tp_item['sp_tp_level_desc'];
-                        }
-                    }
+            //         $tp_listing = [];
+            //         foreach($tp_ex_data as $tp_item)
+            //         {
+            //             if($tp_item['sm_id'] == $item[0]->sm_id)
+            //             {
+            //                 // $sess_data_desc[$item[0]->sm_desc][$item[0]->sm_id][] = $tp_item['sp_tp_level_desc'];
+            //                 $tp_listing[] = $tp_item['sp_tp_level_desc'];
+            //             }
+            //         }
 
-                    $sess_data_desc[$item[0]->sm_desc][0][] = $tp_listing;
-                }
+            //         $sess_data_desc[$item[0]->sm_desc][0][] = $tp_listing;
+            //     }
 
-                $data['tp_session'] = $sess_data_desc;
-            }
+            //     $data['tp_session'] = $sess_data_desc;
+            // }
         }
 
-        $script = ['data', 'tp-dynamic-field', 'tp-autoload'];
+        $script = ['tp-dynamic-field', 'tp-autoload'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
@@ -1779,6 +1779,28 @@ class Main extends BaseController
             'status' => 'success',
             'data' => $data
         ];
+
+        return $this->response->setJSON($response);
+    }
+
+    public function getStandardPerformanceBasedOnDSKPCode()
+    {
+        $response = [
+            'status' => 'fail',
+            'data' => []
+        ];
+
+        $dskp_code = $this->request->getVar('dskp_code');
+
+        $data = $this->standard_performance_model
+                ->where('sp_dskp_code', $dskp_code)->findAll();
+
+        if (!empty($data)) {
+            $response = [
+                'status' => 'success',
+                'data' => $data
+            ];
+        }
 
         return $this->response->setJSON($response);
     }
