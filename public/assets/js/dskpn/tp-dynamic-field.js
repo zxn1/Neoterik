@@ -21,7 +21,7 @@ $(document).ready(function() {
                             <input id="dskp-code-subject-${item.sbm_id}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
                         </div>
                         <div class="col-3 p-0 pe-2">
-                            <button type="button" class="btn bg-gradient-success p-3" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id})">Semak</button>
+                            <button type="button" class="btn bg-gradient-success p-3" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}')">Semak</button>
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ $(document).ready(function() {
                 </div>
                 <div class="list-group-item" id="collection-${item.sbm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                     <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}" style="display: flex !important;flex-direction: row !important;">
-                        <input name="input-${item.sbm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta" disabled>
+                        <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta" required readonly>
                         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
                             <i class="fas fa-info-circle fa-lg me-2"></i>
                         </a>
@@ -63,9 +63,9 @@ $(document).ready(function() {
     // Create the new field HTML
     var newFieldHTML = `
         <div class="d-flex w-100 align-items-center mb-2" id="${newFieldId}-${collectionId}">
-            <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${text}" disabled>
-            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
-                <i class="fas fa-info-circle fa-lg me-2"></i>
+            <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${text}" required>
+            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldId}-${collectionId}').remove();">
+                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
             </a>
         </div>
     `;
