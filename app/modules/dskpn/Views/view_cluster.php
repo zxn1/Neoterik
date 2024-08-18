@@ -11,11 +11,11 @@
                     <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
                         <div class="mb-3">
                             <label for="clusterCode" class="form-label">Kod Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="cm_code" required>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="ctm_code" required>
                         </div>
                         <div class="mb-3">
                             <label for="clusterName" class="form-label">Nama Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="cm_desc" required>
+                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="ctm_desc" required>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
@@ -54,10 +54,10 @@
                     foreach ($clusters as $cluster) : ?>
                         <tr>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['cm_code']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['cm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_code']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_desc']) ?></td>
                             <!-- <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $cluster['cm_id']; ?>').remove(); deleteSubject(<?= $cluster['cm_id']; ?>);">
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $cluster['ctm_id']; ?>').remove(); deleteSubject(<?= $cluster['ctm_id']; ?>);">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                             </td> -->
@@ -71,26 +71,6 @@
         <a href="#" class="btn bg-gradient-primary btn-sm mb-0">Seterusnya</a>
     </div> -->
 </div>
-<?php if (session()->has('success')) : ?>
-    <script>
-        Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: "<?= session('success'); ?>"
-        });
-    </script>
-<?php endif; ?>
-
-<?php if (session()->has('fail')) : ?>
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Maaf",
-            text: "<?= session('fail'); ?>"
-        });
-    </script>
-<?php endif; ?>
-
 <script>
     $(document).ready(function() {
         $('#subject_list').DataTable();

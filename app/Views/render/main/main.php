@@ -164,17 +164,30 @@
 
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
   <!-- success message -->
-  <?php if (session('swal_success')) : ?>
+  <?php if (session('success')) : ?>
     <script>
       Swal.fire({
         icon: 'success',
-        text: '<?= session('swal_success') ?>',
+        text: '<?= session('success') ?>',
         timer: 3000,
         showConfirmButton: false
       });
     </script>
 
   <?php endif; ?>
+
+  <!-- fail message -->
+  <?php if (session('fail')) : ?>
+    <script>
+      Swal.fire({
+        icon: 'error',
+        text: '<?= session('fail') ?>',
+        timer: 3000,
+        showConfirmButton: false
+      });
+    </script>
+  <?php endif; ?>
+
 </body>
 
 </html>
