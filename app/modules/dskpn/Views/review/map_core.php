@@ -71,7 +71,7 @@
                             <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
                               <td class="ps-1" colspan="4">
                                 <div class="my-auto">
-                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" value="<?= $core_map[0]; ?>" readonly>
+                                  <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" value="<?= $core_map[0]; ?>" readonly>
                                 </div>
                               </td>
                               <td width="10px">

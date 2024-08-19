@@ -12,7 +12,7 @@ class CoreCompetencyModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['cc_code', 'cc_desc', 'cc_dskp_code'];
+    protected $allowedFields = ['cc_code', 'cc_desc', 'cc_sbm_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
