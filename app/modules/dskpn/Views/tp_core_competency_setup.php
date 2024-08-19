@@ -18,31 +18,31 @@
       <div class="row pt-1">
         <h6 style="position : relative; top : 10px;">Kod Rujukan</h6>
         <div class="mb-3 d-flex">
-            <table>
-              <tr>
-                <td>
-                  <label>Kod Subjek</label>
-                  <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required readonly>
-                </td>
-                <td id="code-tp-rank-div" style="display : none;">
-                  <label>Tahap</label>
-                  <select id="code-tp-rank" name="code-tp-rank" class="form-control" aria-label="Default select example" onchange="getAvailableDskpCode(this.value)" required>
-                    <option disabled selected>-- Sila Pilih Tahap --</option>
-                    <?php
-                    for($i = 1; $i <= 6; $i++)
-                      echo "<option value='" . $i . "'>" . $i . "</option>";
-                    ?>
-                  </select>
-                </td>
-                <td id="dskpn-topic-numbering-div" style="display : none;">
-                  <label>Penomboran</label>
-                  <select id="dskpn-topic-numbering-list" name="dskpn-topic-numbering" class="form-control" aria-label="Default select example" required disabled>
-                    <option disabled selected>-- Sila Pilih Nombor Identiti --</option>
-                  </select>
-                </td>
-              </tr>
-            </table>
+          <table>
+            <tr>
+              <td>
+                <label>Kod Subjek</label>
+                <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required readonly>
+              </td>
+              <td id="code-tp-rank-div" style="display : none;">
+                <label>Tahap</label>
+                <select id="code-tp-rank" name="code-tp-rank" class="form-control" aria-label="Default select example" onchange="getAvailableDskpCode(this.value)" required>
+                  <option disabled selected>-- Sila Pilih Tahap --</option>
+                  <?php
+                  for($i = 1; $i <= 6; $i++)
+                    echo "<option value='" . $i . "'>" . $i . "</option>";
+                  ?>
+                </select>
+              </td>
+            </tr>
+          </table>
         </div>
+      </div>
+      <div id="dskpn-topic-numbering-div" style="display : none;">
+        <label>Kod Rujukan (Identiti)</label>
+        <select id="dskpn-topic-numbering-list" name="dskpn-topic-numbering" class="form-control" aria-label="Default select example" required disabled>
+          <option disabled selected>-- Sila Pilih Nombor Identiti --</option>
+        </select>
       </div>
     </div>
   </div>

@@ -32,23 +32,24 @@ function getAvailableDskpCode(val)
         type: 'GET',
         dataType: 'json',
         success: function(response) {
-        data = response.data;
+            data = response.data;
 
-        restrictedRefCodeArray = data.map(item => parseInt(item.code));
-        
-        let selectElement = document.getElementById('dskpn-topic-numbering-list');
-        selectElement.innerHTML = "<option disabled selected>-- Sila Pilih Tahap --</option>";
+            restrictedRefCodeArray = data.map(item => parseInt(item.code));
+            
+            let selectElement = document.getElementById('dskpn-topic-numbering-list');
+            selectElement.innerHTML = "<option disabled selected>-- Sila Pilih Tahap --</option>";
 
-        for (let i = 1; i <= 24; i++) {
-            if (!restrictedRefCodeArray.includes(i)) {
-                let option = document.createElement('option');
-                option.value = i;
-                option.text = i;
-                selectElement.appendChild(option);
+            for (let i = 1; i <= 24; i++) {
+                if (!restrictedRefCodeArray.includes(i)) {
+                    let option = document.createElement('option');
+                    option.value = i;
+                    option.text = subjectCode + val + i.toString().padStart(3, '0');
+                    selectElement.appendChild(option);
+                }
             }
-        }
 
-        $("#dskpn-topic-numbering-list").prop("disabled", false);
+            $("#dskpn-topic-numbering-list").prop("disabled", false);
+            $("#dskpn-topic-numbering-list").select2();
         }
     });
 }
