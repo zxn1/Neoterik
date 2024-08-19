@@ -59,7 +59,7 @@
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
                                 <option disabled selected>-- Sila Pilih Kluster --</option>
                                 <?php foreach ($clusters as $item) { ?>
-                                    <option value="<?= $item['cm_id']; ?>"><?= $item['cm_desc']; ?></option>
+                                    <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -112,26 +112,6 @@
         </div>
     </div>
 </div>
-
-<?php if (session()->has('success')) : ?>
-    <script>
-        Swal.fire({
-            icon: "success",
-            title: "Berjaya",
-            text: "<?= session('success'); ?>"
-        });
-    </script>
-<?php endif; ?>
-
-<?php if (session()->has('fail')) : ?>
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Maaf",
-            text: "<?= session('fail'); ?>"
-        });
-    </script>
-<?php endif; ?>
 
 <script>
     $(document).ready(function() {
