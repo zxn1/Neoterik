@@ -52,10 +52,10 @@ class Main extends BaseController
         // Assuming tccm_model is already loaded
         $data['teacher_cluster_mapping'] = $this->tccm_model
             ->select('staff_main.sm_fullname, staff_main.sm_mobile, class_main.cls_name, teacher_cluster_class_mapping.tccm_assigned_by')
-            ->join('class_main', 'teacher_cluster_class_mapping.class_main_recid = class_main.cls_recid')
-            ->join('staff_main', 'teacher_cluster_class_mapping.staff_main_recid = staff_main.sm_recid')
-            ->where('teacher_cluster_class_mapping.cluster_main_id', $cluster)
-            ->where('teacher_cluster_class_mapping.cluster_year', $year)
+            ->join('class_main', 'teacher_cluster_class_mapping.tccm_cls_recid = class_main.cls_recid')
+            ->join('staff_main', 'teacher_cluster_class_mapping.tccm_sm_recid = staff_main.sm_recid')
+            ->where('teacher_cluster_class_mapping.tccm_ctm_id', $cluster)
+            ->where('teacher_cluster_class_mapping.tccm_year', $year)
             ->findAll();
 
         // Store cluster & year in session to be used when allocate teacher-cluster
@@ -74,7 +74,7 @@ class Main extends BaseController
         $cluster_id = $this->request->getPost('cluster_id');
         $data['year'] = $this->topic_model
             ->select('tm_year')
-            ->where('cm_id', $cluster_id)
+            ->where('ctm_id', $cluster_id)
             ->distinct()
             ->findAll();
 
@@ -93,13 +93,15 @@ class Main extends BaseController
         // Get assign by sm_id 
         $assigned_by = $this->session->get('sm_id');
         // Store to database
+
         if ($this->tccm_model->insert([
-            'staff_main_recid'  => $teacher_sm_recid,
-            'cluster_main_id'   => $cluster,
-            'class_main_recid'  => $class_recid,
+            'tccm_sm_recid'     => $teacher_sm_recid,
+            'tccm_ctm_id'       => $cluster,
+            'tccm_cls_recid'    => $class_recid,
             'tccm_assigned_by'  => $assigned_by,
-            'cluster_year'      => $year,
+            'tccm_year'         => $year,
         ])) {
+
             // Set success message
             session()->setFlashdata('swal_success', 'Your action was successful!');
 
