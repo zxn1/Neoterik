@@ -9,7 +9,7 @@ $(document).ready(function() {
                 </div>
                 <div class="list-group-item" id="collection-${item.sm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                     <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sm_code}" style="display: flex !important;flex-direction: row !important;">
-                        <input name="input-${item.sm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta" readonly>
+                        <input name="input-${item.sm_code}[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" readonly>
                     </div>
                 </div>
             </ul>
@@ -30,7 +30,7 @@ $(document).ready(function() {
                     var newFieldColl = Math.floor(Math.random() * 1000000);
                     
                     let newInputHTMLField = `<div class="d-flex w-100 align-items-center mb-2" id="${newFieldColl}-${item.sm_code}">
-                    <input type="text" name="input-${item.sm_code}[]" class="form-control me-2" placeholder="Menilai dan mencinpta" value="${itemz}" readonly>
+                    <input type="text" name="input-${item.sm_code}[]" class="form-control me-2" placeholder="Menilai dan mencipta" value="${itemz}" readonly>
                     </div>`;
         
                     collSubject.append(newInputHTMLField);

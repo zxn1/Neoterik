@@ -13,6 +13,8 @@ use App\Modules\Dskpn\Models\ClusterMainModel;
 use App\Modules\Dskpn\Models\DomainGroupModel;
 use App\Modules\Dskpn\Models\LearningAidModel;
 use App\Modules\Dskpn\Models\SubjectMainModel;
+use App\Modules\Dskpn\Models\CoreCompetencyModel;
+use App\Modules\Dskpn\Models\CompetencyMappingModel;
 
 use App\Modules\Dskpn\Models\DomainMappingModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
@@ -41,6 +43,8 @@ class Main extends BaseController
     protected $standard_performance_dskp_mapping_model;
     protected $dskpn_model;
     protected $dskp_model;
+    protected $core_competency_model;
+    protected $competency_mapping_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -74,6 +78,8 @@ class Main extends BaseController
         $this->domain_group_model       = new DomainGroupModel();
         $this->domain_model             = new DomainModel();
         $this->domain_mapping_model     = new DomainMappingModel();
+        $this->core_competency_model    = new CoreCompetencyModel();
+        $this->competency_mapping_model = new CompetencyMappingModel();
 
         $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
         //-----------------
@@ -593,48 +599,48 @@ class Main extends BaseController
     {
         $data = [];
 
-        $data['core_map_sess'] = $this->session->get("core_map_sess");
-        // $data['core_maplist_sess'] = $this->session->get("core_maplist_sess");
-
         //if update then, get from db
         $is_update = $this->session->get("is_update");
         $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if (isset($is_update) && empty($data['core_map_sess'])) {
-            $temp_core_mapping_db = $this->domain_mapping_model
-                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                ->join('subject_main', 'domain.sm_id = subject_main.sm_id', 'left')
-                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
-                ->where('domain_group.dg_title', 'Kompetensi Teras')
-                ->findAll();
-
-            $temp_core_map = [];
-            foreach ($temp_core_mapping_db as $item) {
-                $temp_core_map[$item['sm_code']][$item['dm_id']] = [$item['d_name'], $item['dm_isChecked']];
-            }
-
-            $data['core_map_sess'] = $temp_core_map;
-        }
-
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         if (!empty($data['dskpn_id'])) {
-            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.ctm_desc, cluster_main.ctm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
                 ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
 
-            //steps 1 - get all subjects related to iterate horizontally
-            //steps 1.1 - get learning standard to get list of subject.
-            $data['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                ->where('ls.dskpn_id', $data['dskpn_id'])->where('ls.deleted_at', null)->findAll();
+            //step 1 - get all subjects related to iterate horizontally
+            //step 1.1 - get learning standard to get list of subject.
+            $data['subjects'] = $this->subject_model->select('subject_main.sbm_code, subject_main.sbm_desc, subject_main.sbm_id')
+                ->join('learning_standard as ls', 'ls.ls_sbm_id = subject_main.sbm_id')
+                ->where('ls.ls_dskpn_id', $data['dskpn_id'])->where('ls.ls_deleted_at', null)->findAll();
+
+            //step 2.0 - get all core_competency from subjects
+            $subjectIdsArray = [];
+            foreach($data['subjects'] as $subject)
+            {
+                $subjectIdsArray[] = $subject['sbm_id'];
+            }
+
+            $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
+            
+            //step 2.1 - structuring the data to pass over view
+            foreach($subjectIdsArray as $sbm_id)
+            {
+                foreach($core_competency as $item)
+                {
+                    if($sbm_id == $item['cc_sbm_id'])
+                        $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'],'N');
+                }
+            }
         }
 
         $script = ['kompetensi-teras'];
         $style = ['static-field', 'tp-maintenance'];
         $this->render_jscss('mapping_kompetensi_teras', $data, $script, $style);
     }
+
     public function mapping_spesifikasi_dskpn()
     {
         $data = [];
@@ -1308,25 +1314,25 @@ class Main extends BaseController
         $allData = $this->request->getPost();
         $dskpn_id = $this->session->get("dskpn_id");
 
-        $core_mapping_sess = $this->session->get("core_map_sess");
-        $core_mapping_id_sess = $this->session->get("core_mapping_id_session_data");
-        if (isset($core_mapping_sess) && !empty($core_mapping_sess) && $core_mapping_sess != null && isset($core_mapping_id_sess)) {
-            $this->domain_model->where('dskpn_id', $dskpn_id)
-                ->delete();
-            $this->domain_mapping_model->whereIn('dm_id', $core_mapping_id_sess)
-                ->delete();
-        }
+        // $core_mapping_sess = $this->session->get("core_map_sess");
+        // $core_mapping_id_sess = $this->session->get("core_mapping_id_session_data");
+        // if (isset($core_mapping_sess) && !empty($core_mapping_sess) && $core_mapping_sess != null && isset($core_mapping_id_sess)) {
+        //     $this->domain_model->where('dskpn_id', $dskpn_id)
+        //         ->delete();
+        //     $this->domain_mapping_model->whereIn('dm_id', $core_mapping_id_sess)
+        //         ->delete();
+        // }
 
         //check if not exist create new one
-        $kompetensi_domain_group = $this->domain_group_model->where('dg_title', 'Kompetensi Teras')->first();
+        // $kompetensi_domain_group = $this->domain_group_model->where('dg_title', 'Kompetensi Teras')->first();
 
-        if (empty($kompetensi_domain_group)) {
-            $this->domain_group_model->insert([
-                'dg_title' => 'Kompetensi Teras'
-            ]);
+        // if (empty($kompetensi_domain_group)) {
+        //     $this->domain_group_model->insert([
+        //         'dg_title' => 'Kompetensi Teras'
+        //     ]);
 
-            $kompetensi_domain_group['dg_id'] = $this->domain_group_model->insertID();
-        }
+        //     $kompetensi_domain_group['dg_id'] = $this->domain_group_model->insertID();
+        // }
 
         $processedData = [];
 
@@ -1351,42 +1357,27 @@ class Main extends BaseController
         //1. loop to get key - subject
         foreach ($processedData as $key => $inputCode) {
             //1.1 get sm_id based on inputCodeKey
-            $subject_data = $this->subject_model->where('sm_code', $key)->first();
-            $sm_id = $subject_data['sm_id'];
-
-            //1.2 get ls_id based on $sm_id
-            $ls_id = $this->learning_standard_model->where('dskpn_id', $dskpn_id)->where('sm_id', $sm_id)->first()['ls_id'];
+            $subject_data = $this->subject_model->where('sbm_code', $key)->first();
 
             //2. loop to get value inside that inputcode
             foreach ($inputCode as $input) {
                 //3. store domain first.
-                $this->domain_model->insert([
-                    'd_name' => $input['value'],
-                    'gd_id' => $kompetensi_domain_group['dg_id'],
-                    'sm_id' => $sm_id,
-                    'dskpn_id' => $dskpn_id
-                ]);
+                if($input['checked'] == 'Y')
+                {
+                    $this->competency_mapping_model->insert([
+                        'cmp_cc_code'  => $input['value'],
+                        'cmp_dskpn_id' => $dskpn_id
+                    ]);
+                }
 
-                $d_id = $this->domain_model->insertID();
-
-                //4. do mapping part
-                $this->domain_mapping_model->insert([
-                    'dm_isChecked' => $input['checked'],
-                    'd_id' => $d_id,
-                    'ls_id' => $ls_id,
-                    'dskpn_id' => $dskpn_id
-                ]);
-
-                $core_mapping_id_session_data[] = $this->domain_model->insertID();
-
-                $core_map_session_data[$subject_data['sm_code']][$d_id] = [$input['value'], $input['checked']];
-                //$core_map_session_list[$subject_data['sm_code']][] = $d_id;
+                $lastInsertedID = $this->competency_mapping_model->insertID();
+                $core_mapping_id_session_data[] = $lastInsertedID;
+                $core_map_session_data[$subject_data['sbm_code']][$lastInsertedID] = [$input['value'], $input['checked']];
             }
         }
 
         $this->session->set('core_map_sess', $core_map_session_data);
         $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
-        //$this->session->set('core_maplist_sess', $core_map_session_list);
 
         return redirect()->to(route_to('domain_mapping'));
     }
@@ -1709,6 +1700,42 @@ class Main extends BaseController
         $script = ['tp-dynamic-field', 'tp_core_competency_setup'];
         $style = ['static-field'];
         $this->render_jscss('tp_core_competency_setup', $data, $script, $style);
+    }
+
+    public function view_core_competency()
+    {
+        $data = [];
+
+        $data['subject_list'] = $this->subject_model->findAll();
+
+        $script = ['core_competency_setup'];
+        $style = ['static-field'];
+        $this->render_jscss('core_competency_setup', $data, $script, $style);
+    }
+
+    public function store_core_competency_setup()
+    {
+        $core_competency_code = $this->request->getPost('input-core-competency-code');
+        $core_competency = $this->request->getPost('input-core-competency');
+        $sbm_id = $this->request->getPost('subject');
+
+        if(!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
+            return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
+
+        if(!empty($core_competency))
+        {
+            foreach($core_competency as $index => $item)
+            {
+                if(isset($core_competency_code[$index]) && !empty($core_competency_code[$index]))
+                $this->core_competency_model->insert([
+                    'cc_code' => $core_competency_code[$index],
+                    'cc_desc' => $item,
+                    'cc_sbm_id' => $sbm_id
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Berjaya menetapkan Kompetensi Teras!');
     }
 
     public function store_tp_setup()

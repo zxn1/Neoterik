@@ -45,20 +45,13 @@
     border: 0 !important;
     /* border-radius: 4px; */
   }
-
-  /* .row>* {
-    padding-right: calc(var(--bs-gutter-x)* 0);
-    padding-left: calc(var(--bs-gutter-x)* 0);
-    margin-right: calc(var(--bs-gutter-x)* .5);
-    margin-left: calc(var(--bs-gutter-x)* .5);
-  } */
 </style>
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
-<form method="POST" action="<?= route_to('store_core_map') ?>" class="container-fluid py-4">
+<form method="POST" action="<?= route_to('store_core_map') ?>" class="container-fluid py-4" id="store-core-competency-form">
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -70,10 +63,7 @@
           <label for="kluster">KLUSTER</label>
           <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
             <?php if (isset($topikncluster)) { ?>
-              <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
-            <?php } else { ?>
-              <option value="AL">Alabama</option>
-              <option value="WY">Wyoming</option>
+              <option value="<?= $topikncluster['ctm_id']; ?>" selected><?= $topikncluster['ctm_desc']; ?></option>
             <?php } ?>
           </select>
         </div>
@@ -82,9 +72,6 @@
           <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
             <?php if (isset($topikncluster)) { ?>
               <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
-            <?php } else { ?>
-              <option value="AL">Alabama</option>
-              <option value="WY">Wyoming</option>
             <?php } ?>
           </select>
         </div>
@@ -112,16 +99,16 @@
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-gradient-primary">
-                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                        <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body pt-0">
                         <div class="table-responsive">
                           <table class="table mb-0 mt-3">
-                            <tbody id="item-placing-<?= $subject['sm_code'] ?>">
+                            <tbody id="item-placing-<?= $subject['sbm_code'] ?>">
 
                               <?php
-                              if (isset($core_map_sess[$subject['sm_code']])) {
-                                foreach ($core_map_sess[$subject['sm_code']] as $core_map) {
+                              if (isset($core_competency_item[$subject['sbm_id']])) {
+                                foreach ($core_competency_item[$subject['sbm_id']] as $core_map) {
                                   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                                   $charactersLength = strlen($characters);
                                   $randomString = '';
@@ -129,42 +116,40 @@
                                     $randomString .= $characters[rand(0, $charactersLength - 1)];
                                   }
                               ?>
-                                  <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
+                                  <tr id="0-item-placing-<?= $subject['sbm_code'] ?>">
+                                    <td>
+                                      <label class="pe-1 pt-2"><?= $core_map[0]; ?></label>
+                                    </td>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]" value="<?= $core_map[0]; ?>">
+                                        <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" value="<?= $core_map[1]; ?>" readonly>
+                                        <input type="text" name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $core_map[0]; ?>" readonly hidden>
                                       </div>
                                     </td>
                                     <td width="10px">
                                       <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
-                                        <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sm_code'] ?>', this.value)" <?= $core_map[1] == 'Y' ? 'checked' : ''; ?>>
-                                        <input type="text" value="<?= $core_map[1] == 'Y' ? $subject['sm_code'] : 'off'; ?>" name="checked-<?= $subject['sm_code'] ?>[]" id="<?= $randomString . $subject['sm_code'] ?>" hidden />
+                                        <input class="form-check-input" type="checkbox" value="<?= $subject['sbm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sbm_code'] ?>', this.value)" <?= $core_map[2] == 'Y' ? 'checked' : ''; ?>>
+                                        <input type="text" value="<?= $core_map[2] == 'Y' ? $subject['sbm_code'] : 'off'; ?>" name="checked-<?= $subject['sbm_code'] ?>[]" id="<?= $randomString . $subject['sbm_code'] ?>" hidden />
                                       </div>
-                                    </td>
-                                    <td width="5px">
-                                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-placing-<?= $subject['sm_code'] ?>').remove();">
-                                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                      </a>
                                     </td>
                                   </tr>
                                 <?php }
                               } else { ?>
 
-                                <tr id="0-item-placing-<?= $subject['sm_code'] ?>">
+                                <tr id="0-item-placing-<?= $subject['sbm_code'] ?>">
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencinpta" name="input-<?= $subject['sm_code'] ?>[]">
+                                      <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" readonly>
                                     </div>
                                   </td>
                                   <td width="10px">
                                     <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
-                                      <input class="form-check-input" type="checkbox" value="<?= $subject['sm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '000<?= $subject['sm_code'] ?>', this.value)">
-                                      <input type="text" value="off" name="checked-<?= $subject['sm_code'] ?>[]" id="000<?= $subject['sm_code'] ?>" hidden />
+                                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" onclick="return false;">
                                     </div>
                                   </td>
                                   <td width="5px">
-                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#0-item-placing-<?= $subject['sm_code'] ?>').remove();">
-                                      <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Item Kompetensi Teras bagi subjek <?= $subject['sbm_desc'] ?> masih belum ditetapkan!">
+                                        <i class="fas fa-info-circle fa-lg me-2"></i>
                                     </a>
                                   </td>
                                 </tr>
@@ -173,11 +158,6 @@
 
                             </tbody>
                           </table>
-                          <span class="btn bg-gradient-primary mt-2" onclick="addField('<?= $subject['sm_code'] ?>')">Tambah Item&nbsp;&nbsp;
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                            </svg>
-                          </span>
                         </div>
                       </div>
                     </div>
@@ -204,8 +184,3 @@
   </div>
 
 </form>
-<script>
-  $(document).ready(function() {
-    $('.select2').select2();
-  });
-</script>
