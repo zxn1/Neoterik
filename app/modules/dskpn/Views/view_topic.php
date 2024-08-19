@@ -12,7 +12,16 @@
     .modal-backdrop {
         z-index: 1040;
     }
+
+    .row {
+        padding: 20px !important;
+    }
+
+    .table-responsive {
+        overflow-x: hidden;
+    }
 </style>
+
 <div class="container-fluid py-4">
     <!-- Modal Structure -->
     <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
@@ -70,7 +79,7 @@
         </div>
         <br>
         <div class="table-responsive">
-            <table class="table align-items-center mb-0" id="subject_list">
+            <table class="table align-items-center mb-0" id="topic_list">
                 <thead>
                     <tr>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
@@ -140,6 +149,116 @@
                 url.searchParams.delete('year');
             }
             window.location.href = url.toString();
+        });
+    });
+</script>
+
+<!-- Ajax to submit add form -->
+<script>
+    $(document).ready(function() {
+        $('#addSubjectForm').on('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            $.ajax({
+                url: $(this).attr('action'), // Get the action URL from the form
+                type: $(this).attr('method'), // Get the form method (POST)
+                data: $(this).serialize(), // Serialize the form data
+                success: function(response) {
+                    // Handle the successful response here
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berjaya!',
+                            text: response.message
+                        }).then(() => {
+                            $('#addClusterModal').modal('hide'); // Hide the modal
+                            location.reload(); // Optionally reload the page
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle errors here
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Terdapat ralat!',
+                        text: 'Maaf, terdapat masalah teknikal. Sila cuba lagi nanti.'
+                    });
+                    console.log(xhr.responseText); // Log the error to the console for debugging
+                }
+            });
+        });
+    });
+
+    $(document).ready(function() {
+
+        $('#topic_list').DataTable({
+            dom: "<'row mb-3'<'col-sm-12 col-md-6 d-flex align-items-center justify-content-start'f><'col-sm-12 col-md-6 d-flex align-items-center justify-content-end'B>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7 d-flex justify-content-end'p>>",
+
+            buttons: [{
+                    text: 'Satu',
+                    name: 'satu',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Satu$', true, false).draw(); // Filter for "Satu"
+                    }
+                },
+                {
+                    text: 'Dua',
+                    name: 'dua',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Dua$', true, false).draw(); // Filter for "Dua"
+                    }
+                },
+                {
+                    text: 'Tiga',
+                    name: 'tiga',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Tiga$', true, false).draw(); // Filter for "Tiga"
+                    }
+                },
+                {
+                    text: 'Empat',
+                    name: 'empat',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Empat$', true, false).draw(); // Filter for "Empat"
+                    }
+                },
+                {
+                    text: 'Lima',
+                    name: 'lima',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Lima$', true, false).draw(); // Filter for "Lima"
+                    }
+                },
+                {
+                    text: 'Enam',
+                    name: 'enam',
+                    className: 'btn-primary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('^Enam$', true, false).draw(); // Filter for "Enam"
+                    }
+                },
+                {
+                    text: 'All',
+                    name: 'all',
+                    className: 'btn-secondary btn-sm mr-1 filter-button',
+                    action: function(e, dt, node, config) {
+                        dt.column(1).search('').draw(); // Show all records
+                    }
+                }
+            ]
         });
     });
 </script>

@@ -17,30 +17,43 @@ class TopicMain extends BaseController
         $this->topic_model   = new TopicMainModel();
     }
 
+    // public function create()
+    // {
+    //     $data = [
+    //         'tm_desc'       => $this->request->getVar('topik'),
+    //         'tm_year'       => $this->request->getVar('year'),
+    //         'tm_ctm_id'         => $this->request->getVar('cluster')
+    //     ];
+
+    //     if ($this->topic_model->insert($data)) {
+    //         return redirect()->back()->with('success', 'Berjaya menambah Topic dalam Kluster!');
+    //     }
+
+    //     return redirect()->back()->with('fail', 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!');
+    // }
     public function create()
     {
         $data = [
-            'tm_desc'       => $this->request->getVar('topik'),
-            'tm_year'       => $this->request->getVar('year'),
-            'cm_id'         => $this->request->getVar('cluster')
+            'tm_desc'   => $this->request->getVar('topik'),
+            'tm_year'   => $this->request->getVar('year'),
+            'tm_ctm_id' => $this->request->getVar('cluster')
         ];
 
-        if($this->topic_model->insert($data))
-        {
-            return redirect()->back()->with('success', 'Berjaya menambah Topic dalam Kluster!');
+        if ($this->topic_model->insert($data)) {
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Berjaya menambah Topic dalam Kluster!']);
         }
 
-        return redirect()->back()->with('fail', 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!');
+        return $this->response->setJSON(['status' => 'fail', 'message' => 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!']);
     }
+
 
     public function delete($id = null)
     {
         $response = ['status' => 'fail'];
-        if($this->topic_model->delete($id))
-        {
+        if ($this->topic_model->delete($id)) {
             $response = ['status' => 'success'];
         }
-        
+
         return $this->response->setJSON($response);
     }
 
@@ -49,11 +62,10 @@ class TopicMain extends BaseController
         $response = ['status' => 'fail', 'data' => []];
 
         $topikSelected = $this->topic_model->where('tm_ctm_id', $id)->find();
-        if(!empty($topikSelected))
-        {
+        if (!empty($topikSelected)) {
             $response = ['status' => 'success', 'data' => $topikSelected];
         }
-        
+
         return $this->response->setJSON($response);
     }
 
@@ -61,11 +73,10 @@ class TopicMain extends BaseController
     {
         $response = ['status' => 'fail', 'data' => []];
         $yearTopic = $this->topic_model
-                ->where('topic_main.tm_id', $id)
-                ->first();
-        
-        if(!empty($yearTopic))
-        {
+            ->where('topic_main.tm_id', $id)
+            ->first();
+
+        if (!empty($yearTopic)) {
             $response = ['status' => 'success', 'data' => $yearTopic];
         }
 
