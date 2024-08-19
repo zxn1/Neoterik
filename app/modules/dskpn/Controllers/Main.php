@@ -1788,7 +1788,7 @@ class Main extends BaseController
         $level = $this->request->getVar('code_tp_rank');
 
         $data = $this->dskp_model->select('dskp_code')
-            ->where('dskp_sbm_id', $sbm_id)->like('dskp_code', $sbm_code ? ($sbm_code . (($level < 10) ? str_pad($level, 2, '0', STR_PAD_LEFT) : $level) . '%') : '')->findAll();
+            ->where('dskp_sbm_id', $sbm_id)->like('dskp_code', $sbm_code ? ($sbm_code . $level . '%') : '')->findAll();
         if (!empty($data)) {
 
             //get 2 last digit in dskp_code
