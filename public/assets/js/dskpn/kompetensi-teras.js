@@ -2,7 +2,21 @@ $(document).ready(function() {
     $('.select2').select2();
 });
 
- function addField(subject_code, text = "") {
+document.getElementById('store-core-competency-form').addEventListener('submit', function(event) {
+    $('#store-core-competency-form').find(':input').each(function() {
+    var input = $(this);
+    if (input.val().trim() === '' && !(input.attr('type') === 'button' || input.attr('type') === 'submit')) {
+        input.css('border', '2px solid red');
+        event.preventDefault();
+    }
+    });
+});
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
+function addField(subject_code, text = "") {
     bareBoneId = subject_code;
     subject_code = 'item-placing-' + subject_code;
 

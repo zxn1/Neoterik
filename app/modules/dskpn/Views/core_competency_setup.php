@@ -1,4 +1,4 @@
-<form method="POST" action="<?= route_to('store_tp_setup'); ?>">
+<form method="POST" action="<?= route_to('store_core_competency_setup'); ?>">
 <div class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
@@ -15,35 +15,6 @@
           ?>
         </select>
       </div>
-      <div class="row pt-1">
-        <h6 style="position : relative; top : 10px;">Kod Rujukan</h6>
-        <div class="mb-3 d-flex">
-            <table>
-              <tr>
-                <td>
-                  <label>Kod Subjek</label>
-                  <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required readonly>
-                </td>
-                <td id="code-tp-rank-div" style="display : none;">
-                  <label>Tahap</label>
-                  <select id="code-tp-rank" name="code-tp-rank" class="form-control" aria-label="Default select example" onchange="getAvailableDskpCode(this.value)" required>
-                    <option disabled selected>-- Sila Pilih Tahap --</option>
-                    <?php
-                    for($i = 1; $i <= 6; $i++)
-                      echo "<option value='" . $i . "'>" . $i . "</option>";
-                    ?>
-                  </select>
-                </td>
-                <td id="dskpn-topic-numbering-div" style="display : none;">
-                  <label>Penomboran</label>
-                  <select id="dskpn-topic-numbering-list" name="dskpn-topic-numbering" class="form-control" aria-label="Default select example" required disabled>
-                    <option disabled selected>-- Sila Pilih Nombor Identiti --</option>
-                  </select>
-                </td>
-              </tr>
-            </table>
-        </div>
-      </div>
     </div>
   </div>
 </div>
@@ -51,25 +22,32 @@
 <div class="container-fluid py-3">
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
-      <h6 class="my-auto text-white">TAHAP PENGUASAAN</h6>
+      <h6 class="my-auto text-white">KOMPETENSI TERAS</h6>
     </div>
     <div class="card-body py-2">
       <div class="custom row pt-3">
-        <div class="row" id="tahap-penguasaan" style="display: none;">
+        <div class="row" id="core-competency" style="display: none;">
           <ul class="list-group flex-grow-1 mx-2">
               <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                   <h6 id="subject-name-one" class="my-auto text-white text-uppercase">N/A</h6>
               </div>
-              <div class="list-group-item" id="collection-tahap-penguasaan" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
-                  <div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
-                      <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
-                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
-                          <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                      </a>
-                  </div>
+              <div class="list-group-item" id="collection-core-competency" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                <div class="d-flex w-100 align-items-center" id="1-collection-core-competency" style="display: flex !important;flex-direction: row !important;">
+                    <div class="row w-100 p-2 pb-0">
+                      <div class="col-2 p-1">
+                        <input name="input-core-competency-code[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="KSN1" required>
+                      </div>
+                      <div class="col-10 d-flex p-1">
+                        <input name="input-core-competency[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-core-competency').remove();">
+                            <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                        </a>
+                      </div>
+                    </div>
+                </div>
               </div>
               <div class="p-2 pb-1">
-                  <span class="btn bg-gradient-primary mt-2" onclick="addField('tahap-penguasaan')">Tambah TP &nbsp;&nbsp;
+                  <span class="btn bg-gradient-primary mt-2" onclick="addField('core-competency')">Tambah Kompetensi Teras &nbsp;&nbsp;
                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                       </svg>
@@ -77,7 +55,7 @@
               </div>
           </ul>
         </div>
-        <div class="row" id="empty-tahap-penguasaan" style="display: block;">
+        <div class="row" id="empty-core-competency" style="display: block;">
           <center>
             <dotlottie-player src="https://lottie.host/f14be899-0e61-4f77-aed4-79ef493631fc/yFJXcAqKcu.json" background="transparent" speed="1" style="width: 40%;" direction="1" playMode="normal" loop autoplay></dotlottie-player>
           </center>
@@ -105,9 +83,6 @@
   </div>
 </div>
 </form>
-<script>
-  const getAvailableDskpCodeURL = "<?= route_to('get_dskp_code_available'); ?>";
-</script>
 <?php if (session()->has('success')) : ?>
     <script>
       $(document).ready(function() {
