@@ -140,7 +140,7 @@
 <div class="container-fluid py-4 accordion">
     <!-- Button trigger modal -->
 
-    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal">
+    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal" hidden>
         Tambah Kluster
     </button>
     <!-- Modal Structure -->
@@ -171,7 +171,7 @@
         </div>
     </div>
 
-    <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST">
+    <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST" hidden>
         <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
