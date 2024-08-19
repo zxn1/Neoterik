@@ -57,7 +57,7 @@ function resetTPForm()
 {
     $("#collection-tahap-penguasaan").empty();
     $("#collection-tahap-penguasaan").append(`<div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
-                                                <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencinpta" required>
+                                                <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
                                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
                                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                                 </a>
