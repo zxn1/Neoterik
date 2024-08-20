@@ -1,0 +1,4 @@
+INSERT INTO `teaching_approach_category` (`tappc_id`, `tappc_desc`, `tappc_created_at`, `tappc_updated_at`, `tappc_deleted_at`) VALUES (1, 'Reka Bentuk Instruksi', '2024-08-20 23:24:32', '2024-08-20 23:24:34', NULL);
+INSERT INTO `teaching_approach_category` (`tappc_id`, `tappc_desc`, `tappc_created_at`, `tappc_updated_at`, `tappc_deleted_at`) VALUES (2, 'Integrasi Teknologi', '2024-08-20 23:24:33', '2024-08-20 23:24:35', NULL);
+INSERT INTO `teaching_approach_category` (`tappc_id`, `tappc_desc`, `tappc_created_at`, `tappc_updated_at`, `tappc_deleted_at`) VALUES (3, 'Pendekatan', '2024-08-20 23:24:33', '2024-08-20 23:24:35', NULL);
+INSERT INTO `teaching_approach_category` (`tappc_id`, `tappc_desc`, `tappc_created_at`, `tappc_updated_at`, `tappc_deleted_at`) VALUES (4, 'Kaedah', '2024-08-20 23:24:34', '2024-08-20 23:24:36', NULL);

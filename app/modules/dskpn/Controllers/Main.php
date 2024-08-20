@@ -15,6 +15,9 @@ use App\Modules\Dskpn\Models\LearningAidModel;
 use App\Modules\Dskpn\Models\SubjectMainModel;
 use App\Modules\Dskpn\Models\CoreCompetencyModel;
 use App\Modules\Dskpn\Models\CompetencyMappingModel;
+use App\Modules\Dskpn\Models\TeachingApproachCategoryModel;
+use App\Modules\Dskpn\Models\TeachingApproachModel;
+use App\Modules\Dskpn\Models\TeachingApproachMappingModel;
 
 use App\Modules\Dskpn\Models\DomainMappingModel;
 use App\Modules\Dskpn\Models\LearningStandardModel;
@@ -45,6 +48,9 @@ class Main extends BaseController
     protected $dskp_model;
     protected $core_competency_model;
     protected $competency_mapping_model;
+    protected $teaching_approach_category_model;
+    protected $teaching_approach_model;
+    protected $teaching_approach_mapping_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -80,6 +86,10 @@ class Main extends BaseController
         $this->domain_mapping_model     = new DomainMappingModel();
         $this->core_competency_model    = new CoreCompetencyModel();
         $this->competency_mapping_model = new CompetencyMappingModel();
+
+        $this->teaching_approach_category_model = new TeachingApproachCategoryModel();
+        $this->teaching_approach_mapping_model  = new TeachingApproachMappingModel();
+        $this->teaching_approach_model          = new TeachingApproachModel();
 
         $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
         //-----------------
@@ -646,48 +656,50 @@ class Main extends BaseController
         $data = [];
         $data['dskpn_id'] = $this->session->get("dskpn_id");
 
-        $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
-        $data['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
+        // $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
+        // $data['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
 
         //if update then, get from db
-        $is_update = $this->session->get("is_update");
-        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+        // $is_update = $this->session->get("is_update");
+        // $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if (isset($is_update) && empty($data['specification_maplist'])) {
-            $temp_specification_mapping_db = $this->domain_mapping_model
-                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                ->join('extra_additional_field', 'extra_additional_field.dm_id = domain_mapping.dm_id', 'left')
-                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
-                ->whereIn('domain_group.dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])
-                ->findAll();
+        // if (isset($is_update) && empty($data['specification_maplist'])) {
+        //     $temp_specification_mapping_db = $this->domain_mapping_model
+        //         ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
+        //         ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
+        //         ->join('extra_additional_field', 'extra_additional_field.dm_id = domain_mapping.dm_id', 'left')
+        //         ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+        //         ->whereIn('domain_group.dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])
+        //         ->findAll();
 
-            $temp_specification_map = [];
-            foreach ($temp_specification_mapping_db as $item) {
-                $temp_specification_map[] = $item['d_id'];
-                if ($item['eaf_desc'] != null || !empty($item['eaf_desc']))
-                    $data['specification_lain_lain'] = $item['eaf_desc'];
-            }
+        //     $temp_specification_map = [];
+        //     foreach ($temp_specification_mapping_db as $item) {
+        //         $temp_specification_map[] = $item['d_id'];
+        //         if ($item['eaf_desc'] != null || !empty($item['eaf_desc']))
+        //             $data['specification_lain_lain'] = $item['eaf_desc'];
+        //     }
 
-            $data['specification_maplist'] = $temp_specification_map;
-        }
+        //     $data['specification_maplist'] = $temp_specification_map;
+        // }
 
         if (!empty($data['dskpn_id'])) {
-            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.ctm_desc, cluster_main.ctm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
                 ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
         }
 
         //steps 1 - get 4 mapping group components
         //steps 1.1 - get all id for 4 group_name
-        $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
+        //$allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
+        $data['allGroup'] = $this->teaching_approach_category_model->select('tappc_id, tappc_desc')->findAll();
 
         //steps 2.1 - get all item for all group
         //steps 2.2 - store all retrieved item
 
-        foreach ($allGroup as $group) {
-            $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+        foreach ($data['allGroup'] as $group) {
+            //$data[$group['dg_title']] = $this->domain_model->select('dmn_desc, dmn_id')->where('dmn_dg_id', $group['dg_id'])->orderBy('dmn_id', 'ASC')->find();
+            $data[$group['tappc_desc']] = $this->teaching_approach_model->select('tapp_desc, tapp_id')->where('tapp_tappc_id', $group['tappc_id'])->orderBy('tapp_id', 'ASC')->findAll();
         }
 
         $script = ['mapping_spesification'];
@@ -927,71 +939,43 @@ class Main extends BaseController
 
         $specification_mapist_data = [];
         $specification_mapping_id_list = [];
-        $specification_lain_lain_id = "";
-        $specification_lain_lain_data = "";
+        // $specification_lain_lain_id = "";
+        // $specification_lain_lain_data = "";
 
-        $get_sess_specification_mapping_id_list = $this->session->get("specification_mapping_id_list_sess");
-        $get_sess_specification_lain_lain_id = $this->session->get("specification_lain_lain_id_sess");
+        // $get_sess_specification_mapping_id_list = $this->session->get("specification_mapping_id_list_sess");
+        // $get_sess_specification_lain_lain_id = $this->session->get("specification_lain_lain_id_sess");
 
-        if (isset($get_sess_specification_mapping_id_list) && isset($get_sess_specification_lain_lain_id)) {
-            $this->domain_mapping_model->whereIn('dm_id', $get_sess_specification_mapping_id_list)
-                ->delete();
+        // if (isset($get_sess_specification_mapping_id_list) && isset($get_sess_specification_lain_lain_id)) {
+        //     $this->domain_mapping_model->whereIn('dm_id', $get_sess_specification_mapping_id_list)
+        //         ->delete();
 
-            //need to delete also as domain_mapping is deleted.
-            $this->extra_additional_field_model->where('eaf_id', $get_sess_specification_lain_lain_id)
-                ->delete();
-        }
+        //     //need to delete also as domain_mapping is deleted.
+        //     $this->extra_additional_field_model->where('eaf_id', $get_sess_specification_lain_lain_id)
+        //         ->delete();
+        // }
 
         //structure data first
         foreach ($allData as $key => $data) {
-            if ($key != 'input-lain') {
-                $parts = explode('-', $key);
-                if ($parts[0] == 'input') {
-                    $d_id = $parts[1];
+            $parts = explode('-', $key);
+            if ($parts[0] == 'input') {
+                $d_id = $parts[1];
 
-                    if ($this->domain_mapping_model->insert([
-                        'dm_isChecked' => 'Y',
-                        'd_id' => $d_id,
-                        'ls_id' => null,
-                        'dskpn_id' => $dskpn_id
-                    ])) {
-                        $specification_mapist_data[] = $d_id;
-                        $specification_mapping_id_list[] = $this->domain_mapping_model->insertID();
-                    } else {
-                        $success = false;
-                    }
-                }
-            } else {
-                if ($this->domain_mapping_model->insert([
-                    'dm_isChecked' => 'Y',
-                    'd_id' => $data,
-                    'ls_id' => null,
-                    'dskpn_id' => $dskpn_id
+                if ($this->teaching_approach_mapping_model->insert([
+                    'tappm_tapp_id' => $d_id,
+                    'tappm_dskpn_id'=> $dskpn_id
                 ])) {
-                    // insert lain2 information
-                    $inputlain = $allData['lain-lain-input'];
-                    $lain_dm_id = $this->domain_mapping_model->insertID();
-                    if ($this->extra_additional_field_model->insert([
-                        'eaf_desc' => $inputlain,
-                        'dm_id' => $lain_dm_id
-                    ])) {
-                        $specification_mapist_data[] = $data;
-                        $specification_mapping_id_list[] = $lain_dm_id;
-                        $specification_lain_lain_data = $inputlain;
-                        $specification_lain_lain_id = $this->extra_additional_field_model->insertID();
-                    } else {
-                        $success = false;
-                    }
+                    $specification_mapist_data[] = $d_id;
+                    $specification_mapping_id_list[] = $this->domain_mapping_model->insertID();
                 } else {
                     $success = false;
                 }
             }
         }
 
-        $this->session->set('specification_mapist_sess', $specification_mapist_data);
-        $this->session->set('specification_lain_lain_sess', $specification_lain_lain_data);
-        $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list);
-        $this->session->set('specification_lain_lain_id_sess', $specification_lain_lain_id);
+        // $this->session->set('specification_mapist_sess', $specification_mapist_data);
+        // $this->session->set('specification_lain_lain_sess', $specification_lain_lain_data);
+        // $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list);
+        // $this->session->set('specification_lain_lain_id_sess', $specification_lain_lain_id);
 
         if ($success)
             return redirect()->to(route_to('activity_n_assessment'));
