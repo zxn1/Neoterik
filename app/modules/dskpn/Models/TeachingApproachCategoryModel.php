@@ -12,7 +12,7 @@ class TeachingApproachCategoryModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['tappc_desc'];
+    protected $allowedFields = ['tappc_desc', 'tappc_allow_modify'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;
