@@ -16,9 +16,9 @@ class TeachingApproachModel extends Model
 
     // If you want to use timestamps
     protected $useTimestamps = true;
-    protected $createdField  = 'tappc_created_at';
-    protected $updatedField  = 'tappc_updated_at';
-    protected $deletedField  = 'tappc_deleted_at';
+    protected $createdField  = 'tapp_created_at';
+    protected $updatedField  = 'tapp_updated_at';
+    protected $deletedField  = 'tapp_deleted_at';
 
     // Validation rules
     protected $validationRules    = [];
