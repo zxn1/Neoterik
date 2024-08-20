@@ -108,7 +108,7 @@
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="method-instruction-<?= $group['tappc_id'] ?>">
                 
               <?php 
               if(isset($data[$group['tappc_desc']]))
@@ -119,7 +119,7 @@
                       <span class="text-dark d-block text-sm"><?= $item['tapp_desc']; ?></span>
                     </div>
                   </td>
-                  <td>
+                  <td class="justify-content-center">
                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                       <input class="form-check-input" name="input-<?= $item['tapp_id'] ?>" value="<?= $item['tapp_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['tapp_id'],$specification_maplist))?'checked':''; ?>>
                     </div>
@@ -131,6 +131,13 @@
             </table>
           </div>
         </div>
+        <?php if($group['tappc_allow_modify'] == 'Y') { ?>
+          <span class="btn bg-gradient-primary mt-2 me-2 ms-2" onclick="addField('method-instruction-<?= $group['tappc_id'] ?>', <?= $group['tappc_id'] ?>)">Tambah TP &nbsp;&nbsp;
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+            </svg>
+          </span>
+        <?php } ?>
       </div>
     </div>
     <?php } ?>
@@ -152,4 +159,37 @@
   $(document).ready(function() {
     $('.select2').select2();
   });
+</script>
+
+<script>
+  function addField(collectionId, id) {
+    bareBoneId = collectionId;
+
+    // Get the collection container
+    var collection = $('#' + collectionId);
+
+    // Generate a unique ID for the new field
+    var newFieldId = Math.floor(Math.random() * 1000000);
+
+    // Create the new field HTML
+    var newFieldHTML = `
+        <tr id="new-input-` + newFieldId + `">
+          <td class="ps-1" colspan="4">
+            <div class="my-auto">
+              <input type="text" name="new-item[` + id + `][` + newFieldId + `]" class="form-control" placeholder="Tajuk Subjek" required>
+            </div>
+          </td>
+          <td class="d-flex justify-content-center">
+            <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+              <input class="form-check-input" name="new-item-checked[` + id + `][` + newFieldId + `]" value="`+ id +`" type="checkbox" id="flexSwitchCheckDefault11">
+            </div>
+            <a class="btn btn-link text-danger text-gradient mb-0" href="javascript:void(0)" onclick="$('#new-input-` + newFieldId + `').remove();">
+              <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+            </a>
+          </td>
+        </tr>
+    `;
+
+    collection.append(newFieldHTML);
+}
 </script>

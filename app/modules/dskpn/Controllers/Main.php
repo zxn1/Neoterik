@@ -692,14 +692,14 @@ class Main extends BaseController
         //steps 1 - get 4 mapping group components
         //steps 1.1 - get all id for 4 group_name
         //$allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
-        $data['allGroup'] = $this->teaching_approach_category_model->select('tappc_id, tappc_desc')->findAll();
+        $data['allGroup'] = $this->teaching_approach_category_model->select('tappc_id, tappc_allow_modify, tappc_desc')->findAll();
 
         //steps 2.1 - get all item for all group
         //steps 2.2 - store all retrieved item
 
         foreach ($data['allGroup'] as $group) {
             //$data[$group['dg_title']] = $this->domain_model->select('dmn_desc, dmn_id')->where('dmn_dg_id', $group['dg_id'])->orderBy('dmn_id', 'ASC')->find();
-            $data[$group['tappc_desc']] = $this->teaching_approach_model->select('tapp_desc, tapp_id')->where('tapp_tappc_id', $group['tappc_id'])->orderBy('tapp_id', 'ASC')->findAll();
+            $data[$group['tappc_desc']] = $this->teaching_approach_model->select('tapp_desc, tapp_id')->where('tapp_tappc_id', $group['tappc_id'])->where('tapp_status', 1)->orderBy('tapp_id', 'ASC')->findAll();
         }
 
         $script = ['mapping_spesification'];
@@ -953,6 +953,34 @@ class Main extends BaseController
         //     $this->extra_additional_field_model->where('eaf_id', $get_sess_specification_lain_lain_id)
         //         ->delete();
         // }
+
+        //if have new-item then insert
+        $newItem = $this->request->getPost('new-item');
+        $newItemChecked = $this->request->getPost('new-item-checked');
+        if(isset($newItem) && !empty($newItem))
+        {
+            foreach($newItem as $tappc_id => $itemArr)
+            {
+                foreach($itemArr as $randomItemID => $item_desc)
+                {
+                    $this->teaching_approach_model->insert([
+                        'tapp_desc' => $item_desc,
+                        'tapp_status' => 2,
+                        'tapp_tappc_id' => $tappc_id
+                    ]);
+
+                    $insertedID = $this->teaching_approach_model->insertID();
+
+                    if(isset($newItemChecked[$tappc_id][$randomItemID]) && $newItemChecked[$tappc_id][$randomItemID] == $tappc_id)
+                    {
+                        $this->teaching_approach_mapping_model->insert([
+                            'tappm_tapp_id' => $insertedID,
+                            'tappm_dskpn_id' => $dskpn_id
+                        ]);
+                    }
+                }
+            }
+        }
 
         //structure data first
         foreach ($allData as $key => $data) {
