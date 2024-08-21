@@ -103,3 +103,35 @@ function get_dskpn_tema($dskpn_theme)
             return '<span class="badge badge-m bg-gradient-secondary">' . $dskpn_theme . '</span>';
     }
 }
+
+// Get mapped subject for clusters
+function get_cluster_subject($ctm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to select the desired row
+    $query = $db->table('cluster_subject_mapping')
+        ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id')
+        ->select('subject_main.sbm_desc')
+        ->where('csm_ctm_id', $ctm_id)
+        ->get();
+
+    // Fetch the results as an array of rows
+    $rows = $query->getResultArray();
+
+    // Initialize an array to store subjects
+    $subjects = [];
+
+    // Check if the rows are not empty
+    if (!empty($rows)) {
+        // Loop through each row to get the 'sbm_desc'
+        foreach ($rows as $row) {
+            $subjects[] = $row['sbm_desc'];
+        }
+        // Return the subjects as a comma-separated string
+        return implode(', ', $subjects);
+    } else {
+        return ''; // Return an empty string if no matching records are found
+    }
+}

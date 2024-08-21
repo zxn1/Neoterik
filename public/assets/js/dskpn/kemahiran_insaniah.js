@@ -1,6 +1,6 @@
 //initialize
 subject_list.forEach(itemz => {
-    mappingProcess(itemz.sm_id + "|0");
+    mappingProcess(itemz.sbm_id + "|0");
 });
 
 function mapKemahiranInsaniah(event)

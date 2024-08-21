@@ -15,7 +15,7 @@
             <di class="row">
                 <div class="col-md-6">
                     <div class="d-flex flex-column h-100 mb-2">
-                        <p class="mb-1 pt-2 text-bold">Pilih Kluster</p>
+                        <p class="mb-1 pt-2 text-bold">Kluster</p>
                         <select disabled name="kluster" id="kluster-selection" class="form-control select2" aria-label="Default select example">
                             <option selected value="<?= $topic['tm_ctm_id'] ?>"><?= $topic['tm_desc'] ?></option>
                             <?php foreach ($kluster as $item) { ?>
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex flex-column h-100 mb-2">
-                        <p class="mb-1 pt-2 text-bold">Pilih Topik</p>
+                        <p class="mb-1 pt-2 text-bold">Topik</p>
                         <select disabled name="topik" id="topik-dynamic-field" class="form-control select2" aria-label="Default select example">
                             <option selected value="<?= $topic['tm_id'] ?>"><?= $topic['tm_desc'] ?></option>
                         </select>
