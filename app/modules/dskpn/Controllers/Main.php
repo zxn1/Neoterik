@@ -29,6 +29,8 @@ use App\Modules\Dskpn\Models\StandardPerformanceDskpMappingModel;
 //mapping model import
 use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
+use App\Modules\Dskpn\Models\AssessmentCategoryModel;
+use App\Modules\Dskpn\Models\AssessmentItemModel;
 //-----
 
 class Main extends BaseController
@@ -63,6 +65,8 @@ class Main extends BaseController
     //protected $extra_additional_field_model;
     protected $method_extra_model;
     protected $learning_aid_model;
+    protected $assessment_category_model;
+    protected $assessment_item_model;
     protected $db;
 
     public function __construct()
@@ -90,6 +94,8 @@ class Main extends BaseController
         $this->teaching_approach_category_model = new TeachingApproachCategoryModel();
         $this->teaching_approach_mapping_model  = new TeachingApproachMappingModel();
         $this->teaching_approach_model          = new TeachingApproachModel();
+        $this->assessment_category_model        = new AssessmentCategoryModel();
+        $this->assessment_item_model            = new AssessmentItemModel();
 
         $this->cluster_subject_mapping_model    = new ClusterSubjectMappingModel();
         //-----------------
@@ -712,43 +718,45 @@ class Main extends BaseController
         $data['review'] = $this->request->getVar('review');
         $data['dskpn_id'] = $this->session->get("dskpn_id");
 
-        $data['act_assess_abm'] = $this->session->get("act_assess_abm");
-        $data['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
-        $data['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
-        $data['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
+        // $data['act_assess_abm'] = $this->session->get("act_assess_abm");
+        // $data['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
+        // $data['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
+        // $data['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
 
         //if update then, get from db
-        $is_update = $this->session->get("is_update");
-        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+        // $is_update = $this->session->get("is_update");
+        // $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
-        if (isset($is_update) && empty($data['act_assess_idea_pengajaran'])) {
-            $temp_act_asses_mapping_db = $this->dskpn_model
-                ->join('activity_assessment', 'activity_assessment.aa_id = dskpn.aa_id')
-                ->where('dskpn_id', $ex_dskpn_id)
-                ->first();
+        // if (isset($is_update) && empty($data['act_assess_idea_pengajaran'])) {
+        //     $temp_act_asses_mapping_db = $this->dskpn_model
+        //         ->join('activity_assessment', 'activity_assessment.aa_id = dskpn.aa_id')
+        //         ->where('dskpn_id', $ex_dskpn_id)
+        //         ->first();
 
-            $temp_abm_list = $this->learning_aid_model->select('la_desc')->where('dskpn_id', $ex_dskpn_id)->findAll();
+        //     $temp_abm_list = $this->learning_aid_model->select('la_desc')->where('dskpn_id', $ex_dskpn_id)->findAll();
 
-            if (!empty($temp_act_asses_mapping_db)) {
-                $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
-                $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
-                $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
-            }
+        //     if (!empty($temp_act_asses_mapping_db)) {
+        //         $data['act_assess_pentaksiran'] = $temp_act_asses_mapping_db['aa_assessment_desc'];
+        //         $data['act_assess_idea_pengajaran'] = $temp_act_asses_mapping_db['aa_activity_desc'];
+        //         $data['act_assess_parent_involve'] = $temp_act_asses_mapping_db['aa_is_parental_involved'];
+        //     }
 
-            // Initialize
-            $data['act_assess_abm'] = [];
+        //     // Initialize
+        //     $data['act_assess_abm'] = [];
 
-            // Iterate over the results and add 'la_desc' values to the output array
-            foreach ($temp_abm_list as $result) {
-                $data['act_assess_abm'][] = $result['la_desc'];
-            }
-        }
+        //     // Iterate over the results and add 'la_desc' values to the output array
+        //     foreach ($temp_abm_list as $result) {
+        //         $data['act_assess_abm'][] = $result['la_desc'];
+        //     }
+        // }
 
         if (!empty($data['dskpn_id'])) {
-            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.ctm_desc, cluster_main.ctm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
                 ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
+            
+            $data['assessment_category'] = $this->assessment_category_model->findAll();
         }
 
         $script = ['activity_assessment'];
@@ -761,61 +769,108 @@ class Main extends BaseController
         $dskpn_id = $this->session->get("dskpn_id");
 
         $abm = $this->request->getPost('abm');
-        $pentaksiran = $this->request->getPost('pentaksiran');
-        $idea_pengajaran = $this->request->getPost('idea-pengajaran');
+        $activity_idea_number = $this->request->getPost('activity-idea-number');
+        $activity_idea_input = $this->request->getPost('activity-idea-input');
+        $assessment_number = $this->request->getPost('assessment-number');
+        $assessment_input = $this->request->getPost('assessment-input');
         $parent_involve = $this->request->getPost('parent-involvement');
 
-        $get_actvty_assess_map_id = $this->session->get("actvty_assess_map_id_sess");
-        $get_actvty_assess_learning_aid_id = $this->session->get("actvty_assess_learning_aid_id_sess");
+        // Start the transaction
+        $this->db->transBegin();
 
-        if (isset($get_actvty_assess_map_id) && isset($get_actvty_assess_learning_aid_id)) {
-            $this->activity_assessment_model->where('aa_id', $get_actvty_assess_map_id)
-                ->delete();
-            $this->learning_aid_model->whereIn('la_id', $get_actvty_assess_learning_aid_id)
-                ->delete();
+        // step 1 - insert activity
+        foreach($activity_idea_input as $index => $activity)
+        {
+            $this->activity_item_model->insert([
+                'aci_dskpn_id' => $dskpn_id,
+                'aci_number' => isset($activity_idea_number[$index])?$activity_idea_number[$index]:'',
+                'aci_desc' => $activity
+            ]);
         }
 
-        $this->session->set('act_assess_abm', $abm);
-        $this->session->set('act_assess_pentaksiran', $pentaksiran);
-        $this->session->set('act_assess_idea_pengajaran', $idea_pengajaran);
-        $this->session->set('act_assess_parent_involve', $parent_involve);
-
-        $actvty_assess_map_id = "";
-        $actvty_assess_learning_aid_id = [];
-
-        if (!isset($parent_involve))
-            $parent_involve = 'N';
-
-        $success = true;
-
-        if ($this->activity_assessment_model->insert([
-            'aa_activity_desc' => $idea_pengajaran,
-            'aa_assessment_desc' => $pentaksiran,
-            'aa_is_parental_involved' => $parent_involve
-        ])) {
-            $actvty_assess_map_id = $this->activity_assessment_model->insertID();
-            if ($this->dskpn_model->update($dskpn_id, ['aa_id' => $actvty_assess_map_id])) {
-            } else {
-                $success = false;
-            }
-            foreach ($abm as $data) {
-                if ($this->learning_aid_model->insert([
-                    'la_desc' => $data,
-                    'dskpn_id' => $dskpn_id
-                ])) {
-                    $actvty_assess_learning_aid_id[] = $this->learning_aid_model->insertID();
-                } else {
-                    $success = false;
-                }
+        // step 2 - insert assessment
+        foreach($assessment_input as $asc_id => $assess)
+        {
+            foreach($assess as $index => $item)
+            {
+                $this->assessment_item_model->insert([
+                    'asi_dskpn_id'  => $dskpn_id,
+                    'asi_desc_number' => isset($assessment_number[$asc_id][$index])?$assessment_number[$asc_id][$index]:'',
+                    'asi_desc' => $item,
+                    'asi_asc_id' => $asc_id
+                ]);
             }
         }
 
-        $this->session->set('actvty_assess_map_id_sess', $actvty_assess_map_id);
-        $this->session->set('actvty_assess_learning_aid_id_sess', $actvty_assess_learning_aid_id);
+        // step 3 - insert abm
+        foreach($abm as $item)
+        {
+            $this->learning_aid_model->insert([
+                'la_dskpn_id' => $dskpn_id,
+                'la_desc' => $item
+            ]);
+        }
 
-        if ($success)
-            return redirect()->to(route_to('activity_n_assessment') . "?review=true");
-        return redirect()->back();
+        // step 4 - update dskpn - parental-involvement
+        $this->dskpn_model->update($dskpn_id, [
+            'dskpn_parent_involvement' => $parent_involve
+        ]);
+
+        // Complete the transaction
+        $this->db->transCommit();
+
+        // $get_actvty_assess_map_id = $this->session->get("actvty_assess_map_id_sess");
+        // $get_actvty_assess_learning_aid_id = $this->session->get("actvty_assess_learning_aid_id_sess");
+
+        // if (isset($get_actvty_assess_map_id) && isset($get_actvty_assess_learning_aid_id)) {
+        //     $this->activity_assessment_model->where('aa_id', $get_actvty_assess_map_id)
+        //         ->delete();
+        //     $this->learning_aid_model->whereIn('la_id', $get_actvty_assess_learning_aid_id)
+        //         ->delete();
+        // }
+
+        // $this->session->set('act_assess_abm', $abm);
+        // $this->session->set('act_assess_pentaksiran', $pentaksiran);
+        // $this->session->set('act_assess_idea_pengajaran', $idea_pengajaran);
+        // $this->session->set('act_assess_parent_involve', $parent_involve);
+
+        // $actvty_assess_map_id = "";
+        // $actvty_assess_learning_aid_id = [];
+
+        // if (!isset($parent_involve))
+        //     $parent_involve = 'N';
+
+        // $success = true;
+
+        // if ($this->activity_assessment_model->insert([
+        //     'aa_activity_desc' => $idea_pengajaran,
+        //     'aa_assessment_desc' => $pentaksiran,
+        //     'aa_is_parental_involved' => $parent_involve
+        // ])) {
+        //     $actvty_assess_map_id = $this->activity_assessment_model->insertID();
+        //     if ($this->dskpn_model->update($dskpn_id, ['aa_id' => $actvty_assess_map_id])) {
+        //     } else {
+        //         $success = false;
+        //     }
+        //     foreach ($abm as $data) {
+        //         if ($this->learning_aid_model->insert([
+        //             'la_desc' => $data,
+        //             'dskpn_id' => $dskpn_id
+        //         ])) {
+        //             $actvty_assess_learning_aid_id[] = $this->learning_aid_model->insertID();
+        //         } else {
+        //             $success = false;
+        //         }
+        //     }
+        // }
+
+        // $this->session->set('actvty_assess_map_id_sess', $actvty_assess_map_id);
+        // $this->session->set('actvty_assess_learning_aid_id_sess', $actvty_assess_learning_aid_id);
+
+        if ($this->db->transStatus() === FALSE)
+            return redirect()->back()->with('fail', 'Operation failed. Data has been rolled back.');
+        
+        return redirect()->to(route_to('activity_n_assessment') . "?review=true");
     }
 
     public function mapping_successfully()
