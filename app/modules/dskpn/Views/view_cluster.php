@@ -45,7 +45,8 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KLUSTER</th>
-                        <!-- <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th> -->
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">SUBJEK</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,11 +57,16 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_code']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_desc']) ?></td>
-                            <!-- <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $cluster['ctm_id']; ?>').remove(); deleteSubject(<?= $cluster['ctm_id']; ?>);">
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_cluster_subject($cluster['ctm_id']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;">
+                                <!-- <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $cluster['ctm_id']; ?>').remove(); deleteSubject(<?= $cluster['ctm_id']; ?>);">
+                                    <i class="fas fa-plus fa-lg me-2" aria-hidden="true"></i>
+                                </a> -->
+
+                                <!-- <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $cluster['ctm_id']; ?>').remove(); deleteSubject(<?= $cluster['ctm_id']; ?>);">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                </a>
-                            </td> -->
+                                </a> -->
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
