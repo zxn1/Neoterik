@@ -129,25 +129,24 @@
                       </div>
 
                       <?php
-                      if(!empty($subject_description) && $subject_description != "")
-                      {
-                        foreach($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
-                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-2 p-0 pe-1">
-                              <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
-                            </div>
-                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
-                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                      if (!empty($subject_description) && $subject_description != "") {
+                        foreach ($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
+                          <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                            <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
+                              <div class="col-2 p-0 pe-1">
+                                <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                              </div>
+                              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                                <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
+                                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
                                   <button class="input-group-text" id="btnGroupAddon">
-                                      <i class="fas fa-trash-alt" style="color:red;"></i>
+                                    <i class="fas fa-trash-alt" style="color:red;"></i>
                                   </button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <?php 
+                        <?php
                         }
                       } else { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
@@ -159,23 +158,23 @@
                               <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
                               <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
                                 <button class="input-group-text" id="btnGroupAddon">
-                                    <i class="fas fa-trash-alt" style="color:red;"></i>
+                                  <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
                               </div>
                             </div>
                           </div>
                         </div>
-                      <?php 
+                      <?php
                       } ?>
 
                       <div class="p-1">
-                          <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>')">Tambah &nbsp;&nbsp;
-                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                              </svg>
-                          </span>
+                        <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>')">Tambah &nbsp;&nbsp;
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                          </svg>
+                        </span>
                       </div>
-                      
+
                     </div>
                   <?php endif; ?>
                 <?php endforeach; ?>
@@ -192,24 +191,23 @@
           <div id="objective-prestasi" style="margin : 10px;">
 
             <?php
-            for($i = 0; $i < 3; $i++)
-            { ?>
-            <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
-              <div class="col-md-1 pe-1">
-                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
-              </div>
-              <div class="col-md-8 pe-1">
-                <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
-              </div>
-              <div class="col-md-3 d-flex">
-                <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
-                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
-                  <button class="input-group-text" id="btnGroupAddon">
-                    <i class="fas fa-trash-alt" style="color: red;"></i>
-                  </button>
+            for ($i = 0; $i < 3; $i++) { ?>
+              <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
+                <div class="col-md-1 pe-1">
+                  <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                </div>
+                <div class="col-md-8 pe-1">
+                  <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+                </div>
+                <div class="col-md-3 d-flex">
+                  <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+                  <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                    <button class="input-group-text" id="btnGroupAddon">
+                      <i class="fas fa-trash-alt" style="color: red;"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
             <?php
             }
             ?>
@@ -218,13 +216,12 @@
 
           <div style="margin-left : 10px;">
             <span class="btn bg-gradient-primary mt-2" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+              </svg>
             </span>
           </div>
-          
-          <!-- <textarea id="editor-objectif-pentaksiran" name="objective" class="multisteps-form__textarea form-control zero-top-border" id="exampleFormControlTextarea1" rows="5" placeholder="Objektif yang hendak dicapai"><?= $objective; ?></textarea> -->
+
         </div>
         <br>
         <div style="display: flex; align-items: center;">
@@ -261,43 +258,41 @@
       <div class="modal-body">
         <form id="checkDuplicateKODDSKPN" action="<?= route_to('checkstore_dskpn_code') ?>" method="post">
           <div class="row pb-4" id="set-dskpn-ic">
-            <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi <?= isset($ex_dskpn_code_init)?'versi':'' ?> topik DSKPN ini:</span>
+            <span class="ps-3" style="color : red;" id="hinting-no-subject">Sila masukkan KOD DSKPN bagi <?= isset($ex_dskpn_code_init) ? 'versi' : '' ?> topik DSKPN ini:</span>
             <div class="ps-3">
               <div class="row">
-                <?php $part1_ex_dskpn = ""; $part2_ex_dskpn = ""; ?>
+                <?php $part1_ex_dskpn = "";
+                $part2_ex_dskpn = ""; ?>
                 <div class="col-md-8">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value=
-                  "<?php
-                  if (!isset($ex_dskpn_code_init)) {
-                      if (isset($dskpn_code)) {
-                          echo $dskpn_code;
-                      } else {
-                          echo '';
-                      }
-                  } else {
-                    // Separate the string into two parts
-                    if(substr_count($ex_dskpn_code_init, '-') > 1)
-                    {
-                      $lastHyphenPos = strrpos($ex_dskpn_code_init, '-');
-                      $part1_ex_dskpn = substr($ex_dskpn_code_init, 0, $lastHyphenPos);
-                      $part2_ex_dskpn = substr($ex_dskpn_code_init, $lastHyphenPos + 1);
-                    } else {
-                      $part1_ex_dskpn = $ex_dskpn_code_init;
-                      $part2_ex_dskpn = date("Y");
-                    }
-                    echo $part1_ex_dskpn . '-';
-                  }
-                  ?>">
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" value="<?php
+                                                                                                                                                              if (!isset($ex_dskpn_code_init)) {
+                                                                                                                                                                if (isset($dskpn_code)) {
+                                                                                                                                                                  echo $dskpn_code;
+                                                                                                                                                                } else {
+                                                                                                                                                                  echo '';
+                                                                                                                                                                }
+                                                                                                                                                              } else {
+                                                                                                                                                                // Separate the string into two parts
+                                                                                                                                                                if (substr_count($ex_dskpn_code_init, '-') > 1) {
+                                                                                                                                                                  $lastHyphenPos = strrpos($ex_dskpn_code_init, '-');
+                                                                                                                                                                  $part1_ex_dskpn = substr($ex_dskpn_code_init, 0, $lastHyphenPos);
+                                                                                                                                                                  $part2_ex_dskpn = substr($ex_dskpn_code_init, $lastHyphenPos + 1);
+                                                                                                                                                                } else {
+                                                                                                                                                                  $part1_ex_dskpn = $ex_dskpn_code_init;
+                                                                                                                                                                  $part2_ex_dskpn = date("Y");
+                                                                                                                                                                }
+                                                                                                                                                                echo $part1_ex_dskpn . '-';
+                                                                                                                                                              }
+                                                                                                                                                              ?>">
                 </div>
                 <div class="col-md-4">
                   <?php
-                  if(empty($part2_ex_dskpn))
-                  {?>
-                  <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)">
+                  if (empty($part2_ex_dskpn)) { ?>
+                    <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)">
                   <?php } ?>
                   <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
-                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn)?date("Y"):$part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn)?'':'disabled';?> />
+                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn) ? date("Y") : $part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn) ? '' : 'disabled'; ?> />
                 </div>
               </div>
             </div>
