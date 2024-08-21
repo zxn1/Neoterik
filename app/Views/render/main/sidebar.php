@@ -43,7 +43,7 @@
       <?php endif; ?>
       <?php if (get_user_role() == $both_roles[1]) : ?>
           <?php
-          $in_main_configuration = url_is(route_to('view_subject'))||url_is(route_to('view_cluster'))||url_is(route_to('view_topic'))||url_is(route_to('view_teacher_cluster'))||url_is(route_to('view_tp_core_setup'))||url_is(route_to('view_core_competency_setup'));
+          $in_main_configuration = url_is(route_to('view_subject'))||url_is(route_to('view_cluster'))||url_is(route_to('view_topic'))||url_is(route_to('view_teacher_cluster'))||url_is(route_to('view_tp_core_setup'))||url_is(route_to('view_core_competency_setup'))||url_is(route_to('view_standard_performance'));
           ?>
         <li class="nav-item">
           <a data-bs-toggle="collapse" href="#dskpn-configuration" class="nav-link " aria-controls="dskpn-configuration" role="button" aria-expanded="<?= $in_main_configuration?'true':'false' ?>">
@@ -100,7 +100,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('view_tp_core_setup'))) ? 'active' : ''; ?>" href="<?= route_to('view_tp_core_setup'); ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('view_tp_core_setup'))||url_is(route_to('view_standard_performance'))) ? 'active' : ''; ?>" href="<?= route_to('view_standard_performance'); ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-brain" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>

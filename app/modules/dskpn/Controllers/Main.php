@@ -1770,6 +1770,47 @@ class Main extends BaseController
         $this->render_jscss('tp_core_competency_setup', $data, $script, $style);
     }
 
+    public function view_standard_performance()
+    {
+        $data = [];
+        $data['subject_list'] = $this->subject_model->findAll();
+
+        $this->render('standard_performance_list', $data);
+    }
+
+    public function get_dskp_based_subject()
+    {
+        $sbm_id = $this->request->getPost('sbm_id');
+        $dskp_list = $this->dskp_model->where('dskp_sbm_id', $sbm_id)->findAll();
+
+        return response()->setJSON($dskp_list);
+    }
+
+    public function standard_performance_dskp_mapping()
+    {
+        $dskp_code = $this->request->getPost('dskp_code');
+
+        $action = $this->request->getPost('action');
+        $sp_id = $this->request->getPost('sp_id');
+        if(isset($action) && $action == 'delete')
+        {
+            $this->standard_performance_model->where('sp_id', $sp_id)->delete();
+
+            $check = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->findAll();
+            if(empty($check))
+            {
+                $this->standard_performance_dskp_mapping_model->where('spdm_dskp_code', $dskp_code)->delete();
+                $this->dskp_model->where('dskp_code', $dskp_code)->delete();
+            }
+        }
+
+        $data['standard_performance_dskp_mapping'] = $this->standard_performance_model
+                                                        ->where('sp_dskp_code', $dskp_code)
+                                                        ->findAll();
+
+        return $this->response->setJSON($data);
+    }
+
     public function view_core_competency()
     {
         $data = [];
