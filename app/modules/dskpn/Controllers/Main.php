@@ -531,7 +531,6 @@ class Main extends BaseController
         //steps 2 - get 4 mapping group components
         //steps 2.1 - get all id for 4 group_name
         $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
-
         $rules_7ki = [
             'KI1' => [
                 'DKM2',
@@ -602,7 +601,6 @@ class Main extends BaseController
 
 
         $data['ki_rules'] = $ki_rules;
-        // dd($data['ki_rules']);
 
         $script = ['data', 'dynamic-input', 'kemahiran_insaniah'];
         $style = ['static-field'];
@@ -1282,18 +1280,28 @@ class Main extends BaseController
             $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
                 ->delete();
         }
+
         //probably loop 2/3/4 time only. because input were put in arrays.
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             if ($parts[0] == 'input') {
+
                 //first repeatition max is only 4/5.
                 $ls_id = $this->learning_standard_model->select('learning_standard.ls_sbm_id')
                     ->join('subject_main', 'subject_main.sbm_code = ' . $this->db->escape($parts[1]))
                     ->where('learning_standard.ls_sbm_id = subject_main.sbm_id')->first();
 
                 foreach ($data as $d_id) {
+                    // Check if $d_id is greater than 16
+                    if ($d_id > 16) {
+                        // Use 'KI' prefix for $d_id greater than 16
+                        $dm_dmn_code = 'KI' . $d_id - 17;
+                    } else {
+                        // Use 'DKM' prefix for $d_id 16 or less
+                        $dm_dmn_code = 'DKM' . $d_id;
+                    }
                     if ($this->domain_mapping_model->insert([
-                        'dm_dmn_code' => 'DKM' . $d_id,
+                        'dm_dmn_code' => $dm_dmn_code,
                         'dm_sbm_id' => $ls_id['ls_sbm_id'],
                         'dm_dskpn_id' => $dskpn_id
                     ])) {
