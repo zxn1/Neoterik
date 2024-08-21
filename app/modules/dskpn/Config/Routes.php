@@ -17,6 +17,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('mapping-aktiviti-pentaksiran',[Main::class,     'activity_and_assessment'],       ['as' => 'activity_n_assessment']);
     $routes->get('complete',                    [Main::class,     'mapping_successfully'],          ['as' => 'dskpn_complete']);
     $routes->get('review-dskpn',                [Main::class,     'review_dskpn'],                  ['as' => 'review_dskpn']);
+    $routes->get('view-standard-performance',   [Main::class,     'view_standard_performance'],     ['as' => 'view_standard_performance']);
 
     $routes->post('store-standard-learning',    [Main::class,     'store_standard_learning'],       ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',     [Main::class,     'store_standard_performance'],    ['as' => 'store_std_perfm']);
@@ -38,6 +39,8 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('view-core-competency-setup',  [Main::class,     'view_core_competency'],          ['as' => 'view_core_competency_setup']);
     $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'], ['as' => 'get_dskp_code_available']);
     $routes->get('get-standard-performance',    [Main::class,     'getStandardPerformanceBasedOnDSKPCode'], ['as' => 'get_standard_performance']);
+    $routes->post('get-dskp-based-subject',     [Main::class,     'get_dskp_based_subject'],         ['as' => 'get_dskp_based_subject']);
+    $routes->post('standard-performance-dskp-mapping', [Main::class,    'standard_performance_dskp_mapping'], ['as' => 'standard_performance_dskp_map']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
