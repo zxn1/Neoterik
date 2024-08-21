@@ -66,7 +66,7 @@
           <label for="kluster">KLUSTER</label>
           <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster) ? 'disabled' : ''; ?>>
             <?php if (isset($topikncluster)) { ?>
-              <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
+              <option value="<?= $topikncluster['ctm_id']; ?>" selected><?= $topikncluster['ctm_desc']; ?></option>
             <?php } else { ?>
               <option value="AL">Alabama</option>
               <!-- Other options here -->
@@ -108,7 +108,7 @@
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-gradient-primary">
-                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                        <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
                         <div class="table-responsive">
@@ -124,12 +124,12 @@
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sm_id'] . '|' . $item['d_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'], $domain_map_session["'" . $subject['sm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                      <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
                                     </div>
                                   </td>
                                 </tr>
@@ -144,12 +144,12 @@
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sm_id'] . '|' . $item['d_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'], $domain_map_session["'" . $subject['sm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                      <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
                                     </div>
                                   </td>
                                 </tr>
@@ -164,12 +164,12 @@
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sm_id'] . '|' . $item['d_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'], $domain_map_session["'" . $subject['sm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                      <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
                                     </div>
                                   </td>
                                 </tr>
@@ -184,12 +184,12 @@
                                 <tr style="background-color : #dedede;">
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                                      <input name="input-<?= $subject['sm_code'] ?>[]" value="<?= $item['d_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sm_id'] ?>|<?= $item['d_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sm_code'] . "'"]) && in_array($item['d_id'], $domain_map_session["'" . $subject['sm_code'] . "'"])) ? 'checked' : ''; ?> onclick="return false;" onkeydown="return false;">
+                                      <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] ?>|<?= $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onclick="return false;" onkeydown="return false;">
                                     </div>
                                   </td>
                                 </tr>

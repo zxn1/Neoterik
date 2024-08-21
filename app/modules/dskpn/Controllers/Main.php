@@ -495,71 +495,73 @@ class Main extends BaseController
 
         if (isset($is_update) && empty($data['domain_map_session'])) {
             $temp_domain_mapping_db = $this->domain_mapping_model
-                ->join('domain', 'domain_mapping.d_id = domain.d_id', 'left')
-                ->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id', 'left')
-                ->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id', 'left')
-                ->join('domain_group', 'domain_group.dg_id = domain.gd_id')
-                ->where('domain_mapping.dskpn_id', $ex_dskpn_id)
+                ->join('domain', 'domain_mapping.dm_dmn_code = domain.dmn_code', 'left')
+                ->join('subject_main', 'domain_mapping.dm_sbm_id = subject_main.sbm_id', 'left')
+                ->join('domain_group', 'domain_group.dg_id = domain.dmn_dg_id')
+                ->where('domain_mapping.dm_dskpn_id', $ex_dskpn_id)
                 ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
                 ->findAll();
 
             $temp_domain_map = [];
 
             foreach ($temp_domain_mapping_db as $item) {
-                $temp_domain_map['\'' . $item['sm_code'] . '\''][] = $item['d_id'];
+                $temp_domain_map['\'' . $item['sbm_code'] . '\''][] = $item['dmn_id'];
+                // Nak kne tgok balik line atas ni sbb tak guna domain_id dah
             }
 
             $data['domain_map_session'] = $temp_domain_map;
         }
 
         $data['dskpn_id'] = $this->session->get("dskpn_id");
+
         $data['subjects'] = [];
         if (!empty($data['dskpn_id'])) {
-            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+            $data['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.ctm_desc, cluster_main.ctm_id')
+                ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
                 ->where('dskpn.dskpn_id', $data['dskpn_id'])->first();
 
             //steps 1 - get all subjects related to iterate horizontally
             //steps 1.1 - get learning standard to get list of subject.
-            $data['subjects'] = $this->subject_model->select('subject_main.sm_id, subject_main.sm_code, subject_main.sm_desc')
-                ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                ->where('ls.dskpn_id', $data['dskpn_id'])->where('ls.deleted_at', null)->findAll();
+            $data['subjects'] = $this->subject_model->select('subject_main.sbm_id, subject_main.sbm_code, subject_main.sbm_desc')
+                ->join('learning_standard as ls', 'ls.ls_sbm_id = subject_main.sbm_id')
+                ->where('ls.ls_dskpn_id', $data['dskpn_id'])->where('ls.ls_deleted_at', null)->findAll();
         }
 
         //steps 2 - get 4 mapping group components
         //steps 2.1 - get all id for 4 group_name
         $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
+
         $rules_7ki = [
-            '(KI1) Pemikiran Kritis & Kemahiran Penyelesaian Masalah' => [
-                'DKM2: Numerasi (N)',
-                'DKM3: Literasi Saintifik (LS)',
-                '(DKM7) Pemikiran Kritis & Penyelesaian Masalah (PKPM)',
-                '(DKM8) Kreativiti (Kr)',
-                '(DKM11) Inkuiri (Ik)'
+            'KI1' => [
+                'DKM2',
+                'DKM3',
+                'DKM7',
+                'DKM8',
+                'DKM11'
             ],
-            '(KI2) Kemahiran Komunikasi' => [
-                'DKM1: Literasi (L)',
-                '(DKM9) Komunikasi (Kom)'
+            'KI2' => [
+                'DKM1',
+                'DKM9'
             ],
-            '(KI3) Kemahiran Kepimpinan' => [
-                '(DKM16) Kepimpinan (Kp)'
+            'KI3' => [
+                'DKM16'
             ],
-            '(KI4) Kemahiran Kerja Berpasukan' => [
-                '(DKM10) Kolaborasi (K)'
+            'KI4' => [
+                'DKM10'
             ],
-            '(KI5) Pembelajaran Berterusan Dan Pengurusan Maklumat' => [
-                'DKM4: Literasi ICT (LICT)',
-                '(DKM12) Inisiatif',
-                '(DKM13) Kegigihan',
-                '(DKM14) Penyesuaian Diri (PD)'
+            'KI5' => [
+                'DKM4',
+                'DKM12',
+                'DKM13',
+                'DKM14'
             ],
-            '(KI6) Kemahiran Keusahawanan' => [
-                '(DKM5) Literasi Kewangan (LW)'
+            'KI6' => [
+                'DKM5'
             ],
-            '(KI7) Moral dan Etika Profesional' => [
-                '(DKM6) Literasi Kebudayaan Sivik dan Nilai (LKSN)',
-                '(DKM15) Kesedaran Sosial & Budaya (KSB)'
+            'KI7' => [
+                'DKM6',
+                'DKM15'
             ]
         ];
         $ki_rules = [];
@@ -568,7 +570,7 @@ class Main extends BaseController
         //steps 2.3 - store all retrieved item
         $tempDomainz = [];
         foreach ($allGroup as $group) {
-            $data[$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
+            $data[$group['dg_title']] = $this->domain_model->select('dmn_code, dmn_desc, dmn_id')->where('dmn_dg_id', $group['dg_id'])->orderBy('dmn_id', 'ASC')->find();
 
             //get all domain
             foreach ($data[$group['dg_title']] as $domainz) {
@@ -581,24 +583,26 @@ class Main extends BaseController
         {
             $cur_d_id = "";
             foreach ($tempDomainz as $d) {
-                if ($d['d_name'] == $key) {
-                    $ki_rules[$d['d_id']] = null; //create array with related key first
-                    $cur_d_id = $d['d_id'];
+                if ($d['dmn_code'] == $key) {
+                    $ki_rules[$d['dmn_id']] = null; //create array with related key first
+                    $cur_d_id = $d['dmn_id'];
                 }
             }
 
             //loop rules inside KI
             foreach ($domainz as $rule) {
                 foreach ($tempDomainz as $d) {
-                    if ($d['d_name'] == $rule) {
-                        $ki_rules[$cur_d_id][] = $d['d_id'];
+                    if ($d['dmn_code'] == $rule) {
+                        $ki_rules[$cur_d_id][] = $d['dmn_id'];
                     }
                 }
             }
         }
+        // dd($data[$group['dg_title']]);
 
-        // dd($ki_rules);
+
         $data['ki_rules'] = $ki_rules;
+        // dd($data['ki_rules']);
 
         $script = ['data', 'dynamic-input', 'kemahiran_insaniah'];
         $style = ['static-field'];
@@ -628,20 +632,17 @@ class Main extends BaseController
 
             //step 2.0 - get all core_competency from subjects
             $subjectIdsArray = [];
-            foreach($data['subjects'] as $subject)
-            {
+            foreach ($data['subjects'] as $subject) {
                 $subjectIdsArray[] = $subject['sbm_id'];
             }
 
             $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
-            
+
             //step 2.1 - structuring the data to pass over view
-            foreach($subjectIdsArray as $sbm_id)
-            {
-                foreach($core_competency as $item)
-                {
-                    if($sbm_id == $item['cc_sbm_id'])
-                        $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'],'N');
+            foreach ($subjectIdsArray as $sbm_id) {
+                foreach ($core_competency as $item) {
+                    if ($sbm_id == $item['cc_sbm_id'])
+                        $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
                 }
             }
         }
@@ -957,12 +958,9 @@ class Main extends BaseController
         //if have new-item then insert
         $newItem = $this->request->getPost('new-item');
         $newItemChecked = $this->request->getPost('new-item-checked');
-        if(isset($newItem) && !empty($newItem))
-        {
-            foreach($newItem as $tappc_id => $itemArr)
-            {
-                foreach($itemArr as $randomItemID => $item_desc)
-                {
+        if (isset($newItem) && !empty($newItem)) {
+            foreach ($newItem as $tappc_id => $itemArr) {
+                foreach ($itemArr as $randomItemID => $item_desc) {
                     $this->teaching_approach_model->insert([
                         'tapp_desc' => $item_desc,
                         'tapp_status' => 2,
@@ -971,8 +969,7 @@ class Main extends BaseController
 
                     $insertedID = $this->teaching_approach_model->insertID();
 
-                    if(isset($newItemChecked[$tappc_id][$randomItemID]) && $newItemChecked[$tappc_id][$randomItemID] == $tappc_id)
-                    {
+                    if (isset($newItemChecked[$tappc_id][$randomItemID]) && $newItemChecked[$tappc_id][$randomItemID] == $tappc_id) {
                         $this->teaching_approach_mapping_model->insert([
                             'tappm_tapp_id' => $insertedID,
                             'tappm_dskpn_id' => $dskpn_id
@@ -990,7 +987,7 @@ class Main extends BaseController
 
                 if ($this->teaching_approach_mapping_model->insert([
                     'tappm_tapp_id' => $d_id,
-                    'tappm_dskpn_id'=> $dskpn_id
+                    'tappm_dskpn_id' => $dskpn_id
                 ])) {
                     $specification_mapist_data[] = $d_id;
                     $specification_mapping_id_list[] = $this->domain_mapping_model->insertID();
@@ -1203,10 +1200,9 @@ class Main extends BaseController
         $dskpn_id   = $this->session->get("dskpn_id");
         $allRefCode = $this->request->getPost('sub_ref_code');
 
-        foreach($allRefCode as $item)
-        {
+        foreach ($allRefCode as $item) {
             $this->standard_performance_dskp_mapping_model->insert([
-                'spdm_dskp_code'=> $item,
+                'spdm_dskp_code' => $item,
                 'spdm_dskpn_id' => $dskpn_id
             ]);
         }
@@ -1286,22 +1282,20 @@ class Main extends BaseController
             $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
                 ->delete();
         }
-
         //probably loop 2/3/4 time only. because input were put in arrays.
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             if ($parts[0] == 'input') {
                 //first repeatition max is only 4/5.
-                $ls_id = $this->learning_standard_model->select('learning_standard.ls_id')
-                    ->join('subject_main', 'subject_main.sm_code = ' . $this->db->escape($parts[1]))
-                    ->where('learning_standard.sm_id = subject_main.sm_id')->first();
+                $ls_id = $this->learning_standard_model->select('learning_standard.ls_sbm_id')
+                    ->join('subject_main', 'subject_main.sbm_code = ' . $this->db->escape($parts[1]))
+                    ->where('learning_standard.ls_sbm_id = subject_main.sbm_id')->first();
 
                 foreach ($data as $d_id) {
                     if ($this->domain_mapping_model->insert([
-                        'dm_isChecked' => 'Y',
-                        'd_id' => $d_id,
-                        'ls_id' => $ls_id['ls_id'],
-                        'dskpn_id' => $dskpn_id
+                        'dm_dmn_code' => 'DKM' . $d_id,
+                        'dm_sbm_id' => $ls_id['ls_sbm_id'],
+                        'dm_dskpn_id' => $dskpn_id
                     ])) {
                         // do nothing
                         $domain_map_session_data[$this->db->escape($parts[1])][] = $d_id;
@@ -1374,8 +1368,7 @@ class Main extends BaseController
             //2. loop to get value inside that inputcode
             foreach ($inputCode as $input) {
                 //3. store domain first.
-                if($input['checked'] == 'Y')
-                {
+                if ($input['checked'] == 'Y') {
                     $this->competency_mapping_model->insert([
                         'cmp_cc_code'  => $input['value'],
                         'cmp_dskpn_id' => $dskpn_id
@@ -1731,19 +1724,17 @@ class Main extends BaseController
         $core_competency = $this->request->getPost('input-core-competency');
         $sbm_id = $this->request->getPost('subject');
 
-        if(!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
+        if (!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
             return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
 
-        if(!empty($core_competency))
-        {
-            foreach($core_competency as $index => $item)
-            {
-                if(isset($core_competency_code[$index]) && !empty($core_competency_code[$index]))
-                $this->core_competency_model->insert([
-                    'cc_code' => $core_competency_code[$index],
-                    'cc_desc' => $item,
-                    'cc_sbm_id' => $sbm_id
-                ]);
+        if (!empty($core_competency)) {
+            foreach ($core_competency as $index => $item) {
+                if (isset($core_competency_code[$index]) && !empty($core_competency_code[$index]))
+                    $this->core_competency_model->insert([
+                        'cc_code' => $core_competency_code[$index],
+                        'cc_desc' => $item,
+                        'cc_sbm_id' => $sbm_id
+                    ]);
             }
         }
 
@@ -1759,18 +1750,18 @@ class Main extends BaseController
 
         $tp_data = $this->request->getPost('input-tahap-penguasaan');
 
-        if(!$code_tp_rank)
+        if (!$code_tp_rank)
             return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
 
-        if(!$topic_numbering)
+        if (!$topic_numbering)
             return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
 
         //step 1 - store dskp record
         $code_tp_rank = sprintf('%01d', $code_tp_rank);
         $topic_numbering = sprintf('%03d', $topic_numbering);
-        
+
         $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
-        if(!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
+        if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
             return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
 
         $res = $this->dskp_model->insert([
@@ -1832,8 +1823,8 @@ class Main extends BaseController
         $sbm_code = $this->request->getVar('sbm_code');
 
         $data = $this->standard_performance_model
-                ->where('sp_dskp_code', $dskp_code)
-                ->like('sp_dskp_code', $sbm_code . '%')->findAll();
+            ->where('sp_dskp_code', $dskp_code)
+            ->like('sp_dskp_code', $sbm_code . '%')->findAll();
 
         if (!empty($data)) {
             $response = [
