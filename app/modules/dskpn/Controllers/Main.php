@@ -876,45 +876,25 @@ class Main extends BaseController
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         $data['dskpn_code'] = $this->session->get("dskpn_code");
 
-        //remove all session
-        $sess_keys = [
-            'subject',
-            'subject_description',
-            'objective',
-            'tema',
-            'subtema',
-            'tm_id',
-            'cluster_id',
-            'topic_id',
-            'objective_performance_id',
-            'dskpn_id',
-            'learning_standard_id',
-            'tp_sess_data',
-            'core_map_sess',
-            'core_mapping_id_session_data',
-            'domain_map_session',
-            'domain_map_id_session_data',
-            'specification_mapist_sess',
-            'specification_lain_lain_sess',
-            'specification_mapping_id_list_sess',
-            'specification_lain_lain_id_sess',
-            'act_assess_abm',
-            'act_assess_pentaksiran',
-            'act_assess_idea_pengajaran',
-            'act_assess_parent_involve',
-            'actvty_assess_map_id_sess',
-            'actvty_assess_learning_aid_id_sess',
-            'dskpn_code',
-            'dskpn_code_init',
-            'is_update',
-            'ex_dskpn_id',
-            'ex_dskpn',
-            'duration'
+        $sessionData = session()->get();
+
+        $excludeKeys = [
+            '__ci_last_regenerate',
+            '_ci_previous_url',
+            'sm_id',
+            'by_id',
+            'icno',
+            'nickname',
+            'fullname',
+            'current_role',
+            'ccm_id',
+            'ccm_name'
         ];
 
-        // Remove each session key
-        foreach ($sess_keys as $key) {
-            $this->session->remove($key);
+        foreach ($sessionData as $key => $value) {
+            if (!in_array($key, $excludeKeys)) {
+                session()->remove($key);
+            }
         }
 
         $script = [];
@@ -1288,6 +1268,7 @@ class Main extends BaseController
 
         $this->session->set('domain_map_session', $domain_map_session_data);
         $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
+        $this->session->set('is_update_domain', 'Y');
 
         if ($success)
             return redirect()->to(route_to('activity_n_assessment'));
