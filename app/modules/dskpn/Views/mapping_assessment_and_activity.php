@@ -309,40 +309,6 @@
       <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
     </div>
   </div>
-
-  <?php
-  if ($review) { ?>
-
-    <div class="modal" id="review-dskpn" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Semakan dan Konfirmasi</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#review-dskpn').modal('hide');">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <iframe src="<?= route_to('review_dskpn') . "?page=1"; ?>" style="height: 70vh; width : 100%;">
-            </iframe>
-          </div>
-          <div class="modal-footer">
-            <a href="<?= route_to("tp_maintenance") ?>" class="btn btn-secondary">Betulkan Semula</a>
-            <a href="<?= route_to('dskpn_complete') ?>" type="button" class="btn btn-primary" data-dismiss="modal">Selesai</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script>
-      $(document).ready(function() {
-        $('#review-dskpn').modal('show');
-      });
-    </script>
-
-  <?php }
-  ?>
-
 </form>
 <script>
   $(document).ready(function() {

@@ -680,6 +680,7 @@ class Main extends BaseController
     {
         $data = [];
         $data['dskpn_id'] = $this->session->get("dskpn_id");
+        $data['review'] = $this->request->getVar('review');
         $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
         $data['new_specification_input'] = $this->session->get("new_specification_input_details");
 
@@ -734,7 +735,6 @@ class Main extends BaseController
     public function activity_and_assessment()
     {
         $data = [];
-        $data['review'] = $this->request->getVar('review');
         $data['dskpn_id'] = $this->session->get("dskpn_id");
 
         $data['abm_session'] = $this->session->get("abm");
@@ -1919,166 +1919,255 @@ class Main extends BaseController
 
         switch ($page) {
             case 1: {
-                    $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
-                    if (!empty($data['data']['dskpn_id'])) {
-                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                            ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                            ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
-
-                        //steps 1 - get all subjects related to iterate horizontally
-                        //steps 1.1 - get learning standard to get list of subject.
-                        $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                            ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                            ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
-                    }
-
+                    //set in session
+                    $data['data']['subject'] = "";
+                    $data['data']['subject_description'] = "";
+                    $data['data']['objective'] = "";
+                    $data['data']['tema'] = "";
+                    $data['data']['subtema'] = "";
+                    $data['data']['duration'] = "";
                     $data['data']['subject_list'] = $this->subject_model->findAll();
 
                     $tm_id = $this->session->get('tm_id');
                     // Query get topic data
-                    $data['data']['topic'] = $this->topic_model
-                        ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
-                        ->where('topic_main.tm_id', $tm_id)
-                        ->first();
+                    if (true && ($tm_id != NULL)) {
+                        $data['data']['topic'] = $this->topic_model
+                            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                            ->where('topic_main.tm_id', $tm_id)
+                            ->first();
 
-                    $data['data']['subject'] = $this->session->get('subject');
-                    $data['data']['subject_description'] = $this->session->get('subject_description');
-                    $data['data']['objective'] = $this->session->get('objective');
-                    $data['data']['duration'] = $this->session->get('duration');
-                    $data['data']['tema'] = $this->session->get('tema');
-                    $data['data']['subtema'] = $this->session->get('subtema');
+                        $data['data']['subject'] = $this->session->get('subject');
+                        $data['data']['getDefaultSubject'] = $this->cluster_subject_mapping_model->where('csm_ctm_id', $data['data']['topic']['tm_ctm_id'])
+                            ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id', 'left')
+                            ->findAll();
+
+                        $arrDefaultSubject = [];
+                        foreach ($data['data']['getDefaultSubject'] as $item) {
+                            $arrDefaultSubject[] = $item['csm_sbm_id'];
+                        }
+
+                        if (empty($data['data']['subject'])) {
+                            $this->session->set('subject', $arrDefaultSubject);
+                            $data['data']['subject'] = $arrDefaultSubject;
+                        }
+
+                        $data['data']['getDefaultSubject'] = $arrDefaultSubject;
+
+                        //get session if exist
+                        $data['data']['subject_description'] = $this->session->get('subject_description');
+                        $data['data']['subject_standard_numbering'] = $this->session->get('subject_standard_numbering');
+                        $data['data']['objective'] = $this->session->get('objective');
+                        $data['data']['objective_number'] = $this->session->get('objective_number');
+                        $data['data']['objective_ref'] = $this->session->get('objective_ref');
+                        $data['data']['duration'] = $this->session->get('duration');
+                        $data['data']['tema'] = $this->session->get('tema');
+                        $data['data']['subtema'] = $this->session->get('subtema');
+
+                        $data['data']['dskpn_code'] = 'K' . $data['data']['topic']['tm_ctm_id'] . 'T' . $data['data']['topic']['tm_year'] . '-';
+                    }
 
                     $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\standard_learning";
                     break;
                 }
             case 2:
-                //code block
                 {
-                    //tp part
-                    $data['data']['parameters'] = $this->session->get();
+                    $data['data'] = [];
                     $data['data']['tp_session'] = $this->session->get("tp_sess_data");
-                    //step 1 - get Cluster
-                    $data['data']['cluster_desc'] = $this->cluster_model
-                        ->where('cm_id', $data['data']['parameters']['cluster_id'])->first();
+                    $data['data']['tp_sess_refcode'] = $this->session->get("tp_sess_refcode");
 
-                    //step 2 - get Topic
-                    $data['data']['topic_desc'] = $this->topic_model
-                        ->where('tm_id', $data['data']['parameters']['topic_id'])->first();
+                    $data['data']['parameters'] = $this->session->get();
+                    if (!empty($data['data']['parameters'])) {
+                        //step 3 - get Subject Via Learning Standard
+                        foreach ($data['data']['parameters']['learning_standard_id'] as $ls_id) {
+                            $query = $this->db->table('subject_main')
+                                ->select('subject_main.*')
+                                ->join('learning_standard', 'learning_standard.ls_sbm_id = subject_main.sbm_id')
+                                ->where('learning_standard.ls_id', $ls_id)
+                                ->get();
 
-                    //step 3 - get Subject Via Learning Standard
-                    foreach ($data['data']['parameters']['learning_standard_id'] as $ls_id) {
-                        $query = $this->db->table('subject_main')
-                            ->select('subject_main.*')
-                            ->join('learning_standard', 'learning_standard.sm_id = subject_main.sm_id')
-                            ->where('learning_standard.ls_id', $ls_id)
-                            ->get();
-
-                        $data['data']['subjects'][] = $query->getResult();
+                            $data['data']['subjects'][] = $query->getResult();
+                        }
                     }
-
-                    $script[] = 'review/tp-dynamic-field';
-                    //end - tp part
-
 
                     $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\tp_maintenance";
                     break;
                 }
-            case 3:
-                //code block;
+            case 3:;
                 {
-                    $data['data']['core_map_sess'] = $this->session->get("core_map_sess");
-
+                    $data['data'] = [];
+                    $core_map_sess = $this->session->get("core_map_sess");
                     $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
                     if (!empty($data['data']['dskpn_id'])) {
-                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                            ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                            ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                        //step 1 - get all subjects related to iterate horizontally
+                        //step 1.1 - get learning standard to get list of subject.
+                        $data['data']['subjects'] = $this->subject_model->select('subject_main.sbm_code, subject_main.sbm_desc, subject_main.sbm_id')
+                            ->join('learning_standard as ls', 'ls.ls_sbm_id = subject_main.sbm_id')
+                            ->where('ls.ls_dskpn_id', $data['data']['dskpn_id'])->where('ls.ls_deleted_at', null)->findAll();
 
-                        //steps 1 - get all subjects related to iterate horizontally
-                        //steps 1.1 - get learning standard to get list of subject.
-                        $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                            ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                            ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
+                        //step 2.0 - get all core_competency from subjects
+                        $subjectIdsArray = [];
+                        $subjectCodeArray = [];
+                        foreach ($data['data']['subjects'] as $subject) {
+                            $subjectIdsArray[] = $subject['sbm_id'];
+                            $subjectCodeArray[] = $subject['sbm_code'];
+                        }
+
+                        $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
+
+                        //step 2.1 - structuring the data to pass over view
+                        foreach ($subjectIdsArray as $index => $sbm_id) {
+                            if(true)
+                            {
+                                foreach ($core_competency as $i => $item) {
+                                    if ($sbm_id == $item['cc_sbm_id'])
+                                    {
+                                        $flag = false;
+                                        if(isset($core_map_sess[$subjectCodeArray[$index]]) && !empty($core_map_sess[$subjectCodeArray[$index]]))
+                                        foreach ($core_map_sess[$subjectCodeArray[$index]] as $core)
+                                        {
+                                            if($core[0] == $item['cc_code'])
+                                            {
+                                                $flag = true;
+                                                $data['data']['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], $core[1]);
+                                            }
+                                        }
+                                        if(!$flag)
+                                            $data['data']['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                                    }
+                                }
+                            } else {
+                                foreach ($core_competency as $item) {
+                                    if ($sbm_id == $item['cc_sbm_id'])
+                                        $data['data']['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                                }
+                            }
+                        }
                     }
 
                     $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_core";
                     break;
                 }
             case 4:
-                //code block
                 {
-                    $data['data']['domain_map_session'] = $this->session->get("domain_map_session");
+                    $data['data'] = [];
 
+                    $data['data']['domain_map_session'] = $this->session->get("domain_map_session");
                     $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
                     $data['data']['subjects'] = [];
-                    if (!empty($data['data']['dskpn_id'])) {
-                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                            ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                            ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                    $data['data']['subjects'] = $this->subject_model->select('subject_main.sbm_id, subject_main.sbm_code, subject_main.sbm_desc')
+                        ->join('learning_standard as ls', 'ls.ls_sbm_id = subject_main.sbm_id')
+                        ->where('ls.ls_dskpn_id', $data['data']['dskpn_id'])->where('ls.ls_deleted_at', null)->findAll();
 
-                        $data['data']['subjects'] = $this->subject_model->select('subject_main.sm_code, subject_main.sm_desc')
-                            ->join('learning_standard as ls', 'ls.sm_id = subject_main.sm_id')
-                            ->where('ls.dskpn_id', $data['data']['dskpn_id'])->where('ls.deleted_at', null)->find();
-                    }
-
+                    //steps 2 - get 4 mapping group components
+                    //steps 2.1 - get all id for 4 group_name
                     $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Kualiti Keperibadian', 'Kemandirian', 'Pengetahuan Asas', '7 Kemahiran Insaniah'])->find();
-
+                    $rules_7ki = [
+                        'KI1' => [
+                            'DKM2',
+                            'DKM3',
+                            'DKM7',
+                            'DKM8',
+                            'DKM11'
+                        ],
+                        'KI2' => [
+                            'DKM1',
+                            'DKM9'
+                        ],
+                        'KI3' => [
+                            'DKM16'
+                        ],
+                        'KI4' => [
+                            'DKM10'
+                        ],
+                        'KI5' => [
+                            'DKM4',
+                            'DKM12',
+                            'DKM13',
+                            'DKM14'
+                        ],
+                        'KI6' => [
+                            'DKM5'
+                        ],
+                        'KI7' => [
+                            'DKM6',
+                            'DKM15'
+                        ]
+                    ];
+                    $ki_rules = [];
+                    //steps 2.2 - get all item for all group
+                    //steps 2.3 - store all retrieved item
+                    $tempDomainz = [];
                     foreach ($allGroup as $group) {
-                        $data['data']['data'][$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
-                    }
+                        $data['data'][$group['dg_title']] = $this->domain_model->select('dmn_code, dmn_desc, dmn_id')->where('dmn_dg_id', $group['dg_id'])->orderBy('dmn_id', 'ASC')->find();
 
+                        //get all domain
+                        foreach ($data['data'][$group['dg_title']] as $domainz) {
+                            $tempDomainz[] = $domainz;
+                        }
+                    }
+                    //convert rules into d_id
+                    foreach ($rules_7ki as $key => $domainz) //loop KI
+                    {
+                        $cur_d_id = "";
+                        foreach ($tempDomainz as $d) {
+                            if ($d['dmn_code'] == $key) {
+                                $ki_rules[$d['dmn_id']] = null; //create array with related key first
+                                $cur_d_id = $d['dmn_id'];
+                            }
+                        }
+                        //loop rules inside KI
+                        foreach ($domainz as $rule) {
+                            foreach ($tempDomainz as $d) {
+                                if ($d['dmn_code'] == $rule) {
+                                    $ki_rules[$cur_d_id][] = $d['dmn_id'];
+                                }
+                            }
+                        }
+                    }
+                    $data['data']['ki_rules'] = $ki_rules;
                     $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\sixteen_domain";
                     break;
                 }
             case 5:
-                //code block
                 {
+                    $data['data'] = [];
                     $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
-
-                    $data['data']['specification_maplist'] = $this->session->get("specification_mapist_sess");
-                    $data['data']['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
+                    $data['data']['abm_session'] = $this->session->get("abm");
+                    $data['data']['assessment_input_session'] = $this->session->get("assessment_input");
+                    $data['data']['assessment_number_session'] = $this->session->get("assessment_number");
+                    $data['data']['activity_number'] = $this->session->get("activity_idea_number");
+                    $data['data']['activity_input'] = $this->session->get("activity_idea_input");
+                    $data['data']['parent_involve'] = $this->session->get("parent_involve");
 
                     if (!empty($data['data']['dskpn_id'])) {
-                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                            ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
+                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.ctm_desc, cluster_main.ctm_id')
+                            ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                            ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
                             ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
-                    }
-
-                    $allGroup = $this->domain_group_model->select('dg_id, dg_title')->whereIn('dg_title', ['Reka Bentuk Instruksi', 'Integrasi Teknologi', 'Pendekatan', 'Kaedah'])->find();
-
-                    foreach ($allGroup as $group) {
-                        $data['data']['data'][$group['dg_title']] = $this->domain_model->select('d_name, d_id')->where('gd_id', $group['dg_id'])->orderBy('d_id', 'ASC')->find();
-                    }
-
-                    $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_specs";
-                    break;
-                }
-            case 6:
-                //code block
-                {
-                    $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
-
-                    $data['data']['act_assess_abm'] = $this->session->get("act_assess_abm");
-                    $data['data']['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
-                    $data['data']['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
-                    $data['data']['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
-
-                    if (!empty($data['data']['dskpn_id'])) {
-                        $data['data']['topikncluster'] = $this->dskpn_model->select('topic_main.tm_desc, topic_main.tm_id, cluster_main.cm_desc, cluster_main.cm_id')
-                            ->join('topic_main', 'topic_main.tm_id = dskpn.tm_id')
-                            ->join('cluster_main', 'cluster_main.cm_id = topic_main.cm_id')
-                            ->where('dskpn.dskpn_id', $data['data']['dskpn_id'])->first();
+                        
+                        $data['data']['assessment_category'] = $this->assessment_category_model->findAll();
                     }
 
                     $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_actvt_assess";
                     break;
                 }
+            case 6:
+                {
+                    $data['data'] = [];
+                    $data['data']['dskpn_id'] = $this->session->get("dskpn_id");
+                    $data['data']['review'] = $this->request->getVar('review');
+                    $data['data']['specification_maplist'] = $this->session->get("specification_mapist_sess");
+                    $data['data']['new_specification_input'] = $this->session->get("new_specification_input_details");
+                    $data['data']['allGroup'] = $this->teaching_approach_category_model->select('tappc_id, tappc_allow_modify, tappc_desc')->findAll();
+
+                    foreach ($data['data']['allGroup'] as $group) {
+                        $data['data'][$group['tappc_desc']] = $this->teaching_approach_model->select('tapp_desc, tapp_id')->where('tapp_tappc_id', $group['tappc_id'])->where('tapp_status', 1)->orderBy('tapp_id', 'ASC')->findAll();
+                    }
+
+                    $data['load_page'] = "App\\Modules\\dskpn\\Views\\review\\map_specs";
+                    break;
+                }
             default:
-                //code block
                 echo "fail";
         }
 
