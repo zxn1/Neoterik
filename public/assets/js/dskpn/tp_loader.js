@@ -1,4 +1,14 @@
-function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name)
+$(document).ready(function() {
+  if(tpSessRefcode.length > 0 && subjectData.length > 0)
+  {
+    subjectData.forEach((sub, index) => {
+      $("#dskp-code-subject-" + sub[0].sbm_id).val(tpSessRefcode[index]);
+      getTPFromDSKPCode(sub[0].sbm_id, sub[0].sbm_code, sub[0].sbm_desc);
+    });
+  }
+});
+
+function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "")
 {
   let dskpCode = $("#dskp-code-subject-" + sbm_id).val();
   $.ajax({
@@ -27,7 +37,7 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name)
           Swal.fire({
             icon: "error",
             title: "Maaf!",
-            text: "Tiada rekod Tahap Penguasaan bagi Kod '" + dskpCode + "' yang berkait subjek '" + sbm_name + "'"
+            text: "Tiada rekod Tahap Penguasaan bagi Kod '" + dskpCode + "' " + sbm_name?"yang berkait subjek '" + sbm_name + "'":"."
           });
         }
       } else {
@@ -40,7 +50,6 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name)
     }
   });
 }
-
 
 document.getElementById('tp-maintenance-form').addEventListener('submit', function(event) {
     $('#tp-maintenance-form').find(':input').each(function() {
