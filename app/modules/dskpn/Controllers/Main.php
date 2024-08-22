@@ -234,17 +234,12 @@ class Main extends BaseController
     {
         $this->session->set('ex_dskpn_code_init', null); //reset
         $data = [];
-        // $data['cluster'] = $this->cluster_model->select('cluster_main.*, topic_main.*')
-        //     ->join('topic_main', 'topic_main.cm_id = cluster_main.cm_id')
-        //     ->findAll();
 
         // Query to get the list of DSKPN
         $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.tm_id = topic_main.tm_id', 'left')
-            ->join('cluster_main', 'topic_main.cm_id = cluster_main.cm_id', 'left')
+            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
             ->findAll();
-
-        // dd($data['dskpn']);
 
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
@@ -1569,10 +1564,9 @@ class Main extends BaseController
         $data['subjects'] = $this->subject_model->findAll();
 
         // Scripts and styles
-        $script = ['dynamic-input'];
+        $script = ['dynamic-input', 'list_registered_dskpn'];
         $style = ['static-field'];
-
-        // dd($data);
+        
         // Render the view
         $this->render_jscss('dskpn_by_topic', $data, $script, $style);
     }
