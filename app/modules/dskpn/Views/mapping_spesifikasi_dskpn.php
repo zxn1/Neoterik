@@ -125,7 +125,29 @@
                     </div>
                   </td>
                 </tr>
-              <?php } ?>
+              <?php } 
+              if(isset($new_specification_input[$group['tappc_id']]) && !empty($new_specification_input[$group['tappc_id']]))
+              {
+                foreach($new_specification_input[$group['tappc_id']] as $new_input)
+                { ?>
+                  <tr id="new-input-<?= $new_input[1]; ?>">
+                    <td class="ps-1" colspan="4">
+                      <div class="my-auto">
+                        <input type="text" name="new-item[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" class="form-control" placeholder="Tajuk Subjek" required value="<?= $new_input[0]; ?>">
+                      </div>
+                    </td>
+                    <td class="d-flex justify-content-center">
+                      <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                        <input class="form-check-input" name="new-item-checked[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" value="<?= $group['tappc_id']; ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($new_input[1],$specification_maplist))?'checked':''; ?>>
+                      </div>
+                      <a class="btn btn-link text-danger text-gradient mb-0" href="javascript:void(0)" onclick="$('#new-input-<?= $new_input[1]; ?>').remove();">
+                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                      </a>
+                    </td>
+                  </tr>
+                <?php }
+              }
+              ?>
 
               </tbody>
             </table>

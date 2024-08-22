@@ -680,9 +680,8 @@ class Main extends BaseController
     {
         $data = [];
         $data['dskpn_id'] = $this->session->get("dskpn_id");
-
-        // $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
-        // $data['specification_lain_lain'] = $this->session->get("specification_lain_lain_sess");
+        $data['specification_maplist'] = $this->session->get("specification_mapist_sess");
+        $data['new_specification_input'] = $this->session->get("new_specification_input_details");
 
         //if update then, get from db
         // $is_update = $this->session->get("is_update");
@@ -984,6 +983,7 @@ class Main extends BaseController
     {
         $data = [];
         $dskpn_id = $this->session->get("dskpn_id");
+        $is_update_specs = $this->session->get('is_update_specs');
 
         $allData = $this->request->getPost();
 
@@ -991,20 +991,19 @@ class Main extends BaseController
 
         $specification_mapist_data = [];
         $specification_mapping_id_list = [];
-        // $specification_lain_lain_id = "";
-        // $specification_lain_lain_data = "";
+        $new_specification_id_list = [];
+        $new_specification_input_details = [];
+        
+        if(isset($is_update_specs) && !empty($is_update_specs))
+        {
+            $old_specification = $this->session->get('new_specification_id_list_sess');
+            
+            //step 1 - remove teaching_approach_mapping
+            $this->teaching_approach_mapping_model->where('tappm_dskpn_id', $dskpn_id)->delete();
 
-        // $get_sess_specification_mapping_id_list = $this->session->get("specification_mapping_id_list_sess");
-        // $get_sess_specification_lain_lain_id = $this->session->get("specification_lain_lain_id_sess");
-
-        // if (isset($get_sess_specification_mapping_id_list) && isset($get_sess_specification_lain_lain_id)) {
-        //     $this->domain_mapping_model->whereIn('dm_id', $get_sess_specification_mapping_id_list)
-        //         ->delete();
-
-        //     //need to delete also as domain_mapping is deleted.
-        //     $this->extra_additional_field_model->where('eaf_id', $get_sess_specification_lain_lain_id)
-        //         ->delete();
-        // }
+            //step 2 - remove newly added teaching_approach
+            $this->teaching_approach_model->whereIn('tapp_id', $old_specification)->delete();
+        }
 
         //if have new-item then insert
         $newItem = $this->request->getPost('new-item');
@@ -1019,12 +1018,16 @@ class Main extends BaseController
                     ]);
 
                     $insertedID = $this->teaching_approach_model->insertID();
+                    $new_specification_id_list[] = $insertedID;
+                    $new_specification_input_details[$tappc_id][] = [$item_desc, $insertedID];
 
                     if (isset($newItemChecked[$tappc_id][$randomItemID]) && $newItemChecked[$tappc_id][$randomItemID] == $tappc_id) {
                         $this->teaching_approach_mapping_model->insert([
                             'tappm_tapp_id' => $insertedID,
                             'tappm_dskpn_id' => $dskpn_id
                         ]);
+                        $specification_mapist_data[] = $insertedID;
+                        $specification_mapping_id_list[] = $this->teaching_approach_mapping_model->insertID();
                     }
                 }
             }
@@ -1041,17 +1044,18 @@ class Main extends BaseController
                     'tappm_dskpn_id' => $dskpn_id
                 ])) {
                     $specification_mapist_data[] = $d_id;
-                    $specification_mapping_id_list[] = $this->domain_mapping_model->insertID();
+                    $specification_mapping_id_list[] = $this->teaching_approach_mapping_model->insertID();
                 } else {
                     $success = false;
                 }
             }
         }
 
-        // $this->session->set('specification_mapist_sess', $specification_mapist_data);
-        // $this->session->set('specification_lain_lain_sess', $specification_lain_lain_data);
-        // $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list);
-        // $this->session->set('specification_lain_lain_id_sess', $specification_lain_lain_id);
+        $this->session->set('specification_mapist_sess', $specification_mapist_data);
+        $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list);
+        $this->session->set('new_specification_id_list_sess', $new_specification_id_list);
+        $this->session->set('new_specification_input_details', $new_specification_input_details);
+        $this->session->set('is_update_specs', 'Y');
 
         if ($success)
             return redirect()->to(route_to('mapping_dynamic_dskpn') . "?review=true");
