@@ -126,9 +126,7 @@ class Main extends BaseController
         $data = [];
 
         $data['tp_session'] = $this->session->get("tp_sess_data");
-
-        // $ex_dskpn = $this->session->get('ex_dskpn');
-        // $sess_data_desc = [];
+        $data['tp_sess_refcode'] = $this->session->get("tp_sess_refcode");
 
         $data['parameters'] = $this->session->get();
         if (!empty($data['parameters'])) {
@@ -1162,9 +1160,14 @@ class Main extends BaseController
 
     public function store_standard_performance()
     {
-        // $allData    = $this->request->getPost();
         $dskpn_id   = $this->session->get("dskpn_id");
         $allRefCode = $this->request->getPost('sub_ref_code');
+        $is_update_TP = $this->session->get("is_update_TP");
+
+        if(!empty($is_update_TP) && $is_update_TP != "")
+        {
+            $this->standard_performance_dskp_mapping_model->where('spdm_dskpn_id', $dskpn_id)->delete();
+        }
 
         foreach ($allRefCode as $item) {
             $this->standard_performance_dskp_mapping_model->insert([
@@ -1173,60 +1176,8 @@ class Main extends BaseController
             ]);
         }
 
+        $this->session->set('is_update_TP', 'Y');
         $this->session->set('tp_sess_refcode', $allRefCode);
-
-        // // remove sub ref code from all data
-        // unset($allData['sub_ref_code']);
-
-        // $sess_data = [];
-
-        // $tp_session = $this->session->get("tp_sess_data");
-        // if (isset($tp_session) && !empty($tp_session))
-        //     $this->standard_performance_model->where('dskpn_id', $dskpn_id)
-        //         ->delete();
-
-
-        // foreach ($allData as $key => $data) {
-
-        //     $parts = explode('-', $key);
-        //     //first repeatition max is only 4/5.
-
-        //     $tempSubject = $this->subject_model->where('sm_code', $parts[1])->first();
-
-        //     $ref_code_index = 0;
-        //     // get learning standard ID based on subject and dskpn id
-        //     $ls_id = $this->learning_standard_model
-        //         ->where('sm_id', $tempSubject['sm_id'])
-        //         ->where('dskpn_id', $dskpn_id)
-        //         ->first();
-        //     // update ref_code base on ls_id
-        //     $this->learning_standard_model->update($ls_id['ls_id'], [
-        //         'ls_ref_code' => $allRefCode[$ref_code_index]
-        //     ]);
-
-        //     $ref_code_index++;
-
-        //     $sess_data_desc = [];
-
-        //     foreach ($data as $index => $item) {
-        //         $tpLevel = $index + 1;
-        //         $this->standard_performance_model->insert([
-        //             'sp_tp_level' => $tpLevel,
-        //             'sp_tp_level_desc' => $item,
-        //             'sm_id' => $tempSubject['sm_id'],
-        //             'dskpn_id' => $dskpn_id
-        //         ]);
-
-        //         $sess_data_desc[] = $item;
-        //     }
-
-        //     $sess_data[$tempSubject['sm_desc']][] = [
-        //         $tempSubject['sm_id'],
-        //         $sess_data_desc
-        //     ];
-        // }
-
-        // $this->session->set('tp_sess_data', $sess_data);
 
         return redirect()->to(route_to('mapping_core'));
     }
