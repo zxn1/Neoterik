@@ -150,7 +150,7 @@
     </a>
     <div class="text-end p-3">
       <!-- <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a> -->
-      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+      <button type="submit" class="btn bg-gradient-info">Semak</button>
     </div>
   </div>
 
