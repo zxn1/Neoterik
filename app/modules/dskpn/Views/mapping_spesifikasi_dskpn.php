@@ -175,8 +175,42 @@
       <button type="submit" class="btn bg-gradient-info">Semak</button>
     </div>
   </div>
-
 </form>
+
+<?php
+if ($review) { ?>
+<div class="container-fluid py-4">
+  <div class="modal" id="review-dskpn" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Semakan dan Mengesah</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="$('#review-dskpn').modal('hide');">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <iframe src="<?= route_to('review_dskpn') . "?page=1"; ?>" style="height: 70vh; width : 100%;">
+          </iframe>
+        </div>
+        <div class="modal-footer">
+          <a href="<?= route_to("dskpn_learning_standard") . "?flag=true" ?>" class="btn btn-secondary">Betulkan Semula</a>
+          <a href="<?= route_to('dskpn_complete') ?>" type="button" class="btn btn-primary" data-dismiss="modal">Selesai</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('#review-dskpn').modal('show');
+  });
+</script>
+
+<?php }
+?>
+
 <script>
   $(document).ready(function() {
     $('.select2').select2();
