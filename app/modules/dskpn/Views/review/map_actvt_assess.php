@@ -1,54 +1,29 @@
-<style>
-  .ck-editor__editable_inline {
-      min-height: 220px;
-  }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
-    border-radius: 1rem !important;
-    border-top-left-radius: 0 !important;
-    border-top-right-radius: 0 !important;
-  }
-
-  .card .card-header {
-    padding: 0.5rem;
-  }
-</style>
-<script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <div class="container-fluid py-4">
-  <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
-      <h6 class="my-auto text-white">Petaan Aktiviti dan Pentaksiran</h6>
-    </div>
-    <div class="card-body">
-      <div class="row">
-        <div class="col">
-          <label for="kluster">KLUSTER</label>
-          <select class="form-control select2" id="kluster" name="kluster" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
-              <option value="<?= $topikncluster['cm_id']; ?>" selected><?= $topikncluster['cm_desc']; ?></option>
-            <?php } ?>
-          </select>
-        </div>
-        <div class="col">
-          <label for="tahun">TOPIK</label>
-          <select class="form-control select2" id="tahun" name="tahun" <?= isset($topikncluster)?'disabled':''; ?>>
-            <?php if(isset($topikncluster)) { ?>
-              <option value="<?= $topikncluster['tm_id']; ?>" selected><?= $topikncluster['tm_desc']; ?></option>
-            <?php } ?>
-          </select>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-
   <div class="row">
     <div class="py-1">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
-        <textarea id="view-idea-pentaksiran" rows="5" name="idea-pengajaran" class="multisteps-form__textarea form-control zero-top-border" disabled><?= $act_assess_idea_pengajaran; ?></textarea>
+        <div id="teaching-idea-and-activity" class="row p-3">
+          <?php 
+          if(isset($activity_number) && !empty($activity_number) && isset($activity_input) && !empty($activity_input))
+          {
+            foreach($activity_number as $index => $numb)
+            { ?>
+            <div class="row m-1" id="activity-idea-item-<?= ($index + 1); ?>">
+              <div class="col-2 p-0 pe-1">
+                <input type="number" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>" disabled>
+              </div>
+              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                <input type="text" class="form-control p-1 me-1" style="height : 45px;" value="<?= isset($activity_input[$index])?$activity_input[$index]:'' ?>" disabled>
+              </div>
+            </div>
+            <?php } 
+          } ?>
+        </div>
       </div>
     </div>
   </div>
@@ -59,13 +34,35 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
-        <textarea id="view-pentaksiran" rows="5" name="pentaksiran" class="multisteps-form__textarea form-control zero-top-border" disabled><?= $act_assess_pentaksiran; ?></textarea>
+        <?php foreach($assessment_category as $index => $category) { ?>
+        <div id="assessment-part-<?= $category['asc_id']; ?>" class="row p-2">
+          <h6 class="m-1"><?= ($index + 1) . ". " . $category['asc_desc']; ?></h6>
+          <div class="p-0 pe-3 ps-3" id="assessment-div-<?= $category['asc_id']; ?>">
+
+            <?php 
+            if((isset($assessment_number_session) && !empty($assessment_number_session)) && (isset($assessment_input_session) && !empty($assessment_input_session)))
+            {
+            foreach($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
+            <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
+              <div class="col-2 p-0 pe-1">
+                <input type="number" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>" disabled>
+              </div>
+              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                <input type="text" class="form-control p-1 me-1" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>" disabled>
+              </div>
+            </div>
+            <?php }
+            } ?>
+
+          </div>
+        </div>
+        <?php } ?>
       </div>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-lg-5">
+    <div class="col-lg-6">
       <div class="card">
         <div class="card-header d-flex p-3 bg-gradient-primary">
           <h6 class="my-auto text-white">Alat Bantu Mengajar (ABM)</h6>
@@ -76,23 +73,21 @@
               <table class="table mb-0">
                 <tbody id="item-abm">
 
-                <?php
-                if(!empty($act_assess_abm))
-                {
-                  foreach($act_assess_abm as $abm)
-                  { 
-                    $random_number = rand(100000, 999999);
-                    ?>
-                    <tr id="<?= $random_number; ?>-item-abm">
-                      <td class="ps-1" colspan="4">
-                        <div class="my-auto">
-                          <input type="text" class="form-control text-dark d-block text-sm" value="<?= $abm; ?>" disabled>
-                        </div>
-                      </td>
-                    </tr>
-                  <?php 
-                  }
-                } ?>
+                  <?php
+                  if (!empty($abm_session)) {
+                    foreach ($abm_session as $abm) {
+                      $random_number = rand(100000, 999999);
+                  ?>
+                      <tr id="<?= $random_number; ?>-item-abm">
+                        <td class="ps-1" colspan="4">
+                          <div class="my-auto">
+                            <input type="text" class="form-control text-dark d-block text-sm" placeholder="Alat Bantu Mengajar (ABM)" value="<?= $abm; ?>" disabled>
+                          </div>
+                        </td>
+                      </tr>
+                    <?php
+                    }
+                  } ?>
 
                 </tbody>
               </table>
@@ -101,49 +96,29 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-lg-4">
-      <table class="mt-2 card" style="border-style : solid; border-width : 2px;">
-        <tr>
-          <td>
-            <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" <?= (!empty($act_assess_parent_involve) && $act_assess_parent_involve == 'Y')?'checked':''; ?> disabled>
-            </div>
-          </td>
-          <td>
-            Keperluan Pengilabatan Ibu Bapa
-          </td>
-        </tr>
-      </table>
-      
+
+      <div class="card">
+        <div class="card-header d-flex p-3 bg-gradient-primary">
+          <h6 class="my-auto text-white">Keperluan Pengilabatan Ibu Bapa</h6>
+        </div>
+        <div class="card-body">
+          <table class="mt-2 card" style="border-style : solid; border-width : 2px;">
+            <tr>
+              <td>
+                <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($parent_involve) && !empty($parent_involve) && $parent_involve == 'Y') ? 'checked' : ''; ?> disabled>
+                </div>
+              </td>
+              <td>
+                Ya, melibatkan ibu-bapa
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
-<div id="custom-freetext-id"><!-- nothing here --></div>
-<script>
-  $(document).ready(function() {
-      ClassicEditor
-      .create( document.querySelector('#view-pentaksiran'), {
-        toolbar: [], // Remove the toolbar
-        disabled: true,
-      } )
-      .then( editor => {
-        editor.enableReadOnlyMode('custom-freetext-id');
-      } )
-      .catch( error => {
-          console.log( error );
-      } );
-
-      ClassicEditor
-      .create( document.querySelector('#view-idea-pentaksiran'), {
-        toolbar: [], // Remove the toolbar
-        disabled: true,
-      } )
-      .then( editor => {
-        editor.enableReadOnlyMode('custom-freetext-id');
-      } )
-      .catch( error => {
-          console.log( error );
-      } );
-  });
-</script>
