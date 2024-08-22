@@ -109,7 +109,27 @@
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
         <div id="teaching-idea-and-activity" class="row p-3">
-          <?php for($i = 0; $i < 3; $i++) { ?>
+          <?php 
+          if(isset($activity_number) && !empty($activity_number) && isset($activity_input) && !empty($activity_input))
+          {
+            foreach($activity_number as $index => $numb)
+            { ?>
+            <div class="row m-1" id="activity-idea-item-<?= ($index + 1); ?>">
+              <div class="col-2 p-0 pe-1">
+                <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>">
+              </div>
+              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;" value="<?= isset($activity_input[$index])?$activity_input[$index]:'' ?>">
+                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#activity-idea-item-<?= ($index + 1); ?>').remove();">
+                    <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                    </button>
+                </div>
+              </div>
+            </div>
+            <?php } 
+          } else {
+          for($i = 0; $i < 3; $i++) { ?>
           <div class="row m-1" id="activity-idea-item-<?= $i; ?>">
             <div class="col-2 p-0 pe-1">
               <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
@@ -123,7 +143,8 @@
               </div>
             </div>
           </div>
-          <?php } ?>
+          <?php }
+        } ?>
         </div>
         <div class="p-3 pt-0 pb-2">
           <span class="btn bg-gradient-primary mt-1" onclick="addActivityItemField('method-instruction-ID', 'ID')">Tambah Aktiviti &nbsp;&nbsp;
@@ -146,6 +167,26 @@
         <div id="assessment-part-<?= $category['asc_id']; ?>" class="row p-2">
           <h6 class="m-1"><?= ($index + 1) . ". " . $category['asc_desc']; ?></h6>
           <div class="p-0 pe-3 ps-3" id="assessment-div-<?= $category['asc_id']; ?>">
+
+            <?php 
+            if((isset($assessment_number_session) && !empty($assessment_number_session)) && (isset($assessment_input_session) && !empty($assessment_input_session)))
+            {
+            foreach($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
+            <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
+              <div class="col-2 p-0 pe-1">
+                <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
+              </div>
+              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
+                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>').remove();">
+                    <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                    </button>
+                </div>
+              </div>
+            </div>
+            <?php }
+            } else { ?>
             <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-0">
               <div class="col-2 p-0 pe-1">
                 <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
@@ -159,6 +200,8 @@
                 </div>
               </div>
             </div>
+           <?php } ?>
+
           </div>
           <div class="p-3 pt-0 pb-1">
             <span class="btn bg-gradient-primary mt-1" onclick="addAsessmentItemField('<?= $category['asc_id']; ?>')">Tambah Item <?= $category['asc_desc']; ?>&nbsp;&nbsp;
@@ -186,8 +229,8 @@
                 <tbody id="item-abm">
 
                   <?php
-                  if (!empty($act_assess_abm)) {
-                    foreach ($act_assess_abm as $abm) {
+                  if (!empty($abm_session)) {
+                    foreach ($abm_session as $abm) {
                       $random_number = rand(100000, 999999);
                   ?>
                       <tr id="<?= $random_number; ?>-item-abm">
@@ -243,7 +286,7 @@
             <tr>
               <td>
                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-                  <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (!empty($act_assess_parent_involve) && $act_assess_parent_involve == 'Y') ? 'checked' : ''; ?>>
+                  <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($parent_involve) && !empty($parent_involve) && $parent_involve == 'Y') ? 'checked' : ''; ?>>
                 </div>
               </td>
               <td>
@@ -258,7 +301,7 @@
   </div>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('mapping_dynamic_dskpn'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-gradient-danger mt-2">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">

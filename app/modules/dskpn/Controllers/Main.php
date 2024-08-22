@@ -492,31 +492,30 @@ class Main extends BaseController
         $data = [];
 
         $data['domain_map_session'] = $this->session->get("domain_map_session");
-
-        //if update then, get from db
-        $is_update = $this->session->get("is_update");
-        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
-
-        if (isset($is_update) && empty($data['domain_map_session'])) {
-            $temp_domain_mapping_db = $this->domain_mapping_model
-                ->join('domain', 'domain_mapping.dm_dmn_code = domain.dmn_code', 'left')
-                ->join('subject_main', 'domain_mapping.dm_sbm_id = subject_main.sbm_id', 'left')
-                ->join('domain_group', 'domain_group.dg_id = domain.dmn_dg_id')
-                ->where('domain_mapping.dm_dskpn_id', $ex_dskpn_id)
-                ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
-                ->findAll();
-
-            $temp_domain_map = [];
-
-            foreach ($temp_domain_mapping_db as $item) {
-                $temp_domain_map['\'' . $item['sbm_code'] . '\''][] = $item['dmn_id'];
-                // Nak kne tgok balik line atas ni sbb tak guna domain_id dah
-            }
-
-            $data['domain_map_session'] = $temp_domain_map;
-        }
-
         $data['dskpn_id'] = $this->session->get("dskpn_id");
+
+        // $is_update = $this->session->get("is_update");
+        // $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+
+        // if (isset($is_update) && empty($data['domain_map_session'])) {
+        //     dd("test");
+        //     $temp_domain_mapping_db = $this->domain_mapping_model
+        //         ->join('domain', 'domain_mapping.dm_dmn_code = domain.dmn_code', 'left')
+        //         ->join('subject_main', 'domain_mapping.dm_sbm_id = subject_main.sbm_id', 'left')
+        //         ->join('domain_group', 'domain_group.dg_id = domain.dmn_dg_id')
+        //         ->where('domain_mapping.dm_dskpn_id', $ex_dskpn_id)
+        //         ->whereIn('domain_group.dg_title', ['Pengetahuan Asas', 'Kemandirian', 'Kualiti Keperibadian'])
+        //         ->findAll();
+
+        //     $temp_domain_map = [];
+
+        //     foreach ($temp_domain_mapping_db as $item) {
+        //         $temp_domain_map['\'' . $item['sbm_code'] . '\''][] = $item['dmn_id'];
+        //         // Nak kne tgok balik line atas ni sbb tak guna domain_id dah
+        //     }
+
+        //     $data['domain_map_session'] = $temp_domain_map;
+        // }
 
         $data['subjects'] = [];
         if (!empty($data['dskpn_id'])) {
@@ -739,10 +738,12 @@ class Main extends BaseController
         $data['review'] = $this->request->getVar('review');
         $data['dskpn_id'] = $this->session->get("dskpn_id");
 
-        // $data['act_assess_abm'] = $this->session->get("act_assess_abm");
-        // $data['act_assess_pentaksiran'] = $this->session->get("act_assess_pentaksiran");
-        // $data['act_assess_idea_pengajaran'] = $this->session->get("act_assess_idea_pengajaran");
-        // $data['act_assess_parent_involve'] = $this->session->get("act_assess_parent_involve");
+        $data['abm_session'] = $this->session->get("abm");
+        $data['assessment_input_session'] = $this->session->get("assessment_input");
+        $data['assessment_number_session'] = $this->session->get("assessment_number");
+        $data['activity_number'] = $this->session->get("activity_idea_number");
+        $data['activity_input'] = $this->session->get("activity_idea_input");
+        $data['parent_involve'] = $this->session->get("parent_involve");
 
         //if update then, get from db
         // $is_update = $this->session->get("is_update");
@@ -789,12 +790,27 @@ class Main extends BaseController
     {
         $dskpn_id = $this->session->get("dskpn_id");
 
+        //get from payload
         $abm = $this->request->getPost('abm');
         $activity_idea_number = $this->request->getPost('activity-idea-number');
         $activity_idea_input = $this->request->getPost('activity-idea-input');
         $assessment_number = $this->request->getPost('assessment-number');
         $assessment_input = $this->request->getPost('assessment-input');
         $parent_involve = $this->request->getPost('parent-involvement');
+
+        //for check this is for update purpose
+        $is_update_activity_assessment = $this->session->get('is_update_activity_assessment');
+        if(isset($is_update_activity_assessment) && !empty($is_update_activity_assessment))
+        {
+            //1.0 - remove activity
+            $this->activity_item_model->where('aci_dskpn_id', $dskpn_id)->delete();
+
+            //2.0 - remove assessment
+            $this->assessment_item_model->where('asi_dskpn_id', $dskpn_id)->delete();
+
+            //3.0 - remove abm
+            $this->learning_aid_model->where('la_dskpn_id', $dskpn_id)->delete();
+        }
 
         // Start the transaction
         $this->db->transBegin();
@@ -839,6 +855,15 @@ class Main extends BaseController
 
         // Complete the transaction
         $this->db->transCommit();
+
+        //set session
+        $this->session->set('abm', $abm);
+        $this->session->set('activity_idea_number', $activity_idea_number);
+        $this->session->set('activity_idea_input', $activity_idea_input);
+        $this->session->set('assessment_number', $assessment_number);
+        $this->session->set('assessment_input', $assessment_input);
+        $this->session->set('parent_involve', $parent_involve);
+        $this->session->set('is_update_activity_assessment', 'Y');
 
         if ($this->db->transStatus() === FALSE)
             return redirect()->back()->with('fail', 'Operation failed. Data has been rolled back.');
