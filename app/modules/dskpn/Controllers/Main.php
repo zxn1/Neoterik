@@ -1778,6 +1778,30 @@ class Main extends BaseController
         $this->render('standard_performance_list', $data);
     }
 
+    public function view_core_competency_list()
+    {
+        $data = [];
+        $data['subject_list'] = $this->subject_model->findAll();
+
+        $this->render('core_competency_list', $data);
+    }
+
+    public function get_core_competency_based_subject()
+    {
+        $sbm_id = $this->request->getVar('sbm_id');
+        $cc_id = $this->request->getVar('cc_id');
+        $action = $this->request->getVar('action');
+
+        if(isset($action) && $action == 'delete')
+        {
+            $this->core_competency_model->where('cc_id', $cc_id)->delete();
+        }
+
+        $core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll();
+
+        return response()->setJSON($core_competency);
+    }
+
     public function get_dskp_based_subject()
     {
         $sbm_id = $this->request->getPost('sbm_id');
@@ -1792,6 +1816,7 @@ class Main extends BaseController
 
         $action = $this->request->getPost('action');
         $sp_id = $this->request->getPost('sp_id');
+        $sbm_id = $this->request->getPost('sbm_id');
         if(isset($action) && $action == 'delete')
         {
             $this->standard_performance_model->where('sp_id', $sp_id)->delete();
@@ -1805,7 +1830,8 @@ class Main extends BaseController
         }
 
         $data['standard_performance_dskp_mapping'] = $this->standard_performance_model
-                                                        ->where('sp_dskp_code', $dskp_code)
+                                                        ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code')
+                                                        ->where('sp_dskp_code', $dskp_code)->where('dskp_sbm_id', $sbm_id)
                                                         ->findAll();
 
         return $this->response->setJSON($data);

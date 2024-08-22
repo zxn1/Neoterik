@@ -76,6 +76,7 @@
         $('.select2').select2();
         $('#standard_performance_table').DataTable();
         $('#subject').change(function() {
+            $('#edit-tp').hide();
             var sbm_id = $(this).val();
 
             if (sbm_id) {
@@ -109,17 +110,24 @@
         $('#subject, #dskpCodeSelect').change(function() {
             var subject = $('#subject').val();
             var dskpCodeSelect = $('#dskpCodeSelect').val();
+            $('#edit-tp').hide();
 
             if (subject && dskpCodeSelect) {
                 $.ajax({
                     url: 'standard-performance-dskp-mapping',
                     type: 'POST',
                     data: {
-                        dskp_code: dskpCodeSelect
+                        dskp_code: dskpCodeSelect,
+                        sbm_id: subject
                     },
                     dataType: 'json',
                     success: function(data) {
-                        $('#edit-tp').show();
+                        if(data.standard_performance_dskp_mapping.length <= 0)
+                        {
+                            $('#edit-tp').hide();
+                        } else {
+                            $('#edit-tp').show();
+                        }
                         var counter = 1;
                         var tableBody = $('#tableBody');
 
@@ -132,7 +140,7 @@
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' +
-                                '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ');">' +
+                                '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ', ' + subject + ');">' +
                                 '<i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>' +
                                 '</a>' +
                                 '</td>' +
@@ -150,7 +158,7 @@
         });
     });
 
-function deleteStandardPerformance(id)
+function deleteStandardPerformance(id, sbm_id)
 {
     Swal.fire({
     title: "Anda benar-benar ingin delete item Tahap Penguasaan ini?",
@@ -162,16 +170,25 @@ function deleteStandardPerformance(id)
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
         var dskpCodeSelect = $('#dskpCodeSelect').val();
+        $('#edit-tp').hide();
         $.ajax({
             url: 'standard-performance-dskp-mapping',
             type: 'POST',
             data: {
                 dskp_code: dskpCodeSelect,
                 action: 'delete',
-                sp_id: id
+                sp_id: id,
+                sbm_id: sbm_id
             },
             dataType: 'json',
             success: function(data) {
+                if(data.standard_performance_dskp_mapping.length <= 0)
+                {
+                    $('#edit-tp').hide();
+                } else {
+                    $('#edit-tp').show();
+                }
+                
                 var counter = 1;
                 var tableBody = $('#tableBody');
 
@@ -184,7 +201,7 @@ function deleteStandardPerformance(id)
                         '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
                         '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
                         '<td class="text-m font-weight-normal" style="text-align: left;">' +
-                        '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ');">' +
+                        '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ', ' + sbm_id + ');">' +
                         '<i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>' +
                         '</a>' +
                         '</td>' +
