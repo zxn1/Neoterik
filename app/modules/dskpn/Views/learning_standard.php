@@ -130,11 +130,11 @@
 
                       <?php
                       if (!empty($subject_description) && $subject_description != "") {
-                        foreach ($subject_description[$item_list['sbm_id']] as $desc_item) { ?>
-                          <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                        echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
+                        foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
                             <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                               <div class="col-2 p-0 pe-1">
-                                <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index])?$subject_standard_numbering[$item_list['sbm_id']][$index]:'' ?>">
                               </div>
                               <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                 <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
@@ -145,9 +145,9 @@
                                 </div>
                               </div>
                             </div>
-                          </div>
                         <?php
                         }
+                        echo "</div>";
                       } else { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
@@ -191,24 +191,46 @@
           <div id="objective-prestasi" style="margin : 10px;">
 
             <?php
-            for ($i = 0; $i < 3; $i++) { ?>
-              <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
+            if (!empty($objective) && $objective != "") {
+              foreach($objective as $index => $item)
+              { ?>
+              <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
                 <div class="col-md-1 pe-1">
-                  <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                  <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index])?$objective_number[$index]:'' ?>">
                 </div>
                 <div class="col-md-8 pe-1">
-                  <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+                  <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
                 </div>
                 <div class="col-md-3 d-flex">
-                  <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
-                  <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                  <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1" value="<?= isset($objective_ref[$index])?$objective_ref[$index]:'' ?>">
+                  <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
                     <button class="input-group-text" id="btnGroupAddon">
                       <i class="fas fa-trash-alt" style="color: red;"></i>
                     </button>
                   </div>
                 </div>
               </div>
-            <?php
+              <?php }
+            } else {
+              for ($i = 0; $i < 3; $i++) { ?>
+                <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
+                  <div class="col-md-1 pe-1">
+                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                  </div>
+                  <div class="col-md-8 pe-1">
+                    <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+                  </div>
+                  <div class="col-md-3 d-flex">
+                    <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                      <button class="input-group-text" id="btnGroupAddon">
+                        <i class="fas fa-trash-alt" style="color: red;"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              <?php
+              }
             }
             ?>
 

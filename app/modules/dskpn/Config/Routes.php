@@ -8,6 +8,7 @@ $routes->group('dskpn', function ($routes) {
     /*           Route Path                   Class Controller  function                        Route Name        */
     $routes->get('/',                           [Main::class,     'index']);
     $routes->get('mapping-static-field',        [Main::class,     'map_static'],                    ['as' => 'mapping_standard_learning']);
+    $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
     $routes->get('tp-maintenance',              [Main::class,     'tp_maintenance'],                ['as' => 'tp_maintenance']);
     $routes->get('topic-list-in-cluster',       [Main::class,     'topic_list_in_cluster'],         ['as' => 'cluster_topic']);
     $routes->get('list-registered-dskpn',       [Main::class,     'list_registered_dskpn'],         ['as' => 'list_dskpn']);
@@ -45,7 +46,6 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('get-core-competency-based-subject', [Main::class,     'get_core_competency_based_subject'],   ['as' => 'get_core_competency_based_subject']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
-    $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
     $routes->get('dskpn-view/(:any)',           [Main::class,     'dskpn_view/$1'],                 ['as' => 'dskpn_view']);
     $routes->get('dskpn-details',               [Main::class,     'dskpn_details'],                 ['as' => 'dskpn_details']);
 
