@@ -211,10 +211,13 @@
             </div>
             <span class="nav-link-text ms-1">DSKPN</span>
           </a>
+          <?php
+          $stylish = "background-color : #cbefd3b8; border-radius : 10px; margin-bottom : 1px;";
+          ?>
           <div class="collapse <?= $in_dskpn_list?'show':''; ?>" id="standardPembelajaran">
             <ul class="nav ms-1 ps-1">
               <li class="nav-item active">
-                <a class="nav-link  <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;<?= (!empty(session('is_update')) && !url_is(route_to('dskpn_learning_standard')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -222,7 +225,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_TP')) && !url_is(route_to('tp_maintenance')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -230,7 +233,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_core')) && !url_is(route_to('mapping_core')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -238,7 +241,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_domain')) && !url_is(route_to('domain_mapping')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -246,7 +249,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_activity_assessment')) && !url_is(route_to('activity_n_assessment')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -254,7 +257,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_specs')) && !url_is(route_to('mapping_dynamic_dskpn')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
