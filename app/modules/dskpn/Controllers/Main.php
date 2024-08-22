@@ -616,8 +616,8 @@ class Main extends BaseController
         $data = [];
 
         //if update then, get from db
-        $is_update = $this->session->get("is_update");
-        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
+        $is_update_Core = $this->session->get("is_update_core");
+        $core_map_sess = $this->session->get("core_map_sess");
 
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         if (!empty($data['dskpn_id'])) {
@@ -634,17 +634,40 @@ class Main extends BaseController
 
             //step 2.0 - get all core_competency from subjects
             $subjectIdsArray = [];
+            $subjectCodeArray = [];
             foreach ($data['subjects'] as $subject) {
                 $subjectIdsArray[] = $subject['sbm_id'];
+                $subjectCodeArray[] = $subject['sbm_code'];
             }
 
             $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
 
             //step 2.1 - structuring the data to pass over view
-            foreach ($subjectIdsArray as $sbm_id) {
-                foreach ($core_competency as $item) {
-                    if ($sbm_id == $item['cc_sbm_id'])
-                        $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+            foreach ($subjectIdsArray as $index => $sbm_id) {
+                if(isset($is_update_Core) && !empty($is_update_Core))
+                {
+                    foreach ($core_competency as $i => $item) {
+                        if ($sbm_id == $item['cc_sbm_id'])
+                        {
+                            $flag = false;
+                            if(isset($core_map_sess[$subjectCodeArray[$index]]) && !empty($core_map_sess[$subjectCodeArray[$index]]))
+                            foreach ($core_map_sess[$subjectCodeArray[$index]] as $core)
+                            {
+                                if($core[0] == $item['cc_code'])
+                                {
+                                    $flag = true;
+                                    $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], $core[1]);
+                                }
+                            }
+                            if(!$flag)
+                                $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                        }
+                    }
+                } else {
+                    foreach ($core_competency as $item) {
+                        if ($sbm_id == $item['cc_sbm_id'])
+                            $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                    }
                 }
             }
         }
@@ -1247,28 +1270,14 @@ class Main extends BaseController
         $allData = $this->request->getPost();
         $dskpn_id = $this->session->get("dskpn_id");
 
-        // $core_mapping_sess = $this->session->get("core_map_sess");
-        // $core_mapping_id_sess = $this->session->get("core_mapping_id_session_data");
-        // if (isset($core_mapping_sess) && !empty($core_mapping_sess) && $core_mapping_sess != null && isset($core_mapping_id_sess)) {
-        //     $this->domain_model->where('dskpn_id', $dskpn_id)
-        //         ->delete();
-        //     $this->domain_mapping_model->whereIn('dm_id', $core_mapping_id_sess)
-        //         ->delete();
-        // }
-
-        //check if not exist create new one
-        // $kompetensi_domain_group = $this->domain_group_model->where('dg_title', 'Kompetensi Teras')->first();
-
-        // if (empty($kompetensi_domain_group)) {
-        //     $this->domain_group_model->insert([
-        //         'dg_title' => 'Kompetensi Teras'
-        //     ]);
-
-        //     $kompetensi_domain_group['dg_id'] = $this->domain_group_model->insertID();
-        // }
+        $is_update_core = $this->session->get('is_update_core');
+        if(isset($is_update_core) && !empty($is_update_core) && $is_update_core = 'Y')
+        {
+            //delete competency mapping
+            $this->competency_mapping_model->where('cmp_dskpn_id', $dskpn_id)->delete();
+        }
 
         $processedData = [];
-
         $core_map_session_data = [];
         $core_mapping_id_session_data = [];
 
@@ -1300,16 +1309,17 @@ class Main extends BaseController
                         'cmp_cc_code'  => $input['value'],
                         'cmp_dskpn_id' => $dskpn_id
                     ]);
-                }
 
-                $lastInsertedID = $this->competency_mapping_model->insertID();
-                $core_mapping_id_session_data[] = $lastInsertedID;
-                $core_map_session_data[$subject_data['sbm_code']][$lastInsertedID] = [$input['value'], $input['checked']];
+                    $lastInsertedID = $this->competency_mapping_model->insertID();
+                    $core_mapping_id_session_data[] = $lastInsertedID;
+                    $core_map_session_data[$subject_data['sbm_code']][$lastInsertedID] = [$input['value'], $input['checked']];
+                }
             }
         }
 
         $this->session->set('core_map_sess', $core_map_session_data);
         $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
+        $this->session->set('is_update_core', 'Y');
 
         return redirect()->to(route_to('domain_mapping'));
     }
