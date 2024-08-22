@@ -24,7 +24,7 @@
                         <tr>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $clusterItem['dskpn_code'] ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['cm_desc']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['ctm_desc']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($clusterItem['tm_desc']) ?></td>
                             <?php if (!function_exists('get_dskpn_status')) {
                                 helper('dskpn_helper');
@@ -33,8 +33,8 @@
                             <?php if (!function_exists('get_user_name')) {
                                 helper('dskpn_helper');
                             } ?>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['created_by']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['approved_by']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['dskpn_created_by']) ?></td>
+                            <td class="text-m font-weight-normal" style="text-align: left;"><?= get_user_name($clusterItem['dskpn_approved_by']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;">
                                 <div class="col-2 text-info" style="display: inline-block;">
                                     <a href="<?= route_to('dskpn_view', esc($clusterItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>

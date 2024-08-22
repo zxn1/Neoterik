@@ -100,9 +100,27 @@
                                 <a href="<?= route_to('dskpn_view', esc($dskpnItem['dskpn_id'])) ?>" class="dropdown-item"><i class="fa fa-eye"></i></a>
                             </div>
                             &nbsp;&nbsp;
-                            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDskpn(<?= $dskpnItem['dskpn_id']; ?>);">
+
+                            <?php 
+                            $both_roles = [
+                                'GURU_BESAR',
+                                'PENYELARAS'
+                            ];
+                            if((get_user_role() == $both_roles[1]) && ($dskpnItem['dskpn_status'] != 3)): ?>
+                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
+                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                </a>
+                            <?php endif; ?>
+
+                            <?php if((get_user_role() == $both_roles[0]) && ($dskpnItem['dskpn_status'] == 3 || $dskpnItem['dskpn_status'] == 4)): ?>
+                                &nbsp;&nbsp;
+                                <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
+                                    <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
+                                </a>
+                            <?php endif; ?>
+                            <!-- <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $dskpnItem['dskpn_id']; ?>').remove(); deleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>);">
                                 <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                            </a>
+                            </a> -->
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -155,6 +173,11 @@
 </div>
 
 <script>
+    const req_delete_dskpn_endpoint = '<?= route_to('req_delete_dskpn'); ?>';
+    const delete_dskpn_endpoint = '<?= route_to('delete_dskpn'); ?>';
+    const reject_delete_dskpn_endpoint = '<?= route_to('reject_delete_dskpn'); ?>';
+    const get_to_delete_reason = '<?= route_to('delete_dskpn_reason'); ?>';
+
     $(document).ready(function() {
         // Initialize select2 for existing elements
         $('.select2').select2();
@@ -210,8 +233,5 @@
         $(document).on('click', '.delete-subject', function() {
             $(this).closest('.subject-card').remove();
         });
-
-
-
     });
 </script>
