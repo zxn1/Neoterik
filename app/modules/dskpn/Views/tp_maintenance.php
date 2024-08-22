@@ -79,7 +79,7 @@
 <script>
   const getTPListEndpoint = "<?= route_to('get_standard_performance') ?>";
   const subjectData = <?= json_encode(!empty($subjects) ? $subjects : []); ?>;
-  const tpDatas = <?= json_encode(!empty($tp_session) ? $tp_session : []); ?>;
+  const tpSessRefcode = <?= json_encode(!empty($tp_sess_refcode) ? $tp_sess_refcode : []); ?>;
 
   <?php if (session()->has('warning_message')) : ?>
     Swal.fire({
