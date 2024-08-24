@@ -48,6 +48,8 @@ function selectionPopulateBasedOnNumbering()
         arrValues.push(nodes[i].getAttribute('data-subject') + " " + nodes[i].value);
     }
 
+    $("#objective-performance-selection-listing").val(JSON.stringify(arrValues));
+
     var nodeTwo = document.querySelectorAll("select#objective-prestasi-ref");
 
     for (var i=0; i<nodeTwo.length; i++)
