@@ -35,9 +35,11 @@ $('#add-subject-button').on('click', function() {
     }
 
     let htmlOptions = ``;
+    let sbm_code = '';
     subject_list.forEach(function(item) {
         if(get_default_subject != null && (item.sbm_id == get_default_subject[countSubject]))
         {
+            sbm_code = item.sbm_code;
             htmlOptions += `<option selected class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
         }  
     });
@@ -57,11 +59,11 @@ $('#add-subject-button').on('click', function() {
         <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
             <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
                 <div class="col-2 p-0 pe-1">
-                    <input type="number" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                 </div>
                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="Objektif bagi Subjek ini.">
-                    <div class="input-group-prepend me-1" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();">
+                    <div class="input-group-prepend me-1" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();selectionPopulateBasedOnNumbering();">
                         <button class="input-group-text" id="btnGroupAddon">
                             <i class="fas fa-trash-alt" style="color:red;"></i>
                         </button>
@@ -71,7 +73,7 @@ $('#add-subject-button').on('click', function() {
         </div>
 
         <div class="p-1">
-            <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}')">Tambah &nbsp;&nbsp;
+            <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}', '${sbm_code}')">Tambah &nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                 </svg>
@@ -84,6 +86,7 @@ $('#add-subject-button').on('click', function() {
 // Attach a delegated event listener for the delete buttons
 $(document).on('click', '.delete-subject', function() {
     $(this).closest('.subject-card').remove();
+    selectionPopulateBasedOnNumbering();
 });
 
 $('#topik-dynamic-field').on('change', function() {
@@ -195,11 +198,11 @@ $('#topik-dynamic-field').on('change', function() {
                                 <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
                                     <div class="row m-1" id="standard-item-`+item.sbm_id+`">
                                         <div class="col-2 p-0 pe-1">
-                                            <input type="number" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                            <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                                         </div>
                                         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                             <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
-                                            <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();">
+                                            <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();selectionPopulateBasedOnNumbering();">
                                                 <button class="input-group-text" id="btnGroupAddon">
                                                     <i class="fas fa-trash-alt" style="color:red;"></i>
                                                 </button>
@@ -209,7 +212,7 @@ $('#topik-dynamic-field').on('change', function() {
                                 </div>
 
                                 <div class="p-1">
-                                    <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${item.sbm_id}')">Tambah &nbsp;&nbsp;
+                                    <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${item.sbm_id}', '${item.sbm_code}')">Tambah &nbsp;&nbsp;
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                                         </svg>
@@ -242,7 +245,7 @@ $('#topik-dynamic-field').on('change', function() {
     });
 });
 
-function addStandardPembelajaran(sm_id)
+function addStandardPembelajaran(sm_id, sm_code)
 {
     var divStandardPembelajaran = $('#standard-subject-' + sm_id);
         
@@ -251,11 +254,11 @@ function addStandardPembelajaran(sm_id)
 
     let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
                                 <div class="col-2 p-0 pe-1">
-                                    <input type="number" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                                 </div>
                                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="Objektif bagi Subjek ini.">
-                                    <div class="input-group-prepend me-1" onclick="$('#standard-item-${newFieldColl}').remove();">
+                                    <div class="input-group-prepend me-1" onclick="$('#standard-item-${newFieldColl}').remove();selectionPopulateBasedOnNumbering();">
                                         <button class="input-group-text" id="btnGroupAddon">
                                             <i class="fas fa-trash-alt" style="color:red;"></i>
                                         </button>
@@ -282,7 +285,9 @@ function addObjectivePrestasi()
                                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
                                 </div>
                                 <div class="col-md-3 d-flex">
-                                    <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+                                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[`+newFieldColl+`][]" multiple="multiple">
+                                        <option disabled>-- Sila pilih Kod --</option>
+                                    </select>
                                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
                                     <button class="input-group-text" id="btnGroupAddon">
                                         <i class="fas fa-trash-alt" style="color: red;"></i>
