@@ -121,7 +121,7 @@
       <div class="row">
         <div class="col-md-10">
           <label for="kluster">KLUSTER</label>
-          <input class="form-control" value="<?= $cluster_details['cm_desc'] ?>" readonly>
+          <input class="form-control" value="<?= $cluster_details['ctm_desc'] ?>" readonly>
         </div>
         <div class="col-md-2">
           <label for="kluster">TAHUN</label>
@@ -176,9 +176,9 @@
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+                      <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sm_id'] == $ls_desc['sm_id']) : ?><?= $ls_desc['ls_details']; ?><?php endif ?><?php endforeach ?></textarea>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_desc']; ?><?php endif ?><?php endforeach ?></textarea>
                   </ul>
                 <?php endforeach; ?>
               </div>
@@ -187,10 +187,10 @@
             <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= $objective_performance['op_desc']; ?></textarea>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_desc']; ?><?php endif ?><?php endforeach ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
-                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $objective_performance['op_duration']; ?></span></strong>
+                    DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $dskpn_details['dskpn_duration']; ?></span></strong>
                   </div>
                 </ul>
               </div>
@@ -240,15 +240,14 @@
                 <!-- foreach tahap penguasaan -->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <label>Kod Rujukan TP</label>
+                    <!-- <label>Kod Rujukan TP</label>
                     <div class="mb-3">
-                      <input type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="<?= get_tp_ref_code($dskpn_details['dskpn_id'], $row['sm_id']) ?>">
-                    </div>
+                    </div> -->
                     <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+                      <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($standard_performance as $sp_desc) : ?>
-                      <?php if ($row['sm_id'] == $sp_desc['sm_id']) : ?>
+                      <?php if ($row['sbm_id'] == $sp_desc['sbm_id']) : ?>
                         <li class="list-group-item"><?= $sp_desc['sp_tp_level'] . ' ' . $sp_desc['sp_tp_level_desc']; ?></li>
                       <?php endif ?>
                     <?php endforeach ?>
@@ -264,11 +263,11 @@
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white"><?= $row['sm_desc']; ?></h6>
+                      <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sm_id'] == $cc_desc['sm_id']) : ?>
-                        <li class="list-group-item"><?= $cc_desc['d_name']; ?></li>
+                      <?php if ($row['sbm_id'] == $cc_desc['sbm_id']) : ?>
+                        <li class="list-group-item"><?= $cc_desc['cc_desc']; ?></li>
                       <?php endif ?>
                     <?php endforeach ?>
                   </ul>
@@ -282,7 +281,7 @@
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-gradient-primary">
-                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                        <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
                         <div class="table-responsive">
@@ -291,10 +290,9 @@
                               <!-- PENGETAHUAN ASAS -->
                               <?php
                               $dpa_flag = false;
-                              foreach ($domain_pengetahuan_asas as $index => $dpa) :
-                                if ($subject['sm_id'] == $dpa['sm_id'] && $dpa['dm_isChecked'] == 'Y') :
-                              ?>
-                                  <?php if ($dpa_flag == false) : ?>
+                              foreach ($domain_pengetahuan_asas as $dpa) :
+                                if ($subject['sbm_id'] == $dpa['dm_sbm_id']) : ?>
+                                  <?php if ($dpa != NULL && $dpa_flag == false) : ?>
                                     <tr>
                                       <th class="bg-light" colspan="5">
                                         <b>PENGETAHUAN ASAS</b>
@@ -305,7 +303,7 @@
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $dpa['d_name']; ?></span>
+                                        <span class="text-dark d-block text-sm"><?= $dpa['dmn_desc']; ?></span>
                                       </div>
                                     </td>
                                   </tr>
@@ -315,10 +313,10 @@
                               ?>
                               <!-- KEMANDIRIAN -->
                               <?php $dkem_flag = false;
-                              foreach ($domain_kemandirian as $index => $dkem) :
-                                if ($subject['sm_id'] == $dkem['sm_id'] && $dkem['dm_isChecked'] == 'Y') :
+                              foreach ($domain_kemandirian as $dkem) :
+                                if ($subject['sbm_id'] == $dkem['dm_sbm_id']) :
                               ?>
-                                  <?php if ($dkem_flag == false) : ?>
+                                  <?php if ($dkem != NULL && $dkem_flag == false) : ?>
                                     <tr>
                                       <th class="bg-light" colspan="5">
                                         <b>KEMANDIRIAN</b>
@@ -329,7 +327,7 @@
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $dkem['d_name']; ?></span>
+                                        <span class="text-dark d-block text-sm"><?= $dkem['dmn_desc']; ?></span>
                                       </div>
                                     </td>
                                   </tr>
@@ -341,11 +339,11 @@
 
                               <!-- KUALITI KEPERIBADIAN -->
                               <?php $dkk_flag = false;
-                              foreach ($domain_kualiti_keperibadian as $index => $dkk) :
-                                if ($subject['sm_id'] == $dkk['sm_id'] && $dkk['dm_isChecked'] == 'Y') :
+                              foreach ($domain_kualiti_keperibadian as $dkk) :
+                                if ($subject['sbm_id'] == $dkk['dm_sbm_id']) :
                                   $found = true; // Set the flag if the condition is met
                               ?>
-                                  <?php if ($dkk_flag == false) : ?>
+                                  <?php if ($dkk != NULL && $dkk_flag == false) : ?>
                                     <tr>
                                       <th class="bg-light" colspan="5">
                                         <b>KUALITI KEPERIBADIAN</b>
@@ -356,7 +354,7 @@
                                   <tr>
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
-                                        <span class="text-dark d-block text-sm"><?= $dkk['d_name']; ?></span>
+                                        <span class="text-dark d-block text-sm"><?= $dkk['dmn_desc']; ?></span>
                                       </div>
                                     </td>
 
@@ -382,19 +380,19 @@
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-gradient-primary">
-                        <h6 class="my-auto text-white"><?= $subject['sm_desc'] ?></h6>
+                        <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
                         <div class="table-responsive">
                           <table class="table mb-0">
                             <?php
                             $found = false; // Initialize a flag
-                            foreach ($kemahiran_insaniah as $index => $ki) :
-                              if ($subject['sm_id'] == $ki['sm_id'] && $ki['dm_isChecked'] == 'Y') : ?>
+                            foreach ($kemahiran_insaniah as $ki) :
+                              if ($subject['sbm_id'] == $ki['dm_sbm_id']) : ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $ki['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $ki['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -453,7 +451,15 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="idea_pengajaran" role="tabpanel" aria-labelledby="idea_pengajaran">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= isset($activity_assessment['aa_activity_desc']) ? htmlspecialchars($activity_assessment['aa_activity_desc'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                  <?php foreach ($activity as $actvt) : ?>
+                    <?php if ($actvt != NULL) : ?>
+                      <div class="row m-1">
+                        <div class="col-2 p-0 pe-1">
+                          <input name="standard-learning" class="form-control p-1" value="<?= $actvt['aci_desc']; ?>">
+                        </div>
+                      </div>
+                    <?php endif ?>
+                  <?php endforeach ?>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     <strong>CATATAN:</strong>
@@ -483,7 +489,51 @@
               <div class="d-flex top-0 w-100">
                 <!-- standard Prestasi (Tahap Penguasaan) -->
                 <ul class="list-group flex-grow-1 mx-2">
-                  <textarea class="multisteps-form__textarea form-control" rows="10" readonly><?= isset($activity_assessment['aa_assessment_desc']) ? htmlspecialchars($activity_assessment['aa_assessment_desc'], ENT_QUOTES, 'UTF-8') : ''; ?></textarea>
+                  <?php
+                  $kognitif_flag = false;
+                  $psikomotor_flag = false;
+                  $afektif_flag = false;
+                  foreach ($assessment as $assmt) : ?>
+                    <?php if ($assmt != NULL) : ?>
+
+                      <?php if ($assmt['asc_desc'] == 'Kognitif' && $assmt['asc_desc'] != NULL) : ?>
+                        <?php if ($kognitif_flag == false) : ?>
+                          <h5 class="mt-3">Kognitif</h5>
+                        <?php $kognitif_flag = true;
+                        endif ?>
+                        <div class="row m-1">
+                          <div class="col-2 p-0 pe-1">
+                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
+                          </div>
+                        </div>
+                      <?php endif ?>
+
+                      <?php if ($assmt['asc_desc'] == 'Psikomotor'  && $assmt['asc_desc'] != NULL) : ?>
+                        <?php if ($psikomotor_flag == false) : ?>
+                          <h5 class="mt-3">Psikomotor</h5>
+                        <?php $psikomotor_flag = true;
+                        endif ?>
+                        <div class="row m-1">
+                          <div class="col-2 p-0 pe-1">
+                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
+                          </div>
+                        </div>
+                      <?php endif ?>
+
+                      <?php if ($assmt['asc_desc'] == 'Afektif'  && $assmt['asc_desc'] != NULL) : ?>
+                        <?php if ($afektif_flag == false) : ?>
+                          <h5 class="mt-3">Afektif</h5>
+                        <?php $afektif_flag = true;
+                        endif ?>
+                        <div class="row m-1">
+                          <div class="col-2 p-0 pe-1">
+                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
+                          </div>
+                        </div>
+                      <?php endif ?>
+                    <?php endif ?>
+
+                  <?php endforeach ?>
                 </ul>
               </div>
             </div>
@@ -544,14 +594,13 @@
                           <tbody>
 
                             <?php
-                            $found = false; // Initialize a flag
-                            foreach ($integrasi_teknologi as $index => $it) :
-                              if ($it['dm_isChecked'] == 'Y') :
+                            foreach ($integrasi_teknologi as $it) :
+                              if ($it['tappc_desc'] == 'Integrasi Teknologi') :
                             ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $it['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $it['tapp_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -575,14 +624,13 @@
                         <table class="table mb-0">
                           <tbody>
                             <?php
-                            $found = false; // Initialize a flag
-                            foreach ($pendekatan as $index => $pdktn) :
-                              if ($pdktn['dm_isChecked'] == 'Y') :
+                            foreach ($pendekatan as $pdkt) :
+                              if ($pdkt['tappc_desc'] == 'Pendekatan') :
                             ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $pdktn['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $pdkt['tapp_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -606,13 +654,13 @@
                         <table class="table mb-0">
                           <tbody>
                             <?php
-                            $found = false; // Initialize a flag
-                            foreach ($kaedah as $index => $method) :
-                              if ($method['dm_isChecked'] == 'Y') : ?>
+                            foreach ($kaedah as $kdh) :
+                              if ($kdh['tappc_desc'] == 'Kaedah') :
+                            ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $method['d_name']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $kdh['tapp_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -622,24 +670,6 @@
                             ?>
                           </tbody>
                         </table>
-
-                        <?php foreach ($kaedah as $index => $method) :
-                          if ($method['d_id'] == '140') :
-                            if (!function_exists('get_lain_lain')) {
-                              helper('dskpn_helper');
-                            }
-                            // Call the helper function and get the data
-                            $extra_additional_field = get_lain_lain($method['dm_id']);
-                        ?>
-                        <?php
-                            break; // Exit the loop if the condition is met
-                          endif;
-                        endforeach; ?>
-
-                        <?php if (!empty($extra_additional_field)) : ?>
-                          <textarea class="multisteps-form__textarea form-control" rows="2" readonly><?= htmlspecialchars($extra_additional_field['eaf_desc']) ?></textarea>
-                        <?php else : ?>
-                        <?php endif; ?>
                       </div>
                     </div>
                   </div>
