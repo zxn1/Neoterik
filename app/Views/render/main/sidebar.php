@@ -141,8 +141,8 @@
           </a>
         </li>
       <?php endif; ?>
-      <!-- <?php if (get_user_role() == $both_roles[1]) : ?>
-        <li class="nav-item">
+      <?php /*if (get_user_role() == $both_roles[1]) : ?>
+        <!-- <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('view_tp_core_setup'))) ? 'active' : ''; ?>" href="<?= route_to('view_tp_core_setup'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-asterisk" viewBox="0 0 16 16">
@@ -164,7 +164,7 @@
             <span class="nav-link-text ms-1">Kompetensi Teras</span>
           </a>
         </li> -->
-      <?php endif; ?>
+      <?php endif; */ ?>
       <?php if (in_array(get_user_role(), $both_roles)) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
