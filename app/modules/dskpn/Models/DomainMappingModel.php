@@ -30,10 +30,9 @@ class DomainMappingModel extends Model
     {
         $builder = $this->db->table('domain_mapping');
         $builder->select('*');
-        $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
-        $builder->join('learning_standard', 'domain_mapping.ls_id = learning_standard.ls_id');
-        $builder->join('subject_main', 'learning_standard.sm_id = subject_main.sm_id');
-        $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+        $builder->join('domain', 'domain_mapping.dm_dmn_code = domain.dmn_code');
+        $builder->join('subject_main', 'domain_mapping.dm_sbm_id = subject_main.sbm_id');
+        $builder->join('domain_group', 'domain.dmn_dg_id = domain_group.dg_id');
         $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
         $builder->where('domain_mapping.dm_deleted_at', null);
         $builder->where('domain_group.dg_title', $dg_name);
@@ -42,17 +41,17 @@ class DomainMappingModel extends Model
         return $query->getResultArray();
     }
 
-    public function getAtribute($dskpn_id, $dg_name)
-    {
-        $builder = $this->db->table('domain_mapping');
-        $builder->select('*');
-        $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
-        $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
-        $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
-        $builder->where('domain_mapping.dm_deleted_at', null);
-        $builder->where('domain_group.dg_title', $dg_name);
+    // public function getAtribute($dskpn_id, $dg_name)
+    // {
+    //     $builder = $this->db->table('domain_mapping');
+    //     $builder->select('*');
+    //     $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
+    //     $builder->join('domain_group', 'domain.gd_id = domain_group.dg_id');
+    //     $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
+    //     $builder->where('domain_mapping.dm_deleted_at', null);
+    //     $builder->where('domain_group.dg_title', $dg_name);
 
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
+    //     $query = $builder->get();
+    //     return $query->getResultArray();
+    // }
 }
