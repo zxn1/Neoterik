@@ -43,7 +43,7 @@ function getAvailableDskpCode(val)
                 if (!restrictedRefCodeArray.includes(i)) {
                     let option = document.createElement('option');
                     option.value = i;
-                    option.text = subjectCode + val + i.toString().padStart(3, '0');
+                    option.text = subjectCode + val + i.toString().padStart(2, '0');
                     selectElement.appendChild(option);
                 }
             }
