@@ -208,7 +208,18 @@
                     $rand = rand(100000000,1000000000);
                     ?>
                     <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                      <?php
+                      if(isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true)))
+                      {
+                        foreach(json_decode($list_selection_to_populate, true) as $indeks => $populate_select)
+                        { ?>
+                          <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index])?'selected':'' ?>><?= $populate_select; ?></option>
+                        <?php
+                        }
+                      } else {
+                      ?>
                       <option disabled>-- Sila pilih Kod --</option>
+                      <?php } ?>
                     </select>
 
                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
@@ -279,6 +290,7 @@
       </span>
     </div>
   </div>
+  <input type="text" name="objective-performance-selection-listing" id="objective-performance-selection-listing" value='<?= (isset($list_selection_to_populate) && !empty($list_selection_to_populate))?$list_selection_to_populate:''; ?>' hidden/>
 </form>
 
 <div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
