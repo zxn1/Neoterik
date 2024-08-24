@@ -35,11 +35,11 @@
                 <div class="d-flex w-100 align-items-center" id="1-collection-core-competency" style="display: flex !important;flex-direction: row !important;">
                   <div class="row w-100 p-2 pb-0">
                     <div class="col-2 p-1">
-                      <input name="input-core-competency-code[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="KSN1" required>
+                      <input name="input-core-competency-code[]" type="text" class="form-control me-2" id="input-core-competency-code" placeholder="KSN1" required>
                     </div>
                     <div class="col-10 d-flex p-1">
                       <input name="input-core-competency[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
-                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-core-competency').remove();">
+                      <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-core-competency').remove(); recalculateCoreCompetencyCode();">
                         <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                       </a>
                     </div>
