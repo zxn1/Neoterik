@@ -17,15 +17,17 @@
   <br>
 
   <div class="text-end">
-    <a href="<?= route_to('dskpn_view', $dskpn_id) ?>" type="button" class="btn bg-gradient-success">Selesai</a>
+    <!-- <a href="<?= route_to('dskpn_view', $dskpn_id) ?>" type="button" class="btn bg-gradient-success">Selesai</a> -->
+    <a href="<?= base_url('demo/K1T4 DSKPN 1.pdf') ?>" type="button" class="btn bg-gradient-success">Selesai</a>
+
   </div>
 </div>
 
 <!-- alert part -->
 <script>
-    Swal.fire({
-        icon: "success",
-        title: "Berjaya",
-        text: "Proses merekodkan Topik DSKPN telah berjaya!"
-    });
+  Swal.fire({
+    icon: "success",
+    title: "Berjaya",
+    text: "Proses merekodkan Topik DSKPN telah berjaya!"
+  });
 </script>
