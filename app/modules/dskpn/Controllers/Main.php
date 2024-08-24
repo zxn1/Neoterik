@@ -1063,6 +1063,7 @@ class Main extends BaseController
         $tema           = $this->request->getPost('tema');
         $subtema        = $this->request->getPost('subtema');
         $duration       = $this->request->getPost('duration');
+        $json_objective_performance_selection_listing = $this->request->getPost('objective-performance-selection-listing');
         //set in session for Part A
         $this->session->set('kluster', $kluster);
         $this->session->set('tahun', $tahun);
@@ -1070,6 +1071,7 @@ class Main extends BaseController
         $this->session->set('duration', $duration);
         $this->session->set('tema', $tema);
         $this->session->set('subtema', $subtema);
+        $this->session->set('objective_performance_selection_listing', $json_objective_performance_selection_listing);
 
         //objective part
         $objective      = $this->request->getPost('objective-prestasi-desc');
@@ -1143,6 +1145,7 @@ class Main extends BaseController
             $dskpn_code_init = 'K' . $kluster . 'T' . $tm_data['tm_year'] . '-' . sprintf('%03d', $dskpn_by_topic_count + 1);
 
         //step 1 - create DSKPN
+        $arr_objective_ref = [];
         if ($dskpn_create_update_status) {
             //step 2 - add objective performance
             foreach ($objective as $index => $obj) {
@@ -1168,6 +1171,7 @@ class Main extends BaseController
                                         'orc_code'   => $ref
                                     ]
                                 );
+                                $arr_objective_ref[$indeks][] = $ref;
                             }
                         }
                         $indeks++;
@@ -1197,6 +1201,8 @@ class Main extends BaseController
         } else {
             die('DSKPN failed to be created. Please refreshed and try again!');
         }
+
+        $this->session->set('arr_objective_ref', $arr_objective_ref);
 
         //http_build_query reverse process
         foreach ($data as $key => $val) {
@@ -1615,6 +1621,9 @@ class Main extends BaseController
         $data['subtema'] = "";
         $data['duration'] = "";
         $data['subject_list'] = $this->subject_model->findAll();
+        
+        $data['list_selection_to_populate'] = $this->session->get('objective-performance-selection-listing');
+        $data['selected_by_selected'] = $this->session->get('arr_objective_ref');
 
         $tm_id = $this->session->get('tm_id');
         $data['flag'] = $this->request->getVar('flag');
