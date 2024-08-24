@@ -41,7 +41,7 @@ function recalculateCoreCompetencyCode()
     for (var i=0; i<nodes.length; i++)
         if(nodes[i].id == 'input-core-competency-code')
         {
-            nodes[i].value = codeSubject + count;
+            nodes[i].value = "K" + codeSubject + count;
             count++;
         }
 }
