@@ -38,6 +38,30 @@ function yearDSKPNChecked(event) {
     }
 }
 
+function selectionPopulateBasedOnNumbering()
+{
+    let arrValues = [];
+    var nodes = document.querySelectorAll("input[type=number]");
+    for (var i=0; i<nodes.length; i++)
+    if(nodes[i].id == 'standard-learning-number' && nodes[i].value != '')
+    {
+        arrValues.push(nodes[i].getAttribute('data-subject') + " " + nodes[i].value);
+    }
+
+    var nodeTwo = document.querySelectorAll("select#objective-prestasi-ref");
+
+    for (var i=0; i<nodeTwo.length; i++)
+    {
+        nodeTwo[i].innerHTML = "";
+        let htmlOption = "";
+        arrValues.forEach(item => {
+            htmlOption += `<option value="${item}">${item}</option>`;
+        });
+
+        nodeTwo[i].innerHTML = htmlOption;
+    }
+}
+
 function validateAndSubmit()
 {
     if(document.getElementById("tema-selection").value != "-- Sila Pilih Tema --")

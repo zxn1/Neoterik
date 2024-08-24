@@ -136,11 +136,11 @@
                         foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                             <div class="col-2 p-0 pe-1">
-                              <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>">
+                              <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>">
                             </div>
                             <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                               <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
-                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                   <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
@@ -154,11 +154,11 @@
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                             <div class="col-2 p-0 pe-1">
-                              <input type="number" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                              <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
                             </div>
                             <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                               <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
-                              <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();">
+                              <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                   <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
@@ -170,7 +170,7 @@
                       } ?>
 
                       <div class="p-1">
-                        <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>')">Tambah &nbsp;&nbsp;
+                        <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>')">Tambah &nbsp;&nbsp;
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                           </svg>
@@ -203,7 +203,14 @@
                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
                   </div>
                   <div class="col-md-3 d-flex">
-                    <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1" value="<?= isset($objective_ref[$index]) ? $objective_ref[$index] : '' ?>">
+
+                    <?php
+                    $rand = rand(100000000,1000000000);
+                    ?>
+                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                      <option disabled>-- Sila pilih Kod --</option>
+                    </select>
+
                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
                       <button class="input-group-text" id="btnGroupAddon">
                         <i class="fas fa-trash-alt" style="color: red;"></i>
@@ -222,7 +229,15 @@
                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
                   </div>
                   <div class="col-md-3 d-flex">
-                    <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1">
+
+                    <?php
+                    $rand = rand(100000000,1000000000);
+                    ?>
+
+                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                      <option disabled>-- Sila pilih Kod --</option>
+                    </select>
+
                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
                       <button class="input-group-text" id="btnGroupAddon">
                         <i class="fas fa-trash-alt" style="color: red;"></i>

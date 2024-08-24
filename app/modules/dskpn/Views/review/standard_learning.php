@@ -78,8 +78,11 @@
                 <div class="col-md-8 pe-1">
                   <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>" disabled>
                 </div>
+                <?php
+                  $rand = rand(100000000,1000000000);
+                ?>
                 <div class="col-md-3 d-flex">
-                  <input type="text" name="objective-prestasi-ref[]" class="form-control" placeholder="PK 8.1.1" value="<?= isset($objective_ref[$index])?$objective_ref[$index]:'' ?>" disabled>
+                  <input type="text" name="objective-prestasi-ref[<?= $rand; ?>][]" class="form-control" placeholder="PK 8.1.1" value="<?= isset($objective_ref[$index])?$objective_ref[$index]:'' ?>" disabled>
                 </div>
               </div>
               <?php }
