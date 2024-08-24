@@ -276,6 +276,13 @@ function addObjectivePrestasi()
         
     // Generate a unique ID for the new field
     var newFieldColl = Math.floor(Math.random() * 1000000);
+
+    let option = "";
+    JSON.parse($("#objective-performance-selection-listing").val()).forEach(item => {
+        option += "<option value='" + item + "'>" + item + "</option>";
+    });
+
+    console.log(option);
     
     let newInputHTMLField = `<div class="input-group" style="margin-bottom: 5px;" id="objective-prestasi-` + newFieldColl + `">
                                 <div class="col-md-1 pe-1">
@@ -285,9 +292,14 @@ function addObjectivePrestasi()
                                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
                                 </div>
                                 <div class="col-md-3 d-flex">
-                                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[`+newFieldColl+`][]" multiple="multiple">
-                                        <option disabled>-- Sila pilih Kod --</option>
-                                    </select>
+                                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[`+newFieldColl+`][]" multiple="multiple">`;
+                                    if(option == "")
+                                    {
+                                        newInputHTMLField += `<option disabled>-- Sila pilih Kod --</option>`;
+                                    } else {
+                                        newInputHTMLField += option;
+                                    }
+              newInputHTMLField += `</select>
                                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
                                     <button class="input-group-text" id="btnGroupAddon">
                                         <i class="fas fa-trash-alt" style="color: red;"></i>

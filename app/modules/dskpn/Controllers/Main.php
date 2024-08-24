@@ -1622,7 +1622,7 @@ class Main extends BaseController
         $data['duration'] = "";
         $data['subject_list'] = $this->subject_model->findAll();
         
-        $data['list_selection_to_populate'] = $this->session->get('objective-performance-selection-listing');
+        $data['list_selection_to_populate'] = $this->session->get('objective_performance_selection_listing');
         $data['selected_by_selected'] = $this->session->get('arr_objective_ref');
 
         $tm_id = $this->session->get('tm_id');

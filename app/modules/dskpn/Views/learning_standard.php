@@ -211,9 +211,9 @@
                       <?php
                       if(isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true)))
                       {
-                        foreach(json_decode($list_selection_to_populate, true) as $populate_select)
+                        foreach(json_decode($list_selection_to_populate, true) as $indeks => $populate_select)
                         { ?>
-                          <option value="<?= $populate_select; ?>"><?= $populate_select; ?></option>
+                          <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index])?'selected':'' ?>><?= $populate_select; ?></option>
                         <?php
                         }
                       } else {
@@ -290,7 +290,7 @@
       </span>
     </div>
   </div>
-  <input type="text" name="objective-performance-selection-listing" id="objective-performance-selection-listing" hidden/>
+  <input type="text" name="objective-performance-selection-listing" id="objective-performance-selection-listing" value='<?= (isset($list_selection_to_populate) && !empty($list_selection_to_populate))?$list_selection_to_populate:''; ?>' hidden/>
 </form>
 
 <div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
