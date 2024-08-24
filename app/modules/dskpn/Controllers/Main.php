@@ -1184,15 +1184,11 @@ class Main extends BaseController
                 ]);
 
                 $op_last_id = $this->objective_performance_model->insertID();
-                if(isset($objectiveRef))
-                {
+                if (isset($objectiveRef)) {
                     $indeks = 0;
-                    foreach($objectiveRef as $key => $reffItem)
-                    {
-                        if($index == $indeks)
-                        {
-                            foreach($reffItem as $ref)
-                            {
+                    foreach ($objectiveRef as $key => $reffItem) {
+                        if ($index == $indeks) {
+                            foreach ($reffItem as $ref) {
                                 $this->opm_reff_code_model->insert(
                                     [
                                         'orc_opm_id' => $op_last_id,

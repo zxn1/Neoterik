@@ -178,7 +178,7 @@
                     <div class="card-header d-flex p-3 bg-gradient-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_desc']; ?><?php endif ?><?php endforeach ?></textarea>
+                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_number'] . ' ' . $ls_desc['lsi_desc'] . "\n"; ?> <?php endif ?><?php endforeach ?></textarea>
                   </ul>
                 <?php endforeach; ?>
               </div>
@@ -187,7 +187,7 @@
             <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_desc']; ?><?php endif ?><?php endforeach ?></textarea>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_number'] . ' ' . $op['opm_desc'] . "\n" ?><?php endif ?><?php endforeach ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $dskpn_details['dskpn_duration']; ?></span></strong>
@@ -451,20 +451,18 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="idea_pengajaran" role="tabpanel" aria-labelledby="idea_pengajaran">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2">
-                  <?php foreach ($activity as $actvt) : ?>
-                    <?php if ($actvt != NULL) : ?>
-                      <div class="row m-1">
-                        <div class="col-2 p-0 pe-1">
-                          <input name="standard-learning" class="form-control p-1" value="<?= $actvt['aci_desc']; ?>">
-                        </div>
-                      </div>
-                    <?php endif ?>
-                  <?php endforeach ?>
-                  <br>
-                  <div class="alert alert-dark text-white" role="alert">
-                    <strong>CATATAN:</strong>
-                    Idea pengajaran adalah panduan kepada guru sahaja, sebarang penambahbaikan adalah amat dialukan
-                  </div>
+                  <ul class="list-group mt-3">
+                    <?php foreach ($activity as $actvt) : ?>
+                      <?php if ($actvt != NULL) : ?>
+                        <li class="list-group-item"><?= $actvt['aci_number'] . '. ' . $actvt['aci_desc']; ?></li>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                    <br>
+                    <div class="alert alert-dark text-white" role="alert">
+                      <strong>CATATAN:</strong>
+                      Idea pengajaran adalah panduan kepada guru sahaja, sebarang penambahbaikan adalah amat dialukan
+                    </div>
+                  </ul>
                 </ul>
               </div>
             </div>
@@ -501,11 +499,7 @@
                           <h5 class="mt-3">Kognitif</h5>
                         <?php $kognitif_flag = true;
                         endif ?>
-                        <div class="row m-1">
-                          <div class="col-2 p-0 pe-1">
-                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
-                          </div>
-                        </div>
+                        <li class="list-group-item"><?= $assmt['asi_desc_number'] . '. ' . $assmt['asi_desc']; ?></li>
                       <?php endif ?>
 
                       <?php if ($assmt['asc_desc'] == 'Psikomotor'  && $assmt['asc_desc'] != NULL) : ?>
@@ -513,11 +507,7 @@
                           <h5 class="mt-3">Psikomotor</h5>
                         <?php $psikomotor_flag = true;
                         endif ?>
-                        <div class="row m-1">
-                          <div class="col-2 p-0 pe-1">
-                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
-                          </div>
-                        </div>
+                        <li class="list-group-item"><?= $assmt['asi_desc_number'] . '. ' . $assmt['asi_desc']; ?></li>
                       <?php endif ?>
 
                       <?php if ($assmt['asc_desc'] == 'Afektif'  && $assmt['asc_desc'] != NULL) : ?>
@@ -525,11 +515,7 @@
                           <h5 class="mt-3">Afektif</h5>
                         <?php $afektif_flag = true;
                         endif ?>
-                        <div class="row m-1">
-                          <div class="col-2 p-0 pe-1">
-                            <input name="standard-learning" class="form-control p-1" value="<?= $assmt['asi_desc']; ?>">
-                          </div>
-                        </div>
+                        <li class="list-group-item"><?= $assmt['asi_desc_number'] . '. ' . $assmt['asi_desc']; ?></li>
                       <?php endif ?>
                     <?php endif ?>
 
@@ -540,7 +526,7 @@
             <!-- Spesifikasi -->
             <div class="tab-pane fade position-relative border-radius-lg" id="spesifikasi_pengajaran" role="tabpanel" aria-labelledby="spesifikasi_pengajaran">
 
-              <?php if (isset($activity_assessment['aa_is_parental_involved']) && $activity_assessment['aa_is_parental_involved'] == 'Y') : ?>
+              <?php if (isset($dskpn_details['dskpn_parent_involvement']) && $dskpn_details['dskpn_parent_involvement'] != NULL) : ?>
                 <div class="col-sm-auto ms-sm-auto mt-sm-0 mt-3 d-flex justify-content-end" style="flex-direction: row !important;">
                   <label class="form-check-label mb-0">
                     Penglibatan Ibu Bapa
@@ -554,124 +540,75 @@
 
               <div class="row">
                 <div class="col-md-3">
-                  <div class="card mt-4" style="min-height:360px;" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">REKA BENTUK INTRUKSI</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <?php
-                            foreach ($rekabentuk_instruksi as $index => $rbi) :
-                              if ($rbi['dm_isChecked'] == 'Y') :
-                            ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $rbi['d_name']; ?></span>
-                                    </div>
-                                  </td>
-                                </tr>
-                            <?php
-                              endif;
-                            endforeach;
-                            ?>
-                          </tbody>
-                        </table>
+                  <div class="d-flex top-0 w-100">
+                    <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                        <h6 class="my-auto text-white">REKA BENTUK INTRUKSI</h6>
                       </div>
-                    </div>
+                      <?php
+                      foreach ($rekabentuk_instruksi as $rbi) :
+                        if ($rbi['tappc_desc'] == 'Reka Bentuk Instruksi') :
+                      ?>
+                          <li class="list-group-item"><?= $rbi['tapp_desc']; ?></li>
+                      <?php
+                        endif;
+                      endforeach;
+                      ?>
+                    </ul>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card mt-4" style="min-height:360px;" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">INTEGRASI TEKNOLOGI</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-
-                            <?php
-                            foreach ($integrasi_teknologi as $it) :
-                              if ($it['tappc_desc'] == 'Integrasi Teknologi') :
-                            ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $it['tapp_desc']; ?></span>
-                                    </div>
-                                  </td>
-                                </tr>
-                            <?php
-                              endif;
-                            endforeach;
-                            ?>
-                          </tbody>
-                        </table>
+                  <div class="d-flex top-0 w-100">
+                    <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                        <h6 class="my-auto text-white">INTEGRASI TEKNOLOGI</h6>
                       </div>
-                    </div>
+                      <?php
+                      foreach ($integrasi_teknologi as $it) :
+                        if ($it['tappc_desc'] == 'Integrasi Teknologi') :
+                      ?>
+                          <li class="list-group-item"><?= $it['tapp_desc']; ?></li>
+                      <?php
+                        endif;
+                      endforeach;
+                      ?>
+                    </ul>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card mt-4" style="min-height:360px;" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">PENDEKATAN</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <?php
-                            foreach ($pendekatan as $pdkt) :
-                              if ($pdkt['tappc_desc'] == 'Pendekatan') :
-                            ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $pdkt['tapp_desc']; ?></span>
-                                    </div>
-                                  </td>
-                                </tr>
-                            <?php
-                              endif;
-                            endforeach;
-                            ?>
-                          </tbody>
-                        </table>
+                  <div class="d-flex top-0 w-100">
+                    <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                        <h6 class="my-auto text-white">PENDEKATAN</h6>
                       </div>
-                    </div>
+                      <?php
+                      foreach ($pendekatan as $pdkt) :
+                        if ($pdkt['tappc_desc'] == 'Pendekatan') :
+                      ?>
+                          <li class="list-group-item"><?= $pdkt['tapp_desc']; ?></li>
+                      <?php
+                        endif;
+                      endforeach;
+                      ?>
+                    </ul>
                   </div>
                 </div>
                 <div class="col-md-3">
-                  <div class="card mt-4" id="notifications">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
-                      <h6 class="my-auto text-white">KAEDAH</h6>
-                    </div>
-                    <div class="card-body pt-0">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <tbody>
-                            <?php
-                            foreach ($kaedah as $kdh) :
-                              if ($kdh['tappc_desc'] == 'Kaedah') :
-                            ?>
-                                <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $kdh['tapp_desc']; ?></span>
-                                    </div>
-                                  </td>
-                                </tr>
-                            <?php
-                              endif;
-                            endforeach;
-                            ?>
-                          </tbody>
-                        </table>
+                  <div class="d-flex top-0 w-100">
+                    <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
+                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                        <h6 class="my-auto text-white">KAEDAH</h6>
                       </div>
-                    </div>
+                      <?php
+                      foreach ($kaedah as $kdh) :
+                        if ($kdh['tappc_desc'] == 'Kaedah') :
+                      ?>
+                          <li class="list-group-item"><?= $kdh['tapp_desc']; ?></li>
+                      <?php
+                        endif;
+                      endforeach;
+                      ?>
+                    </ul>
                   </div>
                 </div>
               </div>
