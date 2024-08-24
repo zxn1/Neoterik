@@ -31,6 +31,7 @@ use App\Modules\Dskpn\Models\ObjectivePerformanceModel;
 use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
 use App\Modules\Dskpn\Models\AssessmentCategoryModel;
 use App\Modules\Dskpn\Models\AssessmentItemModel;
+use App\Modules\Dskpn\Models\OpmReffCodeModel;
 //-----
 
 class Main extends BaseController
@@ -53,6 +54,7 @@ class Main extends BaseController
     protected $teaching_approach_category_model;
     protected $teaching_approach_model;
     protected $teaching_approach_mapping_model;
+    protected $opm_reff_code_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -90,6 +92,7 @@ class Main extends BaseController
         $this->domain_mapping_model     = new DomainMappingModel();
         $this->core_competency_model    = new CoreCompetencyModel();
         $this->competency_mapping_model = new CompetencyMappingModel();
+        $this->opm_reff_code_model      = new OpmReffCodeModel();
 
         $this->teaching_approach_category_model = new TeachingApproachCategoryModel();
         $this->teaching_approach_mapping_model  = new TeachingApproachMappingModel();
@@ -1175,11 +1178,32 @@ class Main extends BaseController
             //step 2 - add objective performance
             foreach ($objective as $index => $obj) {
                 $this->objective_performance_model->insert([
-                    'opm_ls_ref_number' => isset($objectiveRef[$index]) ? $objectiveRef[$index] : null,
                     'opm_number'        => isset($objectiveNumber[$index]) ? $objectiveNumber[$index] : null,
                     'opm_desc'          => $obj,
                     'opm_dskpn_id'      => $data['dskpn_id']
                 ]);
+
+                $op_last_id = $this->objective_performance_model->insertID();
+                if(isset($objectiveRef))
+                {
+                    $indeks = 0;
+                    foreach($objectiveRef as $key => $reffItem)
+                    {
+                        if($index == $indeks)
+                        {
+                            foreach($reffItem as $ref)
+                            {
+                                $this->opm_reff_code_model->insert(
+                                    [
+                                        'orc_opm_id' => $op_last_id,
+                                        'orc_code'   => $ref
+                                    ]
+                                );
+                            }
+                        }
+                        $indeks++;
+                    }
+                }
             }
 
             foreach ($allSubject as $index => $subject) {
