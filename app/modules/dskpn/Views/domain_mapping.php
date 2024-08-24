@@ -184,7 +184,7 @@
                                 <tr style="background-color : #dedede;">
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc'] . $item['dmn_id']; ?></span>
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                   <td>
