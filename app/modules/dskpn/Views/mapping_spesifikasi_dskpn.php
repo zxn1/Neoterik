@@ -172,7 +172,7 @@
       <!-- <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a> -->
       <!-- <button type="submit" class="btn bg-gradient-info">Semak</button> -->
       <a href="<?= base_url('demo/K1T4 DSKPN 1.pdf') ?>" target="_blank" type="button" class="btn bg-gradient-success">Semak</a>
-      <a href="<?= route_to('dskpn_complete') ?>" type="button" class="btn btn-primary" data-dismiss="modal">Hantar</a>
+      <button type="submit" class="btn btn-primary" data-dismiss="modal">Hantar</button>
 
     </div>
   </div>
