@@ -278,11 +278,10 @@ function addObjectivePrestasi()
     var newFieldColl = Math.floor(Math.random() * 1000000);
 
     let option = "";
+    if($("#objective-performance-selection-listing").val() != "")
     JSON.parse($("#objective-performance-selection-listing").val()).forEach(item => {
         option += "<option value='" + item + "'>" + item + "</option>";
     });
-
-    console.log(option);
     
     let newInputHTMLField = `<div class="input-group" style="margin-bottom: 5px;" id="objective-prestasi-` + newFieldColl + `">
                                 <div class="col-md-1 pe-1">
@@ -309,6 +308,9 @@ function addObjectivePrestasi()
                             </div>`;
 
     divObjectivePrestasi.append(newInputHTMLField);
+
+    $('select#objective-prestasi-ref').multipleSelect('destroy');
+    $('select#objective-prestasi-ref').multipleSelect();
 }
 
 $('#kluster-selection').on('change', function() {
