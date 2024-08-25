@@ -237,12 +237,8 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
               <div class="d-flex top-0 w-100">
                 <!-- Tahap Penguasaan-->
-                <!-- foreach tahap penguasaan -->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <!-- <label>Kod Rujukan TP</label>
-                    <div class="mb-3">
-                    </div> -->
                     <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>

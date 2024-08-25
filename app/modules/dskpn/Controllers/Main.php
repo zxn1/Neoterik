@@ -1067,7 +1067,7 @@ class Main extends BaseController
         $this->session->set('is_update_specs', 'Y');
 
         if ($success)
-            return redirect()->to(route_to('mapping_dynamic_dskpn') . "?review=true");
+            return redirect()->to(route_to('dskpn_complete') /* . "?review=true"*/);
         return redirect()->back();
     }
 

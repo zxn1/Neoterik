@@ -8,8 +8,33 @@
   .dropdown-item {
     color: black !important;
   }
+
+  div.col-md-3.d-flex > div.ms-parent {
+    width: 100% !important; 
+    padding: 0px !important;
+  }
+
+  div.col-md-3.d-flex > div.ms-parent > button {
+    height : 40px !important;
+    border-radius: 7.5px;
+  }
+
+  div.col-md-3.d-flex > div.ms-parent > button > span {
+    background-color : white !important;
+    margin-top: 5px !important;
+    margin-left: 5px !important;
+  }
+
+  div.col-md-3.d-flex > div.ms-parent > div > ul > li > label > span {
+    font-size : 14px !important;
+  }
 </style>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.js"></script>
 
 <form action="<?= route_to('store_std_learn'); ?>" method="POST" id="submit_learning">
   <?= csrf_field() ?>
@@ -207,7 +232,7 @@
                     <?php
                     $rand = rand(100000000,1000000000);
                     ?>
-                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                    <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                       <?php
                       if(isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true)))
                       {
@@ -245,7 +270,7 @@
                     $rand = rand(100000000,1000000000);
                     ?>
 
-                    <select class="form-control" id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                    <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                       <option disabled>-- Sila pilih Kod --</option>
                     </select>
 
@@ -367,6 +392,10 @@
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
   let get_default_subject = JSON.parse('<?= isset($getDefaultSubject) ? json_encode($getDefaultSubject) : 'null'; ?>');
+
+  $(document).ready(function() {
+    $('select#objective-prestasi-ref').multipleSelect();
+  });
 </script>
 
 <?php if (session()->has('fail')) : ?>
