@@ -24,4 +24,18 @@ class TeachingApproachMappingModel extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+
+    public function getAtribute($dskpn_id, $dg_name)
+    {
+        $builder = $this->db->table('domain_mapping');
+        $builder->select('*');
+        $builder->join('domain', 'domain_mapping.dm_id = domain.dm_id');
+        $builder->join('domain_group', 'domain.dg_id = domain_group.dg_id');
+        $builder->where('domain_mapping.dm_dskpn_id', $dskpn_id);
+        $builder->where('domain_mapping.dm_deleted_at', null);
+        $builder->where('domain_group.dg_title', $dg_name);
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
 }
