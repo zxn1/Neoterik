@@ -62,6 +62,9 @@ function selectionPopulateBasedOnNumbering()
 
         nodeTwo[i].innerHTML = htmlOption;
     }
+
+    $('select#objective-prestasi-ref').multipleSelect('destroy');
+    $('select#objective-prestasi-ref').multipleSelect();
 }
 
 function validateAndSubmit()
