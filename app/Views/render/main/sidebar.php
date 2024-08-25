@@ -3,7 +3,8 @@
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-0" href="dashboard" target="_blank">
       <img src="<?= base_url() ?>neoterik/img/logo_srsb.png" class="navbar-brand-img h-100" alt="main_logo">
-      <span class="ms-1 font-weight-bold">Sistem Neoterik</span>
+      <span class="ms-1 font-weight-bold text-white" style="font-size: 1.2rem;">Sistem Neoterik</span>
+
     </a>
   </div>
   <hr class="horizontal dark mt-0">
@@ -42,11 +43,11 @@
         </li>
       <?php endif; ?>
       <?php if (get_user_role() == $both_roles[1]) : ?>
-          <?php
-          $in_main_configuration = url_is(route_to('view_subject'))||url_is(route_to('view_cluster'))||url_is(route_to('view_topic'))||url_is(route_to('view_teacher_cluster'))||url_is(route_to('view_tp_core_setup'))||url_is(route_to('view_core_competency_setup'))||url_is(route_to('view_standard_performance'))||url_is(route_to('view_core_competency_list'));
-          ?>
+        <?php
+        $in_main_configuration = url_is(route_to('view_subject')) || url_is(route_to('view_cluster')) || url_is(route_to('view_topic')) || url_is(route_to('view_teacher_cluster')) || url_is(route_to('view_tp_core_setup')) || url_is(route_to('view_core_competency_setup')) || url_is(route_to('view_standard_performance')) || url_is(route_to('view_core_competency_list'));
+        ?>
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#dskpn-configuration" class="nav-link " aria-controls="dskpn-configuration" role="button" aria-expanded="<?= $in_main_configuration?'true':'false' ?>">
+          <a data-bs-toggle="collapse" href="#dskpn-configuration" class="nav-link " aria-controls="dskpn-configuration" role="button" aria-expanded="<?= $in_main_configuration ? 'true' : 'false' ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>Tetapan</title>
@@ -65,7 +66,7 @@
             </div>
             <span class="nav-link-text ms-1">Konfigurasi Utama</span>
           </a>
-          <div class="collapse <?= $in_main_configuration?'show':''; ?>" id="dskpn-configuration">
+          <div class="collapse <?= $in_main_configuration ? 'show' : ''; ?>" id="dskpn-configuration">
             <ul class="nav ms-1 ps-1">
               <li class="nav-item ">
                 <a class="nav-link  <?= (url_is(route_to('view_subject'))) ? 'active' : ''; ?>" href="<?= route_to('view_subject'); ?>" style="overflow : hidden;">
@@ -100,7 +101,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('view_tp_core_setup'))||url_is(route_to('view_standard_performance'))) ? 'active' : ''; ?>" href="<?= route_to('view_standard_performance'); ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('view_tp_core_setup')) || url_is(route_to('view_standard_performance'))) ? 'active' : ''; ?>" href="<?= route_to('view_standard_performance'); ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-brain" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
@@ -108,7 +109,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('view_core_competency_setup'))||url_is(route_to('view_core_competency_list'))) ? 'active' : ''; ?>" href="<?= route_to('view_core_competency_list'); ?>" style="overflow : hidden;">
+                <a class="nav-link <?= (url_is(route_to('view_core_competency_setup')) || url_is(route_to('view_core_competency_list'))) ? 'active' : ''; ?>" href="<?= route_to('view_core_competency_list'); ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-project-diagram" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
@@ -189,10 +190,10 @@
       <?php endif; ?>
       <?php if (get_user_role() == $both_roles[1]) : ?>
         <?php
-        $in_dskpn_list = url_is(route_to('dskpn_learning_standard'))||url_is(route_to('tp_maintenance'))||url_is(route_to('mapping_core'))||url_is(route_to('domain_mapping'))||url_is(route_to('mapping_dynamic_dskpn'))||url_is(route_to('activity_n_assessment'))||url_is(route_to('dskpn_complete'));
+        $in_dskpn_list = url_is(route_to('dskpn_learning_standard')) || url_is(route_to('tp_maintenance')) || url_is(route_to('mapping_core')) || url_is(route_to('domain_mapping')) || url_is(route_to('mapping_dynamic_dskpn')) || url_is(route_to('activity_n_assessment')) || url_is(route_to('dskpn_complete'));
         ?>
         <li class="nav-item">
-          <a data-bs-toggle="collapse" href="#standardPembelajaran" class="nav-link " aria-controls="standardPembelajaran" role="button" aria-expanded="<?= $in_dskpn_list?'true':'false' ?>">
+          <a data-bs-toggle="collapse" href="#standardPembelajaran" class="nav-link " aria-controls="standardPembelajaran" role="button" aria-expanded="<?= $in_dskpn_list ? 'true' : 'false' ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>DSKPN</title>
@@ -214,10 +215,10 @@
           <?php
           $stylish = "background-color : #cbefd3b8; border-radius : 10px; margin-bottom : 1px;";
           ?>
-          <div class="collapse <?= $in_dskpn_list?'show':''; ?>" id="standardPembelajaran">
+          <div class="collapse <?= $in_dskpn_list ? 'show' : ''; ?>" id="standardPembelajaran">
             <ul class="nav ms-1 ps-1">
               <li class="nav-item active">
-                <a class="nav-link <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;<?= (!empty(session('is_update')) && !url_is(route_to('dskpn_learning_standard')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;<?= (!empty(session('is_update')) && !url_is(route_to('dskpn_learning_standard'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -225,7 +226,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_TP')) && !url_is(route_to('tp_maintenance')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_TP')) && !url_is(route_to('tp_maintenance'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -233,7 +234,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_core')) && !url_is(route_to('mapping_core')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_core')) && !url_is(route_to('mapping_core'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -241,7 +242,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_domain')) && !url_is(route_to('domain_mapping')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_domain')) && !url_is(route_to('domain_mapping'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -249,7 +250,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_activity_assessment')) && !url_is(route_to('activity_n_assessment')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_activity_assessment')) && !url_is(route_to('activity_n_assessment'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
@@ -257,7 +258,7 @@
                 </a>
               </li>
               <li class="nav-item ">
-                <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_specs')) && !url_is(route_to('mapping_dynamic_dskpn')))||url_is(route_to('dskpn_complete'))?$stylish:''; ?>">
+                <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_specs')) && !url_is(route_to('mapping_dynamic_dskpn'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
