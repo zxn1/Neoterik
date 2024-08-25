@@ -5,7 +5,7 @@
 <!-- Load d3.js and c3.js -->
 <script src="/assets/js/assessment/d3-5.8.2.min.js" charset="utf-8"></script>
 <script src="/assets/js/assessment/c3.min.js"></script>
-<div class="container-fluid py-4 pb-0">
+<!-- <div class="container-fluid py-4 pb-0">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
       <li class="breadcrumb-item text-sm">
@@ -28,36 +28,36 @@
       <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Papan Pemuka</li>
     </ol>
   </nav>
-</div>
+</div> -->
 <div class="container-fluid py-4">
   <div class="row">
     <div class="col-lg-4 col-12">
-      <div class="card card-background card-background-mask-info h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
+      <div class="card bg-info h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
+        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
         <div class="card-body pt-4 text-center">
           <h2 class="text-white mb-0 mt-2 up">Pelajar</h2>
           <h1 class="text-white mb-0 up">67</h1>
-          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
+          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-12">
-      <div class="card card-background card-background-mask-primary h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
+      <div class="card bg-success h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
+        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
         <div class="card-body pt-4 text-center">
           <h2 class="text-white mb-0 mt-2 up">Kluster</h2>
           <h1 class="text-white mb-0 up"><?= $kluster ?></h1>
-          <a href="<?= route_to('view_cluster'); ?>" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
+          <a href="<?= route_to('view_cluster'); ?>" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-12">
-      <div class="card card-background card-background-mask-success h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div>
+      <div class="card bg-info h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
+        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
         <div class="card-body pt-4 text-center">
           <h2 class="text-white mb-0 mt-2 up">Kelas</h2>
           <h1 class="text-white mb-0 up">4</h1>
-          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5 up">Lihat Lagi</a>
+          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
         </div>
       </div>
     </div>
