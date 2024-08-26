@@ -7,7 +7,7 @@
 
 <div class="container-fluid py-4">
     <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">DSKPN</h6>
         </div>
         <div class="card-body">
@@ -18,7 +18,7 @@
                             <label for="subjectSelect">Subject</label>
                             <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
                                 <option disabled selected>-- Sila Pilih Subjek --</option>
-                                <?php foreach($subject_list as $subject) { ?>
+                                <?php foreach ($subject_list as $subject) { ?>
                                     <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                                 <?php } ?>
                             </select>
@@ -38,14 +38,14 @@
     </div>
     <br>
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
-            <h6 class="my-auto text-white">Senarai Tahap Penguasaan</h6>
+        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
+            <h6 class="my-auto text-white">Tahap Penguasaan</h6>
             <div>
-                <button class="btn bg-gradient-warning" id="edit-tp" style="margin-bottom:0 !important; display : none;">
+                <button class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
                     Ubah Tahap Penguasaan&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
                 </button>
-                <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-gradient-info" style="margin-bottom:0 !important">
+                <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
                     Tetapan Tahap Penguasaan&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
                 </a>
@@ -122,8 +122,7 @@
                     },
                     dataType: 'json',
                     success: function(data) {
-                        if(data.standard_performance_dskp_mapping.length <= 0)
-                        {
+                        if (data.standard_performance_dskp_mapping.length <= 0) {
                             $('#edit-tp').hide();
                         } else {
                             $('#edit-tp').show();
@@ -158,67 +157,65 @@
         });
     });
 
-function deleteStandardPerformance(id, sbm_id)
-{
-    Swal.fire({
-    title: "Anda benar-benar ingin delete item Tahap Penguasaan ini?",
-    showDenyButton: true,
-    showCancelButton: true,
-    confirmButtonText: "Ya",
-    denyButtonText: `Tidak`
-    }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-        var dskpCodeSelect = $('#dskpCodeSelect').val();
-        $('#edit-tp').hide();
-        $.ajax({
-            url: 'standard-performance-dskp-mapping',
-            type: 'POST',
-            data: {
-                dskp_code: dskpCodeSelect,
-                action: 'delete',
-                sp_id: id,
-                sbm_id: sbm_id
-            },
-            dataType: 'json',
-            success: function(data) {
-                if(data.standard_performance_dskp_mapping.length <= 0)
-                {
-                    $('#edit-tp').hide();
-                } else {
-                    $('#edit-tp').show();
-                }
-                
-                var counter = 1;
-                var tableBody = $('#tableBody');
+    function deleteStandardPerformance(id, sbm_id) {
+        Swal.fire({
+            title: "Anda benar-benar ingin delete item Tahap Penguasaan ini?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Ya",
+            denyButtonText: `Tidak`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                var dskpCodeSelect = $('#dskpCodeSelect').val();
+                $('#edit-tp').hide();
+                $.ajax({
+                    url: 'standard-performance-dskp-mapping',
+                    type: 'POST',
+                    data: {
+                        dskp_code: dskpCodeSelect,
+                        action: 'delete',
+                        sp_id: id,
+                        sbm_id: sbm_id
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.standard_performance_dskp_mapping.length <= 0) {
+                            $('#edit-tp').hide();
+                        } else {
+                            $('#edit-tp').show();
+                        }
 
-                tableBody.empty();
+                        var counter = 1;
+                        var tableBody = $('#tableBody');
 
-                $.each(data.standard_performance_dskp_mapping, function(index, row) {
+                        tableBody.empty();
 
-                    var tableRow = '<tr>' +
-                        '<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
-                        '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
-                        '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
-                        '<td class="text-m font-weight-normal" style="text-align: left;">' +
-                        '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ', ' + sbm_id + ');">' +
-                        '<i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>' +
-                        '</a>' +
-                        '</td>' +
-                        '</tr>';
+                        $.each(data.standard_performance_dskp_mapping, function(index, row) {
 
-                    tableBody.append(tableRow);
+                            var tableRow = '<tr>' +
+                                '<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
+                                '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
+                                '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
+                                '<td class="text-m font-weight-normal" style="text-align: left;">' +
+                                '<a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="deleteStandardPerformance(' + row.sp_id + ', ' + sbm_id + ');">' +
+                                '<i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>' +
+                                '</a>' +
+                                '</td>' +
+                                '</tr>';
+
+                            tableBody.append(tableRow);
+                        });
+                        Swal.fire("Berjaya!", "", "success");
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching data:', error);
+                        Swal.fire("Error fetching data:" + error, "", "error");
+                    }
                 });
-                Swal.fire("Berjaya!", "", "success");
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data:', error);
-                Swal.fire("Error fetching data:" + error, "", "error");
+            } else if (result.isDenied) {
+                Swal.fire("Dibatalkan..", "", "info");
             }
         });
-    } else if (result.isDenied) {
-        Swal.fire("Dibatalkan..", "", "info");
     }
-    });
-}
 </script>

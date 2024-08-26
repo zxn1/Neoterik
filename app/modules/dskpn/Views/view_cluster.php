@@ -3,8 +3,8 @@
     <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addClusterModalLabel">Tambah Kluster</h5>
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title text-white" id="addClusterModalLabel">Tambah Kluster</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -18,8 +18,8 @@
                             <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="ctm_desc" required>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn bg-gradient-info">Tambah</button>
+                            <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn bg-info text-white">Tambah</button>
                         </div>
                     </form>
                 </div>
@@ -28,9 +28,9 @@
     </div>
 
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
-            <h6 class="my-auto text-white">Senarai Kluster yang Didaftarkan</h6>
-            <button type="button" class="btn bg-gradient-info" style="margin-bottom:0 !important" data-bs-toggle="modal" data-bs-target="#addClusterModal">
+        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
+            <h6 class="my-auto text-white">KLUSTER</h6>
+            <button type="button" class="btn bg-info text-white" style="margin-bottom:0 !important" data-bs-toggle="modal" data-bs-target="#addClusterModal">
                 Tambah Kluster&nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
@@ -50,7 +50,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     <?php $counter = 1;
                     foreach ($clusters as $cluster) : ?>
                         <tr>
