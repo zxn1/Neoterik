@@ -140,7 +140,7 @@
 <div class="container-fluid py-4 accordion">
     <!-- Button trigger modal -->
 
-    <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#addClusterModal" hidden>
+    <button type="button" class="btn bg-info" data-bs-toggle="modal" data-bs-target="#addClusterModal" hidden>
         Tambah Kluster
     </button>
     <!-- Modal Structure -->
@@ -162,8 +162,8 @@
                             <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="clusterName" name="ctm_desc" required>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Batal</button>
-                            <button type="submit" class="btn bg-gradient-info">Tambah</button>
+                            <button type="button" class="btn bg-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn bg-info">Tambah</button>
                         </div>
                     </form>
                 </div>
@@ -172,7 +172,7 @@
     </div>
 
     <form class="accordion-item custom-accordian-radius card" action="<?= route_to('create_topic'); ?>" method="POST" hidden>
-        <div class="card-header d-flex p-3 bg-gradient-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <div class="card-header d-flex p-3 bg-primary accordion-header accordion-button custom-accordian-radius-header" id="headingOne" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
             <div class="col-md-10">
                 <h6 class="my-auto text-white">Daftar Topik dalam Kluster</h6>
             </div>
@@ -217,14 +217,14 @@
                 </div>
             </div>
             <div class="text-end p-3">
-                <input type="submit" class="btn bg-gradient-info" value="Tambah" />
+                <input type="submit" class="btn bg-info" value="Tambah" />
             </div>
         </div>
     </form>
 </div>
 <div class="container-fluid py-4">
     <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
         </div>
         <div class="container">
@@ -235,9 +235,9 @@
                         <p class="text-center mb-2"><strong style="font-size: 1.0rem; color: black;">Pilih Tahun</strong></p>
                         <?php foreach ($years as $yearItem) : ?>
                             <?php if ($yearItem == $selectedYear) : ?>
-                                <span class="pagination-button active">Tahun <?= $yearItem; ?></span>
+                                <span class="pagination-button active" style="background-color: #613673;">Tahun <?= $yearItem; ?></span>
                             <?php else : ?>
-                                <a href="?year=<?= $yearItem; ?>" class="pagination-button">Tahun <?= $yearItem; ?></a>
+                                <a href="?year=<?= $yearItem; ?>" class="pagination-button" style="color: #613673;">Tahun <?= $yearItem; ?></a>
                             <?php endif; ?>
                         <?php endforeach; ?>
                     </div>
@@ -297,7 +297,7 @@
 </div>
 
 <!-- <div class="text-end p-3">
-    <a href="list-registered-dskpn" class="btn bg-gradient-primary btn-sm mb-0 me-1">Seterusnya</a>
+    <a href="list-registered-dskpn" class="btn bg-primary btn-sm mb-0 me-1">Seterusnya</a>
 </div> -->
 
 <!-- alert part -->
