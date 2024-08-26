@@ -8,7 +8,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container-fluid py-4">
     <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
         </div>
         <div class="card-body mb-4 py-2">
@@ -39,18 +39,18 @@
 
 <div class="container-fluid py-4">
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
+        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white">SENARAI DSKPN</h6>
 
             <?php if ($register_subject_status == true) : ?>
-                <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">
+                <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-info text-white" style="margin-bottom:0 !important">
                     Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                     </svg>
                 </a>
             <?php else : ?>
-                <button class="btn bg-gradient-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
+                <button class="btn bg-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
                     Tambah Topik Dskpn&nbsp;&nbsp;
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                         <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
@@ -101,18 +101,18 @@
                             </div>
                             &nbsp;&nbsp;
 
-                            <?php 
+                            <?php
                             $both_roles = [
                                 'GURU_BESAR',
                                 'PENYELARAS'
                             ];
-                            if((get_user_role() == $both_roles[1]) && ($dskpnItem['dskpn_status'] != 3)): ?>
+                            if ((get_user_role() == $both_roles[1]) && ($dskpnItem['dskpn_status'] != 3)): ?>
                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                             <?php endif; ?>
 
-                            <?php if((get_user_role() == $both_roles[0]) && ($dskpnItem['dskpn_status'] == 3 || $dskpnItem['dskpn_status'] == 4)): ?>
+                            <?php if ((get_user_role() == $both_roles[0]) && ($dskpnItem['dskpn_status'] == 3 || $dskpnItem['dskpn_status'] == 4)): ?>
                                 &nbsp;&nbsp;
                                 <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
                                     <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
@@ -153,13 +153,13 @@
 
                     </div>
                     <div class="text-end">
-                        <button type="button" class="btn bg-gradient-secondary" style="margin-bottom:0 !important" data-bs-dismiss="modal">Batal</button>
-                        <span id="add-subject-btn" class="btn bg-gradient-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+                        <button type="button" class="btn bg-secondary" style="margin-bottom:0 !important" data-bs-dismiss="modal">Batal</button>
+                        <span id="add-subject-btn" class="btn bg-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                             </svg>
                         </span>
-                        <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit" style="display: none;">Simpan&nbsp;
+                        <button id="submit-btn" class="btn bg-info m-0" type="submit" style="display: none;">Simpan&nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
                                 <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
@@ -203,7 +203,7 @@
             $('#standard-pembelajaran').append(`
                 <div class="col-md-12 subject-card">
                     <div class="card mt-4">
-                        <div class="d-flex p-2 bg-gradient-primary">
+                        <div class="d-flex p-2 bg-primary">
                             <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Subjek" required>
                                 <option value="" selected disabled>--Select Subject--</option>
                                 ${options}
