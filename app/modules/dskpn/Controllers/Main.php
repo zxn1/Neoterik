@@ -353,10 +353,6 @@ class Main extends BaseController
         $cluster_details = $this->cluster_model->where('ctm_id', $tm_details['tm_ctm_id'])->first();
 
         // Get standard_performance
-        // $standard_performance = $this->standard_performance_model
-        //     ->join('subject_main', 'subject_main.sm_id = standard_performance.sm_id')
-        //     ->where('dskpn_id', $dskpn_id)
-        //     ->findAll();
         $standard_performance = $this->standard_performance_dskp_mapping_model
             ->join('dskp', 'dskp.dskp_code = standard_performance_dskp_mapping.spdm_dskp_code')
             ->join('standard_performance', 'standard_performance.sp_dskp_code = dskp.dskp_code')
@@ -370,41 +366,23 @@ class Main extends BaseController
         $assessment = $this->assessment_item_model
             ->join('assessment_category', 'assessment_item.asi_asc_id = assessment_category.asc_id')
             ->where('assessment_item.asi_dskpn_id', $dskpn_id)->findAll();
-        //connect dengan competency mapping
-        // $core_competency    = $this->domain_model->where('dskpn_id', $dskpn_id)->findAll();
         $core_competency    = $this->competency_mapping_model
             ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code')
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
         // Get 16 Domain List by tahap
-        // Tahap Pengetahuan Asas
-        // $template_domain_pengetahuan_asas = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pengetahuan Asas')->orderBy('d_id', 'ASC')->findAll();
-        // $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
         // Tahap Kemandirian
-        // $template_domain_kemandirian = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kemandirian')->orderBy('d_id', 'ASC')->findAll();
-        // $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kemandirian');
         $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kemandirian');
 
         // Tahap Pengetahuan Asas
-        // $template_domain_kualiti_keperibadian  = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kualiti Keperibadian')->orderBy('d_id', 'ASC')->findAll();
-        // $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kualiti Keperibadian');
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kualiti Keperibadian');
 
         // Get 7 Kemahiran Insaniah
-        // $template_kemahiran_insaniah = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', '7 Kemahiran Insaniah')->orderBy('d_id', 'ASC')->findAll();
-        // $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, '7 Kemahiran Insaniah');
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, '7 Kemahiran Insaniah');
 
         // Reka bentuk Instruksi
-        // $template_rekabentuk_instruksi = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Reka Bentuk Instruksi')->orderBy('d_id', 'ASC')->findAll();
-        // $rekabentuk_instruksi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Reka Bentuk Instruksi');
         $rekabentuk_instruksi =  $this->teaching_approach_mapping_model
             ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
@@ -432,25 +410,6 @@ class Main extends BaseController
             ->where('tappm_dskpn_id', $dskpn_id)
             ->where('tappc_desc', 'Kaedah')
             ->findAll();
-
-
-        //    protected $teaching_approach_category_model;
-        //    protected $teaching_approach_model;
-        //    protected $teaching_approach_mapping_model;
-
-        // Integrasi Teknologi
-        // $template_integrasi_teknologi = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Integrasi Teknologi')->orderBy('d_id', 'ASC')->findAll();
-        // $integrasi_teknologi =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Integrasi Teknologi');
-
-        // Pendekatan
-        // $template_pendekatan = $this->domain_model->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Pendekatan')->orderBy('d_id', 'ASC')->findAll();
-        // $pendekatan =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Pendekatan');
-
-        // Kaedah
-        // $template_kaedah = $this->domain_model
-        //     ->join('domain_group', 'domain_group.dg_id = domain.gd_id')->where('domain_group.dg_title', 'Kaedah')->orderBy('d_id', 'ASC')->findAll();
-        // $kaedah =  $this->domain_mapping_model->getAtribute($dskpn_id, 'Kaedah');
 
         // abm
         $abm = $this->learning_aid_model->where('la_dskpn_id', $dskpn_id)->findAll();
@@ -1646,7 +1605,7 @@ class Main extends BaseController
         $data['subtema'] = "";
         $data['duration'] = "";
         $data['subject_list'] = $this->subject_model->findAll();
-        
+
         $data['list_selection_to_populate'] = $this->session->get('objective_performance_selection_listing');
         $data['selected_by_selected'] = $this->session->get('arr_objective_ref');
 

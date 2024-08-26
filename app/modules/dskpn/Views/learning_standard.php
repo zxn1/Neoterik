@@ -9,24 +9,24 @@
     color: black !important;
   }
 
-  div.col-md-3.d-flex > div.ms-parent {
-    width: 100% !important; 
+  div.col-md-3.d-flex>div.ms-parent {
+    width: 100% !important;
     padding: 0px !important;
   }
 
-  div.col-md-3.d-flex > div.ms-parent > button {
-    height : 40px !important;
+  div.col-md-3.d-flex>div.ms-parent>button {
+    height: 40px !important;
     border-radius: 7.5px;
   }
 
-  div.col-md-3.d-flex > div.ms-parent > button > span {
-    background-color : white !important;
+  div.col-md-3.d-flex>div.ms-parent>button>span {
+    background-color: white !important;
     margin-top: 5px !important;
     margin-left: 5px !important;
   }
 
-  div.col-md-3.d-flex > div.ms-parent > div > ul > li > label > span {
-    font-size : 14px !important;
+  div.col-md-3.d-flex>div.ms-parent>div>ul>li>label>span {
+    font-size: 14px !important;
   }
 </style>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
@@ -45,7 +45,7 @@
 
   <div class="container-fluid py-4">
     <div class="card">
-      <div class="card-header d-flex p-3 bg-gradient-primary">
+      <div class="card-header d-flex p-3 bg-primary">
         <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
       </div>
       <div class="card-body">
@@ -123,9 +123,9 @@
 
   <div class="container-fluid py-4">
     <div class="card pb-3">
-      <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
+      <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
         <h6 class="my-auto text-white">STANDARD PEMBELAJARAN</h6>
-        <span id="add-subject-button" class="btn bg-gradient-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+        <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
           </svg>
@@ -146,7 +146,7 @@
                 <?php foreach ($subject_list as $item_list) : ?>
                   <?php if ($item_list['sbm_id'] == $sub) : ?>
                     <div class="card mt-4">
-                      <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+                      <div class="card-header d-flex p-1 bg-secondary align-items-center">
                         <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
                           <option class="dropdown-item" value='<?= $item_list['sbm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sbm_desc'] ?></option>
                         </select>
@@ -195,7 +195,7 @@
                       } ?>
 
                       <div class="p-1">
-                        <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>')">Tambah &nbsp;&nbsp;
+                        <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>')">Tambah &nbsp;&nbsp;
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                           </svg>
@@ -212,7 +212,7 @@
           ?>
         </div>
         <div class="card">
-          <div class="card-header d-flex bg-gradient-secondary objektif-prestasi">
+          <div class="card-header d-flex bg-secondary objektif-prestasi">
             <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
           </div>
           <div id="objective-prestasi" style="margin : 10px;">
@@ -230,20 +230,18 @@
                   <div class="col-md-3 d-flex">
 
                     <?php
-                    $rand = rand(100000000,1000000000);
+                    $rand = rand(100000000, 1000000000);
                     ?>
                     <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                       <?php
-                      if(isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true)))
-                      {
-                        foreach(json_decode($list_selection_to_populate, true) as $indeks => $populate_select)
-                        { ?>
-                          <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index])?'selected':'' ?>><?= $populate_select; ?></option>
+                      if (isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true))) {
+                        foreach (json_decode($list_selection_to_populate, true) as $indeks => $populate_select) { ?>
+                          <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index]) ? 'selected' : '' ?>><?= $populate_select; ?></option>
                         <?php
                         }
                       } else {
-                      ?>
-                      <option disabled>-- Sila pilih Kod --</option>
+                        ?>
+                        <option disabled>-- Sila pilih Kod --</option>
                       <?php } ?>
                     </select>
 
@@ -267,7 +265,7 @@
                   <div class="col-md-3 d-flex">
 
                     <?php
-                    $rand = rand(100000000,1000000000);
+                    $rand = rand(100000000, 1000000000);
                     ?>
 
                     <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
@@ -289,7 +287,7 @@
           </div>
 
           <div style="margin-left : 10px;">
-            <span class="btn bg-gradient-primary mt-2" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
+            <span class="btn bg-primary mt-2 text-white" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
               </svg>
@@ -307,7 +305,7 @@
       </div>
     </div>
     <div class="text-end p-3">
-      <span class="btn bg-gradient-info mt-2" onclick="validateAndSubmit()">Simpan&nbsp;
+      <span class="btn bg-info mt-2 text-white" onclick="validateAndSubmit()">Simpan&nbsp;
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
           <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z" />
           <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z" />
@@ -315,7 +313,7 @@
       </span>
     </div>
   </div>
-  <input type="text" name="objective-performance-selection-listing" id="objective-performance-selection-listing" value='<?= (isset($list_selection_to_populate) && !empty($list_selection_to_populate))?$list_selection_to_populate:''; ?>' hidden/>
+  <input type="text" name="objective-performance-selection-listing" id="objective-performance-selection-listing" value='<?= (isset($list_selection_to_populate) && !empty($list_selection_to_populate)) ? $list_selection_to_populate : ''; ?>' hidden />
 </form>
 
 <div style="position : absolute; top : 0px; right : 0px; width: 100%; height: 100%; z-index : 3; display : none;" id="loading-screen">
@@ -326,8 +324,8 @@
 <div class="modal fade" id="setDSKPNIC" tabindex="-1" aria-labelledby="setDSKPNIC" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan KOD DSKPN</h5>
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="rejectModalLabel">Sila Daftarkan KOD DSKPN</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -340,27 +338,27 @@
                 $part2_ex_dskpn = ""; ?>
                 <div class="col-md-8">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode" 
-                  value="<?php
-                          if (!isset($ex_dskpn_code_init)) {
-                            if (isset($dskpn_code)) {
-                              echo $dskpn_code;
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode"
+                    value="<?php
+                            if (!isset($ex_dskpn_code_init)) {
+                              if (isset($dskpn_code)) {
+                                echo $dskpn_code;
+                              } else {
+                                echo '';
+                              }
                             } else {
-                              echo '';
+                              // Separate the string into two parts
+                              if (substr_count($ex_dskpn_code_init, '-') > 1) {
+                                $lastHyphenPos = strrpos($ex_dskpn_code_init, '-');
+                                $part1_ex_dskpn = substr($ex_dskpn_code_init, 0, $lastHyphenPos);
+                                $part2_ex_dskpn = substr($ex_dskpn_code_init, $lastHyphenPos + 1);
+                              } else {
+                                $part1_ex_dskpn = $ex_dskpn_code_init;
+                                $part2_ex_dskpn = date("Y");
+                              }
+                              echo $part1_ex_dskpn . '-';
                             }
-                          } else {
-                            // Separate the string into two parts
-                            if (substr_count($ex_dskpn_code_init, '-') > 1) {
-                              $lastHyphenPos = strrpos($ex_dskpn_code_init, '-');
-                              $part1_ex_dskpn = substr($ex_dskpn_code_init, 0, $lastHyphenPos);
-                              $part2_ex_dskpn = substr($ex_dskpn_code_init, $lastHyphenPos + 1);
-                            } else {
-                              $part1_ex_dskpn = $ex_dskpn_code_init;
-                              $part2_ex_dskpn = date("Y");
-                            }
-                            echo $part1_ex_dskpn . '-';
-                          }
-                        ?>">
+                            ?>">
                 </div>
                 <div class="col-md-4">
                   <?php
@@ -374,8 +372,8 @@
             </div>
           </div>
           <div class="text-end">
-            <a href="<?= route_to('list_dskpn'); ?>" class="btn bg-gradient-secondary m-0">Kembali</a>
-            <button id="submit-btn" class="btn bg-gradient-info m-0" type="submit">Simpan&nbsp;
+            <a href="<?= route_to('list_dskpn'); ?>" class="btn bg-secondary m-0 text-white">Kembali</a>
+            <button id="submit-btn" class="btn bg-info m-0 text-white" type="submit">Simpan&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
                 <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
