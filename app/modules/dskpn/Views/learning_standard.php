@@ -211,98 +211,98 @@
           }
           ?>
         </div>
-        <div class="card">
-          <div class="card-header d-flex bg-secondary objektif-prestasi">
-            <h6 class="my-auto text-white ms-2">Objektif Prestasi</h6>
-          </div>
-          <div id="objective-prestasi" style="margin : 10px;">
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="card">
+      <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
+        <h6 class="my-auto text-white">OBJEKTIF PRESTASI</h6>
+      </div>
+      <div id="objective-prestasi" style="margin : 10px;">
 
-            <?php
-            if (!empty($objective) && $objective != "") {
-              foreach ($objective as $index => $item) { ?>
-                <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
-                  <div class="col-md-1 pe-1">
-                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index]) ? $objective_number[$index] : '' ?>">
-                  </div>
-                  <div class="col-md-8 pe-1">
-                    <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
-                  </div>
-                  <div class="col-md-3 d-flex">
+        <?php
+        if (!empty($objective) && $objective != "") {
+          foreach ($objective as $index => $item) { ?>
+            <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
+              <div class="col-md-1 pe-1">
+                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index]) ? $objective_number[$index] : '' ?>">
+              </div>
+              <div class="col-md-8 pe-1">
+                <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
+              </div>
+              <div class="col-md-3 d-flex">
 
+                <?php
+                $rand = rand(100000000, 1000000000);
+                ?>
+                <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                  <?php
+                  if (isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true))) {
+                    foreach (json_decode($list_selection_to_populate, true) as $indeks => $populate_select) { ?>
+                      <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index]) ? 'selected' : '' ?>><?= $populate_select; ?></option>
                     <?php
-                    $rand = rand(100000000, 1000000000);
+                    }
+                  } else {
                     ?>
-                    <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
-                      <?php
-                      if (isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true))) {
-                        foreach (json_decode($list_selection_to_populate, true) as $indeks => $populate_select) { ?>
-                          <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index]) ? 'selected' : '' ?>><?= $populate_select; ?></option>
-                        <?php
-                        }
-                      } else {
-                        ?>
-                        <option disabled>-- Sila pilih Kod --</option>
-                      <?php } ?>
-                    </select>
+                    <option disabled>-- Sila pilih Kod --</option>
+                  <?php } ?>
+                </select>
 
-                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
-                      <button class="input-group-text" id="btnGroupAddon">
-                        <i class="fas fa-trash-alt" style="color: red;"></i>
-                      </button>
-                    </div>
-                  </div>
+                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
+                  <button class="input-group-text" id="btnGroupAddon">
+                    <i class="fas fa-trash-alt" style="color: red;"></i>
+                  </button>
                 </div>
-              <?php }
-            } else {
-              for ($i = 0; $i < 3; $i++) { ?>
-                <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
-                  <div class="col-md-1 pe-1">
-                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
-                  </div>
-                  <div class="col-md-8 pe-1">
-                    <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
-                  </div>
-                  <div class="col-md-3 d-flex">
+              </div>
+            </div>
+          <?php }
+        } else {
+          for ($i = 0; $i < 3; $i++) { ?>
+            <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
+              <div class="col-md-1 pe-1">
+                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+              </div>
+              <div class="col-md-8 pe-1">
+                <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
+              </div>
+              <div class="col-md-3 d-flex">
 
-                    <?php
-                    $rand = rand(100000000, 1000000000);
-                    ?>
+                <?php
+                $rand = rand(100000000, 1000000000);
+                ?>
 
-                    <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
-                      <option disabled>-- Sila pilih Kod --</option>
-                    </select>
+                <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                  <option disabled>-- Sila pilih Kod --</option>
+                </select>
 
-                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
-                      <button class="input-group-text" id="btnGroupAddon">
-                        <i class="fas fa-trash-alt" style="color: red;"></i>
-                      </button>
-                    </div>
-                  </div>
+                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                  <button class="input-group-text" id="btnGroupAddon">
+                    <i class="fas fa-trash-alt" style="color: red;"></i>
+                  </button>
                 </div>
-            <?php
-              }
-            }
-            ?>
-
-          </div>
-
-          <div style="margin-left : 10px;">
-            <span class="btn bg-primary mt-2 text-white" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-              </svg>
-            </span>
-          </div>
-
-        </div>
-        <br>
-        <div style="display: flex; align-items: center;">
-          <h6 for="Duration" style="margin-right: 10px;">Durasi Perlaksanaan</h6>
-          <input name="duration" style="width: 200px;" class="form-control" type="number" placeholder="Sila Masukkan Durasi" value="<?= $duration; ?>" required>&nbsp;<b>Minit</b>
-        </div>
-
+              </div>
+            </div>
+        <?php
+          }
+        }
+        ?>
 
       </div>
+
+      <div style="margin-left : 10px;">
+        <span class="btn bg-primary mt-2 text-white" onclick="addObjectivePrestasi()">Tambah &nbsp;&nbsp;
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+          </svg>
+        </span>
+      </div>
+
+    </div>
+    <br>
+    <div style="display: flex; align-items: center;">
+      <h6 for="Duration" style="margin-right: 10px;">Durasi Perlaksanaan</h6>
+      <input name="duration" style="width: 200px;" class="form-control" type="number" placeholder="Sila Masukkan Durasi" value="<?= $duration; ?>" required>&nbsp;<b>Minit</b>
     </div>
     <div class="text-end p-3">
       <span class="btn bg-info mt-2 text-white" onclick="validateAndSubmit()">Simpan&nbsp;
