@@ -53,7 +53,7 @@
       <hr class="custom">
 
       <div class="d-flex justify-content-between align-items-center p-2">
-        <a href="<?= route_to('dskpn_learning_standard') . "?flag=true" ?>" class="btn bg-warning mt-2 text-white">
+        <a href="<?= route_to('dskpn_learning_standard') . "?flag=true" ?>" class="btn bg-danger mt-2 text-white">
           <span>Kembali</span>
         </a>
         <div>
