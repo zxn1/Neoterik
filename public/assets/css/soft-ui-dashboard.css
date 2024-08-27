@@ -2476,7 +2476,8 @@ progress {
 }
 
 .table {
-  --bs-table-color: #67748e;
+  /* --bs-table-color: #67748e; */
+  --bs-table-color: #000000;
   --bs-table-bg: transparent;
   --bs-table-border-color: #e9ecef;
   --bs-table-accent-bg: transparent;
