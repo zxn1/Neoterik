@@ -85,7 +85,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
-<div class="container-fluid py-4 pb-0">
+<!-- <div class="container-fluid py-4 pb-0">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
       <li class="breadcrumb-item text-sm">
@@ -109,12 +109,12 @@
       <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Butiran DSKPN</li>
     </ol>
   </nav>
-</div>
+</div> -->
 
 <div class="container-fluid py-4">
 
   <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+    <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">DSKPN</h6>
     </div>
     <div class="card-body">
@@ -175,7 +175,7 @@
                 <!-- foreach subjek -->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_number'] . ' ' . $ls_desc['lsi_desc'] . "\n"; ?> <?php endif ?><?php endforeach ?></textarea>
@@ -239,7 +239,7 @@
                 <!-- Tahap Penguasaan-->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                    <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($standard_performance as $sp_desc) : ?>
@@ -258,7 +258,7 @@
                 <!-- foreach kompetensi teras -->
                 <?php foreach ($subjects as $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                    <div class="card-header d-flex p-3 bg-gradient-primary">
+                    <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($core_competency as $cc_desc) : ?>
@@ -276,7 +276,7 @@
                 <?php foreach ($subjects as $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
-                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <div class="card-header d-flex p-3 bg-primary">
                         <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
@@ -375,7 +375,7 @@
                 <?php foreach ($subjects as $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
-                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <div class="card-header d-flex p-3 bg-primary">
                         <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
@@ -538,7 +538,7 @@
                 <div class="col-md-3">
                   <div class="d-flex top-0 w-100">
                     <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                      <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                         <h6 class="my-auto text-white">REKA BENTUK INTRUKSI</h6>
                       </div>
                       <?php
@@ -556,7 +556,7 @@
                 <div class="col-md-3">
                   <div class="d-flex top-0 w-100">
                     <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                      <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                         <h6 class="my-auto text-white">INTEGRASI TEKNOLOGI</h6>
                       </div>
                       <?php
@@ -574,7 +574,7 @@
                 <div class="col-md-3">
                   <div class="d-flex top-0 w-100">
                     <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                      <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                         <h6 class="my-auto text-white">PENDEKATAN</h6>
                       </div>
                       <?php
@@ -592,7 +592,7 @@
                 <div class="col-md-3">
                   <div class="d-flex top-0 w-100">
                     <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                      <div class="card-header d-flex p-3 bg-gradient-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
+                      <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                         <h6 class="my-auto text-white">KAEDAH</h6>
                       </div>
                       <?php
@@ -630,13 +630,13 @@
       <div class="text-end p-3">
         <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4])) : ?>
           <!-- Reject Button -->
-          <button class="btn bg-gradient-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
+          <button class="btn bg-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
             </svg>
           </button>
           <!-- Approve Button -->
-          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-gradient-info mt-2">Lulus&nbsp;
+          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-info mt-2">Lulus&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM6.97 10.97a.75.75 0 0 1-1.07 0L3.75 8.8a.75.75 0 1 1 1.07-1.05l1.65 1.65 3.58-3.58a.75.75 0 0 1 1.07 1.06l-4.24 4.24z" />
             </svg>
@@ -650,11 +650,11 @@
     <div class="col-xl-12">
       <?php if ($dskpn_details['dskpn_status'] == 1) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-gradient-info">Approved By: <?= get_user_name($dskpn_details['approved_by']) ?></p>
+        <p class="badge badge-sm bg-info">Approved By: <?= get_user_name($dskpn_details['approved_by']) ?></p>
       <?php endif; ?>
       <?php if ($dskpn_details['dskpn_status'] == 2) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-gradient-danger">Rejected By: <?= get_user_name($dskpn_details['approved_by']) ?></p><br>
+        <p class="badge badge-sm bg-danger">Rejected By: <?= get_user_name($dskpn_details['approved_by']) ?></p><br>
         <div class="card-body" style="height: auto;">
           <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_remarks'] ?></textarea>
         </div>
@@ -681,7 +681,7 @@
             <textarea id="catatan" class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
           </div>
           <div class="text-end">
-            <button class="btn bg-gradient-info mt-2" type="submit">Simpan&nbsp;
+            <button class="btn bg-info mt-2" type="submit">Simpan&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
                 <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>

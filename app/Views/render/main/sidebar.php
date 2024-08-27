@@ -213,7 +213,8 @@
             <span class="nav-link-text ms-1">DSKPN</span>
           </a>
           <?php
-          $stylish = "background-color : #cbefd3b8; border-radius : 10px; margin-bottom : 1px;";
+          // $stylish = "background-color : #cbefd3b8; border-radius : 10px; margin-bottom : 1px;";
+          $stylish = "background-color : #aa89d9; border-radius : 10px; margin-bottom : 1px;";
           ?>
           <div class="collapse <?= $in_dskpn_list ? 'show' : ''; ?>" id="standardPembelajaran">
             <ul class="nav ms-1 ps-1">

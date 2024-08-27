@@ -1,6 +1,6 @@
 <div class="container-fluid py-4">
     <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">Senarai DSKPN yang Didaftarkan</h6>
         </div>
         <br>
@@ -45,22 +45,22 @@
                                     'PENYELARAS'
                                 ];
 
-                                if((get_user_role() == $both_roles[1]) && ($clusterItem['dskpn_status'] != 3)): ?>
-                                &nbsp;&nbsp;
-                                <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])); ?>">
-                                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                                </a>
-                                &nbsp;&nbsp;
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
-                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                </a>
+                                if ((get_user_role() == $both_roles[1]) && ($clusterItem['dskpn_status'] != 3)): ?>
+                                    &nbsp;&nbsp;
+                                    <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])); ?>">
+                                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                    </a>
+                                    &nbsp;&nbsp;
+                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
+                                        <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+                                    </a>
                                 <?php endif; ?>
 
-                                <?php if((get_user_role() == $both_roles[0]) && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
-                                &nbsp;&nbsp;
-                                <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
-                                    <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
-                                </a>
+                                <?php if ((get_user_role() == $both_roles[0]) && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
+                                    &nbsp;&nbsp;
+                                    <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
+                                        <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
+                                    </a>
                                 <?php endif; ?>
                             </td>
                         </tr>
