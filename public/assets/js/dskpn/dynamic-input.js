@@ -47,7 +47,7 @@ $('#add-subject-button').on('click', function() {
     $('#standard-pembelajaran').append(`
     <div class="col-md-4 subject-card">
         <div class="card mt-4">
-        <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+        <div class="card-header d-flex p-1 bg-secondary align-items-center">
             <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
                 ${htmlOptions}
             </select>
@@ -73,7 +73,7 @@ $('#add-subject-button').on('click', function() {
         </div>
 
         <div class="p-1">
-            <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}', '${sbm_code}')">Tambah &nbsp;&nbsp;
+            <span class="btn bg-primary mt-2" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}', '${sbm_code}')">Tambah &nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                 </svg>
@@ -186,7 +186,7 @@ $('#topik-dynamic-field').on('change', function() {
                     $('#standard-pembelajaran').append(`
                         <div class="col-md-4 subject-card">
                             <div class="card mt-4">
-                                <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
+                                <div class="card-header d-flex p-1 bg-secondary align-items-center">
                                     <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
                                         ${htmlOptions}
                                     </select>
@@ -212,7 +212,7 @@ $('#topik-dynamic-field').on('change', function() {
                                 </div>
 
                                 <div class="p-1">
-                                    <span class="btn bg-gradient-primary mt-2" onclick="addStandardPembelajaran('${item.sbm_id}', '${item.sbm_code}')">Tambah &nbsp;&nbsp;
+                                    <span class="btn bg-primary mt-2" onclick="addStandardPembelajaran('${item.sbm_id}', '${item.sbm_code}')">Tambah &nbsp;&nbsp;
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                                         </svg>

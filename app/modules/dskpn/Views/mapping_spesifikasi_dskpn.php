@@ -57,7 +57,7 @@
 <form action="<?= route_to('store-spec-map') ?>" method="POST" class="container-fluid py-4">
 
   <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+    <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
     </div>
     <div class="card-body">
@@ -92,7 +92,7 @@
     <?php foreach ($allGroup as $group) { ?>
       <div class="col-md-6">
         <div class="card mt-4" style="min-height:400px;" id="notifications">
-          <div class="card-header d-flex p-3 bg-gradient-primary">
+          <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white"><?= strtoupper($group['tappc_desc']); ?></h6>
           </div>
           <div class="card-body pt-0">
@@ -152,7 +152,7 @@
             </div>
           </div>
           <?php if ($group['tappc_allow_modify'] == 'Y') { ?>
-            <span class="btn bg-gradient-primary mt-2 me-2 ms-2" onclick="addField('method-instruction-<?= $group['tappc_id'] ?>', <?= $group['tappc_id'] ?>)">Tambah TP &nbsp;&nbsp;
+            <span class="btn bg-primary mt-2 me-2 ms-2 text-white" onclick="addField('method-instruction-<?= $group['tappc_id'] ?>', <?= $group['tappc_id'] ?>)">Tambah&nbsp;&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
               </svg>
@@ -165,13 +165,13 @@
   <br>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('activity_n_assessment'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('activity_n_assessment'); ?>" class="btn bg-danger mt-2 text-white">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <!-- <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a> -->
-      <!-- <button type="submit" class="btn bg-gradient-info">Semak</button> -->
-      <a href="<?= base_url('demo/K1T4 DSKPN 1.pdf') ?>" target="_blank" type="button" class="btn bg-gradient-success">Semak</a>
+      <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
+      <!-- <button type="submit" class="btn bg-info">Semak</button> -->
+      <a href="<?= base_url('demo/K1T4 DSKPN 1.pdf') ?>" target="_blank" type="button" class="btn bg-success text-white">Semak</a>
       <button type="submit" class="btn btn-primary" data-dismiss="modal">Hantar</button>
 
     </div>

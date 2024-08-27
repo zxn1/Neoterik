@@ -57,7 +57,7 @@
   <?= csrf_field() ?>
 
   <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+    <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
     </div>
     <div class="card-body">
@@ -94,7 +94,7 @@
   <div class="row">
     <div class="col-xl-12">
       <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
           <h6 class="my-auto text-white">PENETAPAN 16 DOMAIN MAPPING</h6>
         </div>
         <div class="card-body p-3 mt-2" style="height: auto;">
@@ -107,7 +107,7 @@
                 <?php foreach ($subjects as $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
-                      <div class="card-header d-flex p-3 bg-gradient-primary">
+                      <div class="card-header d-flex p-3 bg-primary">
                         <h6 class="my-auto text-white"><?= $subject['sbm_desc'] ?></h6>
                       </div>
                       <div class="card-body p-0">
@@ -213,12 +213,12 @@
   <br>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('mapping_core'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('mapping_core'); ?>" class="btn bg-danger mt-2 text-white">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <!-- <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a> -->
-      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+      <!-- <a href="#" type="button" class="btn bg-secondary">Batal</a> -->
+      <button type="submit" class="btn bg-info text-white">Seterusnya</button>
     </div>
   </div>
 
@@ -233,6 +233,6 @@
 </script>
 
 <!-- <div class="text-end p-3">
-    <a href="#" type="button" class="btn bg-gradient-secondary">Batal</a>
-    <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+    <a href="#" type="button" class="btn bg-secondary">Batal</a>
+    <button type="submit" class="btn bg-info">Seterusnya</button>
   </div> -->
