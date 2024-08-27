@@ -70,7 +70,7 @@
 <form action="<?= route_to('store_actv_asses') ?>" method="POST" class="container-fluid py-4">
 
   <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+    <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">Petaan Aktiviti dan Pentaksiran</h6>
     </div>
     <div class="card-body">
@@ -105,51 +105,49 @@
   <div class="row">
     <div class="py-1">
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
+        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
           <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
         </div>
         <div id="teaching-idea-and-activity" class="row p-3">
-          <?php 
-          if(isset($activity_number) && !empty($activity_number) && isset($activity_input) && !empty($activity_input))
-          {
-            foreach($activity_number as $index => $numb)
-            { ?>
-            <div class="row m-1" id="activity-idea-item-<?= ($index + 1); ?>">
-              <div class="col-2 p-0 pe-1">
-                <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>">
-              </div>
-              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;" value="<?= isset($activity_input[$index])?$activity_input[$index]:'' ?>">
-                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#activity-idea-item-<?= ($index + 1); ?>').remove();">
+          <?php
+          if (isset($activity_number) && !empty($activity_number) && isset($activity_input) && !empty($activity_input)) {
+            foreach ($activity_number as $index => $numb) { ?>
+              <div class="row m-1" id="activity-idea-item-<?= ($index + 1); ?>">
+                <div class="col-2 p-0 pe-1">
+                  <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>">
+                </div>
+                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                  <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;" value="<?= isset($activity_input[$index]) ? $activity_input[$index] : '' ?>">
+                  <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#activity-idea-item-<?= ($index + 1); ?>').remove();">
                     <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
-                        <i class="fas fa-trash-alt" style="color:red;"></i>
+                      <i class="fas fa-trash-alt" style="color:red;"></i>
                     </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <?php } 
+            <?php }
           } else {
-          for($i = 0; $i < 3; $i++) { ?>
-          <div class="row m-1" id="activity-idea-item-<?= $i; ?>">
-            <div class="col-2 p-0 pe-1">
-              <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
-            </div>
-            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-              <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;">
-              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#activity-idea-item-<?= $i; ?>').remove();">
-                  <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+            for ($i = 0; $i < 3; $i++) { ?>
+              <div class="row m-1" id="activity-idea-item-<?= $i; ?>">
+                <div class="col-2 p-0 pe-1">
+                  <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+                </div>
+                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                  <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;">
+                  <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#activity-idea-item-<?= $i; ?>').remove();">
+                    <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
                       <i class="fas fa-trash-alt" style="color:red;"></i>
-                  </button>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
           <?php }
-        } ?>
+          } ?>
         </div>
         <div class="p-3 pt-0 pb-2">
-          <span class="btn bg-gradient-primary mt-1" onclick="addActivityItemField('method-instruction-ID', 'ID')">Tambah Aktiviti &nbsp;&nbsp;
+          <span class="btn bg-primary mt-1 text-white" onclick="addActivityItemField('method-instruction-ID', 'ID')">Tambah Aktiviti &nbsp;&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
             </svg>
           </span>
         </div>
@@ -160,57 +158,56 @@
   <div class="row">
     <div class="py-4">
       <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
+        <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
           <h6 class="my-auto text-white">Pentaksiran</h6>
         </div>
-        <?php foreach($assessment_category as $index => $category) { ?>
-        <div id="assessment-part-<?= $category['asc_id']; ?>" class="row p-2">
-          <h6 class="m-1"><?= ($index + 1) . ". " . $category['asc_desc']; ?></h6>
-          <div class="p-0 pe-3 ps-3" id="assessment-div-<?= $category['asc_id']; ?>">
+        <?php foreach ($assessment_category as $index => $category) { ?>
+          <div id="assessment-part-<?= $category['asc_id']; ?>" class="row p-2">
+            <h6 class="m-1"><?= ($index + 1) . ". " . $category['asc_desc']; ?></h6>
+            <div class="p-0 pe-3 ps-3" id="assessment-div-<?= $category['asc_id']; ?>">
 
-            <?php 
-            if((isset($assessment_number_session) && !empty($assessment_number_session)) && (isset($assessment_input_session) && !empty($assessment_input_session)))
-            {
-            foreach($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
-            <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
-              <div class="col-2 p-0 pe-1">
-                <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
-              </div>
-              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
-                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>').remove();">
-                    <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+              <?php
+              if ((isset($assessment_number_session) && !empty($assessment_number_session)) && (isset($assessment_input_session) && !empty($assessment_input_session))) {
+                foreach ($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
+                  <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
+                    <div class="col-2 p-0 pe-1">
+                      <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
+                    </div>
+                    <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                      <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
+                      <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>').remove();">
+                        <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+                          <i class="fas fa-trash-alt" style="color:red;"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                <?php }
+              } else { ?>
+                <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-0">
+                  <div class="col-2 p-0 pe-1">
+                    <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+                  </div>
+                  <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                    <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;">
+                    <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-0').remove();">
+                      <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
                         <i class="fas fa-trash-alt" style="color:red;"></i>
-                    </button>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <?php }
-            } else { ?>
-            <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-0">
-              <div class="col-2 p-0 pe-1">
-                <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
-              </div>
-              <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;">
-                <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-0').remove();">
-                    <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
-                        <i class="fas fa-trash-alt" style="color:red;"></i>
-                    </button>
-                </div>
-              </div>
-            </div>
-           <?php } ?>
+              <?php } ?>
 
-          </div>
-          <div class="p-3 pt-0 pb-1">
-            <span class="btn bg-gradient-primary mt-1" onclick="addAsessmentItemField('<?= $category['asc_id']; ?>')">Tambah Item <?= $category['asc_desc']; ?>&nbsp;&nbsp;
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            </div>
+            <div class="p-3 pt-0 pb-1">
+              <span class="btn bg-primary mt-1 text-white" onclick="addAsessmentItemField('<?= $category['asc_id']; ?>')">Tambah Item <?= $category['asc_desc']; ?>&nbsp;&nbsp;
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-              </svg>
-            </span>
+                </svg>
+              </span>
+            </div>
           </div>
-        </div>
         <?php } ?>
       </div>
     </div>
@@ -219,7 +216,7 @@
   <div class="row">
     <div class="col-lg-6">
       <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
           <h6 class="my-auto text-white">Alat Bantu Mengajar (ABM)</h6>
         </div>
         <div class="card-body">
@@ -264,7 +261,7 @@
 
                 </tbody>
               </table>
-              <span class="btn bg-gradient-primary mt-2" onclick="addField()">Tambah Item&nbsp;&nbsp;
+              <span class="btn bg-primary mt-2 text-white" onclick="addField()">Tambah Item&nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                 </svg>
@@ -278,7 +275,7 @@
     <div class="col-lg-4">
 
       <div class="card">
-        <div class="card-header d-flex p-3 bg-gradient-primary">
+        <div class="card-header d-flex p-3 bg-primary">
           <h6 class="my-auto text-white">Keperluan Pengilabatan Ibu Bapa</h6>
         </div>
         <div class="card-body">
@@ -301,12 +298,12 @@
   </div>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-gradient-danger mt-2">
+    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-danger mt-2 text-white">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <!-- <a href="domain-mapping" type="button" class="btn bg-gradient-secondary">Batal</a> -->
-      <button type="submit" class="btn bg-gradient-info">Seterusnya</button>
+      <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
+      <button type="submit" class="btn bg-info text-white">Seterusnya</button>
     </div>
   </div>
 </form>

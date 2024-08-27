@@ -21,7 +21,7 @@ $(document).ready(function() {
                             <input id="dskp-code-subject-${item.sbm_id}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
                         </div>
                         <div class="col-3 p-0 pe-2">
-                            <button type="button" class="btn bg-success p-3" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}')">Semak</button>
+                            <button type="button" class="btn bg-secondary p-3 text-white" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}')">Semak</button>
                         </div>
                     </div>
                 </div>
