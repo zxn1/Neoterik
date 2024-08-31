@@ -213,7 +213,7 @@ class Main extends BaseController
     {
         $data = [];
         $data['clusters'] = $this->cluster_model->findAll();
-        // dd($data['subjects']);
+        $data['subjects'] = $this->subject_model->findAll();
         $script = ['data', 'view_subject'];
         $style = ['view_subject'];
         $this->render_jscss('view_cluster', $data, $script, $style);
@@ -931,22 +931,24 @@ class Main extends BaseController
     public function store_cluster_subject_mapping()
     {
         $data = [];
-        $cm_id = $this->request->getPost("cm_id");
-        $tm_id = $this->request->getPost("tm_id");
+        $ctm_id = $this->request->getPost("ctm_id");
 
         // Get the POST data
         $subjects = $this->request->getPost('subject');
         // Iterate over each selected subject and save to the database
         foreach ($subjects as $subjectId) {
             $data = [
-                'csm_ctm_id' => $cm_id,
+                'csm_ctm_id' => $ctm_id,
                 'csm_sbm_id' => $subjectId,
             ];
 
             $this->cluster_subject_mapping_model->insert($data);
         }
         // Set success message and redirect back
-        return redirect()->to(route_to('create_dskpn', $tm_id));
+        // return redirect()->to(route_to('create_dskpn', $tm_id));
+        session()->setFlashdata('success', 'Pemetaan Subjek Berjaya!');
+
+        return redirect()->back();
     }
     public function store_specification_mapping()
     {
