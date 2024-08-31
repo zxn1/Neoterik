@@ -225,10 +225,10 @@
         if (!empty($objective) && $objective != "") {
           foreach ($objective as $index => $item) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
-              <div class="col-md-1 pe-1">
+              <div class="col pe-1">
                 <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index]) ? $objective_number[$index] : '' ?>">
               </div>
-              <div class="col-md-8 pe-1">
+              <div class="col-md-6 pe-1">
                 <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
               </div>
               <div class="col-md-3 d-flex">
@@ -255,15 +255,57 @@
                   </button>
                 </div>
               </div>
+              <div class="col-md-2 d-flex">
+
+                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
+                  <option value="">-- Sila Pilih Kategori Pentaksiran --</option>
+                  <optgroup label="Kognitif">
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C3">C3</option>
+                    <option value="C4">C4</option>
+                    <option value="C5">C5</option>
+                    <option value="C6">C6</option>
+                    <option value="C7">C7</option>
+                    <option value="C8">C8</option>
+                  </optgroup>
+                  <optgroup label="Psikomotor">
+                    <option value="P1">P1</option>
+                    <option value="P2">P2</option>
+                    <option value="P3">P3</option>
+                    <option value="P4">P4</option>
+                    <option value="P5">P5</option>
+                    <option value="P6">P6</option>
+                    <option value="P7">P7</option>
+                    <option value="P8">P8</option>
+                  </optgroup>
+                  <optgroup label="Afektif">
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="A4">A4</option>
+                    <option value="A5">A5</option>
+                    <option value="A6">A6</option>
+                    <option value="A7">A7</option>
+                    <option value="A8">A8</option>
+                  </optgroup>
+                </select>
+
+                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                  <button class="input-group-text" id="btnGroupAddon">
+                    <i class="fas fa-trash-alt" style="color: red;"></i>
+                  </button>
+                </div>
+              </div>
             </div>
           <?php }
         } else {
           for ($i = 0; $i < 3; $i++) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
-              <div class="col-md-1 pe-1">
+              <div class="col pe-1">
                 <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
               </div>
-              <div class="col-md-8 pe-1">
+              <div class="col-md-6 pe-1">
                 <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
               </div>
               <div class="col-md-3 d-flex">
@@ -274,6 +316,41 @@
 
                 <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                   <option disabled>-- Sila pilih Kod --</option>
+                </select>
+              </div>
+              <div class="col-md-2 d-flex">
+                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
+                  <option value="">-- Sila Pilih Kategori Pentaksiran --</option>
+                  <optgroup label="Kognitif">
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C3">C3</option>
+                    <option value="C4">C4</option>
+                    <option value="C5">C5</option>
+                    <option value="C6">C6</option>
+                    <option value="C7">C7</option>
+                    <option value="C8">C8</option>
+                  </optgroup>
+                  <optgroup label="Psikomotor">
+                    <option value="P1">P1</option>
+                    <option value="P2">P2</option>
+                    <option value="P3">P3</option>
+                    <option value="P4">P4</option>
+                    <option value="P5">P5</option>
+                    <option value="P6">P6</option>
+                    <option value="P7">P7</option>
+                    <option value="P8">P8</option>
+                  </optgroup>
+                  <optgroup label="Afektif">
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="A4">A4</option>
+                    <option value="A5">A5</option>
+                    <option value="A6">A6</option>
+                    <option value="A7">A7</option>
+                    <option value="A8">A8</option>
+                  </optgroup>
                 </select>
 
                 <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
@@ -408,3 +485,16 @@
     });
   </script>
 <?php endif; ?>
+
+<script>
+  $(document).ready(function() {
+    //Select2 
+    $(".select2").select2({
+      maximumSelectionLength: 3,
+    });
+    //Chosen 
+    $(".select2").chosen({
+      max_selected_options: 3,
+    });
+  });
+</script>

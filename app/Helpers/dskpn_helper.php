@@ -132,6 +132,6 @@ function get_cluster_subject($ctm_id)
         // Return the subjects as a comma-separated string
         return implode(', ', $subjects);
     } else {
-        return ''; // Return an empty string if no matching records are found
+        return null; // Return an empty string if no matching records are found
     }
 }
