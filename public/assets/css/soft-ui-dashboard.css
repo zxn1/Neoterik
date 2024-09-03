@@ -23372,7 +23372,8 @@ html {
 
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-background,
 .navbar-vertical .navbar-nav>.nav-item .nav-link.active .icon svg .color-foreground {
-  fill: #fff;
+  fill: #3A416F;
+  /* fill: #fff; */
 }
 
 .navbar-main {
