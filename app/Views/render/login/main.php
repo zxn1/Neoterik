@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="icon" type="image/png" href="<?= base_url() ?>neoterik/img/logo_srsb.png">
     <title>
         SEKOLAH RENDAH SERI BUDIMAN
     </title>
@@ -28,6 +27,38 @@
         .ms-n6 {
             margin-left: -5rem !important;
         }
+
+        /* .oblique-image {
+            background: linear-gradient(45deg, rgba(128, 0, 128, 0), rgba(128, 0, 128, 0)), url('<?= base_url('neoterik/img/assets/kabg.png') ?>');
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 1.5s ease-in-out;
+        } */
+
+        .card {
+            box-shadow: 0 4px 8px rgba(128, 0, 128, 0.3);
+        }
+
+        .card.card-plain {
+            background-color: #ffffffeb;
+            box-shadow: none;
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .main-content {
+            background: url('<?= base_url('neoterik/img/assets/kabg.png') ?>');
+            background-size: cover;
+        }
     </style>
 </head>
 
@@ -46,7 +77,7 @@
                                             <!-- <b>eSchool System</b> -->
                                         </span>
                                     </div><br><br>
-                                    <h3 class="font-weight-bolder text-info text-gradient">Log Masuk</h3>
+                                    <h3 class="font-weight-bolder text-primary">Log Masuk</h3>
                                     <p class="mb-0">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p>
                                 </div>
                                 <div class="card-body">
@@ -71,72 +102,25 @@
                                             <label class="form-check-label" for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                                            <button type="submit" class="btn bg-primary w-100 mt-4 mb-0 text-white">Sign in</button>
                                         </div>
                                     </form>
                                 </div>
                                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
                                         Tidak mempunyai akaun?
-                                        <a href="<?= site_url('register') ?>" class="text-info text-gradient font-weight-bold">Daftar</a>
+                                        <a href="<?= site_url('register') ?>" class="text-primary font-weight-bold">Daftar</a>
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-6 d-lg-flex d-none h-100 my-auto position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                            <div id="carouselExampleIndicators" class="carousel slide border-radius-lg d-flex flex-column justify-content-center overflow-hidden" data-bs-ride="carousel">
-                                <ol class="carousel-indicators">
-                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
-                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
-                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
-                                    <li data-target="#carouselExampleIndicators" data-bs-slide-to="3"></li>
-                                </ol>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img class="d-block w-100" src="<?= base_url('neoterik/img/assets/login_slider1.png') ?>" alt="First slide">
-                                        <b>Study hard, shine bright.</b><br>
-                                        <span>Work diligently in your studies to achieve success and recognition</span><br><span class="h5">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="<?= base_url('neoterik/img/assets/login_slider2.png') ?>" alt="Second slide">
-                                        <b>Unlock your potential through study</b><br>
-                                        <span>Study to discover and unleash your capabilities</span><br><span class="h5">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="<?= base_url('neoterik/img/assets/login_slider3.png') ?>" alt="Third slide">
-                                        <b>Knowledge is your superpower, study to wield it</b><br>
-                                        <span>Acquire knowledge through study to make a positive impact</span><br><span class="h5">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img class="d-block w-100" src="<?= base_url('neoterik/img/assets/login_slider4.png') ?>" alt="Third slide">
-                                        <b>Learn today, lead tomorrow</b><br>
-                                        <span>Start learning now to prepare for future leadership roles.</span><br><span class="h5">
-                                    </div>
-                                </div>
-                                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                            <!-- <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-          background-size: cover;">
-                <span class="mask bg-gradient-primary opacity-6"></span>
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
-                <p class="text-white position-relative">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
-              </div> -->
-                        </div>
                         <!-- <div class="col-md-6">
-              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8" style="box-shadow: 1px 2px 4px 9px rgba(0, 0, 0, 0.2);">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('https://www.upsi.edu.my/wp-content/uploads/2022/01/Bangunan-Suluh-Budiman2.jpg')"></div>
-              </div>
-            </div> -->
+                            <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6"></div>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
-            </div>
         </section>
     </main>
     <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
@@ -163,12 +147,12 @@
     <!-- fail message -->
     <?php if (session('swal_fail')) : ?>
         <script>
-        Swal.fire({
-            icon: 'error',
-            text: "<?= session('swal_fail') ?>",
-            timer: 3000,
-            showConfirmButton: false
-        });
+            Swal.fire({
+                icon: 'error',
+                text: "<?= session('swal_fail') ?>",
+                timer: 3000,
+                showConfirmButton: false
+            });
         </script>
 
     <?php endif; ?>

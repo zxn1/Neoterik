@@ -319,7 +319,7 @@
                 </select>
               </div>
               <div class="col-md-2 d-flex">
-                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
+                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic-<?= $i ?>" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
                   <option value="">-- Sila Pilih Kategori Pentaksiran --</option>
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
