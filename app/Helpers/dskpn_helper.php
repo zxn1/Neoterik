@@ -135,3 +135,35 @@ function get_cluster_subject($ctm_id)
         return null; // Return an empty string if no matching records are found
     }
 }
+
+function get_user_roles($sm_recid)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to select the desired row
+    $query = $db->table('user_access_roles')
+        ->join('access_roles', 'access_roles.ar_id = user_access_roles.uar_ar_id', 'left')
+        ->select('access_roles.ar_name')
+        ->where('uar_sm_recid', $sm_recid)
+        ->get();
+
+    // Fetch the results as an array of rows
+    $rows = $query->getResultArray();
+
+    // Initialize an array to store roles with HTML markup
+    $roles = [];
+
+    // Check if the rows are not empty
+    if (!empty($rows)) {
+        // Loop through each row to get the 'ar_name'
+        foreach ($rows as $row) {
+            // Wrap each role name with a span tag for styling
+            $roles[] = '<span class="badge badge-role">' . $row['ar_name'] . '</span>';
+        }
+        // Return the roles as an HTML string
+        return implode(' ', $roles);
+    } else {
+        return '<span class="badge badge-no-role">No Roles</span>'; // Return a placeholder if no roles found
+    }
+}
