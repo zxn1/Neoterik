@@ -8,7 +8,7 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-            <h6 class="my-auto text-white">DSKPN</h6>
+            <h6 class="my-auto text-white"><b>DSKPN</b></h6>
         </div>
         <div class="card-body">
             <div class="row align-items-center">
@@ -39,7 +39,7 @@
     <br>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white">Tahap Penguasaan</h6>
+            <h6 class="my-auto text-white"><b>TAHAP PENGUASAAN</b></h6>
             <div>
                 <button class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
                     Ubah Tahap Penguasaan&nbsp;&nbsp;
