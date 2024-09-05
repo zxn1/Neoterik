@@ -44,7 +44,7 @@
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white">KLUSTER</h6>
+            <h6 class="my-auto text-white"><b>KLUSTER</b></h6>
             <div class="ms-auto d-flex align-items-center">
                 <button type="button" class="btn bg-info text-white me-2" style="margin-bottom:0 !important" data-bs-toggle="modal" data-bs-target="#addClusterModal">
                     Tambah Kluster&nbsp;&nbsp;

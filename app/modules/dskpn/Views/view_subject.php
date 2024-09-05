@@ -28,7 +28,7 @@
     </div>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white">SUBJEK</h6>
+            <h6 class="my-auto text-white"><b>SUBJEK</b></h6>
             <button type="button" class="btn bg-info text-white" style="margin-bottom:0 !important" data-bs-toggle="modal" data-bs-target="#addClusterModal">
                 Tambah Subjek&nbsp;&nbsp;
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
