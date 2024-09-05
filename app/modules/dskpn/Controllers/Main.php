@@ -32,6 +32,7 @@ use App\Modules\Dskpn\Models\ClusterSubjectMappingModel;
 use App\Modules\Dskpn\Models\AssessmentCategoryModel;
 use App\Modules\Dskpn\Models\AssessmentItemModel;
 use App\Modules\Dskpn\Models\OpmReffCodeModel;
+use App\Modules\Dskpn\Models\OpmAssessmentCodeModel;
 //-----
 
 class Main extends BaseController
@@ -55,6 +56,7 @@ class Main extends BaseController
     protected $teaching_approach_model;
     protected $teaching_approach_mapping_model;
     protected $opm_reff_code_model;
+    protected $opm_assessment_code_model;
 
     //mapping model sets
     protected $domain_group_model;
@@ -87,12 +89,13 @@ class Main extends BaseController
         $this->dskpn_model                  = new DskpnModel();
         $this->dskp_model                   = new DskpModel();
         //mapping model init
-        $this->domain_group_model       = new DomainGroupModel();
-        $this->domain_model             = new DomainModel();
-        $this->domain_mapping_model     = new DomainMappingModel();
-        $this->core_competency_model    = new CoreCompetencyModel();
-        $this->competency_mapping_model = new CompetencyMappingModel();
-        $this->opm_reff_code_model      = new OpmReffCodeModel();
+        $this->domain_group_model           = new DomainGroupModel();
+        $this->domain_model                 = new DomainModel();
+        $this->domain_mapping_model         = new DomainMappingModel();
+        $this->core_competency_model        = new CoreCompetencyModel();
+        $this->competency_mapping_model     = new CompetencyMappingModel();
+        $this->opm_reff_code_model          = new OpmReffCodeModel();
+        $this->opm_assessment_code_model    = new OpmAssessmentCodeModel();
 
         $this->teaching_approach_category_model = new TeachingApproachCategoryModel();
         $this->teaching_approach_mapping_model  = new TeachingApproachMappingModel();
@@ -1043,6 +1046,7 @@ class Main extends BaseController
         $allSubject     = $this->request->getPost('subject'); //multi-array
         $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
         $standardNumbering = $this->request->getPost('standard-learning-number');
+
         //set session for part 0
         $this->session->set('subject', $allSubject);
         $this->session->set('subject_description', $allDescription);
@@ -1066,13 +1070,18 @@ class Main extends BaseController
         $this->session->set('objective_performance_selection_listing', $json_objective_performance_selection_listing);
 
         //objective part
-        $objective      = $this->request->getPost('objective-prestasi-desc');
-        $objectiveNumber = $this->request->getPost('objective-prestasi-number');
-        $objectiveRef   = $this->request->getPost('objective-prestasi-ref');
+        $objective              = $this->request->getPost('objective-prestasi-desc');
+        $objectiveNumber        = $this->request->getPost('objective-prestasi-number');
+        $objectiveRef           = $this->request->getPost('objective-prestasi-ref');
+        $objectiveAssessment    = $this->request->getPost('objective-prestasi-pentaksiran');
+
         //set in session for objective part
         $this->session->set('objective', $objective);
         $this->session->set('objective_number', $objectiveNumber);
         $this->session->set('objective_ref', $objectiveRef);
+        $this->session->set('objective_assessment', $objectiveAssessment);
+
+        //pentaksiran part
 
         $dskpn_code_init = $this->session->get('dskpn_code_init');
         $isUpdated      = $this->session->get('is_update');
@@ -1138,6 +1147,7 @@ class Main extends BaseController
 
         //step 1 - create DSKPN
         $arr_objective_ref = [];
+        $arr_objective_assessment = [];
         if ($dskpn_create_update_status) {
             //step 2 - add objective performance
             foreach ($objective as $index => $obj) {
@@ -1148,6 +1158,7 @@ class Main extends BaseController
                 ]);
 
                 $op_last_id = $this->objective_performance_model->insertID();
+
                 if (isset($objectiveRef)) {
                     $indeks = 0;
                     foreach ($objectiveRef as $key => $reffItem) {
@@ -1160,6 +1171,24 @@ class Main extends BaseController
                                     ]
                                 );
                                 $arr_objective_ref[$indeks][] = $ref;
+                            }
+                        }
+                        $indeks++;
+                    }
+                }
+
+                if (isset($objectiveAssessment)) {
+                    $indeks = 0;
+                    foreach ($objectiveAssessment as $key => $assessmentItem) {
+                        if ($index == $indeks) {
+                            foreach ($assessmentItem as $asmt) {
+                                $this->opm_assessment_code_model->insert(
+                                    [
+                                        'oac_opm_id' => $op_last_id,
+                                        'oac_code'   => $asmt
+                                    ]
+                                );
+                                $arr_objective_assessment[$indeks][] = $asmt;
                             }
                         }
                         $indeks++;
@@ -1191,6 +1220,7 @@ class Main extends BaseController
         }
 
         $this->session->set('arr_objective_ref', $arr_objective_ref);
+        $this->session->set('arr_objective_assessment', $arr_objective_assessment);
 
         //http_build_query reverse process
         foreach ($data as $key => $val) {
@@ -1610,7 +1640,8 @@ class Main extends BaseController
 
         $data['list_selection_to_populate'] = $this->session->get('objective_performance_selection_listing');
         $data['selected_by_selected'] = $this->session->get('arr_objective_ref');
-
+        $data['selected_assessment_code'] = $this->session->get('arr_objective_assessment');
+        // dd($data['selected_assessment_code']);
         $tm_id = $this->session->get('tm_id');
         $data['flag'] = $this->request->getVar('flag');
         // Query get topic data
