@@ -269,10 +269,21 @@ function addStandardPembelajaran(sm_id, sm_code)
 
     divStandardPembelajaran.append(newInputHTMLField);
 }
+// Use in objective prestasi
+var select2Counter = 2; // Start counter at 3 since you have 3 select2 elements initially
 
-function addObjectivePrestasi()
+// Initialize the 3 default select2 elements when the page loads
+$(document).ready(function() {
+    for (var i = 0; i <= 2; i++) {
+        $('#dynamic-select2-' + i).select2();
+    }
+});
+
+
+function addObjectivePrestasi(i)
 {
     var divObjectivePrestasi = $('#objective-prestasi');
+    select2Counter++; // Increment the counter to create unique IDs
         
     // Generate a unique ID for the new field
     var newFieldColl = Math.floor(Math.random() * 1000000);
@@ -287,7 +298,7 @@ function addObjectivePrestasi()
                                 <div class="col-md-1 pe-1">
                                     <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
                                 </div>
-                                <div class="col-md-8 pe-1">
+                                <div class="col-md-6 pe-1">
                                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
                                 </div>
                                 <div class="col-md-3 d-flex">
@@ -299,10 +310,45 @@ function addObjectivePrestasi()
                                         newInputHTMLField += option;
                                     }
               newInputHTMLField += `</select>
-                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
-                                    <button class="input-group-text" id="btnGroupAddon">
-                                        <i class="fas fa-trash-alt" style="color: red;"></i>
-                                    </button>
+                                </div>
+                                <div class="col-md-2 d-flex">
+                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + select2Counter + `" class="dynamic-select2 form-control" multiple="multiple">
+                  <optgroup label="Kognitif">
+                    <option value="C1">C1</option>
+                    <option value="C2">C2</option>
+                    <option value="C3">C3</option>
+                    <option value="C4">C4</option>
+                    <option value="C5">C5</option>
+                    <option value="C6">C6</option>
+                    <option value="C7">C7</option>
+                    <option value="C8">C8</option>
+                  </optgroup>
+                  <optgroup label="Psikomotor">
+                    <option value="P1">P1</option>
+                    <option value="P2">P2</option>
+                    <option value="P3">P3</option>
+                    <option value="P4">P4</option>
+                    <option value="P5">P5</option>
+                    <option value="P6">P6</option>
+                    <option value="P7">P7</option>
+                    <option value="P8">P8</option>
+                  </optgroup>
+                  <optgroup label="Afektif">
+                    <option value="A1">A1</option>
+                    <option value="A2">A2</option>
+                    <option value="A3">A3</option>
+                    <option value="A4">A4</option>
+                    <option value="A5">A5</option>
+                    <option value="A6">A6</option>
+                    <option value="A7">A7</option>
+                    <option value="A8">A8</option>
+                  </optgroup>
+                </select>
+
+                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                                        <button class="input-group-text" id="btnGroupAddon">
+                                            <i class="fas fa-trash-alt" style="color: red;"></i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>`;
@@ -311,6 +357,9 @@ function addObjectivePrestasi()
 
     $('select#objective-prestasi-ref').multipleSelect('destroy');
     $('select#objective-prestasi-ref').multipleSelect();
+
+     // Initialize the newly added select2 element
+     $('#dynamic-select2-' + select2Counter).select2();
 }
 
 $('#kluster-selection').on('change', function() {

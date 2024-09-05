@@ -9,7 +9,7 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-            <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
+            <h6 class="my-auto text-white"><b>MAKLUMAT DSKPN</b></h6>
         </div>
         <div class="card-body mb-4 py-2">
             <di class="row">
@@ -40,7 +40,7 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white">SENARAI DSKPN</h6>
+            <h6 class="my-auto text-white"><b>SENARAI DSKPN</b></h6>
 
             <?php if ($register_subject_status == true) : ?>
                 <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-info text-white" style="margin-bottom:0 !important">
