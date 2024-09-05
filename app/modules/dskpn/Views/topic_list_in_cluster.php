@@ -140,7 +140,7 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-            <h6 class="my-auto text-white">Senarai Topik Dalam Kluster</h6>
+            <h6 class="my-auto text-white"><b>Topik Dan Kluster</b></h6>
         </div>
         <div class="container">
 
@@ -184,9 +184,9 @@
                                                                     <a class="btn btn-link text-info text-gradient px-1 mb-0" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>">
                                                                         <i class="far fa-eye fa-lg me-2" aria-hidden="true"></i>
                                                                     </a>
-                                                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
+                                                                    <!-- <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topik['tm_id']; ?>').remove(); deleteTopic(<?= $topik['tm_id']; ?>);">
                                                                         <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                                                    </a>
+                                                                    </a> -->
                                                                 </div>
                                                             </div>
                                                         </div>
