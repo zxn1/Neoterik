@@ -46,7 +46,7 @@
   <div class="container-fluid py-4">
     <div class="card">
       <div class="card-header d-flex p-3 bg-primary">
-        <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
+        <h6 class="my-auto text-white"><b>MAKLUMAT DSKPN</b></h6>
       </div>
       <div class="card-body">
         <div class="row">
@@ -124,7 +124,7 @@
   <div class="container-fluid py-4">
     <div class="card pb-3">
       <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-        <h6 class="my-auto text-white">STANDARD PEMBELAJARAN</h6>
+        <h6 class="my-auto text-white"><b>STANDARD PEMBELAJARAN</b></h6>
         <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
@@ -217,12 +217,13 @@
     <br>
     <div class="card">
       <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-        <h6 class="my-auto text-white">OBJEKTIF PRESTASI</h6>
+        <h6 class="my-auto text-white"><b>OBJEKTIF PRESTASI</b></h6>
       </div>
       <div id="objective-prestasi" style="margin : 10px;">
 
         <?php
         if (!empty($objective) && $objective != "") {
+          $op_pentaksiran_counter = 0;
           foreach ($objective as $index => $item) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
               <div class="col pe-1">
@@ -235,12 +236,13 @@
 
                 <?php
                 $rand = rand(100000000, 1000000000);
+                $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : [];
                 ?>
-                <select id="objective-prestasi-ref" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
+                <select id="objective-prestasi-ref-<?= $rand; ?>" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                   <?php
                   if (isset($list_selection_to_populate) && !empty(json_decode($list_selection_to_populate, true))) {
-                    foreach (json_decode($list_selection_to_populate, true) as $indeks => $populate_select) { ?>
-                      <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selected_by_selected[$index]) ? 'selected' : '' ?>><?= $populate_select; ?></option>
+                    foreach (json_decode($list_selection_to_populate, true) as $populate_select) { ?>
+                      <option value="<?= $populate_select; ?>" <?= in_array($populate_select, $selectedValues) ? 'selected' : '' ?>><?= $populate_select; ?></option>
                     <?php
                     }
                   } else {
@@ -248,58 +250,52 @@
                     <option disabled>-- Sila pilih Kod --</option>
                   <?php } ?>
                 </select>
-
+              </div>
+              <div class="col-md-2 d-flex">
+                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="dynamic-select2 form-control" multiple="multiple">
+                  <optgroup label="Kognitif">
+                    <option value="C1" <?= in_array('C1', $selectedValues) ? 'selected' : '' ?>>C1</option>
+                    <option value="C2" <?= in_array('C2', $selectedValues) ? 'selected' : '' ?>>C2</option>
+                    <option value="C3" <?= in_array('C3', $selectedValues) ? 'selected' : '' ?>>C3</option>
+                    <option value="C4" <?= in_array('C4', $selectedValues) ? 'selected' : '' ?>>C4</option>
+                    <option value="C5" <?= in_array('C5', $selectedValues) ? 'selected' : '' ?>>C5</option>
+                    <option value="C6" <?= in_array('C6', $selectedValues) ? 'selected' : '' ?>>C6</option>
+                    <option value="C7" <?= in_array('C7', $selectedValues) ? 'selected' : '' ?>>C7</option>
+                    <option value="C8" <?= in_array('C8', $selectedValues) ? 'selected' : '' ?>>C8</option>
+                  </optgroup>
+                  <optgroup label="Psikomotor">
+                    <option value="P1" <?= in_array('P1', $selectedValues) ? 'selected' : '' ?>>P1</option>
+                    <option value="P2" <?= in_array('P2', $selectedValues) ? 'selected' : '' ?>>P2</option>
+                    <option value="P3" <?= in_array('P3', $selectedValues) ? 'selected' : '' ?>>P3</option>
+                    <option value="P4" <?= in_array('P4', $selectedValues) ? 'selected' : '' ?>>P4</option>
+                    <option value="P5" <?= in_array('P5', $selectedValues) ? 'selected' : '' ?>>P5</option>
+                    <option value="P6" <?= in_array('P6', $selectedValues) ? 'selected' : '' ?>>P6</option>
+                    <option value="P7" <?= in_array('P7', $selectedValues) ? 'selected' : '' ?>>P7</option>
+                    <option value="P8" <?= in_array('P8', $selectedValues) ? 'selected' : '' ?>>P8</option>
+                  </optgroup>
+                  <optgroup label="Afektif">
+                    <option value="A1" <?= in_array('A1', $selectedValues) ? 'selected' : '' ?>>A1</option>
+                    <option value="A2" <?= in_array('A2', $selectedValues) ? 'selected' : '' ?>>A2</option>
+                    <option value="A3" <?= in_array('A3', $selectedValues) ? 'selected' : '' ?>>A3</option>
+                    <option value="A4" <?= in_array('A4', $selectedValues) ? 'selected' : '' ?>>A4</option>
+                    <option value="A5" <?= in_array('A5', $selectedValues) ? 'selected' : '' ?>>A5</option>
+                    <option value="A6" <?= in_array('A6', $selectedValues) ? 'selected' : '' ?>>A6</option>
+                    <option value="A7" <?= in_array('A7', $selectedValues) ? 'selected' : '' ?>>A7</option>
+                    <option value="A8" <?= in_array('A8', $selectedValues) ? 'selected' : '' ?>>A8</option>
+                  </optgroup>
+                </select>
+                <?php $op_pentaksiran_counter++; ?>
                 <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
                   <button class="input-group-text" id="btnGroupAddon">
                     <i class="fas fa-trash-alt" style="color: red;"></i>
                   </button>
                 </div>
               </div>
-              <div class="col-md-2 d-flex">
-
-                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
-                  <option value="">-- Sila Pilih Kategori Pentaksiran --</option>
-                  <optgroup label="Kognitif">
-                    <option value="C1">C1</option>
-                    <option value="C2">C2</option>
-                    <option value="C3">C3</option>
-                    <option value="C4">C4</option>
-                    <option value="C5">C5</option>
-                    <option value="C6">C6</option>
-                    <option value="C7">C7</option>
-                    <option value="C8">C8</option>
-                  </optgroup>
-                  <optgroup label="Psikomotor">
-                    <option value="P1">P1</option>
-                    <option value="P2">P2</option>
-                    <option value="P3">P3</option>
-                    <option value="P4">P4</option>
-                    <option value="P5">P5</option>
-                    <option value="P6">P6</option>
-                    <option value="P7">P7</option>
-                    <option value="P8">P8</option>
-                  </optgroup>
-                  <optgroup label="Afektif">
-                    <option value="A1">A1</option>
-                    <option value="A2">A2</option>
-                    <option value="A3">A3</option>
-                    <option value="A4">A4</option>
-                    <option value="A5">A5</option>
-                    <option value="A6">A6</option>
-                    <option value="A7">A7</option>
-                    <option value="A8">A8</option>
-                  </optgroup>
-                </select>
-
-                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
-                  <button class="input-group-text" id="btnGroupAddon">
-                    <i class="fas fa-trash-alt" style="color: red;"></i>
-                  </button>
-                </div>
-              </div>
             </div>
-          <?php }
+          <?php } ?>
+          <?php
         } else {
+          $op_pentaksiran_counter = 0;
           for ($i = 0; $i < 3; $i++) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
               <div class="col pe-1">
@@ -318,9 +314,10 @@
                   <option disabled>-- Sila pilih Kod --</option>
                 </select>
               </div>
-              <div class="col-md-2 d-flex">
-                <select class="select2 form-control select2-hidden-accessible" multiple="" id="multiple-basic-<?= $i ?>" data-select2-id="multiple-basic" tabindex="-1" aria-hidden="true">
-                  <option value="">-- Sila Pilih Kategori Pentaksiran --</option>
+
+              <div class="col-md-2 d-flex" id="select2-container">
+                <!-- Initially displaying 3 select2 elements -->
+                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
@@ -352,8 +349,8 @@
                     <option value="A8">A8</option>
                   </optgroup>
                 </select>
-
-                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                <?php $op_pentaksiran_counter++; ?>
+                <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $op_pentaksiran_counter; ?>').remove();">
                   <button class="input-group-text" id="btnGroupAddon">
                     <i class="fas fa-trash-alt" style="color: red;"></i>
                   </button>
@@ -485,16 +482,3 @@
     });
   </script>
 <?php endif; ?>
-
-<script>
-  $(document).ready(function() {
-    //Select2 
-    $(".select2").select2({
-      maximumSelectionLength: 3,
-    });
-    //Chosen 
-    $(".select2").chosen({
-      max_selected_options: 3,
-    });
-  });
-</script>
