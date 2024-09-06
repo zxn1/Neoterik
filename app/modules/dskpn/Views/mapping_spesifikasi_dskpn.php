@@ -171,9 +171,8 @@
     <div class="text-end p-3">
       <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
       <!-- <button type="submit" class="btn bg-info">Semak</button> -->
-      <a href="<?= base_url('demo/K1T4 DSKPN 1.pdf') ?>" target="_blank" type="button" class="btn bg-success text-white">Semak</a>
-      <button type="submit" class="btn btn-primary" data-dismiss="modal">Hantar</button>
-
+      <button type="submit" class="btn bg-success text-white" name="submit_status" value="check_dskpn">Semak</button>
+      <button type="submit" class="btn btn-primary" data-dismiss="modal" name="submit_status" value="submit_dskpn">Hantar</button>
     </div>
   </div>
 </form>
@@ -215,6 +214,10 @@ if ($review) { ?>
 <script>
   $(document).ready(function() {
     $('.select2').select2();
+
+    <?php if (session()->has('new_tab_dskpn')) : ?>
+      window.open("<?= session('new_tab_dskpn'); ?>", '_blank');
+    <?php endif; ?>
   });
 </script>
 
