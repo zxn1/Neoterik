@@ -34,6 +34,8 @@ use App\Modules\Dskpn\Models\AssessmentItemModel;
 use App\Modules\Dskpn\Models\OpmReffCodeModel;
 //-----
 
+use \Mpdf\Mpdf;
+
 class Main extends BaseController
 {
 
@@ -112,6 +114,31 @@ class Main extends BaseController
         $this->render_login('login', $data);
 
         // return view('App\\Modules\\Login\\Views\\login');
+    }
+
+    public function generate_view_pdf()
+    {
+        $data = $this->_populate_dskpn_details();
+        $mpdf = new Mpdf([
+            'orientation' => 'L',
+            'format' => 'A2',
+            'margin_left' => 10,
+            'margin_right' => 10,
+            'margin_top' => 10,
+            'margin_bottom' => 10,
+        ]);
+
+        $htmlContent = view('pdf/dskpn', $data);
+
+        $mpdf->WriteHTML($htmlContent);
+        return $mpdf->Output($this->session->get('dskpn_id') . '.pdf', 'D');
+    }
+
+    public function test_view_pdf_in_html()
+    {
+        $data = $this->_populate_dskpn_details();
+
+        return view('pdf/dskpn', $data);
     }
 
     public function map_static()
@@ -329,6 +356,18 @@ class Main extends BaseController
     {
         $db = \Config\Database::connect();
 
+        $data = $this->_populate_dskpn_details();
+
+        // dd($data);
+        $script = ['dynamic-input', 'dskpn_view'];
+        $style = ['static-field'];
+
+        // dd($data);
+        $this->render_jscss('dskpn_view', $data, $script, $style);
+    }
+
+    private function _populate_dskpn_details()
+    {
         $dskpn_id = $this->session->get('dskpn_id');
 
         $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
@@ -371,22 +410,37 @@ class Main extends BaseController
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
+        $ls_sbm_ids = array_column($learning_standard, 'ls_sbm_id');
+        $all_core_competency = $this->core_competency_model
+            ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
+            ->whereIn('cc_sbm_id', $ls_sbm_ids)->findAll();
+
         // Get 16 Domain List by tahap
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
+        $all_domain_pengetahuan_asas = $this->domain_mapping_model->getAllDomain('Pengetahuan Asas');
+
         // Tahap Kemandirian
         $domain_kemandirian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kemandirian');
+        $all_domain_kemandirian = $this->domain_mapping_model->getAllDomain('Kemandirian');
 
         // Tahap Pengetahuan Asas
         $domain_kualiti_keperibadian =  $this->domain_mapping_model->getDomain($dskpn_id, 'Kualiti Keperibadian');
+        $all_domain_kualiti_keperibadian = $this->domain_mapping_model->getAllDomain('Kualiti Keperibadian');
 
         // Get 7 Kemahiran Insaniah
         $kemahiran_insaniah =  $this->domain_mapping_model->getDomain($dskpn_id, '7 Kemahiran Insaniah');
+        $all_kemahiran_insaniah =  $this->domain_mapping_model->getAllDomain('7 Kemahiran Insaniah');
 
         // Reka bentuk Instruksi
         $rekabentuk_instruksi =  $this->teaching_approach_mapping_model
             ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappm_dskpn_id', $dskpn_id)
+            ->where('tappc_desc', 'Reka Bentuk Instruksi')
+            ->findAll();
+
+        $all_rekabentuk_instruksi = $this->teaching_approach_model
+            ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappc_desc', 'Reka Bentuk Instruksi')
             ->findAll();
 
@@ -397,10 +451,20 @@ class Main extends BaseController
             ->where('tappc_desc', 'Integrasi Teknologi')
             ->findAll();
 
+        $all_integrasi_teknologi =  $this->teaching_approach_model
+            ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
+            ->where('tappc_desc', 'Integrasi Teknologi')
+            ->findAll();
+
         $pendekatan =  $this->teaching_approach_mapping_model
             ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappm_dskpn_id', $dskpn_id)
+            ->where('tappc_desc', 'Pendekatan')
+            ->findAll();
+        
+        $all_pendekatan = $this->teaching_approach_model
+            ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappc_desc', 'Pendekatan')
             ->findAll();
 
@@ -408,6 +472,11 @@ class Main extends BaseController
             ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappm_dskpn_id', $dskpn_id)
+            ->where('tappc_desc', 'Kaedah')
+            ->findAll();
+        
+        $all_kaedah = $this->teaching_approach_model
+            ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappc_desc', 'Kaedah')
             ->findAll();
 
@@ -435,14 +504,18 @@ class Main extends BaseController
             'pendekatan'                    => $pendekatan,
             'kaedah'                        => $kaedah,
             'abm'                           => $abm,
+            'all_core_competency'           => $all_core_competency,
+            'all_domain_pengetahuan_asas'   => $all_domain_pengetahuan_asas,
+            'all_domain_kemandirian'        => $all_domain_kemandirian,
+            'all_domain_kualiti_keperibadian' => $all_domain_kualiti_keperibadian,
+            'all_rekabentuk_instruksi'      => $all_rekabentuk_instruksi,
+            'all_integrasi_teknologi'       => $all_integrasi_teknologi,
+            'all_pendekatan'                => $all_pendekatan,
+            'all_kaedah'                    => $all_kaedah,
+            'all_kemahiran_insaniah'        => $all_kemahiran_insaniah,
         ];
 
-        // dd($data);
-        $script = ['dynamic-input', 'dskpn_view'];
-        $style = ['static-field'];
-
-        // dd($data);
-        $this->render_jscss('dskpn_view', $data, $script, $style);
+        return $data;
     }
 
     public function approve_dskpn($dskpn_id)
@@ -972,7 +1045,8 @@ class Main extends BaseController
             $this->teaching_approach_mapping_model->where('tappm_dskpn_id', $dskpn_id)->delete();
 
             //step 2 - remove newly added teaching_approach
-            $this->teaching_approach_model->whereIn('tapp_id', $old_specification)->delete();
+            if(!empty($old_specification))
+                $this->teaching_approach_model->whereIn('tapp_id', $old_specification)->delete();
         }
 
         //if have new-item then insert
@@ -1027,8 +1101,12 @@ class Main extends BaseController
         $this->session->set('new_specification_input_details', $new_specification_input_details);
         $this->session->set('is_update_specs', 'Y');
 
-        if ($success)
-            return redirect()->to(route_to('dskpn_complete') /* . "?review=true"*/);
+        if($success)
+        if($this->request->getPost('submit_status') == 'check_dskpn')
+            return redirect()->back()->with('new_tab_dskpn', route_to('generate_dskpn'));
+        else
+            return redirect()->to(route_to('dskpn_complete'));
+
         return redirect()->back();
     }
 
