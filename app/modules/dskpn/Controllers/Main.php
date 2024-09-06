@@ -2197,4 +2197,10 @@ class Main extends BaseController
     {
         print_r(json_encode($this->session->get()));
     }
+
+    public function print_bpp($dskpn_id)
+    {
+        // dd('test');
+        echo view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran');
+    }
 }
