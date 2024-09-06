@@ -124,7 +124,7 @@ class Main extends BaseController
         $data = $this->_populate_dskpn_details();
         $mpdf = new Mpdf([
             'orientation' => 'L',
-            'format' => 'A2',
+            'format' => [590, 1000], //A2
             'margin_left' => 10,
             'margin_right' => 10,
             'margin_top' => 10,
@@ -133,8 +133,11 @@ class Main extends BaseController
 
         $htmlContent = view('pdf/dskpn', $data);
 
+        $dskpn_code = $this->session->get('dskpn_code');
+        $dskpn_code = empty($dskpn_code)?'dskpn':$dskpn_code;
+
         $mpdf->WriteHTML($htmlContent);
-        return $mpdf->Output($this->session->get('dskpn_id') . '.pdf', 'D');
+        return $mpdf->Output($dskpn_code . '.pdf', 'D');
     }
 
     public function test_view_pdf_in_html()
@@ -361,11 +364,9 @@ class Main extends BaseController
 
         $data = $this->_populate_dskpn_details();
 
-        // dd($data);
         $script = ['dynamic-input', 'dskpn_view'];
         $style = ['static-field'];
 
-        // dd($data);
         $this->render_jscss('dskpn_view', $data, $script, $style);
     }
 
