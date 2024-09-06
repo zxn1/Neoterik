@@ -41,6 +41,18 @@ class DomainMappingModel extends Model
         return $query->getResultArray();
     }
 
+    public function getAllDomain($dg_name)
+    {
+        $builder = $this->db->table('domain');
+        $builder->select('*');
+        $builder->join('domain_group', 'domain.dmn_dg_id = domain_group.dg_id AND domain.dmn_deleted_at IS NULL');
+        $builder->where('domain_group.dg_title', $dg_name);
+        $builder->orderBy('domain.dmn_id');
+
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
     // public function getAtribute($dskpn_id, $dg_name)
     // {
     //     $builder = $this->db->table('domain_mapping');

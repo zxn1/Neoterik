@@ -59,6 +59,8 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('store-cluster-subject-mapping',               [Main::class,     'store_cluster_subject_mapping'],                  ['as' => 'store_cluster_subject_mapping']);
     $routes->post('check-and-store-dskpn-code', [Main::class,     'checkAndSetDSKPNCodeSession'],   ['as' => 'checkstore_dskpn_code']);
     $routes->get('initialize_edit_dskpn/(:any)', [Main::class,     'set_session_edit_dskpn/$1'],    ['as' => 'edit_dskpn_initializer']);
+    $routes->get('download-dskpn',              [Main::class,   'generate_view_pdf'],               ['as' => 'generate_dskpn']);
+    $routes->get('test-view-pdf-dskpn',         [Main::class,   'test_view_pdf_in_html'],           ['as' => 'test_view_pdf_dskpn']);
 
     // print BPP
     $routes->get('print_bpp/(:any)', [Main::class,     'print_bpp/$1']);
