@@ -465,7 +465,7 @@ class Main extends BaseController
             ->where('tappm_dskpn_id', $dskpn_id)
             ->where('tappc_desc', 'Pendekatan')
             ->findAll();
-        
+
         $all_pendekatan = $this->teaching_approach_model
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappc_desc', 'Pendekatan')
@@ -477,7 +477,7 @@ class Main extends BaseController
             ->where('tappm_dskpn_id', $dskpn_id)
             ->where('tappc_desc', 'Kaedah')
             ->findAll();
-        
+
         $all_kaedah = $this->teaching_approach_model
             ->join('teaching_approach_category', 'teaching_approach_category.tappc_id = teaching_approach.tapp_tappc_id')
             ->where('tappc_desc', 'Kaedah')
@@ -1048,7 +1048,7 @@ class Main extends BaseController
             $this->teaching_approach_mapping_model->where('tappm_dskpn_id', $dskpn_id)->delete();
 
             //step 2 - remove newly added teaching_approach
-            if(!empty($old_specification))
+            if (!empty($old_specification))
                 $this->teaching_approach_model->whereIn('tapp_id', $old_specification)->delete();
         }
 
@@ -1104,11 +1104,11 @@ class Main extends BaseController
         $this->session->set('new_specification_input_details', $new_specification_input_details);
         $this->session->set('is_update_specs', 'Y');
 
-        if($success)
-        if($this->request->getPost('submit_status') == 'check_dskpn')
-            return redirect()->back()->with('new_tab_dskpn', route_to('generate_dskpn'));
-        else
-            return redirect()->to(route_to('dskpn_complete'));
+        if ($success)
+            if ($this->request->getPost('submit_status') == 'check_dskpn')
+                return redirect()->back()->with('new_tab_dskpn', route_to('generate_dskpn'));
+            else
+                return redirect()->to(route_to('dskpn_complete'));
 
         return redirect()->back();
     }
@@ -2278,7 +2278,23 @@ class Main extends BaseController
 
     public function print_bpp($dskpn_id)
     {
-        // dd('test');
-        echo view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran');
+        $data = $this->_populate_dskpn_details();
+
+        $mpdf = new Mpdf([
+            'orientation' => 'L',
+            'format' => 'A4',
+            'margin_left' => 15,
+            'margin_right' => 15,
+            'margin_top' => 15,
+            'margin_bottom' => 15,
+        ]);
+
+        $htmlContent = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+
+        $mpdf->WriteHTML($htmlContent);
+        return $mpdf->Output('test' . '.pdf', 'D');
+
+        // dd($data);
+        // echo view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
     }
 }
