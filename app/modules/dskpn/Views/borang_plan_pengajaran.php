@@ -8,25 +8,53 @@
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* Ensure the table collapses borders */
+        .table {
+            border-collapse: collapse;
+        }
+
+        /* Default to no border for all td elements */
+        .table td {
+            border: none;
+            padding-left: 10px;
+        }
+
+        .table th {
+            border: none;
+            padding-left: 10px;
+        }
+
+        /* Add a class to selectively apply borders to specific td elements */
+        .bordered {
+            border: 1px solid #000;
+        }
+
         .container-custom {
             display: flex;
             justify-content: space-between;
+            /* Space between items */
             align-items: center;
-            padding: 20px;
+            /* Align items vertically in the center */
         }
 
         .container-custom img {
-            max-width: 150px;
-            height: auto;
+            max-width: 400px;
+            /* Maintain the image size */
+            margin: 0 20px;
+            /* Adjust spacing between text and image */
         }
 
-        h1 {
+        .left,
+        .right {
             margin: 0;
-            font-size: 24px;
+            /* Remove default margins */
         }
 
-        .form-group {
-            margin-right: 20px;
+        .mid {
+            text-align: center;
+            /* Center-aligns text horizontally */
+            margin: 0 auto;
+            /* Center-aligns the div itself if its width is set */
         }
     </style>
 </head>
@@ -34,298 +62,315 @@
 <body>
     <div class="row">
         <div class="container-custom">
-            <h1>SULIT</h1>
-            <img src="your-image-source.jpg" alt="Your Image">
-            <h1>SULIT</h1>
+            <h5 class="left">SULIT</h5>
+            <!-- <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image"> -->
+            <h5 class="right">SULIT</h5>
         </div>
     </div>
 
-    <div class="row mt-4">
-        <div class="col-md-2">
-            <div class="form-group d-flex">
-                <label for="kluster" class="form-label col-md-4"><b>KLUSTER:</b>&nbsp;</label>
-                <input type="text" class="form-control" id="kluster" name="kluster">
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="form-group d-flex align-items-center">
-                <label for="subtema" class="form-label col-md-2" style="white-space: nowrap;"><b>SUB-TEMA:</b>&nbsp;</label>
-                <input type="text" class="form-control" id="subtema" name="subtema">
-            </div>
 
-        </div>
-        <div class="col-md-3">
-            <div class="form-group d-flex align-items-center">
-                <label for="tahun" class="form-label col-md-4"><b>TAHUN:</b>&nbsp;</label>
-                <input type="text" class="form-control" id="tahun" name="tahun">
-            </div>
-        </div>
-    </div>
+    <table class="table">
+        <tbody>
+            <tr style="width:100%">
+                <th style="width: 100px;"><b>KLUSTER:</b></th>
+                <td style="width: 300px; border: 1px solid #000;"><?= isset($cluster_details) && !empty($cluster_details) ? $cluster_details['ctm_desc'] : '' ?></td>
 
-    <div class="row mt-4">
-        <div class="col-md-2">
-            <div class="form-group d-flex align-items-center">
-                <label for="kluster" class="form-label col-md-4"><b>TEMA:</b>&nbsp;</label>
-                <input type="text" class="form-control" id="kluster" name="kluster">
-            </div>
-        </div>
-        <div class="col-md-7">
-            <div class="form-group d-flex align-items-center">
-                <label for="subtema" class="form-label col-md-2" style="white-space: nowrap;"><b>TOPIK:</b>&nbsp;</label>
-                <input type="text" class="form-control" id="subtema" name="subtema">
-            </div>
+                <th style="width: 120px;"><b>SUB-TEMA:</b></th>
+                <td style="border: 1px solid #000;"><?= isset($dskpn_details) && !empty($dskpn_details) ? $dskpn_details['dskpn_sub_theme'] : '' ?></td>
 
-        </div>
-        <div class="col-md-3">
-            <div class="form-group d-flex align-items-center">
-                <label for="tahun" class="form-label col-md-4"><b>DURASI PELAKSANAAN (minit):</b>&nbsp;</label>
-                <input type="text" class="form-control" id="tahun" name="tahun">
-            </div>
-        </div>
+                <th style="width: 200px;"><b>TAHUN:</b></th>
+                <td style="width: 100px; border: 1px solid #000;"><?= isset($tm_details) && !empty($tm_details) ? $tm_details['tm_year'] : '' ?></td>
+            </tr>
+            <tr>
+                <th><b>TEMA:</b></th>
+                <td style="border: 1px solid #000;"><?= isset($dskpn_details) && !empty($dskpn_details) ? $dskpn_details['dskpn_theme'] : '' ?></td>
 
-    </div>
+                <th><b>TOPIK:</b></th>
+                <td style="border: 1px solid #000;"><?= isset($tm_details) && !empty($tm_details) ? $tm_details['tm_desc'] : '' ?></td>
 
-    <!-- Main Row -->
-    <div class="row g-3">
-        <!-- First Column: Standard Pembelajaran and Standard Prestasi & Pentaksiran -->
-        <div class="col-md-6">
-            <div class="row g-3">
-                <!-- Standard Pembelajaran -->
-                <div class="col-md-8 g-3" style="border:1px solid;">
-                    <h6><b>STANDARD PEMBELAJARAN</b></h6>
-                </div>
+                <th><b>DURASI PELAKSANAAN (minit):</b></th>
+                <td style="border: 1px solid #000;"><?= isset($dskpn_details) && !empty($dskpn_details) ? $dskpn_details['dskpn_duration'] : '' ?></td>
+            </tr>
+        </tbody>
 
-                <!-- Standard Prestasi and Pentaksiran -->
-                <div class="col-md-4">
-                    <div class="row g-3 mb-2">
-                        <div class="col-12" style="border:1px solid;">
-                            <h6><b>STANDARD PRESTASI</b></h6>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-12" style="border:1px solid;">
-                            <h6><b>PENTAKSIRAN</b></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Objektif Prestasi -->
-            <div class="row g-3">
-                <div class="col-12" style="border:1px solid;">
-                    <h6><b>OBJEKTIF PENTAKSIRAN</b></h6>
-                </div>
-            </div>
-            <!-- Objektif Prestasi -->
-            <div class="row g-3">
-                <div class="col-12" style="border:1px solid;">
-                    <h6><b>ALAT BANTU MENGAJAR</b></h6>
-                </div>
-            </div>
-        </div>
+    </table>
+    <style type="text/css">
+        table {
+            width: 100%;
+        }
 
-        <!-- Second Column: Test -->
-        <div class="col-md-6">
-            <div class="row g-3">
-                <!-- Reka Bentuk Instruksi -->
-                <div class="col-md-12 g-3" style="border:1px solid;">
-                    <h6><b>REKA BENTUK INSTRUKSI:</b></h6>
-                    <div class="row g-3 mb-2">
-                        <!-- First Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox1" class="me-2">
-                                <label for="checkbox1">Label 1</label>
-                            </div>
-                        </div>
-                        <!-- Second Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox2" class="me-2">
-                                <label for="checkbox2">Label 2</label>
-                            </div>
-                        </div>
-                        <!-- Third Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox3" class="me-2">
-                                <label for="checkbox3">Label 3</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3 mb-2">
-                        <!-- First Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox1" class="me-2">
-                                <label for="checkbox1">Label 1</label>
-                            </div>
-                        </div>
-                        <!-- Second Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox2" class="me-2">
-                                <label for="checkbox2">Label 2</label>
-                            </div>
-                        </div>
-                        <!-- Third Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <p>*Rujuk Technology Integration Matrik</p>
-                        </div>
-                    </div>
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
 
-                </div>
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
 
-            </div>
-            <div class="row g-3">
-                <!-- Integrasi Teknologi -->
-                <div class="col-md-12 g-3" style="border:1px solid;">
-                    <h6><b>INTEGRASI TEKNOLOGI:</b></h6>
-                    <div class="row g-3 mb-2">
-                        <!-- First Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox1" class="me-2">
-                                <label for="checkbox1">Label 1</label>
-                            </div>
-                        </div>
-                        <!-- Second Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox2" class="me-2">
-                                <label for="checkbox2">Label 2</label>
-                            </div>
-                        </div>
-                        <!-- Third Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox3" class="me-2">
-                                <label for="checkbox3">Label 3</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-3 mb-2">
-                        <!-- First Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox1" class="me-2">
-                                <label for="checkbox1">Label 1</label>
-                            </div>
-                        </div>
-                        <!-- Second Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <div class="d-flex align-items-center">
-                                <input type="checkbox" id="checkbox2" class="me-2">
-                                <label for="checkbox2">Label 2</label>
-                            </div>
-                        </div>
-                        <!-- Third Column -->
-                        <div class="col-4" style="padding: 10px;">
-                            <p>*Rujuk Technology Integration Matrik</p>
-                        </div>
-                    </div>
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
 
-                </div>
-            </div>
-            <div class="row g-3">
-                <div class="col-7">
-                    <div class="row g-3 mb-2">
-                        <div class="col-12" style="border:1px solid;">
-                            <h6><b>PENDEKATAN</b></h6>
-                            <div class="row g-3 mb-2">
-                                <!-- First Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox1" class="me-2">
-                                        <label for="checkbox1">Label 1</label>
-                                    </div>
-                                </div>
-                                <!-- Second Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox2" class="me-2">
-                                        <label for="checkbox2">Label 2</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-3 mb-2">
-                                <!-- First Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox1" class="me-2">
-                                        <label for="checkbox1">Label 1</label>
-                                    </div>
-                                </div>
-                                <!-- Second Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox2" class="me-2">
-                                        <label for="checkbox2">Label 2</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-3 mb-2">
-                                <!-- First Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox1" class="me-2">
-                                        <label for="checkbox1">Label 1</label>
-                                    </div>
-                                </div>
-                                <!-- Second Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox2" class="me-2">
-                                        <label for="checkbox2">Label 2</label>
-                                    </div>
-                                </div>
-                            </div>
+        .tg .tg-fymr {
+            border-color: inherit;
+            font-weight: bold;
+            text-align: left;
+            vertical-align: top;
+            border-bottom: none;
+        }
+
+        .tg .tg-0pky {
+            border-color: inherit;
+            text-align: left;
+            vertical-align: top;
+            border-top: none;
+        }
+    </style>
+    <table class="tg">
+        <thead>
+            <tr>
+                <th class="tg-fymr" colspan="3" style="width: 30%;text-align: center;">STANDARD PEMBELAJARAN</th>
+                <th class="tg-fymr" style="width: 10%;text-align: center;">STANDARD PRESTASI</th>
+                <th class="tg-fymr" colspan="4" style="width: 60%;">REKA BENTUK INSTRUKSI:</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="tg-0pky" colspan="3" rowspan="9">
+                    <?php
+                    $sb_flag = false;
+                    if (isset($subjects) && !empty($subjects)):
+                        $sb_flag = true; //check if subject contain value
+                        foreach ($subjects as $sb): ?>
+                            <b><?= $sb['sbm_desc'] ?><b><br>
+                                    <?php if (isset($learning_standard) && !empty($learning_standard)): ?>
+                                        <?php foreach ($learning_standard as $ls): ?>
+                                            <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']): ?>
+                                                <?= $ls['lsi_number'] . ". " . $ls['lsi_desc'] ?><br>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?><br>
+                                    <?php endif; ?>
+                            <?php endforeach;
+                    endif; ?>
+                </td>
+                <td class="tg-0pky" rowspan="2">
+                    <?php if (isset($standard_performance) && !empty($standard_performance)): ?>
+                        <?php
+                        // Collect all 'dskp_code' values from the nested arrays
+                        $dskp_codes = [];
+                        foreach ($standard_performance as $item) {
+                            if (isset($item['dskp_code'])) {
+                                $dskp_codes[] = $item['dskp_code']; // Collect dskp_code values
+                            }
+                        }
+
+                        // Remove duplicate 'dskp_code' values
+                        $unique_performance = array_unique($dskp_codes);
+
+                        // Echo the unique values
+                        foreach ($unique_performance as $performance) {
+                            echo $performance . "<br>";
+                        }
+                        ?>
+                        <br>
+                    <?php endif; ?>
+
+
+
+                </td>
+                <td class="tg-0pky" colspan="4" rowspan="2">
+                    <?php if (isset($rekabentuk_instruksi) && !empty($rekabentuk_instruksi)): ?>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <?php foreach ($rekabentuk_instruksi as $index => $item): ?>
+                                <label style="display: inline-block; margin-right: 20px; width: 30%;">
+                                    <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
+                                </label>
+                                <?php if (($index + 1) % 3 == 0): ?>
+                                    <br>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-12" style="border:1px solid;">
-                            <h6><b>PENGLIBATAN IBU BAPA</b></h6>
-                            <div class="row g-3 mb-2">
-                                <!-- First Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox1" class="me-2">
-                                        <label for="checkbox1">Label 1</label>
-                                    </div>
-                                </div>
-                                <!-- Second Column -->
-                                <div class="col-6" style="padding: 10px;">
-                                    <div class="d-flex align-items-center">
-                                        <input type="checkbox" id="checkbox2" class="me-2">
-                                        <label for="checkbox2">Label 2</label>
-                                    </div>
-                                </div>
-                            </div>
+                    <?php endif; ?>
+                </td>
+
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td class="tg-fymr" style="text-align: center;">PENTAKSIRAN</td>
+                <td class="tg-fymr" colspan="4">INTEGRASI TEKNOLOGI:</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky" rowspan="6">
+                    <?php
+                    $assessment_html_line = "";
+                    if (isset($assessment) && !empty($assessment)): ?>
+                        <?php
+                        $cognitive = "";
+                        $affective = "";
+                        $psikomotor = "";
+                        foreach ($assessment as $assess) :
+
+                            if ($assess['asc_desc'] == 'Kognitif') {
+                                $cognitive .= $assess['asi_desc_number'] . ". " . $assess['asi_desc'] . "<br>";
+                            }
+
+                            if ($assess['asc_desc'] == 'Afektif') {
+                                $affective .= $assess['asi_desc_number'] . ". " . $assess['asi_desc'] . "<br>";
+                            }
+
+                            if ($assess['asc_desc'] == 'Psikomotor') {
+                                $psikomotor .= $assess['asi_desc_number'] . ". " . $assess['asi_desc'] . "<br>";
+                            }
+                        endforeach;
+
+                        echo $assessment_html_line .= "<b>Kognitif</b><br>" . $cognitive . "<br><b>Psikomotor</b><br>" . $psikomotor . "<br><b>Affective</b><br>" . $affective;
+                        ?>
+                    <?php endif; ?>
+                </td>
+                <td class="tg-0pky" colspan="4" rowspan="2">
+                    <?php if (isset($integrasi_teknologi) && !empty($integrasi_teknologi)): ?>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <?php foreach ($integrasi_teknologi as $index => $item): ?>
+                                <label style="display: inline-block; margin-right: 20px; width: 30%;">
+                                    <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
+                                </label>
+                                <?php if (($index + 1) % 3 == 0): ?>
+                                    <br>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </div>
-                    </div>
-                </div>
-                <div class="col-5" style="border:1px solid;">
-                    <h6><b>KAEDAH</b></h6>
-                </div>
-            </div>
-            <!-- AKTIVITI -->
-            <div class="row g-3">
-                <!-- AKTIVITI -->
-                <div class="col-md-12 g-3" style="border:1px solid;">
-                    <h6><b>INTEGRASI TEKNOLOGI:</b></h6>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td class="tg-fymr" colspan="2">PENDEKATAN:</td>
+                <td class="tg-fymr" colspan="2">KAEDAH:</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky" colspan="2" rowspan="3">
+                    <?php if (isset($pendekatan) && !empty($pendekatan)): ?>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <?php foreach ($pendekatan as $index => $item): ?>
+                                <label style="display: inline-block; margin-right: 20px; width: 45%;">
+                                    <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
+                                </label>
+                                <?php if (($index + 1) % 2 == 0): ?>
+                                    <br>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+
+                </td>
+                <td class="tg-0pky" colspan="2" rowspan="5">
+                    <?php if (isset($kaedah) && !empty($kaedah)): ?>
+                        <div style="display: flex; flex-wrap: wrap;">
+                            <?php foreach ($kaedah as $index => $item): ?>
+                                <label style="display: inline-block; margin-right: 20px; width: 45%;">
+                                    <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
+                                </label>
+                                <?php if (($index + 1) % 2 == 0): ?>
+                                    <br>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td class="tg-fymr" colspan="4" style="text-align: center;">OBJEKTIF PRESTASI</td>
+                <td class="tg-fymr" colspan="2">PENGLIBATAN IBU BAPA:</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky" colspan="4" rowspan="4">
+                    <?php
+                    if (isset($objective_performance) && !empty($objective_performance)) {
+                        foreach ($objective_performance as $op) {
+                            echo $op['opm_number'] . " " . $op['opm_desc'] . "<br>";
+                        }
+                    }
+                    ?>
+                </td>
+                <td class="tg-0pky" colspan="2">
+                    <label>
+                        <input type="checkbox" name="parent_involvement_yes" value="Y"
+                            <?php echo (isset($dskpn_details['dskpn_parent_involvement']) && $dskpn_details['dskpn_parent_involvement'] == 'Y') ? 'checked' : ''; ?>> Yes
+                    </label>
+                    <span style="margin-right: 20px;"></span>
+                    <label>
+                        <input type="checkbox" name="parent_involvement_no" value="N"
+                            <?php echo (isset($dskpn_details['dskpn_parent_involvement']) && $dskpn_details['dskpn_parent_involvement'] == 'N') ? 'checked' : ''; ?>> No
+                    </label>
+                </td>
+
+            </tr>
+            <tr>
+                <td class="tg-fymr" colspan="4" style="text-align: center;">AKTIVITI</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky" colspan="4" rowspan="5">
+                    <?php $activity_line_html = "";
+                    if (isset($activity) && !empty($activity)):
+                        foreach ($activity as $ac) {
+                            echo $activity_line_html .= $ac['aci_number'] . ". " . $ac['aci_desc'] . "<br>";
+                        }
+                    endif;
+                    ?>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+            <tr>
+                <td class="tg-fymr" colspan="4" style="text-align: center;">ALAT BANTU MENGAJAR</td>
+            </tr>
+            <tr>
+                <td class="tg-0pky" colspan="4" rowspan="2">
+                    <?php if (isset($abm) && !empty($abm)): ?>
+                        <?php foreach ($abm as $index => $item): ?>
+                            <?= $index + 1 . ". " . $item['la_desc'] ?> <br>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </td>
+            </tr>
+            <tr>
+            </tr>
+        </tbody>
+    </table>
 
     <div class="row">
         <div class="container-custom">
-            <h1>SULIT</h1>
-            <p style="font-size: 1.2em;width:400px;">PUSAT INISIATIF PEMODENAN PENDIDIKAN UNIVERSITI PENDIDIKAN SULTAN IDRIS</p>
-            <h1>SULIT</h1>
+            <h5 class="left">SULIT</h5>
+            <div class="mid">
+                PUSAT INISIATIF PEMODENAN PENDIDIKAN<br>
+                UNIVERSITI PENDIDIKAN SULTAN IDRIS
+            </div>
+            <h5 class="right">SULIT</h5>
         </div>
     </div>
-    <!-- Bootstrap 5 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 
 </html>
