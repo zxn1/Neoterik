@@ -16,6 +16,7 @@ class UserAccessRolesModel extends Model
         'uar_id',
         'uar_ar_id',
         'uar_sm_recid',
+        'uar_isChecked',
         'uar_created_at',
         'uar_updated_at',
         'uar_deleted_at',

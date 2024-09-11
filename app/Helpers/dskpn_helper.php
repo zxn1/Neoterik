@@ -164,6 +164,6 @@ function get_user_roles($sm_recid)
         // Return the roles as an HTML string
         return implode(' ', $roles);
     } else {
-        return '<span class="badge badge-no-role">No Roles</span>'; // Return a placeholder if no roles found
+        return '<span class="badge badge-no-role">TIADA AKSES</span>'; // Return a placeholder if no roles found
     }
 }

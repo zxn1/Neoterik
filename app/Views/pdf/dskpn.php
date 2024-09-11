@@ -115,7 +115,26 @@
                     {
                         foreach($objective_performance as $op)
                         {
-                            echo $op['opm_number'] . " " . $op['opm_desc'] . "<br>";
+                            $op_reff_code = [];
+                            if(isset($all_reff_code_op) && !empty($all_reff_code_op))
+                            {
+                                $arco_flag = false;
+                                foreach($all_reff_code_op as $arco)
+                                {
+                                    if($arco['opm_id'] == $op['opm_id'])
+                                    {
+                                        $op_reff_code[] = $arco['orc_code'];
+                                        $arco_flag = true;
+                                    }
+                                }
+
+                                if($arco_flag)
+                                    $op_reff_code = "(" . implode(",", $op_reff_code) . ")";
+                                else
+                                    $op_reff_code = "";
+                            }
+
+                            echo $op['opm_number'] . ". " . $op['opm_desc'] . " <b>" . $op_reff_code . "</b><br>";
                         }
                     }
                     ?>
