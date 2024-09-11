@@ -9,5 +9,7 @@ $routes->group('administrative', function ($routes) {
     $routes->post('get_cluster_years',                          [Main::class,     'get_cluster_years'],                     ['as' => 'get_cluster_years']);
     $routes->post('allocate_teacher_cluster_class',             [Main::class,     'allocate_teacher_cluster_class'],        ['as' => 'allocate_teacher_cluster_class']);
 
-    $routes->get('view_user_access',                        [UserAccessController::class,     'view_user_access'],                  ['as' => 'view_user_access']);
+    $routes->get('view_user_access',                        [UserAccessController::class,     'view_user_access'],          ['as' => 'view_user_access']);
+    $routes->get('get_roles',                               [UserAccessController::class,     'get_roles'],                 ['as' => 'get_roles']);
+    $routes->post('save_user_roles',                        [UserAccessController::class,     'save_user_roles'],           ['as' => 'save_user_roles']);
 });
