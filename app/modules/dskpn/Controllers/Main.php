@@ -404,6 +404,11 @@ class Main extends BaseController
             ->findAll();
 
         $objective_performance = $this->objective_performance_model->where('opm_dskpn_id', $dskpn_id)->findAll();
+        $all_reff_code_op = $this->objective_performance_model
+            ->select('objective_performance.opm_id, opm_reff_code.orc_code')
+            ->join('opm_reff_code', 'opm_reff_code.orc_opm_id = objective_performance.opm_id')
+            ->where('opm_dskpn_id', $dskpn_id)->findAll();
+
         $activity = $this->activity_item_model
             ->where('activity_item.aci_dskpn_id', $dskpn_id)->findAll();
         $assessment = $this->assessment_item_model
@@ -517,6 +522,7 @@ class Main extends BaseController
             'all_pendekatan'                => $all_pendekatan,
             'all_kaedah'                    => $all_kaedah,
             'all_kemahiran_insaniah'        => $all_kemahiran_insaniah,
+            'all_reff_code_op'              => $all_reff_code_op,
         ];
 
         return $data;
