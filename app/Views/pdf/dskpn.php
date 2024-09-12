@@ -7,9 +7,10 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            height: 100%;
         }
-        table {
-            widtd: 100%;
+        table.fitcontent {
+            width: 100%;
             border-collapse: collapse;
         }
         td, td {
@@ -32,6 +33,12 @@
         td.yellownobold {
             background-color: #ffe699;
         }
+        td.slowgray {
+            background-color: #e8e3d3a3;
+        }
+        td.slowyellow {
+            background-color: #ffedb5;
+        }
         td.blank {
             background-color: black;
         }
@@ -49,15 +56,82 @@
         .vertical-center {
             vertical-align : middle;
         }
+        span.assessmentcodebadge {
+            border-radius : 15px; 
+            padding-left : 10px; 
+            padding-right : 10px; 
+            margin-left : 2.5px; 
+            margin-right : 2.5px;
+            border: 1px none #ccc;
+        }
+        span.coginitve {
+            background-color: #a6b3ed;
+        }
+        span.affective {
+            background-color: #ff9595;
+        }
+        span.psikomotor {
+            background-color: #59f65a;
+        }
+        td.no-border {
+            border: none;
+        }
+        .approved-by {
+            display: flex; justify-content: flex-end; padding: 10px;
+        }
     </style>
 </head>
 <body>
     <!-- <table style="transform: scale(0.5); transform-origin: top left;"> -->
-    <table>
+    <table class="fitcontent">
         <tdead>
+            <tr>
+                <td class="header center no-border">
+                    <?php
+                    if(isset($dskpn_details['dskpn_code']))
+                        echo  $dskpn_details['dskpn_code'];
+                    ?>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" class="center vertical-center no-border"><b>
+                    <center>
+                    <table>
+                        <tr>
+                            <td class="center vertical-center no-border" style="padding-right: 15px;">
+                                <b>
+                                    DOKUMEN STANDARD KURIKULUM PENDEKATAN NEOTERIK<br>
+                                    AKADEMI PENDIDIKAN / SEKOLAH MAKMAL<br>
+                                    UNIVERSITI PENDIDIKAN SULTAN IDRIS
+                                </b>
+                            </td>
+                            <td class="no-border">
+                                <img style="width: 90px;" src="<?= $srsb_logo; ?>">
+                            </td>
+                        </tr>
+                    </table>
+                    </center>
+                </td>
+            </tr>
             <tr>
                 <td class="bold">KLUSTER</td>
                 <td class="bold" colspan="3"><?= isset($cluster_details)&&!empty($cluster_details)?$cluster_details['ctm_desc']:'' ?></td>
+                <td colspan="7" class="no-border" style="text-align: right;">
+                    <b>TAHUN</b>
+                </td>
+                
+                <?php
+                $year_map = [
+                    1 => 'SATU',
+                    2 => 'DUA',
+                    3 => 'TIGA',
+                    4 => 'EMPAT',
+                    5 => 'LIMA',
+                    6 => 'ENAM'
+                ];
+                $tm_year_display = isset($year_map[$tm_details['tm_year']]) ? $year_map[$tm_details['tm_year']] : $tm_details['tm_year'];
+                ?>
+                <td class="center"><b><?= $tm_year_display; ?></b></td>
             </tr>
             <tr>
                 <td class="bold">TOPIK</td>
@@ -134,7 +208,32 @@
                                     $op_reff_code = "";
                             }
 
-                            echo $op['opm_number'] . ". " . $op['opm_desc'] . " <b>" . $op_reff_code . "</b><br>";
+                            $opm_assessment_code_html = "";
+                            if(isset($opm_assessment_code) && !empty($opm_assessment_code))
+                            {
+                                foreach($opm_assessment_code as $oac)
+                                {
+                                    $color_code = "";
+                                    switch ($oac['oac_code'][0]) {
+                                        case 'C':
+                                          $color_code = "coginitve";
+                                          break;
+                                        case 'A':
+                                          $color_code = "affective";
+                                          break;
+                                        case 'P':
+                                          $color_code = "psikomotor";
+                                          break;
+                                    }
+
+                                    if($oac['oac_opm_id'] == $op['opm_id'])
+                                    {
+                                        $opm_assessment_code_html .= "<span class='center assessmentcodebadge " . $color_code . "'><b>" . $oac['oac_code'] . "</b></span>";
+                                    }
+                                }
+                            }
+
+                            echo $op['opm_number'] . ". " . $op['opm_desc'] . " <b>" . $op_reff_code . "</b>" . $opm_assessment_code_html . "<br>";
                         }
                     }
                     ?>
@@ -211,10 +310,10 @@
                         }
 
                         if(!$hasValue)
-                            echo "<td></td><td></td>";
+                            echo "<td class='slowyellow'></td><td class='slowgray'></td>";
                     }
                 } else {
-                    echo "<td></td><td></td>";
+                    echo "<td class='slowyellow'></td><td class='slowgray'></td>";
                 }
 
                 if ($i == 1) {
@@ -553,24 +652,33 @@
                 // pendekatan
                 if(($j > 1) && ($j <= $max_adk_val))
                 {
-                    echo "<td class='";
-                    echo isset($all_pendekatan[$j-2]['tapp_id'])?"center vertical-center":"blank";
-                    echo "'>";
-                    if(isset($pendekatan) && !empty($pendekatan))
-                    foreach($pendekatan as $index_pdkt => $pdkt)
+                    if(isset($all_pendekatan[$j-2]['tapp_id']))
                     {
-                        if($all_pendekatan[$j-2]['tapp_id'] == $pdkt['tapp_id'])
+                        $rowspan_pendekatan = 1;
+                        if(!isset($all_pendekatan[$j-1]['tapp_id']))
                         {
-                            echo "&#x2714;";
-                            unset($pendekatan[$index_pdkt]);
+                            $rowspan_pendekatan = $max_adk_val - $j+1;
                         }
+
+                        echo "<td rowspan='" . $rowspan_pendekatan . "' class='";
+                        echo isset($all_pendekatan[$j-2]['tapp_id'])?"center vertical-center":"blank";
+                        echo "'>";
+                        if(isset($pendekatan) && !empty($pendekatan))
+                        foreach($pendekatan as $index_pdkt => $pdkt)
+                        {
+                            if($all_pendekatan[$j-2]['tapp_id'] == $pdkt['tapp_id'])
+                            {
+                                echo "&#x2714;";
+                                unset($pendekatan[$index_pdkt]);
+                            }
+                        }
+                        echo "</td>";
+                        echo "<td rowspan='" . $rowspan_pendekatan . "' class='";
+                        echo isset($all_pendekatan[$j-2]['tapp_id'])?"":"blank";
+                        echo "'>";
+                        echo isset($all_pendekatan[$j-2]['tapp_desc']) && !empty($all_pendekatan[$j-2]['tapp_desc'])?$all_pendekatan[$j-2]['tapp_desc']:'';
+                        echo "</td>";
                     }
-                    echo "</td>";
-                    echo "<td class='";
-                    echo isset($all_pendekatan[$j-2]['tapp_id'])?"":"blank";
-                    echo "'>";
-                    echo isset($all_pendekatan[$j-2]['tapp_desc']) && !empty($all_pendekatan[$j-2]['tapp_desc'])?$all_pendekatan[$j-2]['tapp_desc']:'';
-                    echo "</td>";
                 } else if($j == 1) {}  else {
                     echo '<td></td><td></td>';
                 }
@@ -682,6 +790,11 @@
             } ?>
                 
         </tbody>
-    </table>
+    </table><br>
+    <div class="approved-by"><b>
+        Tarikh dikeluarkan: <?= isset($dskpn_details['dskpn_created_at'])?$dskpn_details['dskpn_created_at']:'N\A'; ?><br>
+        Disahkan oleh: <?= isset($dskpn_details['dskpn_approved_by'])?$dskpn_details['dskpn_approved_by']:'N\A'; ?>
+    </b></div>
 </body>
+
 </html>

@@ -126,12 +126,21 @@ class Main extends BaseController
         $data = $this->_populate_dskpn_details();
         $mpdf = new Mpdf([
             'orientation' => 'L',
-            'format' => [590, 1000], //A2
+            'format' => 'A1',//[594, 850], //A2
             'margin_left' => 10,
             'margin_right' => 10,
             'margin_top' => 10,
             'margin_bottom' => 10,
         ]);
+
+        $path = FCPATH . 'neoterik/img/logo_srsb.png';
+
+        if (file_exists($path)) {
+            //encode image to base64
+            $imageData = base64_encode(file_get_contents($path));
+            $base64Image = 'data:image/png;base64,' . $imageData;
+            $data['srsb_logo'] = $base64Image;
+        }
 
         $htmlContent = view('pdf/dskpn', $data);
 
@@ -139,12 +148,22 @@ class Main extends BaseController
         $dskpn_code = empty($dskpn_code)?'dskpn':$dskpn_code;
 
         $mpdf->WriteHTML($htmlContent);
+
         return $mpdf->Output($dskpn_code . '.pdf', 'D');
     }
 
     public function test_view_pdf_in_html()
     {
         $data = $this->_populate_dskpn_details();
+
+        $path = FCPATH . 'neoterik/img/logo_srsb.png';
+
+        if (file_exists($path)) {
+            //encode image to base64
+            $imageData = base64_encode(file_get_contents($path));
+            $base64Image = 'data:image/png;base64,' . $imageData;
+            $data['srsb_logo'] = $base64Image;
+        }
 
         return view('pdf/dskpn', $data);
     }
@@ -411,6 +430,11 @@ class Main extends BaseController
             ->join('opm_reff_code', 'opm_reff_code.orc_opm_id = objective_performance.opm_id')
             ->where('opm_dskpn_id', $dskpn_id)->findAll();
 
+        $arr_opm_ids = array_column($objective_performance, 'opm_id');
+        $opm_assessment_code = $this->opm_assessment_code_model
+            ->whereIn('oac_opm_id', $arr_opm_ids)
+            ->findAll();
+
         $activity = $this->activity_item_model
             ->where('activity_item.aci_dskpn_id', $dskpn_id)->findAll();
         $assessment = $this->assessment_item_model
@@ -525,6 +549,7 @@ class Main extends BaseController
             'all_kaedah'                    => $all_kaedah,
             'all_kemahiran_insaniah'        => $all_kemahiran_insaniah,
             'all_reff_code_op'              => $all_reff_code_op,
+            'opm_assessment_code'          => $opm_assessment_code,
         ];
 
         return $data;
