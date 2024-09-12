@@ -69,45 +69,74 @@
                 <div class="container" style="margin-left: 5%; margin-right: 5%;">
                     <div class="row">
                         <div class="col-xl-6 col-lg-5 col-md-6 d-flex flex-column">
-                            <div class="card card-plain mt-0">
+                            <div class="card card-plain mt-4" style="width : 350px;">
                                 <!-- <div class="card z-index-1 mt-0"> -->
                                 <div class="card-header pb-0 text-left bg-transparent">
-                                    <div class="text-center"><img src="<?= base_url('neoterik/img/logo_srsb.png') ?>" width="150"><br><br>
-                                        <span>SEKOLAH RENDAH SERI BUDIMAN </span><br><span class="h5">
+                                    <div class="text-center"><img src="<?= base_url('neoterik/img/logo_srsb.png') ?>" width="70"><br>
+                                        <span class="text-sm">SEKOLAH RENDAH SERI BUDIMAN </span><br><span class="h5">
                                             <!-- <b>eSchool System</b> -->
                                         </span>
                                     </div><br><br>
-                                    <h3 class="font-weight-bolder text-primary">Log Masuk</h3>
-                                    <p class="mb-0">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p>
+                                    <h3 class="font-weight-bolder text-primary" style="font-size : 15px;">Log Masuk</h3>
+                                    <p class="mb-0" style="font-size : 12px;">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body pb-1">
                                     <form method="post" action="<?= site_url('login/attempt_login'); ?>" id="login-form" class="smart-form client-form" data-gtm-form-interact-id="0">
                                         <?= csrf_field() ?>
-                                        <label>Nama Pengguna</label>
-                                        <div class="mb-3">
+                                        <!-- <label>Nama Pengguna</label> -->
+                                        
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1" style="border-radius : 8px 0px 0px 8px; background-color:#41414121;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                                                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <input type="text" class="form-control" id="um_username" name="um_username" placeholder="&nbsp;&nbsp;Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            <?= session('errors.login') ?>
+                                        </div>
+
+                                        <!-- <div class="mb-3">
                                             <input id="um_username" name="um_username" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="email-addon" required>
                                             <div class="invalid-feedback">
                                                 <?= session('errors.login') ?>
                                             </div>
+                                        </div> -->
+                                        <!-- <label>Kata Laluan</label> -->
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="basic-addon1" style="border-radius : 8px 0px 0px 8px; background-color:#41414121;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-key-fill" viewBox="0 0 16 16">
+                                                        <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2M2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                                                    </svg>
+                                                </span>
+                                            </div>
+                                            <input type="password" class="form-control" id="um_password" name="um_password" placeholder="&nbsp;&nbsp;Password" aria-label="Password" aria-describedby="password-addon1" required>
                                         </div>
-                                        <label>Kata Laluan</label>
-                                        <div class="mb-3">
+                                        <div class="invalid-feedback">
+                                            <?= session('errors.password') ?>
+                                        </div>
+                                        <!-- <div class="mb-3">
                                             <input id="um_password" name="um_password" type="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" required>
                                             <div class="invalid-feedback">
                                                 <?= session('errors.password') ?>
                                             </div>
-                                        </div>
-                                        <div class="form-check form-switch">
+                                        </div> -->
+
+                                        <div class="form-check form-switch" style="transform : scale(0.75); position : relative; left : -32px; top : -5px;">
                                             <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
-                                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                                            <label class="form-check-label" for="rememberMe">Ingat saya</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn bg-primary w-100 mt-4 mb-0 text-white">Sign in</button>
+                                            <button type="submit" class="btn bg-primary w-100 mt-1 mb-0 text-white" style="height : 35px;"><span style="position : relative; top : -2.5px;">Log Masuk</span></button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                    <p class="mb-4 text-sm mx-auto">
+                                <div class="card-footer text-center pt-0 pb-0" style="transform : scale(0.75);">
+                                    <p class="text-sm mx-auto pt-0 pb-0">
                                         Tidak mempunyai akaun?
                                         <a href="<?= site_url('register') ?>" class="text-primary font-weight-bold">Daftar</a>
                                     </p>
