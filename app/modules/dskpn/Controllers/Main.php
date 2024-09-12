@@ -36,6 +36,8 @@ use App\Modules\Dskpn\Models\OpmAssessmentCodeModel;
 //-----
 
 use \Mpdf\Mpdf;
+use \TCPDF;
+use \Dompdf\Dompdf;
 
 class Main extends BaseController
 {
@@ -404,6 +406,11 @@ class Main extends BaseController
             ->findAll();
 
         $objective_performance = $this->objective_performance_model->where('opm_dskpn_id', $dskpn_id)->findAll();
+        $all_reff_code_op = $this->objective_performance_model
+            ->select('objective_performance.opm_id, opm_reff_code.orc_code')
+            ->join('opm_reff_code', 'opm_reff_code.orc_opm_id = objective_performance.opm_id')
+            ->where('opm_dskpn_id', $dskpn_id)->findAll();
+
         $activity = $this->activity_item_model
             ->where('activity_item.aci_dskpn_id', $dskpn_id)->findAll();
         $assessment = $this->assessment_item_model
@@ -517,6 +524,7 @@ class Main extends BaseController
             'all_pendekatan'                => $all_pendekatan,
             'all_kaedah'                    => $all_kaedah,
             'all_kemahiran_insaniah'        => $all_kemahiran_insaniah,
+            'all_reff_code_op'              => $all_reff_code_op,
         ];
 
         return $data;
@@ -2277,23 +2285,85 @@ class Main extends BaseController
         print_r(json_encode($this->session->get()));
     }
 
-    public function print_bpp($dskpn_id)
+    public function print_bpp()
     {
+        // require_once('vendor/tecnickcom/tcpdf/tcpdf.php');
         $data = $this->_populate_dskpn_details();
 
-        $mpdf = new Mpdf([
-            'orientation' => 'L',
-            'format' => 'A4',
-            'margin_left' => 15,
-            'margin_right' => 15,
-            'margin_top' => 15,
-            'margin_bottom' => 15,
-        ]);
+        // Load your view and generate the HTML content
+        $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
 
-        $htmlContent = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+        // Return HTML as response
+        return $this->response->setContentType('text/html')->setBody($html);
 
-        $mpdf->WriteHTML($htmlContent);
-        return $mpdf->Output('test' . '.pdf', 'D');
+        // $pdf = new TCPDF();
+        // $pdf->AddPage();
+
+        // Load your view and generate the HTML content
+        // $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+
+        // Write HTML content to PDF
+        // $pdf->writeHTML($html);
+
+        // Output the PDF (D: download, I: inline)
+        // $pdf->Output('document.pdf', 'D'); // 
+        // // Create new PDF document
+        // $dompdf = new Dompdf();
+
+        // // Load HTML content
+        // $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+
+        // echo $html;
+        // exit();
+        // $dompdf->loadHtml($html);
+
+        // // (Optional) Set paper size and orientation
+        // $dompdf->setPaper('A4', 'landscape');
+
+        // // Render the HTML as PDF
+        // $dompdf->render();
+
+        // // Output the generated PDF
+        // $dompdf->stream("example.pdf", array("Attachment" => 1));
+
+
+
+        // // Create new PDF document
+        // $pdf = new TCPDF('L', PDF_UNIT, 'A4', true, 'UTF-8', false);
+
+        // // Set document information
+        // $pdf->SetCreator(PDF_CREATOR);
+        // $pdf->SetAuthor('Author');
+        // $pdf->SetTitle('TCPDF Example');
+        // $pdf->SetSubject('TCPDF Tutorial');
+
+        // // Add a page
+        // $pdf->AddPage();
+
+        // // Output HTML content
+        // $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+        // $pdf->writeHTML($html, true, false, true, false, '');
+
+        // // Close and output PDF document
+        // $pdf->Output('example.pdf', 'D');
+
+
+        // $data = $this->_populate_dskpn_details();
+
+        // $mpdf = new Mpdf([
+        //     'orientation'   => 'L',
+        //     'format'        => 'A4',
+        //     'margin_left'   => 15,
+        //     'margin_right'  => 15,
+        //     'margin_top'    => 15,
+        //     'margin_bottom' => 15,
+        //     'debug'         => true, // Enable debugging
+        // ]);
+
+        // $htmlContent = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+
+        // $mpdf->WriteHTML($htmlContent);
+        // return $mpdf->Output('test' . '.pdf', 'D');
 
         // dd($data);
         // echo view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
