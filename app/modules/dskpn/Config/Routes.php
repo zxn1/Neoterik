@@ -63,7 +63,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('test-view-pdf-dskpn',         [Main::class,   'test_view_pdf_in_html'],           ['as' => 'test_view_pdf_dskpn']);
 
     // print BPP
-    $routes->get('print_bpp/(:any)', [Main::class,     'print_bpp/$1']);
+    $routes->get('print_bpp', [Main::class,     'print_bpp']);
 
     //Topic Main
     $routes->group('topic', function ($routes) {
