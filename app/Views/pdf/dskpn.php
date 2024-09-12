@@ -115,7 +115,26 @@
                     {
                         foreach($objective_performance as $op)
                         {
-                            echo $op['opm_number'] . " " . $op['opm_desc'] . "<br>";
+                            $op_reff_code = [];
+                            if(isset($all_reff_code_op) && !empty($all_reff_code_op))
+                            {
+                                $arco_flag = false;
+                                foreach($all_reff_code_op as $arco)
+                                {
+                                    if($arco['opm_id'] == $op['opm_id'])
+                                    {
+                                        $op_reff_code[] = $arco['orc_code'];
+                                        $arco_flag = true;
+                                    }
+                                }
+
+                                if($arco_flag)
+                                    $op_reff_code = "(" . implode(",", $op_reff_code) . ")";
+                                else
+                                    $op_reff_code = "";
+                            }
+
+                            echo $op['opm_number'] . ". " . $op['opm_desc'] . " <b>" . $op_reff_code . "</b><br>";
                         }
                     }
                     ?>
@@ -295,7 +314,7 @@
                             if(($i+1) == $item_inside)
                             {
                                 $differenceRow = $highest_val_item_for_sbm_id - $item_inside;
-                                echo '<td class="center vertical-center" rowspan="' . $differenceRow + 1  . '">' . $ticked . '</td><td rowspan="' . $differenceRow + 1  . '">(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
+                                echo '<td class="center vertical-center" rowspan="' . $differenceRow + 1  . '">' . $ticked . '</td><td class="vertical-center" rowspan="' . $differenceRow + 1  . '">(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
                             } else if(($i+1) < $item_inside) {
                                 echo '<td class="center vertical-center">' . $ticked . '</td><td>(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
                             }
@@ -498,22 +517,33 @@
                 
                 foreach($subjects as $sb)
                 {
-                    ?>
-                    <td class="center vertical-center">
-                        <?php
-                        if(isset($domain_kemandirian)&&!empty($domain_kemandirian))
-                            foreach($domain_kemandirian as $index_dpa => $dpa)
+                    if(count($all_domain_kemandirian) > ($j))
+                    {
+                        echo '<td class="center vertical-center">';
+                    } else if(count($all_domain_kemandirian) == ($j)) {
+                        echo '<td class="center vertical-center" rowspan="' . (($max_adk_val+1) - count($all_domain_kemandirian)) . '">';
+                    }
+                   
+                    if(isset($domain_kemandirian)&&!empty($domain_kemandirian))
+                        foreach($domain_kemandirian as $index_dpa => $dpa)
+                        {
+                            if($dpa['dm_dmn_code'] == $all_domain_kemandirian[$j - 1]['dmn_code'] && $sb['sbm_id'] == $dpa['sbm_id'])
                             {
-                                if($dpa['dm_dmn_code'] == $all_domain_kemandirian[$j - 1]['dmn_code'] && $sb['sbm_id'] == $dpa['sbm_id'])
-                                {
-                                    echo "&#x2714;";
-                                    unset($domain_kemandirian[$index_dpa]);
-                                }
+                                echo "&#x2714;";
+                                unset($domain_kemandirian[$index_dpa]);
                             }
-                        ?>
+                        }
+                    ?>
                     </td>
-                    <td><?= (($max_adk_val > 0) && isset($all_domain_kemandirian[$j - 1]['dmn_code']))?"(" . $all_domain_kemandirian[$j - 1]['dmn_code'] . ") " . $all_domain_kemandirian[$j - 1]['dmn_desc']:'' ?></td>
                     <?php
+                    if(count($all_domain_kemandirian) > ($j))
+                    { 
+                    ?>
+                        <td><?= (($max_adk_val > 0) && isset($all_domain_kemandirian[$j - 1]['dmn_code']))?"(" . $all_domain_kemandirian[$j - 1]['dmn_code'] . ") " . $all_domain_kemandirian[$j - 1]['dmn_desc']:'' ?></td>
+                    <?php } else if(count($all_domain_kemandirian) == ($j)) { ?>
+                        <td class="vertical-center" rowspan="<?= (($max_adk_val+1) - count($all_domain_kemandirian)) ?>"><?= (($max_adk_val > 0) && isset($all_domain_kemandirian[$j - 1]['dmn_code']))?"(" . $all_domain_kemandirian[$j - 1]['dmn_code'] . ") " . $all_domain_kemandirian[$j - 1]['dmn_desc']:'' ?></td>
+                    <?php
+                    }
                 }
 
                 if($j == 1)

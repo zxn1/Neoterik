@@ -126,7 +126,7 @@ class Main extends BaseController
         $data = $this->_populate_dskpn_details();
         $mpdf = new Mpdf([
             'orientation' => 'L',
-            'format' => 'A2',
+            'format' => [590, 1000], //A2
             'margin_left' => 10,
             'margin_right' => 10,
             'margin_top' => 10,
@@ -135,14 +135,11 @@ class Main extends BaseController
 
         $htmlContent = view('pdf/dskpn', $data);
 
-<<<<<<< Updated upstream
-=======
         $dskpn_code = $this->session->get('dskpn_code');
-        $dskpn_code = empty($dskpn_code) ? 'dskpn' : $dskpn_code;
+        $dskpn_code = empty($dskpn_code)?'dskpn':$dskpn_code;
 
->>>>>>> Stashed changes
         $mpdf->WriteHTML($htmlContent);
-        return $mpdf->Output($this->session->get('dskpn_id') . '.pdf', 'D');
+        return $mpdf->Output($dskpn_code . '.pdf', 'D');
     }
 
     public function test_view_pdf_in_html()
@@ -369,11 +366,9 @@ class Main extends BaseController
 
         $data = $this->_populate_dskpn_details();
 
-        // dd($data);
         $script = ['dynamic-input', 'dskpn_view'];
         $style = ['static-field'];
 
-        // dd($data);
         $this->render_jscss('dskpn_view', $data, $script, $style);
     }
 
@@ -411,6 +406,11 @@ class Main extends BaseController
             ->findAll();
 
         $objective_performance = $this->objective_performance_model->where('opm_dskpn_id', $dskpn_id)->findAll();
+        $all_reff_code_op = $this->objective_performance_model
+            ->select('objective_performance.opm_id, opm_reff_code.orc_code')
+            ->join('opm_reff_code', 'opm_reff_code.orc_opm_id = objective_performance.opm_id')
+            ->where('opm_dskpn_id', $dskpn_id)->findAll();
+
         $activity = $this->activity_item_model
             ->where('activity_item.aci_dskpn_id', $dskpn_id)->findAll();
         $assessment = $this->assessment_item_model
@@ -524,6 +524,7 @@ class Main extends BaseController
             'all_pendekatan'                => $all_pendekatan,
             'all_kaedah'                    => $all_kaedah,
             'all_kemahiran_insaniah'        => $all_kemahiran_insaniah,
+            'all_reff_code_op'              => $all_reff_code_op,
         ];
 
         return $data;

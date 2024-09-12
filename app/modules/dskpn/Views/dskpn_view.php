@@ -84,8 +84,6 @@
     <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">DSKPN</h6>
       <div class="ms-auto d-flex align-items-center">
-<<<<<<< Updated upstream
-=======
         <a href="<?= route_to('generate_dskpn'); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
           Unduh DSKPN&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
@@ -93,7 +91,6 @@
           </svg>
         </a>
         <button onclick="printPDF()">Print PDF</button>
->>>>>>> Stashed changes
         <a href="<?= base_url('dskpn/print_bpp/' . $dskpn_details['dskpn_id']); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
           Cetak Borang Plan Pengajaran&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
