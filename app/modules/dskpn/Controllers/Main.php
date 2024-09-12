@@ -37,7 +37,8 @@ use App\Modules\Dskpn\Models\OpmAssessmentCodeModel;
 
 use \Mpdf\Mpdf;
 use \TCPDF;
-use \Dompdf\Dompdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class Main extends BaseController
 {
@@ -2324,22 +2325,23 @@ class Main extends BaseController
         // $pdf = new TCPDF();
         // $pdf->AddPage();
 
-        // Load your view and generate the HTML content
+        // // Load your view and generate the HTML content
         // $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
 
-        // Write HTML content to PDF
+        // // Write HTML content to PDF
         // $pdf->writeHTML($html);
 
-        // Output the PDF (D: download, I: inline)
+        // // Output the PDF (D: download, I: inline)
         // $pdf->Output('document.pdf', 'D'); // 
+
+        // // Initialize Dompdf and set options
+        // $options = new Options();
+        // $options->set('isHtml5ParserEnabled', true); // Enable HTML5 parsing
+        // $options->set('isPhpEnabled', true); // Disable PHP in HTML if not needed
+
         // // Create new PDF document
-        // $dompdf = new Dompdf();
+        // $dompdf = new Dompdf($options);
 
-        // // Load HTML content
-        // $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
-
-        // echo $html;
-        // exit();
         // $dompdf->loadHtml($html);
 
         // // (Optional) Set paper size and orientation
@@ -2349,7 +2351,7 @@ class Main extends BaseController
         // $dompdf->render();
 
         // // Output the generated PDF
-        // $dompdf->stream("example.pdf", array("Attachment" => 1));
+        // $dompdf->stream("example.pdf", array("Attachment" => 0));
 
 
 

@@ -3,6 +3,14 @@
 
 <head>
     <style>
+        @media print {
+            @page {
+                size: A4 landscape; /* Set to A4 size and portrait orientation */
+            }
+            body {
+                zoom: 0.9; /* Scales content to 90% */
+            }
+  }
         /* Ensure the table collapses borders */
         .table {
             border-collapse: collapse;
@@ -102,14 +110,23 @@
 </head>
 
 <body>
-    <table class="table">
+    <!-- <table class="table">
         <tr>
             <td>SULIT</td>
-            <td><img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image"></td>
+            <td style="text-align: center;"><img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image"></td>
             <td>SULIT</td>
         </tr>
-    </table>
-
+    </table> -->
+    <div class="row">
+        <div class="container-custom">
+            <h5 class="left">SULIT</h5>
+            <div class="mid">
+            <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
+            </div>
+            <h5 class="right">SULIT</h5>
+        </div>
+    </div>
+<br>
     <table class="table">
         <tr style="width:100%">
             <td style="width: 100px;"><b>KLUSTER:</b></td>
@@ -178,9 +195,6 @@
                     ?>
                     <br>
                 <?php endif; ?>
-
-
-
             </td>
             <td class="tg-0pky" colspan="4" rowspan="2">
                 <?php if (isset($rekabentuk_instruksi) && !empty($rekabentuk_instruksi)): ?>
@@ -342,7 +356,7 @@
             </td>
         </tr>
     </table>
-
+<br>
     <div class="row">
         <div class="container-custom">
             <h5 class="left">SULIT</h5>

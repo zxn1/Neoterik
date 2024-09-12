@@ -69,7 +69,7 @@
                 <div class="container" style="margin-left: 5%; margin-right: 5%;">
                     <div class="row">
                         <div class="col-xl-6 col-lg-5 col-md-6 d-flex flex-column">
-                            <div class="card card-plain mt-4" style="width : 350px;">
+                            <div class="card card-plain mt-4" style="width : 350px; box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);">
                                 <!-- <div class="card z-index-1 mt-0"> -->
                                 <div class="card-header pb-0 text-left bg-transparent">
                                     <div class="text-center"><img src="<?= base_url('neoterik/img/logo_srsb.png') ?>" width="70"><br>
@@ -78,7 +78,7 @@
                                         </span>
                                     </div><br><br>
                                     <h3 class="font-weight-bolder text-primary" style="font-size : 15px;">Log Masuk</h3>
-                                    <p class="mb-0" style="font-size : 12px;">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p>
+                                    <!-- <p class="mb-0" style="font-size : 12px;">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p> -->
                                 </div>
                                 <div class="card-body pb-1">
                                     <form method="post" action="<?= site_url('login/attempt_login'); ?>" id="login-form" class="smart-form client-form" data-gtm-form-interact-id="0">
@@ -126,10 +126,10 @@
                                             </div>
                                         </div> -->
 
-                                        <div class="form-check form-switch" style="transform : scale(0.75); position : relative; left : -32px; top : -5px;">
+                                        <!-- <div class="form-check form-switch" style="transform : scale(0.75); position : relative; left : -32px; top : -5px;">
                                             <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                                             <label class="form-check-label" for="rememberMe">Ingat saya</label>
-                                        </div>
+                                        </div> -->
                                         <div class="text-center">
                                             <button type="submit" class="btn bg-primary w-100 mt-1 mb-0 text-white" style="height : 35px;"><span style="position : relative; top : -2.5px;">Log Masuk</span></button>
                                         </div>
