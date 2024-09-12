@@ -10664,6 +10664,10 @@ fieldset:disabled .btn {
   background-color: #865EBF  !important;
 }
 
+.bg-primary-text-white {
+  color : white !important;
+}
+
 .bg-secondary {
   background-color: #8392AB !important;
 }
@@ -22147,6 +22151,11 @@ hr.vertical.gray-light {
 
 hr.horizontal {
   background-color: transparent;
+}
+
+hr.hr-lightbit {
+  background-color: #ffffff;
+  width : 80%;
 }
 
 hr.horizontal.light {
