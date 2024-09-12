@@ -11,6 +11,7 @@
             <option disabled selected>-- Sila Pilih Subjek --</option>
             <?php
             foreach ($subject_list as $subject)
+            if(!core_competency_exist($subject['sbm_id']))
               echo "<option value='" . $subject['sbm_id'] . "' data-code='" . $subject['sbm_code'] . "'>" . $subject['sbm_desc'] . "</option>";
             ?>
           </select>

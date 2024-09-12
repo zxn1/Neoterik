@@ -164,6 +164,25 @@ function get_user_roles($sm_recid)
         // Return the roles as an HTML string
         return implode(' ', $roles);
     } else {
-        return '<span class="badge badge-no-role">TIADA AKSES</span>'; // Return a placeholder if no roles found
+        return '<span class="badge badge-no-role">TIADA</span>'; // Return a placeholder if no roles found
+    }
+}
+
+function core_competency_exist($sbm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to check if the record exists
+    $exists = $db->table('core_competency')
+        ->where('cc_sbm_id', $sbm_id)
+        ->where('cc_deleted_at IS NULL')
+        ->countAllResults();
+
+    // Check if the record exists
+    if ($exists > 0) {
+        return true;
+    } else {
+        return false;
     }
 }

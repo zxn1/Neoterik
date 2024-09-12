@@ -168,21 +168,24 @@
 
               <?php
               if ((isset($assessment_number_session) && !empty($assessment_number_session)) && (isset($assessment_input_session) && !empty($assessment_input_session))) {
-                foreach ($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
-                  <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
-                    <div class="col-2 p-0 pe-1">
-                      <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
-                    </div>
-                    <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                      <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
-                      <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>').remove();">
-                        <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
-                          <i class="fas fa-trash-alt" style="color:red;"></i>
-                        </button>
+                if(isset($assessment_number_session[$category['asc_id']]))
+                {
+                  foreach ($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
+                    <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
+                      <div class="col-2 p-0 pe-1">
+                        <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
+                      </div>
+                      <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
+                        <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
+                        <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>').remove();">
+                          <button class="input-group-text justify-content-center" id="btnGroupAddon" style="height : 45px; width : 50px;">
+                            <i class="fas fa-trash-alt" style="color:red;"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                <?php }
+                  <?php }
+                }
               } else { ?>
                 <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-0">
                   <div class="col-2 p-0 pe-1">
@@ -298,11 +301,10 @@
   </div>
 
   <div class="d-flex justify-content-between align-items-center p-2">
-    <a href="<?= route_to('domain_mapping'); ?>" class="btn bg-danger mt-2 text-white">
+    <a href="<?= route_to('domain_mapping'); ?>" class="btn border border-gray text-gray mt-2">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
       <button type="submit" class="btn bg-info text-white">Seterusnya</button>
     </div>
   </div>

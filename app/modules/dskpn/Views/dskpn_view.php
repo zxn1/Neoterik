@@ -90,13 +90,18 @@
             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0" />
           </svg>
         </a>
-        <button onclick="printPDF()">Print PDF</button>
-        <a href="<?= base_url('dskpn/print_bpp/' . $dskpn_details['dskpn_id']); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
+        <button onclick="printPDF()" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
           Cetak Borang Plan Pengajaran&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
             <path d="M2 7a1 1 0 0 0-1 1v4a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1H2zm11 1v3h-1v-2H4v2H3V8h10zM5 12v3h6v-3H5zM1 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1H1V5z" />
           </svg>
-        </a>
+        </button>
+        <!-- <a href="<?= base_url('dskpn/print_bpp/'); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
+          Cetak Borang Plan Pengajaran&nbsp;&nbsp;
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+            <path d="M2 7a1 1 0 0 0-1 1v4a2 2 0 0 0 2 2h1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2h1a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1H2zm11 1v3h-1v-2H4v2H3V8h10zM5 12v3h6v-3H5zM1 5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1H1V5z" />
+          </svg>
+        </a> -->
       </div>
     </div>
     <div class="card-body">
@@ -680,25 +685,29 @@
 
 <script>
   function printPDF() {
+    // Create an iframe to load the document
     var iframe = document.createElement('iframe');
     iframe.style.position = 'absolute';
     iframe.style.width = '0px';
     iframe.style.height = '0px';
     iframe.style.border = 'none';
-    iframe.src = '<?= base_url('dskpn/print_bpp/') ?>'; // Ensure $dskpn_id is available and passed correctly
+    iframe.src = '<?= base_url('dskpn/print_bpp/') ?>'; // Adjust URL as needed
+
     document.body.appendChild(iframe);
 
-    // Optional: Remove the iframe after printing
     iframe.onload = function() {
+      // Ensure the iframe content is focused and print dialog is triggered
       iframe.contentWindow.focus();
       iframe.contentWindow.print();
-      // Remove the iframe after print
+
+      // Clean up iframe after printing
       setTimeout(function() {
         document.body.removeChild(iframe);
-      }, 1000); // Give it a second before removing
+      }, 1000); // Wait a second to ensure print dialog is processed
     };
   }
 </script>
+
 
 <script>
   $(document).ready(function() {
