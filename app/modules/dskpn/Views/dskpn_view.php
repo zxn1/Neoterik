@@ -613,7 +613,7 @@
       'PENYELARAS'
     ];
     ?>
-    <?php if (get_user_role() == $both_roles[0]) : ?>
+    <?php if (in_array($both_roles[0], get_user_role())) : ?>
       <div class="text-end p-3">
         <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4])) : ?>
           <!-- Reject Button -->

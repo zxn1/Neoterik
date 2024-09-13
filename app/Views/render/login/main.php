@@ -76,8 +76,8 @@
                                         <span class="text-sm">SEKOLAH RENDAH SERI BUDIMAN </span><br><span class="h5">
                                             <!-- <b>eSchool System</b> -->
                                         </span>
-                                    </div><br><br>
-                                    <h3 class="font-weight-bolder text-primary" style="font-size : 15px;">Log Masuk</h3>
+                                    </div>
+                                    <h3 class="font-weight-bolder text-primary" style="font-size : 15px; position : relative; top : 15px; padding-top : 15px;">Log Masuk</h3>
                                     <!-- <p class="mb-0" style="font-size : 12px;">Masukkan 'Nama Pengguna' dan 'Kata laluan' anda untuk log masuk </p> -->
                                 </div>
                                 <div class="card-body pb-1">
@@ -140,6 +140,11 @@
                                         Tidak mempunyai akaun?
                                         <a href="<?= site_url('register') ?>" class="text-primary font-weight-bold">Daftar</a>
                                     </p>
+                                </div>
+
+                                <div style="font-size : 9px; text-align : center; padding-bottom : 10px;">
+                                <span>Universiti Pendidikan Sultan Idris © 2024<br>
+                                Gambar : Dewan Tuanku Canselor</span>
                                 </div>
                             </div>
                         </div>
