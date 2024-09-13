@@ -106,13 +106,13 @@
                                 'GURU_BESAR',
                                 'PENYELARAS'
                             ];
-                            if ((get_user_role() == $both_roles[1]) && ($dskpnItem['dskpn_status'] != 3)): ?>
+                            if ((in_array($both_roles[1], get_user_role())) && ($dskpnItem['dskpn_status'] != 3)): ?>
                                 <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
                                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                                 </a>
                             <?php endif; ?>
 
-                            <?php if ((get_user_role() == $both_roles[0]) && ($dskpnItem['dskpn_status'] == 3 || $dskpnItem['dskpn_status'] == 4)): ?>
+                            <?php if ((in_array($both_roles[0], get_user_role())) && ($dskpnItem['dskpn_status'] == 3 || $dskpnItem['dskpn_status'] == 4)): ?>
                                 &nbsp;&nbsp;
                                 <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $dskpnItem['dskpn_id']; ?>)">
                                     <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>

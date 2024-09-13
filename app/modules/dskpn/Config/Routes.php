@@ -15,7 +15,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('domain-mapping',              [Main::class,     'domain_mapping'],                ['as' => 'domain_mapping']);
     $routes->get('mapping-kompetensi-teras',    [Main::class,     'mapping_kompetensi_teras'],      ['as' => 'mapping_core']);
     $routes->get('mapping-spesifikasi-dskpn',   [Main::class,     'mapping_spesifikasi_dskpn'],     ['as' => 'mapping_dynamic_dskpn']);
-    $routes->get('mapping-aktiviti-pentaksiran', [Main::class,     'activity_and_assessment'],       ['as' => 'activity_n_assessment']);
+    $routes->get('mapping-aktiviti-pentaksiran', [Main::class,     'activity_and_assessment'],      ['as' => 'activity_n_assessment']);
     $routes->get('complete',                    [Main::class,     'mapping_successfully'],          ['as' => 'dskpn_complete']);
     $routes->get('review-dskpn',                [Main::class,     'review_dskpn'],                  ['as' => 'review_dskpn']);
     $routes->get('view-standard-performance',   [Main::class,     'view_standard_performance'],     ['as' => 'view_standard_performance']);
@@ -26,11 +26,11 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('store-domain-mapping',       [Main::class,     'store_domain_mapping'],          ['as' => 'store_domain_map']);
     $routes->post('store-create-cluster',       [Main::class,     'store_create_cluster'],          ['as' => 'store_create_cluster']);
     $routes->post('store-core-mapping',         [Main::class,     'store_core_mapping'],            ['as' => 'store_core_map']);
-    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],   ['as' => 'store-spec-map']);
+    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],  ['as' => 'store-spec-map']);
     $routes->post('store-activity-assessment',  [Main::class,     'store_activity_assessment'],     ['as' => 'store_actv_asses']);
     $routes->post('store-image-return-url',     [Main::class,     'store_image_ckeditor'],          ['as' => 'store_image_ckedit']);
     $routes->post('store-tp-setup',             [Main::class,     'store_tp_setup'],                ['as' => 'store_tp_setup']);
-    $routes->post('store-core-competency-setup', [Main::class,     'store_core_competency_setup'],   ['as' => 'store_core_competency_setup']);
+    $routes->post('store-core-competency-setup', [Main::class,     'store_core_competency_setup'],  ['as' => 'store_core_competency_setup']);
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
@@ -40,9 +40,9 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('view-tp-core-competency-setup', [Main::class,   'view_tp_core_competency'],       ['as' => 'view_tp_core_setup']);
     $routes->get('view-core-competency-setup',  [Main::class,     'view_core_competency'],          ['as' => 'view_core_competency_setup']);
     $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'], ['as' => 'get_dskp_code_available']);
-    $routes->get('get-standard-performance',    [Main::class,     'getStandardPerformanceBasedOnDSKPCode'], ['as' => 'get_standard_performance']);
-    $routes->post('get-dskp-based-subject',     [Main::class,     'get_dskp_based_subject'],         ['as' => 'get_dskp_based_subject']);
-    $routes->post('standard-performance-dskp-mapping', [Main::class,    'standard_performance_dskp_mapping'], ['as' => 'standard_performance_dskp_map']);
+    $routes->get('get-standard-performance',    [Main::class,     'getStandardPerformanceBasedOnDSKPCode'],     ['as' => 'get_standard_performance']);
+    $routes->post('get-dskp-based-subject',     [Main::class,     'get_dskp_based_subject'],        ['as' => 'get_dskp_based_subject']);
+    $routes->post('standard-performance-dskp-mapping', [Main::class,    'standard_performance_dskp_mapping'],   ['as' => 'standard_performance_dskp_map']);
     $routes->get('get-core-competency-based-subject', [Main::class,     'get_core_competency_based_subject'],   ['as' => 'get_core_competency_based_subject']);
 
     $routes->get('create-dskpn/(:any)',         [Main::class,     'create_dskpn/$1'],               ['as' => 'create_dskpn']);
@@ -58,7 +58,7 @@ $routes->group('dskpn', function ($routes) {
 
     $routes->post('store-cluster-subject-mapping',               [Main::class,     'store_cluster_subject_mapping'],                  ['as' => 'store_cluster_subject_mapping']);
     $routes->post('check-and-store-dskpn-code', [Main::class,     'checkAndSetDSKPNCodeSession'],   ['as' => 'checkstore_dskpn_code']);
-    $routes->get('initialize_edit_dskpn/(:any)',[Main::class,     'set_session_edit_dskpn/$1'],    ['as' => 'edit_dskpn_initializer']);
+    $routes->get('initialize_edit_dskpn/(:any)',[Main::class,     'set_session_edit_dskpn/$1'],     ['as' => 'edit_dskpn_initializer']);
     $routes->get('download-dskpn',              [Main::class,   'generate_view_pdf'],               ['as' => 'generate_dskpn']);
     $routes->get('test-view-pdf-dskpn',         [Main::class,   'test_view_pdf_in_html'],           ['as' => 'test_view_pdf_dskpn']);
     $routes->get('print_bpp', [Main::class,     'print_bpp']);
@@ -79,6 +79,6 @@ $routes->group('dskpn', function ($routes) {
     });
 
     //SETTING MAPPING INITIALIZER
-    $routes->get('initialize-domain-mapping-database', [Main::class,   'mappingInit']);
-    $routes->get('debugcheckallsession', [Main::class, 'debugcheckallsession']);
+    $routes->get('initialize-domain-mapping-database',  [Main::class,   'mappingInit']);
+    $routes->get('debugcheckallsession',                [Main::class, 'debugcheckallsession']);
 });
