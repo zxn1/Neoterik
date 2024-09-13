@@ -84,7 +84,7 @@
 <body>
     <!-- <table style="transform: scale(0.5); transform-origin: top left;"> -->
     <table class="fitcontent">
-        <tdead>
+        <thead>
             <tr>
                 <td class="header center no-border">
                     <?php
