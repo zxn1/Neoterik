@@ -3,13 +3,16 @@
 namespace App\Modules\Login\Controllers;
 
 use App\Controllers\BaseController;
+use App\Modules\Login\Models\LoginStaffMainModel;
 
 class Main extends BaseController
 {
+    protected $login_model;
 
     public function __construct()
     {
         $this->session          = service('session');
+        $this->login_model      = new LoginStaffMainModel();
     }
 
     public function index()
@@ -31,89 +34,50 @@ class Main extends BaseController
                 'password'  => $this->request->getPost('um_password'),
             ];
 
-            if($userData['username'] != $userData['password'])
-                return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
+            if(empty($userData['username']) || empty($userData['password']))
+                return redirect()->to(route_to('login'))->with('swal_fail', 'Sila masukkan Username dan Password anda!');
 
-            $role = "";
-            $user_id = "";
-            if($userData['username'] == 'penyelaras1')
-            {
-                $user_id = '40365';
-                $role = "PENYELARAS";
+            // Verification process
+            $user = $this->login_model->getUserByIdentityNumber($userData['username']);
+
+            if (!empty($user) && password_verify($userData['password'], $user['lsm_password'])) {
+                //success
+                //get user role
+                $roles = $this->login_model->getUserAccessRole($user['lsm_sm_recid']);
+                $roles = array_column($roles, 'ar_desc');
+
                 $this->session->set([
-                    'sm_id' => $user_id,
-                    'by_id' => $user_id,
-                    'icno' => '000102035265',
-                    'nickname' => 'JAMIL',
-                    'fullname' => 'MUHAMMAD JAMIL HUSNI BIN HANIF',
-                    'current_role' => $role,//'INSTITUSI',
-                    'ccm_id' => '11245',
-                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
+                    'sm_id' => $user['lsm_sm_recid'],
+                    'by_id' => $user['lsm_sm_recid'],
+                    'icno' => $user['sm_icno'],
+                    'nickname' => $user['sm_nickname'],
+                    'fullname' => $user['sm_fullname'],
+                    'current_role' => $roles//'INSTITUSI',
                 ]);
-            }
-
-            if($userData['username'] == 'bighead1')
-            {
-                $user_id = '40364';
-                $role = "GURU_BESAR";
-                $this->session->set([
-                    'sm_id' => $user_id,
-                    'by_id' => $user_id,
-                    'icno' => '980618085698',
-                    'nickname' => 'HAZLAN',
-                    'fullname' => 'MUHAMMAD HAZLAN SHAH BIN IDRIS',
-                    'current_role' => $role,//'INSTITUSI',
-                    'ccm_id' => '11245',
-                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
-                ]);
-                
-            }
-
-            if($userData['username'] == 'cikgu')
-            {
-                $user_id = '46675';
-                $role = "GURU";
-                $this->session->set([
-                    'sm_id' => $user_id,
-                    'by_id' => $user_id,
-                    'icno' => '980618085698',
-                    'nickname' => 'SYAFIQ',
-                    'fullname' => 'MUHAMMAD SYAFIQ BIN IBRAHIM',
-                    'current_role' => $role,//'INSTITUSI',
-                    'ccm_id' => '12345',
-                    'ccm_name' => 'Sekolah Rendah Seri Budiman'
-                ]);
-                
-            }
-
-            if(empty($role))
-                return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
-
-            // $user = $this->staffModel->where('username', $userData['username'])->first();
-            $user = true;
-            if ($user) {
-                // if (password_verify($userData['password'], $user['password'])) {
-                //         $this->session->set('staff_id', $user['staff_id']);
-                //         $this->session->set('username', $user['username']);
-                //         $this->session->set('position', $user['position']);
-                //         $this->session->set('name', $user['name']);
-                //         $this->session->set('image', $user['image']);
-                //         return redirect()->to('staff/home');
-                // } else {
-                //     session()->setFlashdata('error', 'Invalid Password');
-                //     dd('test');
-                //     return redirect()->to('staff/login');
-                // }
-                // Add data to the session
 
                 return redirect()->to('dashboard');
             } else {
-                session()->setFlashdata('error', 'Invalid Username');
-                return redirect()->to('staff/login');
+                //fail
+                return redirect()->to(route_to('login'))->with('swal_fail', 'Username and Password doesn\'t matched!');
             }
         }
         $data = [];
         $this->render_login('login', $data);
+    }
+
+    public function generate_account()
+    {
+        $sm_recid_id = $this->request->getVar('recid_id');
+        $sm_new_password = $this->request->getVar('password');
+
+        if($this->login_model->insert([
+            'lsm_sm_recid' => $sm_recid_id,
+            'lsm_password' => password_hash($sm_new_password, PASSWORD_DEFAULT)
+        ])) {
+            echo "success!";
+        } else {
+            echo "fail";
+        }
     }
 
     public function logout()

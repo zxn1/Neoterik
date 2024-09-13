@@ -8,3 +8,8 @@ $routes->group('login', function ($routes) {
     $routes->post('attempt_login',      [Main::class,     'attempt_login']);
     $routes->get('logout',              [Main::class,     'logout'],            ['as' => 'logout']);
 });
+
+
+//test route
+$routes->get('generate-account',    [Main::class,     'generate_account'],  ['as' => 'gen_acc']);
+//  /generate-account?recid_id=<recid_id>&password=<password>

@@ -14,7 +14,7 @@
       if (!function_exists('get_user_role')) {
         helper('dskpn_helper');
       }
-      echo "<h5 class=\"ms-md-auto pe-md-3 d-flex align-items-center\">" . get_user_role() . "</h5>";
+      echo "<h5 class=\"ms-md-auto pe-md-3 d-flex align-items-center\">" . implode(",", get_user_role()) . "</h5>";
 
       if (!empty(session('dskpn_code'))) { ?>
         <div class="ms-md-auto pe-md-3 d-flex align-items-center">

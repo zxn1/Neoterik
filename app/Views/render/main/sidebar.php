@@ -22,7 +22,10 @@
         helper('dskpn_helper');
       }
 
-      if (in_array(get_user_role(), $both_roles)) : ?>
+      $tempArrA = get_user_role();
+      $conditionA = sort($tempArrA);
+      $conditionB = sort($both_roles);
+      if ($conditionA == $conditionB) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('dashboard'))) ? 'active' : ''; ?>" href="<?= route_to('dashboard'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -45,7 +48,7 @@
         </li>
       <?php endif; ?>
 
-      <?php if (get_user_role() == $both_roles[1]) : ?>
+      <?php if (in_array($both_roles[1], get_user_role())) : ?>
         <?php
         $in_main_configuration = url_is(route_to('view_subject')) || url_is(route_to('view_cluster')) || url_is(route_to('view_topic')) || url_is(route_to('view_teacher_cluster')) || url_is(route_to('view_tp_core_setup')) || url_is(route_to('view_core_competency_setup')) || url_is(route_to('view_standard_performance')) || url_is(route_to('view_core_competency_list'));
         ?>
@@ -165,7 +168,7 @@
       </li>
       <!-- End Super Admin -->
 
-      <?php if (get_user_role() == $both_roles[1]) : ?>
+      <?php if (in_array($both_roles[1], get_user_role())) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('cluster_topic'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -211,7 +214,9 @@
           </a>
         </li> -->
       <?php endif; */ ?>
-      <?php if (in_array(get_user_role(), $both_roles)) : ?>
+      <?php 
+      $arrTempA = get_user_role();
+      if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -233,7 +238,7 @@
           </a>
         </li>
       <?php endif; ?>
-      <?php if (get_user_role() == $both_roles[1]) : ?>
+      <?php if (in_array($both_roles[1], get_user_role())) : ?>
         <?php
         $in_dskpn_list = url_is(route_to('dskpn_learning_standard')) || url_is(route_to('tp_maintenance')) || url_is(route_to('mapping_core')) || url_is(route_to('domain_mapping')) || url_is(route_to('mapping_dynamic_dskpn')) || url_is(route_to('activity_n_assessment')) || url_is(route_to('dskpn_complete'));
         ?>
@@ -329,7 +334,7 @@
           </div>
         </li>
       <?php endif; ?>
-      <!-- <?php if (get_user_role() == $both_roles[1]) : ?>
+      <!-- <?php if (in_array($both_roles[1], get_user_role())) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('view_teacher_cluster'))) ? 'active' : ''; ?>" href="<?= route_to('view_teacher_cluster'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
