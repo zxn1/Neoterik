@@ -315,7 +315,7 @@ function addObjectivePrestasi(i)
               newInputHTMLField += `</select>
                                 </div>
                                 <div class="col-md-2 d-flex">
-                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + newFieldColl + `" class="dynamic-select2 form-control" multiple="multiple">
+                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + newFieldColl + `" class="select2adjustheight dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
