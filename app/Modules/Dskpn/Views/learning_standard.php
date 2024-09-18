@@ -28,6 +28,11 @@
   div.col-md-3.d-flex>div.ms-parent>div>ul>li>label>span {
     font-size: 14px !important;
   }
+
+  div.col-md-2.d-flex > select.select2adjustheight + span > span.selection > span {
+    height: 40px;
+    margin-left : 5px;
+  }
 </style>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <!-- Latest compiled and minified CSS -->
@@ -236,7 +241,7 @@
 
                 <?php
                 $rand = rand(100000000, 1000000000);
-                $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : [];
+                $selectedValues = isset($selected_by_selected[$index]) ? $selected_by_selected[$index] : [];
                 ?>
                 <select id="objective-prestasi-ref-<?= $rand; ?>" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                   <?php
@@ -248,11 +253,18 @@
                   } else {
                     ?>
                     <option disabled>-- Sila pilih Kod --</option>
-                  <?php } ?>
+                  <?php } 
+                  $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : []; //used for pentaksiran code
+                  ?>
                 </select>
+                <script>
+                  $(document).ready(function() {
+                    initializeEachOne('<?= $rand; ?>');
+                  });
+                </script>
               </div>
               <div class="col-md-2 d-flex">
-                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="dynamic-select2 form-control" multiple="multiple">
+                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="select2adjustheight dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1" <?= in_array('C1', $selectedValues) ? 'selected' : '' ?>>C1</option>
                     <option value="C2" <?= in_array('C2', $selectedValues) ? 'selected' : '' ?>>C2</option>
@@ -317,7 +329,7 @@
 
               <div class="col-md-2 d-flex" id="select2-container">
                 <!-- Initially displaying 3 select2 elements -->
-                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="dynamic-select2 form-control" multiple="multiple">
+                <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="select2adjustheight dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
