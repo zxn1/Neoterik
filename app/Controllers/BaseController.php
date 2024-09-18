@@ -77,7 +77,7 @@ abstract class BaseController extends Controller
     {
         $uri = service('uri');
         $modules = $uri->getSegment(1);
-        $view_path = 'App\\Modules\\' . $modules . '\\Views\\';
+        $view_path = 'App\\Modules\\' . ucfirst($modules) . '\\Views\\';
 
         $array = [
             'data'  => $data,
@@ -91,7 +91,7 @@ abstract class BaseController extends Controller
     {
         $uri = service('uri');
         $modules = $uri->getSegment(1);
-        $view_path = 'App\\Modules\\' . $modules . '\\Views\\';
+        $view_path = 'App\\Modules\\' . ucfirst($modules) . '\\Views\\';
 
         $jsTemp = [];
         foreach($js as $sc)
