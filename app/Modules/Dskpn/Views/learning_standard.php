@@ -236,7 +236,7 @@
 
                 <?php
                 $rand = rand(100000000, 1000000000);
-                $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : [];
+                $selectedValues = isset($selected_by_selected[$index]) ? $selected_by_selected[$index] : [];
                 ?>
                 <select id="objective-prestasi-ref-<?= $rand; ?>" name="objective-prestasi-ref[<?= $rand; ?>][]" multiple="multiple">
                   <?php
@@ -248,8 +248,15 @@
                   } else {
                     ?>
                     <option disabled>-- Sila pilih Kod --</option>
-                  <?php } ?>
+                  <?php } 
+                  $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : []; //used for pentaksiran code
+                  ?>
                 </select>
+                <script>
+                  $(document).ready(function() {
+                    initializeEachOne('<?= $rand; ?>');
+                  });
+                </script>
               </div>
               <div class="col-md-2 d-flex">
                 <select name="objective-prestasi-pentaksiran[<?= $rand; ?>][]" id="dynamic-select2-<?= $op_pentaksiran_counter; ?>" class="dynamic-select2 form-control" multiple="multiple">

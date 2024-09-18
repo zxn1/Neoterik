@@ -274,7 +274,10 @@ var select2Counter = 2; // Start counter at 3 since you have 3 select2 elements 
 
 // Initialize the 3 default select2 elements when the page loads
 $(document).ready(function() {
-    for (var i = 0; i <= 2; i++) {
+    //make it dynamic. so find all element starting with id "dynamic-select2-"
+    const selects = document.querySelectorAll('select[id^="dynamic-select2-"]');
+    const count = selects.length; //count
+    for (var i = 0; i <= count-1; i++) {
         $('#dynamic-select2-' + i).select2();
     }
 });
@@ -312,7 +315,7 @@ function addObjectivePrestasi(i)
               newInputHTMLField += `</select>
                                 </div>
                                 <div class="col-md-2 d-flex">
-                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + select2Counter + `" class="dynamic-select2 form-control" multiple="multiple">
+                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + newFieldColl + `" class="dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
@@ -345,7 +348,7 @@ function addObjectivePrestasi(i)
                   </optgroup>
                 </select>
 
-                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
+                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
                                         <button class="input-group-text" id="btnGroupAddon">
                                             <i class="fas fa-trash-alt" style="color: red;"></i>
                                         </button>
@@ -359,7 +362,7 @@ function addObjectivePrestasi(i)
     $('select#objective-prestasi-ref').multipleSelect();
 
      // Initialize the newly added select2 element
-     $('#dynamic-select2-' + select2Counter).select2();
+     $('#dynamic-select2-' + newFieldColl).select2();
 }
 
 $('#kluster-selection').on('change', function() {
