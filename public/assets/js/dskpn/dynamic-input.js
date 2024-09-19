@@ -1,5 +1,88 @@
 $(document).ready(function() {
     $('.select2').select2();
+
+    // Event listener for when an option is selected
+    $(document).on('select2:select', '.dynamic-select2', function(e) {
+        var selectedValue = e.params.data.id; // Get the selected value
+        var selectId = $(this).attr('id'); // Get the ID of the current select element
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('A')) {
+            // Disable all Afektif options except the selected one
+            var afektifOptgroup = $('#' + selectId).find('optgroup[label="Afektif"]');
+            afektifOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Afektif"]').hide();
+        }
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('C')) {
+            // Disable all Afektif options except the selected one
+            var kognitifOptgroup = $('#' + selectId).find('optgroup[label="Kognitif"]');
+            kognitifOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Kognitif"]').hide();
+        }
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('P')) {
+            // Disable all Afektif options except the selected one
+            var psikomotorOptgroup = $('#' + selectId).find('optgroup[label="Psikomotor"]');
+            psikomotorOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Psikomotor"]').hide();
+        }
+    });
+
+    // Event listener for when an option is unselected
+    $(document).on('select2:unselect', '.dynamic-select2', function(e) {
+        var unselectedValue = e.params.data.id;
+        var selectId = $(this).attr('id');
+
+        // If an "Afektif" option is unselected and no "Afektif" options are selected, show the "Afektif" optgroup again
+        var hasKognitifSelected = $('#' + selectId).find("optgroup[label='Kognitif'] option:selected").length > 0;
+        var hasPsikomotorSelected = $('#' + selectId).find("optgroup[label='Psikomotor'] option:selected").length > 0;
+        var hasAfektifSelected = $('#' + selectId).find("optgroup[label='Afektif'] option:selected").length > 0;
+        if (!hasKognitifSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Kognitif'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Kognitif"]').show();
+        }
+        if (!hasPsikomotorSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Psikomotor'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Psikomotor"]').show();
+        }
+        if (!hasAfektifSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Afektif'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Afektif"]').show();
+        }
+    });
 });
 
 //listener
