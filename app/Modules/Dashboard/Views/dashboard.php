@@ -72,7 +72,7 @@
   </div>
   <br>
   <div class="text-end dropdown">
-    <button class="btn bg-gradient-info dropdown-toggle" style="width:150px;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+    <button class="btn bg-info dropdown-toggle text-white" style="width:150px;" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
       Tahun
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
