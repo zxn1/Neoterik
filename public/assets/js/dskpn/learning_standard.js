@@ -41,7 +41,7 @@ function yearDSKPNChecked(event) {
 function selectionPopulateBasedOnNumbering()
 {
     let arrValues = [];
-    var nodes = document.querySelectorAll("input[type=number]");
+    var nodes = document.querySelectorAll("input[type=text]");
     for (var i=0; i<nodes.length; i++)
     if(nodes[i].id == 'standard-learning-number' && nodes[i].value != '')
     {

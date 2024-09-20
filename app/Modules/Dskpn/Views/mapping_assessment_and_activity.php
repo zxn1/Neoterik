@@ -114,7 +114,8 @@
             foreach ($activity_number as $index => $numb) { ?>
               <div class="row m-1" id="activity-idea-item-<?= ($index + 1); ?>">
                 <div class="col-2 p-0 pe-1">
-                  <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>">
+                  <input type="text" name="activity-idea-number[]" pattern="^\d+(\.\d+)*$" 
+                    title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $numb; ?>" required>
                 </div>
                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                   <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;" value="<?= isset($activity_input[$index]) ? $activity_input[$index] : '' ?>">
@@ -130,7 +131,8 @@
             for ($i = 0; $i < 3; $i++) { ?>
               <div class="row m-1" id="activity-idea-item-<?= $i; ?>">
                 <div class="col-2 p-0 pe-1">
-                  <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+                  <input type="text" name="activity-idea-number[]" pattern="^\d+(\.\d+)*$" 
+                    title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" required>
                 </div>
                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                   <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;">
@@ -173,7 +175,8 @@
                   foreach ($assessment_number_session[$category['asc_id']] as $i => $assess) { ?>
                     <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-<?= ($i + 1) ?>">
                       <div class="col-2 p-0 pe-1">
-                        <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>">
+                        <input type="text" name="assessment-number[<?= $category['asc_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
+                          title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" value="<?= $assess; ?>" required>
                       </div>
                       <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                         <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;" value="<?= $assessment_input_session[$category['asc_id']][$i]; ?>">
@@ -189,7 +192,8 @@
               } else { ?>
                 <div class="row m-1" id="assessment-<?= $category['asc_id']; ?>-item-0">
                   <div class="col-2 p-0 pe-1">
-                    <input type="number" name="assessment-number[<?= $category['asc_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+                    <input type="text" name="assessment-number[<?= $category['asc_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
+                      title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" required>
                   </div>
                   <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                     <input type="text" class="form-control p-1 me-1" name="assessment-input[<?= $category['asc_id']; ?>][]" placeholder="Idea pentaksiran bagi <?= strtolower($category['asc_desc']); ?>" style="height : 45px;">
