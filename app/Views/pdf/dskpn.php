@@ -208,6 +208,9 @@
                                     $op_reff_code = "";
                             }
 
+                            if($op_reff_code == [])
+                                $op_reff_code = "";
+
                             $opm_assessment_code_html = "";
                             if(isset($opm_assessment_code) && !empty($opm_assessment_code))
                             {
@@ -232,7 +235,7 @@
                                     }
                                 }
                             }
-
+                            
                             echo $op['opm_number'] . ". " . $op['opm_desc'] . " <b>" . $op_reff_code . "</b>" . $opm_assessment_code_html . "<br>";
                         }
                     }

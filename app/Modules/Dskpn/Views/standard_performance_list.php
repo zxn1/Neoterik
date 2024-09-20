@@ -135,7 +135,7 @@
                         $.each(data.standard_performance_dskp_mapping, function(index, row) {
 
                             var tableRow = '<tr>' +
-                                '<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
+                                //'<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' +
@@ -194,7 +194,7 @@
                         $.each(data.standard_performance_dskp_mapping, function(index, row) {
 
                             var tableRow = '<tr>' +
-                                '<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
+                                //'<td class="text-m font-weight-normal" style="text-align: left;">' + (counter++) + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' + row.sp_tp_level_desc + '</td>' +
                                 '<td class="text-m font-weight-normal" style="text-align: left;">' +
