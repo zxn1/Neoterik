@@ -142,7 +142,8 @@ $('#add-subject-button').on('click', function() {
         <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
             <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
                 <div class="col-2 p-0 pe-1">
-                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                 </div>
                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="Objektif bagi Subjek ini.">
@@ -281,7 +282,8 @@ $('#topik-dynamic-field').on('change', function() {
                                 <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
                                     <div class="row m-1" id="standard-item-`+item.sbm_id+`">
                                         <div class="col-2 p-0 pe-1">
-                                            <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                            <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                                         </div>
                                         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                             <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
@@ -337,7 +339,8 @@ function addStandardPembelajaran(sm_id, sm_code)
 
     let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
                                 <div class="col-2 p-0 pe-1">
-                                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                                 </div>
                                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="Objektif bagi Subjek ini.">
@@ -382,7 +385,8 @@ function addObjectivePrestasi(i)
     
     let newInputHTMLField = `<div class="input-group" style="margin-bottom: 5px;" id="objective-prestasi-` + newFieldColl + `">
                                 <div class="col-md-1 pe-1">
-                                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                                    <input type="text" name="objective-prestasi-number[]" pattern="^\\d+(\\.\\d+)*$" 
+                                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control" placeholder="1.1" required>
                                 </div>
                                 <div class="col-md-6 pe-1">
                                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">

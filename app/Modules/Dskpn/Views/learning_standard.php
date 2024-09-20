@@ -166,7 +166,8 @@
                         foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                             <div class="col-2 p-0 pe-1">
-                              <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>">
+                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
+                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>" required>
                             </div>
                             <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                               <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
@@ -184,7 +185,8 @@
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                             <div class="col-2 p-0 pe-1">
-                              <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
+                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                             </div>
                             <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                               <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
@@ -232,7 +234,7 @@
           foreach ($objective as $index => $item) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= ($index + 1); ?>">
               <div class="col pe-1">
-                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index]) ? $objective_number[$index] : '' ?>">
+                <input type="text" name="objective-prestasi-number[]" pattern="(\d+(\.\d+)+)?" class="form-control" placeholder="1.1" value="<?= isset($objective_number[$index]) ? $objective_number[$index] : '' ?>" required>
               </div>
               <div class="col-md-6 pe-1">
                 <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini." value="<?= $item ?>">
@@ -311,7 +313,8 @@
           for ($i = 0; $i < 3; $i++) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
               <div class="col pe-1">
-                <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                <input type="text" name="objective-prestasi-number[]" pattern="^\d+(\.\d+)*$" 
+                  title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control" placeholder="1.1" required>
               </div>
               <div class="col-md-6 pe-1">
                 <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">

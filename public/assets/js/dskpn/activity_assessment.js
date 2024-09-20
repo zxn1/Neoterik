@@ -77,7 +77,8 @@ function addActivityItemField() {
     var newFieldHTML = `
     <div class="row m-1" id="activity-idea-item-` + newFieldId + `">
         <div class="col-2 p-0 pe-1">
-            <input type="number" name="activity-idea-number[]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+            <input type="text" name="activity-idea-number[]" pattern="^\\d+(\\.\\d+)*$" 
+               title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" required>
         </div>
         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
             <input type="text" class="form-control p-1 me-1" name="activity-idea-input[]" placeholder="Idea pengajaran bagi topik DSKPN ini" style="height : 45px;">
@@ -104,7 +105,8 @@ function addAsessmentItemField(whichID) {
     var newFieldHTML = `
     <div class="row m-1" id="assessment-`+ whichID +`-item-`+newFieldId+`">
         <div class="col-2 p-0 pe-1">
-        <input type="number" name="assessment-number[`+ whichID +`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1" style="height : 45px;">
+        <input type="text" name="assessment-number[`+ whichID +`][]" pattern="^\\d+(\\.\\d+)*$" 
+               title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" style="height : 45px;" required>
         </div>
         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
         <input type="text" class="form-control p-1 me-1" name="assessment-input[`+ whichID +`][]" placeholder="Idea pentaksiran seterusnya.." style="height : 45px;">

@@ -1930,7 +1930,7 @@ class Main extends BaseController
 
         //step 1 - store dskp record
         $code_tp_rank = sprintf('%01d', $code_tp_rank);
-        $topic_numbering = sprintf('%03d', $topic_numbering);
+        $topic_numbering = sprintf('%02d', $topic_numbering);
 
         $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
         if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
@@ -2317,7 +2317,7 @@ class Main extends BaseController
         $data = $this->_populate_dskpn_details();
 
         // Load your view and generate the HTML content
-        $html = view('App\\Modules\\dskpn\\Views\\borang_plan_pengajaran', $data);
+        $html = view('App\\Modules\\Dskpn\\Views\\borang_plan_pengajaran', $data);
 
         // Return HTML as response
         return $this->response->setContentType('text/html')->setBody($html);
