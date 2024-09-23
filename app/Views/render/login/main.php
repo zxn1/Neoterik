@@ -59,6 +59,10 @@
             background: url('<?= base_url('neoterik/img/assets/kabg.png') ?>');
             background-size: cover;
         }
+
+        input {
+            text-indent: 10px;
+        }
     </style>
 </head>
 
@@ -93,7 +97,7 @@
                                                     </svg>
                                                 </span>
                                             </div>
-                                            <input type="text" class="form-control" id="um_username" name="um_username" placeholder="&nbsp;&nbsp;Username" aria-label="Username" aria-describedby="basic-addon1" required>
+                                            <input type="text" class="form-control" id="um_username" name="um_username" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" required>
                                         </div>
                                         <div class="invalid-feedback">
                                             <?= session('errors.login') ?>
@@ -114,7 +118,7 @@
                                                     </svg>
                                                 </span>
                                             </div>
-                                            <input type="password" class="form-control" id="um_password" name="um_password" placeholder="&nbsp;&nbsp;Password" aria-label="Password" aria-describedby="password-addon1" required>
+                                            <input type="password" class="form-control" id="um_password" name="um_password" placeholder="Password" aria-label="Password" aria-describedby="password-addon1" required>
                                         </div>
                                         <div class="invalid-feedback">
                                             <?= session('errors.password') ?>

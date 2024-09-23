@@ -70,7 +70,10 @@ function get_tp_ref_code($dskpn_id, $sm_id)
 function get_user_role()
 {
     $session = \Config\Services::session();
-    return $session->get('current_role');
+    $session = $session->get('current_role');
+    if(isset($session) && !empty($session))
+        return is_array($session)?$session:array($session);
+    return array();
 }
 
 function get_dskpn_status($status)
