@@ -6,7 +6,7 @@ use App\Modules\Dskpn\Controllers\SubjectMain;
 
 $routes->group('dskpn', function ($routes) {
     /*           Route Path                   Class Controller  function                        Route Name        */
-    $routes->get('/',                           [Main::class,     'index']);
+    $routes->get('/',                           [Main::class,     'index'],                         ['as' => 'dskpn_home']);
     $routes->get('mapping-static-field',        [Main::class,     'map_static'],                    ['as' => 'mapping_standard_learning']);
     $routes->get('dskpn-learning-standard',     [Main::class,     'dskpn_learning_standard'],       ['as' => 'dskpn_learning_standard']);
     $routes->get('tp-maintenance',              [Main::class,     'tp_maintenance'],                ['as' => 'tp_maintenance']);

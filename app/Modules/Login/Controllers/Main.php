@@ -52,7 +52,7 @@ class Main extends BaseController
                     'icno' => $user['sm_icno'],
                     'nickname' => $user['sm_nickname'],
                     'fullname' => $user['sm_fullname'],
-                    'current_role' => $roles//'INSTITUSI',
+                    'list_current_role' => $roles
                 ]);
 
                 return redirect()->to('dashboard');

@@ -987,6 +987,7 @@ class Main extends BaseController
             'nickname',
             'fullname',
             'current_role',
+            'list_current_role',
             'ccm_id',
             'ccm_name'
         ];

@@ -133,5 +133,21 @@ class UserAccessController extends BaseController
         }
     }
     
+    public function changeRoleAccess()
+    {
+        helper('dskpn_helper');
+        $role = $this->request->getVar('role');
+        if($role == 'GURU')
+            $this->session->remove('current_role');
 
+        $sm_id = session('sm_id');
+        $availableAccess = $this->user_access_roles_model->select('access_roles.ar_desc')->join('access_roles', 'access_roles.ar_id = user_access_roles.uar_ar_id')->where('user_access_roles.uar_sm_recid', $sm_id)->findAll();
+        $availableAccess = array_column($availableAccess, 'ar_desc');
+        if(in_array($role, $availableAccess))
+        {
+            $this->session->set('current_role', $role);
+        }
+
+        return redirect()->to(route_to('dashboard'));
+    }
 }
