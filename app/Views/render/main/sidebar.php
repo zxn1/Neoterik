@@ -76,7 +76,7 @@
             <ul class="nav ms-1 ps-1">
               <li class="nav-item ">
                 <a class="nav-link  <?= (url_is(route_to('view_subject'))) ? 'active' : ''; ?>" href="<?= route_to('view_subject'); ?>" style="overflow : hidden;">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
                   <span class="nav-link-text ms-1">Subjek</span>
@@ -84,7 +84,7 @@
               </li>
               <li class="nav-item ">
                 <a class="nav-link  <?= (url_is(route_to('view_cluster'))) ? 'active' : ''; ?>" href="<?= route_to('view_cluster'); ?>" style="overflow : hidden;">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book-reader" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
                   <span class="nav-link-text ms-1">Kluster</span>
@@ -92,7 +92,7 @@
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('view_topic'))) ? 'active' : ''; ?>" href="<?= route_to('view_topic'); ?>" style="overflow : hidden;">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-bookmark" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
                   <span class="nav-link-text ms-1">Topik</span>
@@ -100,7 +100,7 @@
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('view_teacher_cluster'))) ? 'active' : ''; ?>" href="<?= route_to('view_teacher_cluster'); ?>" style="overflow : hidden;">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-chalkboard-teacher" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
                   <span class="nav-link-text ms-1">Guru - Kluster</span>
@@ -128,6 +128,7 @@
       <?php endif; ?>
 
       <!-- Super Admin -->
+      <?php if (in_array($both_roles[1], get_user_role())) : ?>
       <?php
       $in_main_configuration = url_is(route_to('view_user_access'));
       ?>
@@ -148,8 +149,6 @@
                 </g>
               </g>
             </svg>
-
-
           </div>
           <span class="nav-link-text ms-1">Tetapan Admin</span>
         </a>
@@ -157,7 +156,7 @@
           <ul class="nav ms-1 ps-1">
             <li class="nav-item ">
               <a class="nav-link  <?= (url_is(route_to('view_user_access'))) ? 'active' : ''; ?>" href="<?= route_to('view_user_access'); ?>" style="overflow : hidden;">
-                <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <i class="fas fa-user-tie" style="color : #3c4242; height : 16px; width : 16px;"></i>
                 </div>
                 <span class="nav-link-text ms-1">Akses Pengguna</span>
@@ -166,6 +165,7 @@
           </ul>
         </div>
       </li>
+      <?php endif; ?>
       <!-- End Super Admin -->
 
       <?php if (in_array($both_roles[1], get_user_role())) : ?>
@@ -270,55 +270,55 @@
             <ul class="nav ms-1 ps-1">
               <li class="nav-item active">
                 <a class="nav-link <?= (url_is(route_to('dskpn_learning_standard'))) ? 'active' : ''; ?>" href="<?= route_to('dskpn_learning_standard'); ?>" style="overflow : hidden;<?= (!empty(session('is_update')) && !url_is(route_to('dskpn_learning_standard'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Standard<br>Pembelajaran</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Standard<br>Pembelajaran</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link  <?= (url_is(route_to('tp_maintenance'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_TP')) && !url_is(route_to('tp_maintenance'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Tahap Penguasaan</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Tahap Penguasaan</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('mapping_core'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_core')) && !url_is(route_to('mapping_core'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Teras</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Teras</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('domain_mapping'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_domain')) && !url_is(route_to('domain_mapping'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Domain</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Domain</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('activity_n_assessment'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_activity_assessment')) && !url_is(route_to('activity_n_assessment'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Aktiviti <br>& Pentaksiran</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Aktiviti <br>& Pentaksiran</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_specs')) && !url_is(route_to('mapping_dynamic_dskpn'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1">Penetapan<br>Pemetaan Spesifikasi</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Spesifikasi</span>
                 </a>
               </li>
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('dskpn_complete'))) ? 'active' : ''; ?>" style="overflow : hidden;">
-                  <div class="icon icon-shape icon-sm shadow border-radius-md text-center d-flex align-items-center justify-content-center">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <?php if (url_is(route_to('dskpn_complete'))) { ?>
                       <dotlottie-player src="https://lottie.host/d117b2d6-3c35-4bc4-8038-324d215e9c4c/gpXLLNRqqP.json" background="transparent" speed="1" style="width: 300px; height: 300px" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                     <?php } else { ?>
@@ -361,11 +361,11 @@
       </center>
       <li class="nav-item">
         <a class="nav-link" href="<?= site_url('login/logout') ?>">
-          <div class="icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+          <div class="icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center" style="min-width : 32px;">
             <!-- Font Awesome icon for Sign Out -->
             <i class="fa fa-sign-out-alt" style="font-size:0.8rem;"></i>
           </div>
-          <span class="nav-link-text ms-1 d-flex">Sign Out</span>
+          <span class="nav-link-text ms-1 d-flex">Log Keluar</span>
         </a>
       </li>
     </ul>

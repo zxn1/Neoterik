@@ -10,32 +10,31 @@
       </a>
     </div>
     <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+      <span class="ms-md-auto pe-md-3 d-flex align-items-center"></span>
       <?php
       if (!function_exists('get_user_role')) {
         helper('dskpn_helper');
       }
-      echo "<h5 class=\"ms-md-auto pe-md-3 d-flex align-items-center\">" . implode(",", get_user_role()) . "</h5>";
 
       if (!empty(session('dskpn_code'))) { ?>
-        <div class="ms-md-auto pe-md-3 d-flex align-items-center">
           <span class="btn btn-outline-primary btn-sm mb-0 me-3">DSKPN# <?= session('dskpn_code') ?></span>
-        </div>
       <?php }
       ?>
+
       <!-- <div class="ms-md-auto pe-md-3 d-flex align-items-center">
         <div class="input-group">
           <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
           <input type="text" class="form-control" placeholder="Type here...">
         </div>
-      </div>
-      <ul class="navbar-nav  justify-content-end">
-        <li class="nav-item d-flex align-items-center">
+      </div> -->
+      <ul class="navbar-nav justify-content-end">
+        <!-- <li class="nav-item d-flex align-items-center">
           <a href="<?= base_url() ?>pages/authentication/signin/illustration.html" class="nav-link text-body font-weight-bold px-0" target="_blank">
             <i class="fa fa-user me-sm-1"></i>
             <span class="d-sm-inline d-none">Sign In</span>
           </a>
-        </li>
-        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+        </li> -->
+        <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
           <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
             <div class="sidenav-toggler-inner">
               <i class="sidenav-toggler-line"></i>
@@ -43,35 +42,67 @@
               <i class="sidenav-toggler-line"></i>
             </div>
           </a>
-        </li>
-        <li class="nav-item px-3 d-flex align-items-center">
+        </li> -->
+        <!-- <li class="nav-item px-3 d-flex align-items-center">
           <a href="javascript:;" class="nav-link text-body p-0">
             <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
           </a>
-        </li>
+        </li> -->
         <li class="nav-item dropdown pe-2 d-flex align-items-center">
-          <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell cursor-pointer"></i>
+          <a href="javascript:;" class="nav-link text-body p-0 d-flex align-items-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="me-2" style="line-height: 1.2;">
+              <span><b><?= session('nickname'); ?></b><br></span>
+              <span class="badge text-bg-dark" style="font-size : 8px;"><?= !empty(session('current_role'))?session('current_role'):'guru'; ?></span>
+            </div>
+            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="rounded-circle shadow-sm" style="width: 40px; height: 40px;" alt="Avatar" />
           </a>
           <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-            <li class="mb-2">
-              <a class="dropdown-item border-radius-md" href="javascript:;">
+         
+            <div class="mb-2 d-flex justify-content-center">
+              <span class="border-radius-md" href="javascript:;">
                 <div class="d-flex py-1">
                   <div class="my-auto">
-                    <img src="<?= base_url() ?>assets/img/team-2.jpg" class="avatar avatar-sm  me-3 " alt="user image">
+                    <img src="<?= base_url() ?>neoterik/img/assets/multi-role.png" class="avatar-md me-3" style="height : 50px;" alt="user image">
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="text-sm font-weight-normal mb-1">
-                      <span class="font-weight-bold">New message</span> from Laur
+                      <span class="font-weight-bold"><?= session('fullname'); ?></span>
                     </h6>
                     <p class="text-xs text-secondary mb-0">
-                      <i class="fa fa-clock me-1"></i>
-                      13 minutes ago
+                      Sebagai, <?= !empty(session('current_role'))?session('current_role'):'Guru'; ?>.
                     </p>
                   </div>
                 </div>
-              </a>
-            </li>
+              </span>
+            </div>
+            <span class="text-xs text-secondary mb-0">Tukar Akses?</span>
+            <hr style="background-color : gray !important;" class="p-0 m-0">
+
+            <?php
+            $list_current_role = session('list_current_role');
+            $current_role = session('current_role');
+            $list_current_role[] = "GURU";
+            foreach($list_current_role as $available_role)
+            { ?>
+              <li class="mb-0">
+                <a class="dropdown-item border-radius-md <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'bg-dark':''; ?>" href="<?= ($current_role != $available_role)?route_to('change_user_role') . "?role=" . $available_role:'#'; ?>">
+                  <div class="d-flex py-1">
+                    <div class="my-auto">
+                      <img src="<?= base_url() ?>neoterik/img/assets/<?= $available_role; ?>.jpg" class="avatar avatar-sm  me-3 " alt="user image">
+                    </div>
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="text-sm font-weight-normal mb-1">
+                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= $available_role; ?></span>
+                      </h6>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            <?php }
+            ?>
+
+            <span class="text-xs text-secondary mb-0">Tetapan</span>
+            <hr style="background-color : gray !important;" class="p-0 m-0">
             <li class="mb-2">
               <a class="dropdown-item border-radius-md" href="javascript:;">
                 <div class="d-flex py-1">
@@ -122,7 +153,8 @@
             </li>
           </ul>
         </li>
-      </ul> -->
+      </ul>
+      
     </div>
   </div>
 </nav>

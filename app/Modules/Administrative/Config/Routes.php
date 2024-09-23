@@ -12,4 +12,6 @@ $routes->group('administrative', function ($routes) {
     $routes->get('view_user_access',                        [UserAccessController::class,     'view_user_access'],          ['as' => 'view_user_access']);
     $routes->get('get_roles',                               [UserAccessController::class,     'get_roles'],                 ['as' => 'get_roles']);
     $routes->post('save_user_roles',                        [UserAccessController::class,     'save_user_roles'],           ['as' => 'save_user_roles']);
+
+    $routes->get('change_user_access',                      [UserAccessController::class,     'changeRoleAccess'],          ['as' => 'change_user_role']);
 });
