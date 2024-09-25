@@ -98,6 +98,16 @@
       border: 0 !important;
       /* border-radius: 4px; */
     }
+
+    .swal2-styled.swal2-confirm {
+      background-image: linear-gradient(310deg, #7367f0, #7367f0);
+      background-color: #7367f0 !important;
+    }
+
+    .swal2-styled.swal2-confirm:hover, .swal2-styled.swal2-confirm:focus {
+        background-image: linear-gradient(310deg, #7367f0, #7367f0) !important;
+    }
+
   </style>
 
 </head>

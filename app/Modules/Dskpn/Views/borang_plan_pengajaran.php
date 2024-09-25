@@ -332,10 +332,10 @@
         </tr>
         <tr>
             <td class="tg-0pky" colspan="4" rowspan="5">
-                <?php $activity_line_html = "";
+                <?php 
                 if (isset($activity) && !empty($activity)):
                     foreach ($activity as $ac) {
-                        echo $activity_line_html .= $ac['aci_number'] . ". " . $ac['aci_desc'] . "<br>";
+                        echo $ac['aci_number'] . ". " . $ac['aci_desc'] . "<br>";
                     }
                 endif;
                 ?>
