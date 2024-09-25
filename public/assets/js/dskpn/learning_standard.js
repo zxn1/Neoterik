@@ -1,22 +1,22 @@
 let editor_objective;
 $(document).ready(function() {
-    ClassicEditor
-    .create( document.querySelector('#editor-objectif-pentaksiran'), {
-        simpleUpload: {
-        // Feature configuration.
-        uploadUrl: ckeditor_upload_url,
-        headers: {
-            //later put csrf_token
-        }
-        }
-    } )
-    .then( newEditor => {
-        //ni incase ada nak adjust editor ni nanti
-        editor_objective = newEditor;
-    } )
-    .catch( error => {
-        console.log( error );
-    } );
+    // ClassicEditor
+    // .create( document.querySelector('#editor-objectif-pentaksiran'), {
+    //     simpleUpload: {
+    //     // Feature configuration.
+    //     uploadUrl: ckeditor_upload_url,
+    //     headers: {
+    //         //later put csrf_token
+    //     }
+    //     }
+    // } )
+    // .then( newEditor => {
+    //     //ni incase ada nak adjust editor ni nanti
+    //     editor_objective = newEditor;
+    // } )
+    // .catch( error => {
+    //     console.log( error );
+    // } );
 
     if (!globalCheckingDSKPNCode)
         $('#setDSKPNIC').modal('show');
@@ -41,7 +41,7 @@ function yearDSKPNChecked(event) {
 function selectionPopulateBasedOnNumbering()
 {
     let arrValues = [];
-    var nodes = document.querySelectorAll("input[type=number]");
+    var nodes = document.querySelectorAll("input[type=text]");
     for (var i=0; i<nodes.length; i++)
     if(nodes[i].id == 'standard-learning-number' && nodes[i].value != '')
     {
@@ -65,6 +65,11 @@ function selectionPopulateBasedOnNumbering()
 
     $('select#objective-prestasi-ref').multipleSelect('destroy');
     $('select#objective-prestasi-ref').multipleSelect();
+}
+
+function initializeEachOne(id_num)
+{
+    $('select#objective-prestasi-ref-' + id_num).multipleSelect();
 }
 
 function validateAndSubmit()

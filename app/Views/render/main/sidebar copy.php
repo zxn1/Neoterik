@@ -6,7 +6,7 @@
       <span class="ms-1 font-weight-bold">Sistem Neoterik</span>
     </a>
   </div>
-  <hr class="horizontal dark mt-0">
+  <hr class="hr-lightbit mt-0">
   <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <li class="nav-item">

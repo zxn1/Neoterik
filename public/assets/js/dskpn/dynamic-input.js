@@ -1,5 +1,88 @@
 $(document).ready(function() {
     $('.select2').select2();
+
+    // Event listener for when an option is selected
+    $(document).on('select2:select', '.dynamic-select2', function(e) {
+        var selectedValue = e.params.data.id; // Get the selected value
+        var selectId = $(this).attr('id'); // Get the ID of the current select element
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('A')) {
+            // Disable all Afektif options except the selected one
+            var afektifOptgroup = $('#' + selectId).find('optgroup[label="Afektif"]');
+            afektifOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Afektif"]').hide();
+        }
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('C')) {
+            // Disable all Afektif options except the selected one
+            var kognitifOptgroup = $('#' + selectId).find('optgroup[label="Kognitif"]');
+            kognitifOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Kognitif"]').hide();
+        }
+
+        // Hide the "Afektif" optgroup if any of its options is selected
+        if (selectedValue.startsWith('P')) {
+            // Disable all Afektif options except the selected one
+            var psikomotorOptgroup = $('#' + selectId).find('optgroup[label="Psikomotor"]');
+            psikomotorOptgroup.find('option').not(':selected').prop('disabled', true);
+
+            // Trigger the update in Select2 to reflect the changes
+            $('#' + selectId).trigger('change');
+
+            // Hide the optgroup in the dropdown by targeting the Select2-generated elements
+            var select2ContainerId = selectId.replace("dynamic-select2-", ""); // Use to target the select2 dropdown container
+            $("#select2-" + selectId + "-results").find('li[aria-label="Psikomotor"]').hide();
+        }
+    });
+
+    // Event listener for when an option is unselected
+    $(document).on('select2:unselect', '.dynamic-select2', function(e) {
+        var unselectedValue = e.params.data.id;
+        var selectId = $(this).attr('id');
+
+        // If an "Afektif" option is unselected and no "Afektif" options are selected, show the "Afektif" optgroup again
+        var hasKognitifSelected = $('#' + selectId).find("optgroup[label='Kognitif'] option:selected").length > 0;
+        var hasPsikomotorSelected = $('#' + selectId).find("optgroup[label='Psikomotor'] option:selected").length > 0;
+        var hasAfektifSelected = $('#' + selectId).find("optgroup[label='Afektif'] option:selected").length > 0;
+        if (!hasKognitifSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Kognitif'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Kognitif"]').show();
+        }
+        if (!hasPsikomotorSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Psikomotor'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Psikomotor"]').show();
+        }
+        if (!hasAfektifSelected) {
+            // Re-enable the Afektif options
+            $('#' + selectId).find("optgroup[label='Afektif'] option").prop('disabled', false);
+            $('#' + selectId).trigger('change');
+
+            // Show the optgroup in the dropdown by targeting the Select2-generated elements
+            $("#select2-" + selectId + "-results").find('li[aria-label="Afektif"]').show();
+        }
+    });
 });
 
 //listener
@@ -59,7 +142,8 @@ $('#add-subject-button').on('click', function() {
         <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
             <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
                 <div class="col-2 p-0 pe-1">
-                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                 </div>
                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="Objektif bagi Subjek ini.">
@@ -198,12 +282,13 @@ $('#topik-dynamic-field').on('change', function() {
                                 <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
                                     <div class="row m-1" id="standard-item-`+item.sbm_id+`">
                                         <div class="col-2 p-0 pe-1">
-                                            <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                            <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                                         </div>
                                         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                             <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
                                             <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();selectionPopulateBasedOnNumbering();">
-                                                <button class="input-group-text" id="btnGroupAddon">
+                                                <button type="button" class="input-group-text" id="btnGroupAddon">
                                                     <i class="fas fa-trash-alt" style="color:red;"></i>
                                                 </button>
                                             </div>
@@ -254,7 +339,8 @@ function addStandardPembelajaran(sm_id, sm_code)
 
     let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
                                 <div class="col-2 p-0 pe-1">
-                                    <input type="number" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" step="0.01" min="0" class="form-control p-1" placeholder="1.1">
+                                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
+                                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                                 </div>
                                 <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                     <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="Objektif bagi Subjek ini.">
@@ -274,7 +360,10 @@ var select2Counter = 2; // Start counter at 3 since you have 3 select2 elements 
 
 // Initialize the 3 default select2 elements when the page loads
 $(document).ready(function() {
-    for (var i = 0; i <= 2; i++) {
+    //make it dynamic. so find all element starting with id "dynamic-select2-"
+    const selects = document.querySelectorAll('select[id^="dynamic-select2-"]');
+    const count = selects.length; //count
+    for (var i = 0; i <= count-1; i++) {
         $('#dynamic-select2-' + i).select2();
     }
 });
@@ -296,7 +385,8 @@ function addObjectivePrestasi(i)
     
     let newInputHTMLField = `<div class="input-group" style="margin-bottom: 5px;" id="objective-prestasi-` + newFieldColl + `">
                                 <div class="col-md-1 pe-1">
-                                    <input type="number" name="objective-prestasi-number[]" step="0.01" min="0" class="form-control" placeholder="1.1">
+                                    <input type="text" name="objective-prestasi-number[]" pattern="^\\d+(\\.\\d+)*$" 
+                                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control" placeholder="1.1" required>
                                 </div>
                                 <div class="col-md-6 pe-1">
                                     <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
@@ -312,7 +402,7 @@ function addObjectivePrestasi(i)
               newInputHTMLField += `</select>
                                 </div>
                                 <div class="col-md-2 d-flex">
-                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + select2Counter + `" class="dynamic-select2 form-control" multiple="multiple">
+                                    <select name="objective-prestasi-pentaksiran[` + newFieldColl + `][]" id="dynamic-select2-` + newFieldColl + `" class="select2adjustheight dynamic-select2 form-control" multiple="multiple">
                   <optgroup label="Kognitif">
                     <option value="C1">C1</option>
                     <option value="C2">C2</option>
@@ -345,8 +435,8 @@ function addObjectivePrestasi(i)
                   </optgroup>
                 </select>
 
-                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $i; ?>').remove();">
-                                        <button class="input-group-text" id="btnGroupAddon">
+                                    <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
+                                        <button type="button" class="input-group-text" id="btnGroupAddon">
                                             <i class="fas fa-trash-alt" style="color: red;"></i>
                                         </button>
                                     </div>
@@ -359,7 +449,7 @@ function addObjectivePrestasi(i)
     $('select#objective-prestasi-ref').multipleSelect();
 
      // Initialize the newly added select2 element
-     $('#dynamic-select2-' + select2Counter).select2();
+     $('#dynamic-select2-' + newFieldColl).select2();
 }
 
 $('#kluster-selection').on('change', function() {
