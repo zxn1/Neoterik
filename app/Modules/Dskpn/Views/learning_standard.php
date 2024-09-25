@@ -33,6 +33,11 @@
     height: 40px;
     margin-left : 5px;
   }
+
+  div.col-md-2.d-flex > select.select2adjustheight + span > span.selection > span > .select2-selection__rendered {
+    border: 0px solid #d2d6da;
+}
+
 </style>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <!-- Latest compiled and minified CSS -->
@@ -300,7 +305,7 @@
                 </select>
                 <?php $op_pentaksiran_counter++; ?>
                 <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= ($index + 1); ?>').remove();">
-                  <button class="input-group-text" id="btnGroupAddon">
+                  <button type="button" class="input-group-text" id="btnGroupAddon">
                     <i class="fas fa-trash-alt" style="color: red;"></i>
                   </button>
                 </div>
@@ -366,7 +371,7 @@
                 </select>
                 <?php $op_pentaksiran_counter++; ?>
                 <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-<?= $op_pentaksiran_counter; ?>').remove();">
-                  <button class="input-group-text" id="btnGroupAddon">
+                  <button type="button" class="input-group-text" id="btnGroupAddon">
                     <i class="fas fa-trash-alt" style="color: red;"></i>
                   </button>
                 </div>

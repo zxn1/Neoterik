@@ -288,7 +288,7 @@ $('#topik-dynamic-field').on('change', function() {
                                         <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
                                             <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
                                             <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();selectionPopulateBasedOnNumbering();">
-                                                <button class="input-group-text" id="btnGroupAddon">
+                                                <button type="button" class="input-group-text" id="btnGroupAddon">
                                                     <i class="fas fa-trash-alt" style="color:red;"></i>
                                                 </button>
                                             </div>
@@ -436,7 +436,7 @@ function addObjectivePrestasi(i)
                 </select>
 
                                     <div class="input-group-prepend ms-2" onclick="$('#objective-prestasi-` + newFieldColl + `').remove();">
-                                        <button class="input-group-text" id="btnGroupAddon">
+                                        <button type="button" class="input-group-text" id="btnGroupAddon">
                                             <i class="fas fa-trash-alt" style="color: red;"></i>
                                         </button>
                                     </div>

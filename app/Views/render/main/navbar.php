@@ -68,9 +68,9 @@
                     <h6 class="text-sm font-weight-normal mb-1">
                       <span class="font-weight-bold"><?= session('fullname'); ?></span>
                     </h6>
-                    <p class="text-xs text-secondary mb-0">
+                    <!-- <p class="text-xs text-secondary mb-0">
                       Sebagai, <?= !empty(session('current_role'))?session('current_role'):'Guru'; ?>.
-                    </p>
+                    </p> -->
                   </div>
                 </div>
               </span>
@@ -101,7 +101,7 @@
             <?php }
             ?>
 
-            <span class="text-xs text-secondary mb-0">Tetapan</span>
+            <!-- <span class="text-xs text-secondary mb-0">Tetapan</span>
             <hr style="background-color : gray !important;" class="p-0 m-0">
             <li class="mb-2">
               <a class="dropdown-item border-radius-md" href="javascript:;">
@@ -150,7 +150,7 @@
                   </div>
                 </div>
               </a>
-            </li>
+            </li> -->
           </ul>
         </li>
       </ul>
