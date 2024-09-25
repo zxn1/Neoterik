@@ -41,10 +41,10 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>TAHAP PENGUASAAN</b></h6>
             <div>
-                <button class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
+                <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
                     Ubah Tahap Penguasaan&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
-                </button>
+                </a>
                 <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
                     Tetapan Tahap Penguasaan&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
@@ -56,7 +56,7 @@
             <table id="standard_performance_table" class="table align-items-center mb-0" id="subject_list">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
+                        <!-- <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th> -->
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">LEVEL</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">TAHAP PENGUASAAN</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
@@ -72,7 +72,9 @@
 </div>
 
 <script>
+    var currentHref = null;
     $(document).ready(function() {
+        currentHref = $('#edit-tp').attr('href');
         $('.select2').select2();
         $('#standard_performance_table').DataTable();
         $('#subject').change(function() {
@@ -124,7 +126,11 @@
                     success: function(data) {
                         if (data.standard_performance_dskp_mapping.length <= 0) {
                             $('#edit-tp').hide();
+                            $('#edit-tp').attr('href', currentHref);
                         } else {
+                            let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
+                            let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
+                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
                             $('#edit-tp').show();
                         }
                         var counter = 1;
@@ -151,6 +157,7 @@
                     error: function(xhr, status, error) {
                         console.error('Error fetching data:', error);
                         $('#edit-tp').hide();
+                        $('#edit-tp').attr('href', currentHref);
                     }
                 });
             }
@@ -182,8 +189,12 @@
                     success: function(data) {
                         if (data.standard_performance_dskp_mapping.length <= 0) {
                             $('#edit-tp').hide();
+                            $('#edit-tp').attr('href', currentHref);
                         } else {
                             $('#edit-tp').show();
+                            let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
+                            let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
+                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
                         }
 
                         var counter = 1;

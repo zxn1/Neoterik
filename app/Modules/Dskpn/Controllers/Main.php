@@ -1808,6 +1808,8 @@ class Main extends BaseController
     public function view_tp_core_competency()
     {
         $data = [];
+        $data['edit_dskp_code'] = $this->request->getVar('dskp_code');
+        $data['edit_batch'] = $this->request->getVar('batch');
 
         $data['subject_list'] = $this->subject_model->findAll();
 

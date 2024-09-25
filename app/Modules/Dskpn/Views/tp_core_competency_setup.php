@@ -130,3 +130,14 @@
     });
   </script>
 <?php endif; ?>
+<?php if (isset($edit_dskp_code) && !empty($edit_dskp_code)) : ?>
+  <script>
+    $(document).ready(function() {
+      Swal.fire({
+        icon: "error",
+        title: "Maaf",
+        text: "<?= $edit_dskp_code; ?>"
+      });
+    });
+  </script>
+<?php endif; ?>
