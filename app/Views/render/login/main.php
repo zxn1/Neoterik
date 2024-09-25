@@ -148,7 +148,7 @@
 
                                 <div style="font-size : 9px; text-align : center; padding-bottom : 10px;">
                                 <span>Universiti Pendidikan Sultan Idris © 2024<br>
-                                Gambar : Dewan Tuanku Canselor</span>
+                                Gambar : Kompleks Akademik</span>
                                 </div>
                             </div>
                         </div>

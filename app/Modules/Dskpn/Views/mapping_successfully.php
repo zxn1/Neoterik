@@ -1,7 +1,7 @@
 <div class="container-fluid py-4">
 
   <div class="card">
-    <div class="card-header d-flex p-3 bg-gradient-primary">
+    <div class="card-header d-flex p-3 bg-primary">
       <h6 class="my-auto text-white">DSKPN</h6>
     </div>
     <div class="card-body">
