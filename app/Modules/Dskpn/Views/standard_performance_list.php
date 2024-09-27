@@ -97,9 +97,13 @@
 
                         $dskpCodeSelect.append('<option value="" disabled selected>-- Sila Pilih Kod --</option>');
 
+                        let includedArr = [];
                         $.each(response, function(index, item) {
-
-                            $dskpCodeSelect.append('<option value="' + item.dskp_code + '">' + item.dskp_code + '</option>');
+                            if(!includedArr.includes(item.dskp_code))
+                            {
+                                $dskpCodeSelect.append('<option value="' + item.dskp_code + '">' + item.dskp_code + '</option>');
+                                includedArr.push(item.dskp_code);   
+                            }
                         });
                     }
                 });
@@ -128,9 +132,10 @@
                             $('#edit-tp').hide();
                             $('#edit-tp').attr('href', currentHref);
                         } else {
+                            let subject_name = $('#subject').select2('data')[0].text;
                             let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
                             let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
-                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
+                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + subject_name + "&data=" + JSON.stringify(data));
                             $('#edit-tp').show();
                         }
                         var counter = 1;

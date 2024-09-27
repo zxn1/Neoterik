@@ -419,8 +419,8 @@ class Main extends BaseController
 
         // Get standard_performance
         $standard_performance = $this->standard_performance_dskp_mapping_model
-            ->join('dskp', 'dskp.dskp_code = standard_performance_dskp_mapping.spdm_dskp_code')
-            ->join('standard_performance', 'standard_performance.sp_dskp_code = dskp.dskp_code')
+            ->join('dskp', 'dskp.dskp_code = standard_performance_dskp_mapping.spdm_dskp_code AND dskp.dskp_batch = standard_performance_dskp_mapping.spdm_dskp_batch')
+            ->join('standard_performance', 'standard_performance.sp_dskp_code = dskp.dskp_code AND standard_performance.sp_dskp_batch = dskp.dskp_batch')
             ->join('subject_main', 'subject_main.sbm_id = dskp.dskp_sbm_id')
             ->where('spdm_dskpn_id', $dskpn_id)
             ->findAll();
@@ -1358,8 +1358,10 @@ class Main extends BaseController
         }
 
         foreach ($allRefCode as $item) {
+            $sp_last_batch = $this->standard_performance_model->where('sp_dskp_code', $item)->orderBy('sp_id', 'DESC')->first();
             $this->standard_performance_dskp_mapping_model->insert([
                 'spdm_dskp_code' => $item,
+                'spdm_dskp_batch'=> $sp_last_batch['sp_dskp_batch'],
                 'spdm_dskpn_id' => $dskpn_id
             ]);
         }
@@ -1809,7 +1811,9 @@ class Main extends BaseController
     {
         $data = [];
         $data['edit_dskp_code'] = $this->request->getVar('dskp_code');
+        $data['edit_subject_name'] = $this->request->getVar('subject');
         $data['edit_batch'] = $this->request->getVar('batch');
+        $data['edit_data'] = $this->request->getVar('data');
 
         $data['subject_list'] = $this->subject_model->findAll();
 
@@ -1865,18 +1869,25 @@ class Main extends BaseController
         $sp_id = $this->request->getPost('sp_id');
         $sbm_id = $this->request->getPost('sbm_id');
         if (isset($action) && $action == 'delete') {
-            $this->standard_performance_model->where('sp_id', $sp_id)->delete();
+            $sp_target = $this->standard_performance_model->where('sp_id', $sp_id)->first();
+            $this->standard_performance_model->delete($sp_target['sp_id']);
 
-            $check = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->findAll();
+            $check = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->where('sp_dskp_batch', $sp_target['sp_dskp_batch'])->findAll();
             if (empty($check)) {
-                $this->standard_performance_dskp_mapping_model->where('spdm_dskp_code', $dskp_code)->delete();
-                $this->dskp_model->where('dskp_code', $dskp_code)->delete();
+                $this->standard_performance_dskp_mapping_model->where('spdm_dskp_code', $dskp_code)->where('spdm_dskp_batch', $sp_target['sp_dskp_batch'])->delete();
+                $this->dskp_model->where('dskp_code', $dskp_code)->where('dskp_batch', $sp_target['sp_dskp_batch'])->delete();
             }
         }
 
+        $last_batch_number = $this->standard_performance_model->select('sp_dskp_batch')
+                        ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code')
+                        ->where('sp_dskp_code', $dskp_code)->where('dskp_sbm_id', $sbm_id)
+                        ->orderBy('sp_id', 'DESC')->first();
+
         $data['standard_performance_dskp_mapping'] = $this->standard_performance_model
-            ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code')
+            ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code AND dskp.dskp_batch = standard_performance.sp_dskp_batch')
             ->where('sp_dskp_code', $dskp_code)->where('dskp_sbm_id', $sbm_id)
+            ->where('dskp.dskp_batch', $last_batch_number['sp_dskp_batch'])
             ->findAll();
 
         return $this->response->setJSON($data);
@@ -1924,23 +1935,34 @@ class Main extends BaseController
         $sbm_id = $this->request->getPost('subject');
 
         $tp_data = $this->request->getPost('input-tahap-penguasaan');
+        $exist_tp = $this->standard_performance_model->withDeleted()->where('sp_dskp_code', $subject_code)->orderBy('sp_id', 'DESC')->first();
+        $batch_count = 0;
 
-        if (!$code_tp_rank)
-            return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
+        if(!empty($exist_tp))
+        {
+            //batch = increase + 1
+            $batch_count = $exist_tp['sp_dskp_batch'] + 1;
+            $dskp_code = $subject_code;
+        } else {
+            //batch = 0
+            if (!$code_tp_rank)
+                return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
 
-        if (!$topic_numbering)
-            return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
+            if (!$topic_numbering)
+                return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
 
-        //step 1 - store dskp record
-        $code_tp_rank = sprintf('%01d', $code_tp_rank);
-        $topic_numbering = sprintf('%02d', $topic_numbering);
+            //step 1 - store dskp record
+            $code_tp_rank = sprintf('%01d', $code_tp_rank);
+            $topic_numbering = sprintf('%02d', $topic_numbering);
 
-        $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
-        if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
-            return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
+            $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
+            if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
+                return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
+        }
 
         $res = $this->dskp_model->insert([
             'dskp_code'     => $dskp_code,
+            'dskp_batch'    => $batch_count,
             'dskp_sbm_id'   => $sbm_id
         ]);
 
@@ -1950,12 +1972,18 @@ class Main extends BaseController
                 $tpLevel = $index + 1;
                 $this->standard_performance_model->insert([
                     'sp_dskp_code'  => $dskp_code,
+                    'sp_dskp_batch' => $batch_count,
                     'sp_tp_level'   => $tpLevel,
                     'sp_tp_level_desc' => $item
                 ]);
             }
         }
 
+        if(!empty($exist_tp))
+        {
+            session()->setFlashdata('success', 'Tahap Penguasaan berjaya dikemaskini!');
+            return redirect()->to(route_to('view_standard_performance'));
+        }
         return redirect()->back()->with('success', 'Berjaya menetapkan Tahap Penguasaan!');
     }
 
@@ -1997,8 +2025,11 @@ class Main extends BaseController
         $dskp_code = $this->request->getVar('dskp_code');
         $sbm_code = $this->request->getVar('sbm_code');
 
+        $last_batch = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->orderBy('sp_id', 'DESC')->first();
+        $last_batch = $last_batch['sp_dskp_batch'];
         $data = $this->standard_performance_model
             ->where('sp_dskp_code', $dskp_code)
+            ->where('sp_dskp_batch', $last_batch)
             ->like('sp_dskp_code', $sbm_code . '%')->findAll();
 
         if (!empty($data)) {
