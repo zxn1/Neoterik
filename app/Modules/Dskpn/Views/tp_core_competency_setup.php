@@ -15,7 +15,7 @@
             ?>
           </select>
         </div>
-        <div class="row pt-1">
+        <div class="row pt-1" id="chooseleveldropdown">
           <!-- <h6 style="position : relative; top : 10px;">Tahun</h6> -->
           <div class="mb-3 d-flex">
             <table>
@@ -127,6 +127,44 @@
         title: "Maaf",
         text: "<?= session('fail'); ?>"
       });
+    });
+  </script>
+<?php endif; ?>
+<?php if (isset($edit_dskp_code) && !empty($edit_dskp_code)) : ?>
+  <script>
+    function selectByText(text) {
+        // Find the option that matches the text
+        var option = $('#subject-dynamic-field option').filter(function() {
+            return $(this).text() === text;
+        });
+
+        // If the option is found, set the value and trigger change
+        if (option.length) {
+            $('#subject-dynamic-field').val(option.val()).trigger('change');
+            //$('#subject-dynamic-field').prop('disabled', true).trigger('change');
+            let currentValue = option.val();
+
+            $('#subject-dynamic-field').on('change', function(e) {
+                $(this).val(currentValue).trigger('change'); // Revert to the original value
+            });
+        }
+    }
+
+    $(document).ready(function() {
+      selectByText('<?= $edit_subject_name; ?>');
+      let data_tp = JSON.parse('<?= $edit_data; ?>').standard_performance_dskp_mapping;
+      
+      $('#collection-tahap-penguasaan').empty();
+      data_tp.forEach(function(element, index, array) {
+        addField('tahap-penguasaan', element.sp_tp_level_desc);
+      });
+
+      $('#chooseleveldropdown').hide();
+      // Clear existing options
+      $('#dskpn-topic-numbering-list').empty();
+      // Add new options
+      $('#dskpn-topic-numbering-list').append('<option value="<?= $edit_dskp_code; ?>"><?= $edit_dskp_code; ?></option>');
+      $('#kod-rujukan').val('<?= $edit_dskp_code; ?>');
     });
   </script>
 <?php endif; ?>
