@@ -442,7 +442,7 @@ class Main extends BaseController
             ->join('assessment_category', 'assessment_item.asi_asc_id = assessment_category.asc_id')
             ->where('assessment_item.asi_dskpn_id', $dskpn_id)->findAll();
         $core_competency    = $this->competency_mapping_model
-            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code')
+            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
@@ -450,7 +450,15 @@ class Main extends BaseController
         $all_core_competency = [];
         foreach($ls_sbm_ids as $sub_id)
         {
-            $check_core_competency = $this->core_competency_model->where('cc_sbm_id', $sub_id)->orderBy('cc_id', 'DESC')->first();
+            $check_core_competency = $this->competency_mapping_model
+            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
+            // ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
+            ->where('cmp_dskpn_id', $dskpn_id)
+            ->where('cc_sbm_id', $sub_id)
+            ->orderBy('cmp_id', 'DESC')
+            ->first();
+
+            //$this->core_competency_model->where('cc_sbm_id', $sub_id)->orderBy('cc_id', 'DESC')->first();
             $tmp_core_competency = $this->core_competency_model
                 ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
                 ->where('cc_sbm_id', $sub_id)->where('cc_batch', $check_core_competency['cc_batch'])->findAll();
