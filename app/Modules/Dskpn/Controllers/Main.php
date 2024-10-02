@@ -442,14 +442,29 @@ class Main extends BaseController
             ->join('assessment_category', 'assessment_item.asi_asc_id = assessment_category.asc_id')
             ->where('assessment_item.asi_dskpn_id', $dskpn_id)->findAll();
         $core_competency    = $this->competency_mapping_model
-            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code')
+            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
         $ls_sbm_ids = array_column($learning_standard, 'ls_sbm_id');
-        $all_core_competency = $this->core_competency_model
-            ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
-            ->whereIn('cc_sbm_id', $ls_sbm_ids)->findAll();
+        $all_core_competency = [];
+        foreach($ls_sbm_ids as $sub_id)
+        {
+            $check_core_competency = $this->competency_mapping_model
+            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
+            // ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
+            ->where('cmp_dskpn_id', $dskpn_id)
+            ->where('cc_sbm_id', $sub_id)
+            ->orderBy('cmp_id', 'DESC')
+            ->first();
+
+            //$this->core_competency_model->where('cc_sbm_id', $sub_id)->orderBy('cc_id', 'DESC')->first();
+            $tmp_core_competency = $this->core_competency_model
+                ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
+                ->where('cc_sbm_id', $sub_id)->where('cc_batch', $check_core_competency['cc_batch'])->findAll();
+
+            array_merge($all_core_competency, $tmp_core_competency);
+        }
 
         // Get 16 Domain List by tahap
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
@@ -748,7 +763,17 @@ class Main extends BaseController
                 $subjectCodeArray[] = $subject['sbm_code'];
             }
 
-            $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
+            $core_competency = [];
+            foreach($subjectIdsArray as $subject_id)
+            {
+                $batch_num = 0;
+                $check_core_competency = $this->core_competency_model->where('cc_sbm_id', $subject_id)->orderBy('cc_id', 'DESC')->first();
+                if(isset($check_core_competency) && !empty($check_core_competency))
+                    $batch_num = $check_core_competency['cc_batch'];
+
+                $core_competency_temp = $this->core_competency_model->where('cc_sbm_id', $subject_id)->where('cc_batch', $batch_num)->findAll();
+                $core_competency = array_merge($core_competency, $core_competency_temp);
+            }
 
             //step 2.1 - structuring the data to pass over view
             foreach ($subjectIdsArray as $index => $sbm_id) {
@@ -1467,6 +1492,7 @@ class Main extends BaseController
         foreach ($processedData as $key => $inputCode) {
             //1.1 get sm_id based on inputCodeKey
             $subject_data = $this->subject_model->where('sbm_code', $key)->first();
+            $core_competency = $this->core_competency_model->where('cc_sbm_id', $subject_data['sbm_id'])->orderBy('cc_id', "DESC")->first();
 
             //2. loop to get value inside that inputcode
             foreach ($inputCode as $input) {
@@ -1474,6 +1500,7 @@ class Main extends BaseController
                 if ($input['checked'] == 'Y') {
                     $this->competency_mapping_model->insert([
                         'cmp_cc_code'  => $input['value'],
+                        'cmp_cc_batch' => $core_competency['cc_batch'],
                         'cmp_dskpn_id' => $dskpn_id
                     ]);
 
@@ -1848,7 +1875,13 @@ class Main extends BaseController
             $this->core_competency_model->where('cc_id', $cc_id)->delete();
         }
 
-        $core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll();
+        $batch_number = 0;
+        $core_competency_exist = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->orderBy('cc_id', 'DESC')->first();
+
+        if(isset($core_competency_exist) && !empty($core_competency_exist))
+            $batch_number = $core_competency_exist['cc_batch'];
+
+        $core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->where('cc_batch', $batch_number)->findAll();
 
         return response()->setJSON($core_competency);
     }
@@ -1893,10 +1926,25 @@ class Main extends BaseController
         return $this->response->setJSON($data);
     }
 
+    public function get_subject_details_by_id()
+    {
+        $data = [];
+        $req = $this->request->getVar('sbm_id');
+
+        if(!isset($req) || empty($req))
+            return null;
+
+        $data['subject'] = $this->subject_model->where('sbm_id', $req)->first();
+        return $this->response->setJSON($data);
+    }
+
     public function view_core_competency()
     {
         $data = [];
-
+        $data['edit_subject_name'] = $this->request->getVar('subject');
+        $data['edit_sbm_id'] = $this->request->getVar('sbm_id');
+        $data['edit_data'] = $this->request->getVar('data');
+        
         $data['subject_list'] = $this->subject_model->findAll();
 
         $script = ['core_competency_setup'];
@@ -1910,18 +1958,30 @@ class Main extends BaseController
         $core_competency = $this->request->getPost('input-core-competency');
         $sbm_id = $this->request->getPost('subject');
 
-        if (!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
-            return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
+        // if (!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
+        //     return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
+
+        $batch_number = 0;
+        $exit_core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->orderBy('cc_id', 'DESC')->first();
+        if(isset($exit_core_competency) && !empty($exit_core_competency))
+            $batch_number = $exit_core_competency['cc_batch'] + 1;
 
         if (!empty($core_competency)) {
             foreach ($core_competency as $index => $item) {
                 if (isset($core_competency_code[$index]) && !empty($core_competency_code[$index]))
                     $this->core_competency_model->insert([
-                        'cc_code' => $core_competency_code[$index],
-                        'cc_desc' => $item,
+                        'cc_code'   => $core_competency_code[$index],
+                        'cc_batch'  => $batch_number,
+                        'cc_desc'   => $item,
                         'cc_sbm_id' => $sbm_id
                     ]);
             }
+        }
+
+        if($exit_core_competency)
+        {
+            session()->setFlashdata('success', 'Kompetensi Teras berjaya dikemaskini!');
+            return redirect()->to(route_to('view_core_competency_list'));
         }
 
         return redirect()->back()->with('success', 'Berjaya menetapkan Kompetensi Teras!');

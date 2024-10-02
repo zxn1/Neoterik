@@ -106,3 +106,48 @@
     });
   </script>
 <?php endif; ?>
+
+
+<?php if (isset($edit_data) && !empty($edit_data)) : ?>
+  <script>
+    function selectByText(text) {
+        // Find the option that matches the text
+        var option = $('#subject-dynamic-field option').filter(function() {
+            return $(this).text() === text;
+        });
+
+        // If the option is found, set the value and trigger change
+        if (option.length) {
+            $('#subject-dynamic-field').val(option.val()).trigger('change');
+            //$('#subject-dynamic-field').prop('disabled', true).trigger('change');
+            let currentValue = option.val();
+
+            $('#subject-dynamic-field').on('change', function(e) {
+                $(this).val(currentValue).trigger('change'); // Revert to the original value
+            });
+        }
+    }
+
+    $(document).ready(function() {
+      //need to get subject sbm_id, sbm_name, sbm_code first.
+      $.get("<?= route_to('get_subject_by_id') . "?sbm_id=" . $edit_sbm_id; ?>", function(data, status){
+
+        let subject = data.subject;
+        const newOptionHtml = "<option value='" + subject.sbm_id + "' data-code='" + subject.sbm_code + "'>" + subject.sbm_desc + "</option>";
+        $('#subject-dynamic-field').select2('destroy');
+        //append the new option using HTML
+        $('#subject-dynamic-field').append(newOptionHtml);
+        $('#subject-dynamic-field').select2();
+
+        //then only this
+        selectByText('<?= $edit_subject_name; ?>');
+        let data_tp = JSON.parse('<?= $edit_data; ?>');
+        
+        $('#collection-core-competency').empty();
+        data_tp.forEach(function(element, index, array) {
+          addField('core-competency', element.cc_desc);
+        });
+      });
+    });
+  </script>
+<?php endif; ?>

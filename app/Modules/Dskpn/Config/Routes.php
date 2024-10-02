@@ -76,6 +76,7 @@ $routes->group('dskpn', function ($routes) {
         $routes->post('store-create-subject',           [SubjectMain::class,     'store_create_subject'],         ['as' => 'store_create_subject']);
         $routes->delete('delete/(:num)',                [SubjectMain::class,     'delete_subject/$1'],            ['as' => 'delete_subject']);
         $routes->get('get-default-sm-id/(:any)',        [SubjectMain::class,     'get_default_subject_ID'],       ['as' => 'default_sm_id']);
+        $routes->get('get-subject-details-by-id',       [Main::class, 'get_subject_details_by_id'],               ['as' => 'get_subject_by_id']);
     });
 
     //SETTING MAPPING INITIALIZER
