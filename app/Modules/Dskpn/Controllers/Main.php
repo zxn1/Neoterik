@@ -461,9 +461,9 @@ class Main extends BaseController
             //$this->core_competency_model->where('cc_sbm_id', $sub_id)->orderBy('cc_id', 'DESC')->first();
             $tmp_core_competency = $this->core_competency_model
                 ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
-                ->where('cc_sbm_id', $sub_id)->where('cc_batch', $check_core_competency['cc_batch'])->findAll();
+                ->where('cc_sbm_id', $sub_id)->where('cc_batch', $check_core_competency['cc_batch']??0)->findAll();
 
-            array_merge($all_core_competency, $tmp_core_competency);
+            $all_core_competency = array_merge($all_core_competency, $tmp_core_competency);
         }
 
         // Get 16 Domain List by tahap
