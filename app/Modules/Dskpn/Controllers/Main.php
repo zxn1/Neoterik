@@ -1075,6 +1075,9 @@ class Main extends BaseController
 
         $this->session->set('subject', $subject);
         //dskpn_code_init (x)
+        //dskpn_code (x)
+        //$this->session->set('is_update', 'Y'); kalau draft + ex_dskpn_id tu sama. baru update
+        //is_update_TP":"Y" //kalau draft gak
         $this->session->set('subject_description', $subject_description);
         $this->session->set('subject_standard_numbering', $subject_standard_numbering);
         $this->session->set('kluster', $dskpn['ctm_id']);
@@ -1087,7 +1090,6 @@ class Main extends BaseController
         $this->session->set('subtema', $dskpn['dskpn_sub_theme']);
         $this->session->set('dskpn_id', $dskpn['dskpn_id']);
         $this->session->set('learning_standard_id', $learning_standard_ids);
-        $this->session->set('is_update', 'Y');
         $objective_perform = $this->objective_performance_model->where('opm_dskpn_id', $ex_dskpn_id)->findAll();
         $objective = [];
         $objective_number = [];
@@ -1126,7 +1128,35 @@ class Main extends BaseController
         //end page - Penetapan Standard Pembelajaran
 
         //page - Penetapan Tahap Penguasaan
+        $tp_map = $this->standard_performance_dskp_mapping_model->where('spdm_dskpn_id', $ex_dskpn_id)->findAll();
+        $tp_sess_refcode = [];
+        foreach($tp_map as $tp)
+            $tp_sess_refcode[] = $tp['spdm_dskp_code'];
+        $this->session->set('tp_sess_refcode', $tp_sess_refcode);
         //end page - Penetapan Tahap Penguasaan
+
+        //page - Penetapan Pemetaan Teras
+        $core_map = $this->competency_mapping_model->where('cmp_dskpn_id', $ex_dskpn_id)
+                        ->join('core_competency', 'core_competency.cc_code = competency_mapping.cmp_cc_code AND core_competency.cc_batch = competency_mapping.cmp_cc_batch')
+                        ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
+                        ->findAll();
+
+        $core_map_sess = [];
+        $core_mapping_id_session_data = [];
+        foreach($core_map as $cmp)
+        {
+            $core_map_sess[$cmp['sbm_code']][$cmp['cmp_id']] = [$cmp['cmp_cc_code'], 'Y'];
+
+            if(!in_array($cmp['cmp_id'],$core_mapping_id_session_data))
+                $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
+        }
+        $this->session->set('core_map_sess', $core_map_sess);
+        $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
+        $this->session->set('is_update_core', 'Y'); //is must - to display - but make sure dskpn_id is current new dskpn_id
+        //end page - Penetapan Pemetaan Teras
+
+        //page - Penetapan Pemetaan Domain
+        //end page - Penetapan Pemetaan Domain
 
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
