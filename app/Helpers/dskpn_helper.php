@@ -88,6 +88,8 @@ function get_dskpn_status($status)
         return '<span class="badge badge-m bg-secondary">Permohonan<br>Pemadaman</span>';
     } else if ($status == 4) {
         return '<span class="badge badge-m bg-danger">Dipadam</span>';
+    } else if ($status == 5) {
+        return '<span class="badge badge-m bg-warning text-muted">Draft</span>';
     } else {
         return 'Unknown';
     }

@@ -1001,6 +1001,11 @@ class Main extends BaseController
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         $data['dskpn_code'] = $this->session->get("dskpn_code");
 
+        //update dskpn status
+        $this->dskpn_model->update($data['dskpn_id'], [
+            'dskpn_status' => null
+        ]);
+
         $sessionData = session()->get();
 
         $excludeKeys = [
@@ -1037,19 +1042,20 @@ class Main extends BaseController
 
         //ex_dskpn
         $dskpn = $this->dskpn_model->where('dskpn_id', $ex_dskpn_id)
-            ->join('objective_performance', 'objective_performance.op_id = dskpn.op_id')->first();
+            ->join('objective_performance', 'objective_performance.opm_dskpn_id = dskpn.dskpn_id')->first();
 
         $this->session->set('ex_dskpn', $dskpn);
 
-        $learning_standard = $this->learning_standard_model->where('dskpn_id', $ex_dskpn_id)
-            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+        $learning_standard = $this->learning_standard_model->where('ls_dskpn_id', $ex_dskpn_id)
+            ->join('subject_main', 'subject_main.sbm_id = learning_standard.ls_sbm_id')
+            ->join('learning_standard_item', 'learning_standard_item.lsi_ls_id = learning_standard.ls_id')
             ->findAll();
 
         $subject = [];
         $subject_description = [];
         foreach ($learning_standard as $item) {
-            $subject[] = $item['sm_id'];
-            $subject_description[] = $item['ls_details'];
+            $subject[] = $item['sbm_id'];
+            $subject_description[] = $item['lsi_desc'];
         }
 
         $this->session->set('subject', $subject);
@@ -1256,7 +1262,7 @@ class Main extends BaseController
                 'dskpn_code'        => $dskpn_code_init,
                 'dskpn_theme'       => $tema,
                 'dskpn_sub_theme'   => $subtema,
-                'dskpn_status'      => null,
+                'dskpn_status'      => 5,
                 'dskpn_remarks'     => null,
                 'dskpn_delete_reason' => null,
                 'dskpn_created_by'  => $sm_id, //sm_id is not subject_main ID
