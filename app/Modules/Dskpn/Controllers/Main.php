@@ -1035,38 +1035,98 @@ class Main extends BaseController
 
     public function set_session_edit_dskpn($ex_dskpn_id)
     {
+        helper('dskpn_helper');
+
+        //page - Penetapan Standard Pembelajaran
         //set all attribute
         $this->session->set('is_update', true); //need to check if currently update process
         if (!empty($ex_dskpn_id))
             $this->session->set('ex_dskpn_id', $ex_dskpn_id);
 
-        //ex_dskpn
         $dskpn = $this->dskpn_model->where('dskpn_id', $ex_dskpn_id)
-            ->join('objective_performance', 'objective_performance.opm_dskpn_id = dskpn.dskpn_id')->first();
+                    //->join('objective_performance', 'objective_performance.opm_dskpn_id = dskpn.dskpn_id')
+                    ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+                    ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
+                    ->first();
 
-        $this->session->set('ex_dskpn', $dskpn);
+        //set session
+        $this->session->set('tm_id', $dskpn['dskpn_tm_id']);
 
         $learning_standard = $this->learning_standard_model->where('ls_dskpn_id', $ex_dskpn_id)
             ->join('subject_main', 'subject_main.sbm_id = learning_standard.ls_sbm_id')
             ->join('learning_standard_item', 'learning_standard_item.lsi_ls_id = learning_standard.ls_id')
             ->findAll();
-
+        
         $subject = [];
         $subject_description = [];
+        $subject_standard_numbering = [];
+        $learning_standard_ids = [];
         foreach ($learning_standard as $item) {
-            $subject[] = $item['sbm_id'];
-            $subject_description[] = $item['lsi_desc'];
+            if(!in_array($item['sbm_id'], $subject))
+            {
+                $subject[] = $item['sbm_id'];
+            }
+            $subject_description[$item['sbm_id']][] = $item['lsi_desc'];
+            $subject_standard_numbering[$item['sbm_id']][] = $item['lsi_number'];
+
+            if(!in_array($item['ls_id'], $learning_standard_ids))
+                $learning_standard_ids[] = $item['ls_id'];
         }
 
         $this->session->set('subject', $subject);
+        //dskpn_code_init (x)
         $this->session->set('subject_description', $subject_description);
-        $this->session->set('objective', $dskpn['op_desc']);
-        $this->session->set('duration', $dskpn['op_duration']);
+        $this->session->set('subject_standard_numbering', $subject_standard_numbering);
+        $this->session->set('kluster', $dskpn['ctm_id']);
+        $this->session->set('cluster_id', $dskpn['ctm_id']);
+        $this->session->set('tahun', year_to_string($dskpn['tm_year']));
+        $this->session->set('topik', $dskpn['tm_id']);
+        $this->session->set('topic_id', $dskpn['tm_id']);
+        $this->session->set('duration', $dskpn['dskpn_duration']);
         $this->session->set('tema', $dskpn['dskpn_theme']);
         $this->session->set('subtema', $dskpn['dskpn_sub_theme']);
-        $this->session->set('ex_dskpn_code_init', $dskpn['dskpn_code']);
-        $this->session->set('dskpn_code_init', null); //reset
-        $this->session->set('tm_id', $dskpn['tm_id']);
+        $this->session->set('dskpn_id', $dskpn['dskpn_id']);
+        $this->session->set('learning_standard_id', $learning_standard_ids);
+        $this->session->set('is_update', 'Y');
+        $objective_perform = $this->objective_performance_model->where('opm_dskpn_id', $ex_dskpn_id)->findAll();
+        $objective = [];
+        $objective_number = [];
+        $objective_ref = [];
+        $objective_assessment = [];
+        $arr_objective_ref = [];
+        $arr_objective_assessment = [];
+        $objective_performance_selection_listing = [];
+        foreach($objective_perform as $opm)
+        {
+            $objective[] = $opm['opm_desc'];
+            $objective_number[] = $opm['opm_number'];
+            $rand = generateRandomNumber();
+            $orc = $this->opm_reff_code_model->where('orc_opm_id', $opm['opm_id'])->findAll();
+            $objective_ref[$rand] = !empty($orc)?array_column($orc,'orc_code'):[];
+
+            if(isset($orc) && !empty($orc))
+            {
+                $objective_performance_selection_listing = array_merge($objective_performance_selection_listing, array_column($orc, 'orc_code'));
+                $arr_objective_ref[] = array_column($orc,'orc_code');
+            }
+
+            $oac = $this->opm_assessment_code_model->where('oac_opm_id', $opm['opm_id'])->findAll();
+            $objective_assessment[$rand] = !empty($oac)?array_column($oac,'oac_code'):[];
+
+            if(isset($oac) && !empty($oac))
+                $arr_objective_assessment[] = array_column($oac,'oac_code');
+        }
+        $this->session->set('objective', $objective);
+        $this->session->set('objective_number', $objective_number);
+        $this->session->set('objective_ref', $objective_ref);
+        $this->session->set('objective_assessment', $objective_assessment);
+        $this->session->set('arr_objective_ref', $arr_objective_ref);
+        $this->session->set('arr_objective_assessment', $arr_objective_assessment);
+        $this->session->set('objective_performance_selection_listing', json_encode($objective_performance_selection_listing));
+        //end page - Penetapan Standard Pembelajaran
+
+        //page - Penetapan Tahap Penguasaan
+        //end page - Penetapan Tahap Penguasaan
 
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
