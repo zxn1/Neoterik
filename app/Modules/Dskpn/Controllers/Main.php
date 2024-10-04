@@ -1037,6 +1037,7 @@ class Main extends BaseController
     public function set_session_edit_dskpn($ex_dskpn_id)
     {
         helper('dskpn_helper');
+        $is_draft = $this->request->getVar('draft');
 
         //page - Penetapan Standard Pembelajaran
         //set all attribute
@@ -1075,10 +1076,19 @@ class Main extends BaseController
         }
 
         $this->session->set('subject', $subject);
+        
         //dskpn_code_init (x)
         //dskpn_code (x)
-        //$this->session->set('is_update', 'Y'); kalau draft + ex_dskpn_id tu sama. baru update
-        //is_update_TP":"Y" //kalau draft gak
+        //$this->session->set('is_update', 'Y'); if draft + ex_dskpn_id must same. then only update
+        //is_update_TP":"Y" //if draft this one is needed
+        if(isset($is_draft) && !empty($is_draft))
+        {
+            $this->session->set('dskpn_code_init', $ex_dskpn_id);
+            $this->session->set('dskpn_code', $ex_dskpn_id);
+            $this->session->set('is_update', 'Y');
+            $this->session->set('is_update_TP', 'Y');
+        }
+
         $this->session->set('subject_description', $subject_description);
         $this->session->set('subject_standard_numbering', $subject_standard_numbering);
         $this->session->set('kluster', $dskpn['ctm_id']);
