@@ -1019,7 +1019,8 @@ class Main extends BaseController
             'current_role',
             'list_current_role',
             'ccm_id',
-            'ccm_name'
+            'ccm_name',
+            'tm_id'
         ];
 
         foreach ($sessionData as $key => $value) {
@@ -1156,7 +1157,80 @@ class Main extends BaseController
         //end page - Penetapan Pemetaan Teras
 
         //page - Penetapan Pemetaan Domain
+        $domain_map_session = [];
+        $domain_map_id_session_data = [];
+        $domain_map = $this->domain_mapping_model->where('dm_dskpn_id', $ex_dskpn_id)
+                        ->join('subject_main', 'subject_main.sbm_id = domain_mapping.dm_sbm_id')
+                        ->join('domain', 'domain.dmn_code = domain_mapping.dm_dmn_code')
+                        ->findAll();
+
+        foreach($domain_map as $dmp)
+        {
+            $domain_map_session["'". $dmp['sbm_code'] . "'"][] = $dmp['dmn_id'];
+            $domain_map_id_session_data[] = (int)$dmp['dm_id'];
+        }
+        $this->session->set('domain_map_session', $domain_map_session);
+        $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
+        $this->session->set('is_update_domain', 'Y');
         //end page - Penetapan Pemetaan Domain
+
+        //page - Penetapan Pemetaan Aktiviti & Pentaksiran
+        $activity_idea_number = [];
+        $activity_idea_input = [];
+        $assessment_number = [];
+        $assessment_input = [];
+        $abm = array_column($this->learning_aid_model->where('la_dskpn_id', $ex_dskpn_id)->findAll() ?? [], 'la_desc');
+        $this->session->set('abm', $abm);
+
+        $activity_idea = $this->activity_item_model->where('aci_dskpn_id', $ex_dskpn_id)->findAll();
+        foreach($activity_idea as $act_item)
+        {
+            $activity_idea_number[] = $act_item['aci_number'];
+            $activity_idea_input[] = $act_item['aci_desc'];
+        }
+
+        $this->session->set('activity_idea_number', $activity_idea_number);
+        $this->session->set('activity_idea_input', $activity_idea_input);
+
+        $assess = $this->assessment_item_model->where('asi_dskpn_id', $ex_dskpn_id)->findAll();
+        foreach($assess as $asses_item)
+        {
+            $assessment_number[$asses_item['asi_asc_id']][] = $asses_item['asi_desc_number'];
+            $assessment_input[$asses_item['asi_asc_id']][] = $asses_item['asi_desc'];
+        }
+        $this->session->set('assessment_number', $assessment_number);
+        $this->session->set('assessment_input', $assessment_input);
+
+
+        $this->session->set('parent_involve', $dskpn['dskpn_parent_involvement']??null);
+        $this->session->set('is_update_activity_assessment', 'Y');
+        //end page - Penetapan Pemetaan Aktiviti & Pentaksiran
+
+        //page - Penetapan Pemetaan Spesifikasi
+        $specification_mapist_sess = [];
+        $specification_mapping_id_list_sess = [];
+        $new_specification_id_list_sess = [];
+        $new_specification_input_details = [];
+        $specs_map = $this->teaching_approach_mapping_model->where('tappm_dskpn_id', $ex_dskpn_id)
+                        ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
+                        ->findAll();
+        foreach($specs_map as $sp_map)
+        {
+            $specification_mapist_sess[] = (string)$sp_map['tappm_tapp_id'];
+            $specification_mapping_id_list_sess[] = (int)$sp_map['tappm_id'];
+
+            if((int)$sp_map['tapp_id'] > 23)
+            {
+                $new_specification_id_list_sess[] = (int)$sp_map['tappm_tapp_id'];
+                $new_specification_input_details[$sp_map['tapp_tappc_id']][] = [$sp_map['tapp_desc'], (string)$sp_map['tapp_id']];
+            }
+        }
+        $this->session->set('specification_mapist_sess', $specification_mapist_sess);
+        $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list_sess);
+        $this->session->set('is_update_specs', 'Y');
+        $this->session->set('new_specification_id_list_sess', $new_specification_id_list_sess);
+        $this->session->set('new_specification_input_details', $new_specification_input_details);
+        //end page - Penetapan Pemetaan Spesifikasi
 
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
