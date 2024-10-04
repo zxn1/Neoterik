@@ -47,8 +47,14 @@
 
                                 if ((in_array($both_roles[1], get_user_role())) && ($clusterItem['dskpn_status'] != 3)): ?>
                                     &nbsp;&nbsp;
-                                    <a class="btn btn-link text-warning text-gradient px-1 mb-0" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])); ?>">
-                                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                                    <?php $is_draft_url = (($clusterItem['dskpn_status'] == 5))?"?draft=true":""; ?>
+                                    <a class="btn btn-link text-warning text-gradient px-1 mb-0" data-toggle="tooltip" data-placement="top" title="<?= (($clusterItem['dskpn_status'] == 5))?"Kemas kini bahagian yang masih belum selesai.":"Kemas kini dokumen ini untuk versi seterusnya." ?>" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])) . $is_draft_url; ?>">
+                                        <?php
+                                        if($clusterItem['dskpn_status'] != 5)
+                                            echo '<i class="fa fal fa-file-signature fa-lg" aria-hidden="true"></i>';
+                                        else
+                                            echo '<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>';
+                                        ?>
                                     </a>
                                     &nbsp;&nbsp;
                                     <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="requestToDeleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
@@ -78,5 +84,9 @@
 
     $(document).ready(function() {
         $('#dskpn_list').DataTable();
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
     });
 </script>

@@ -69,20 +69,51 @@
     }
   }
 
-
   .zero-top-border {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
+  }
+
+  /* HTML: <div class="ribbon">Your text content</div> */
+  .ribbon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    position : relative;
+    left : -5px;
+    top : -5px;
+    padding : 5px;
+  }
+  .ribbon {
+    --r: .8em; /* control the cutout */
+    
+    border-block: .5em solid #0000;
+    padding-inline: .5em calc(var(--r) + .25em);
+    line-height: 1.8;
+    clip-path: polygon(100% 0,0 0,0 100%,100% 100%,100% calc(100% - .25em),calc(100% - var(--r)) 50%,100% .25em);
+    background:
+    radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+    gray padding-box; /* the color  */
+    width: fit-content;
   }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 <div class="container-fluid py-4">
-
+<a href="<?= route_to('dskpn_by_topic_list'); ?>" class="btn border border-gray text-gray">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
+  </svg>
+  <span>Kembali</span>
+</a>
+<span class="ribbon"><?= $dskpn_details['dskpn_code']; ?>&nbsp;&nbsp;</span>
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">DSKPN</h6>
+      <div style="height : 40px; position : relative; top : -6px;">
+        <h6 class="my-auto text-white">DSKPN</h6>
+        <span class="text-white text-sm p-0 m-0">Status: </span><?= get_dskpn_status($dskpn_details['dskpn_status']); ?>
+      </div>
       <div class="ms-auto d-flex align-items-center">
         <a href="<?= route_to('generate_dskpn'); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
           Unduh DSKPN&nbsp;&nbsp;
