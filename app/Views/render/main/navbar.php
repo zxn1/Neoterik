@@ -54,7 +54,8 @@
               <span><b><?= session('nickname'); ?></b><br></span>
               <span class="badge text-bg-dark" style="font-size : 8px;"><?= !empty(session('current_role'))?session('current_role'):'guru'; ?></span>
             </div>
-            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="rounded-circle shadow-sm" style="width: 40px; height: 40px;" alt="Avatar" />
+            <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="rounded-circle shadow-sm" style="width: 40px; height: 40px;" alt="Avatar" /> -->
+            <i class="fas fa-user-circle" style="font-size: 40px;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
          

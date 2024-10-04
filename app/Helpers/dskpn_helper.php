@@ -76,6 +76,28 @@ function get_user_role()
     return array();
 }
 
+function year_to_string($year)
+{
+    if($year == 1)
+        return "Satu";
+    else if($year == 2)
+        return "Dua";
+    else if($year == 3)
+        return "Tiga";
+    else if($year == 4)
+        return "Empat";
+    else if($year == 5)
+        return "Lima";
+    else if($year == 6)
+        return "Enam";
+}
+
+function generateRandomNumber($maxLength = 9) {
+    // Generate a random number with a length up to $maxLength
+    $maxNumber = str_repeat('9', $maxLength); // Max number with $maxLength digits
+    return rand(0, (int)$maxNumber);
+}
+
 function get_dskpn_status($status)
 {
     if ($status == NULL) {
@@ -88,6 +110,8 @@ function get_dskpn_status($status)
         return '<span class="badge badge-m bg-secondary">Permohonan<br>Pemadaman</span>';
     } else if ($status == 4) {
         return '<span class="badge badge-m bg-danger">Dipadam</span>';
+    } else if ($status == 5) {
+        return '<span class="badge badge-m bg-warning text-muted">Draft</span>';
     } else {
         return 'Unknown';
     }
