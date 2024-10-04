@@ -413,6 +413,7 @@ class Main extends BaseController
 
         //Get topic main by tm_id
         $tm_details = $this->topic_model->where('tm_id', $dskpn_details['dskpn_tm_id'])->first();
+        $this->session->set('tm_id', $dskpn_details['dskpn_tm_id']); //must to avoid error when go back
 
         // Get cluster based on tm_id cm_id
         $cluster_details = $this->cluster_model->where('ctm_id', $tm_details['tm_ctm_id'])->first();
@@ -446,7 +447,7 @@ class Main extends BaseController
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
-        $ls_sbm_ids = array_column($learning_standard, 'ls_sbm_id');
+        $ls_sbm_ids = array_unique(array_column($learning_standard, 'ls_sbm_id')); //array_unique to ensure no duplicate/redundant issue
         $all_core_competency = [];
         foreach($ls_sbm_ids as $sub_id)
         {
