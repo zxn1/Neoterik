@@ -1647,6 +1647,7 @@ class Main extends BaseController
     {
         $allData = $this->request->getPost();
         $dskpn_id = $this->session->get("dskpn_id");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
         $success = true;
 
@@ -1656,6 +1657,7 @@ class Main extends BaseController
         $domain_map_sess = $this->session->get("domain_map_session");
         $domain_map_id_sess = $this->session->get("domain_map_id_session_data");
 
+        if(empty($ex_dskpn_id) || ($ex_dskpn_id == $dskpn_id))
         if (isset($domain_map_sess) && (!empty($domain_map_sess) || $domain_map_sess != null) && isset($domain_map_id_sess)) {
             $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
                 ->delete();
