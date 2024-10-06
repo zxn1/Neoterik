@@ -170,7 +170,7 @@
 
       <?php if (in_array($both_roles[1], get_user_role())) : ?>
         <li class="nav-item">
-          <a class="nav-link <?= (url_is(route_to('cluster_topic'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
+          <a class="nav-link <?= (url_is(route_to('cluster_topic')) || url_is(route_to('dskpn_by_topic_list'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
