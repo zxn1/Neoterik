@@ -677,11 +677,16 @@
           <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_remarks'] ?></textarea>
         </div>
       <?php endif; ?>
+      <?php if ($dskpn_details['dskpn_status'] == 4) : ?>
+        <!-- Display Approved By -->
+        <p class="badge badge-sm bg-danger">Deleted By: <?= !empty($dskpn_details['dskpn_approved_by'])?get_user_name($dskpn_details['dskpn_approved_by']):""; ?></p><br>
+        <h5 class="modal-title" id="alasanpenolakan">Alasan penolakan dokumen:</h5>
+        <div class="card-body" style="height: auto;">
+          <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_delete_reason'] ?></textarea>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
-
-
-
 
 </div>
 <div class="modal fade" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
