@@ -79,7 +79,7 @@
                                     </a>
                                 <?php endif; ?>
 
-                                <?php if ((in_array($both_roles[0], get_user_role())) && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
+                                <?php if ((in_array($both_roles[0], get_user_role())) && ($clusterItem['dskpn_status'] == 3)): ?>
                                     &nbsp;&nbsp;
                                     <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
                                         <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
