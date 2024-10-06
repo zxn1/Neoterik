@@ -1,28 +1,20 @@
 let editor_objective;
 $(document).ready(function() {
-    // ClassicEditor
-    // .create( document.querySelector('#editor-objectif-pentaksiran'), {
-    //     simpleUpload: {
-    //     // Feature configuration.
-    //     uploadUrl: ckeditor_upload_url,
-    //     headers: {
-    //         //later put csrf_token
-    //     }
-    //     }
-    // } )
-    // .then( newEditor => {
-    //     //ni incase ada nak adjust editor ni nanti
-    //     editor_objective = newEditor;
-    // } )
-    // .catch( error => {
-    //     console.log( error );
-    // } );
-
+    //force to show dskpn set ic/id form
     if (!globalCheckingDSKPNCode)
         $('#setDSKPNIC').modal('show');
     $('#setDSKPNIC').on('hidden.bs.modal', function () {
         if (!globalCheckingDSKPNCode) {
             $('#setDSKPNIC').modal('show');
+        }
+    });
+
+    //force to show form either resume or new dskpn
+    if (resumeOrNot)
+        $('#resumeornot').modal('show');
+    $('#resumeornot').on('hidden.bs.modal', function () {
+        if (resumeOrNot) {
+            $('#resumeornot').modal('show');
         }
     });
 });

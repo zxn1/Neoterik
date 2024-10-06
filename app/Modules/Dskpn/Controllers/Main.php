@@ -293,11 +293,29 @@ class Main extends BaseController
         $this->session->set('ex_dskpn_code_init', null); //reset
         $data = [];
 
+        $current_role = session('current_role');
         // Query to get the list of DSKPN
-        $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
-            ->findAll();
+        if($current_role == 'PENYELARAS')
+        {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->findAll();
+        } else if($current_role == 'GURU_BESAR')
+        {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->whereIn('dskpn_status', [1,2,3,4,null])
+                ->orWhere('dskpn_status IS NULL')
+                ->findAll();
+        } else {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn_status', 1)
+                ->findAll();
+        }
 
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
@@ -362,8 +380,8 @@ class Main extends BaseController
 
         if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => null,
-            'approved_by'   => null,
-            'deleted_at'    => null,
+            'dskpn_approved_by'   => null,
+            'dskpn_deleted_at'    => null,
             'dskpn_remarks' => null
         ])) {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dibatalkan');
@@ -396,7 +414,7 @@ class Main extends BaseController
     {
         $dskpn_id = $this->session->get('dskpn_id');
 
-        $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
+        $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->withDeleted()->first();
 
         // Get DSKPN learning_standard
         $learning_standard = $this->learning_standard_model
@@ -579,8 +597,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 1,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s')
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s')
         ]);
 
         // Set success message and redirect back
@@ -598,8 +616,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 2,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s'),
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s'),
             'dskpn_remarks' => $remarks
         ]);
 
@@ -1007,6 +1025,15 @@ class Main extends BaseController
             'dskpn_status' => null
         ]);
 
+        $this->_destroy_all_session();
+
+        $script = [];
+        $style = [];
+        $this->render_jscss('mapping_successfully', $data, $script, $style);
+    }
+
+    private function _destroy_all_session($exclude = [])
+    {
         $sessionData = session()->get();
 
         $excludeKeys = [
@@ -1024,20 +1051,23 @@ class Main extends BaseController
             'tm_id'
         ];
 
+        // Remove elements in $exclude from $excludeKeys
+        $result = array_diff($excludeKeys, $exclude);
+
+        // Re-index the array if necessary
+        $excludeKeys = array_values($result);
+
         foreach ($sessionData as $key => $value) {
             if (!in_array($key, $excludeKeys)) {
                 session()->remove($key);
             }
         }
-
-        $script = [];
-        $style = [];
-        $this->render_jscss('mapping_successfully', $data, $script, $style);
     }
 
     public function set_session_edit_dskpn($ex_dskpn_id)
     {
         helper('dskpn_helper');
+        $this->_destroy_all_session();
         $is_draft = $this->request->getVar('draft');
 
         //page - Penetapan Standard Pembelajaran
@@ -1484,12 +1514,19 @@ class Main extends BaseController
                     foreach ($objectiveRef as $key => $reffItem) {
                         if ($index == $indeks) {
                             foreach ($reffItem as $ref) {
-                                $this->opm_reff_code_model->insert(
-                                    [
+                                // Check if the record already exists
+                                $exists = $this->opm_reff_code_model->where([
+                                    'orc_opm_id' => $op_last_id,
+                                    'orc_code'   => $ref
+                                ])->findAll();
+
+                                if (empty($exists)) {
+                                    // If it does not exist, insert the new record
+                                    $this->opm_reff_code_model->insert([
                                         'orc_opm_id' => $op_last_id,
                                         'orc_code'   => $ref
-                                    ]
-                                );
+                                    ]);
+                                }
                                 $arr_objective_ref[$indeks][] = $ref;
                             }
                         }
@@ -1502,12 +1539,18 @@ class Main extends BaseController
                     foreach ($objectiveAssessment as $key => $assessmentItem) {
                         if ($index == $indeks) {
                             foreach ($assessmentItem as $asmt) {
-                                $this->opm_assessment_code_model->insert(
-                                    [
-                                        'oac_opm_id' => $op_last_id,
-                                        'oac_code'   => $asmt
-                                    ]
-                                );
+                                $exists = $this->opm_assessment_code_model->where([
+                                    'oac_opm_id' => $op_last_id,
+                                    'oac_code'   => $asmt
+                                ])->findAll();
+                                if (empty($exists)) {
+                                    $this->opm_assessment_code_model->insert(
+                                        [
+                                            'oac_opm_id' => $op_last_id,
+                                            'oac_code'   => $asmt
+                                        ]
+                                    );
+                                }
                                 $arr_objective_assessment[$indeks][] = $asmt;
                             }
                         }
@@ -1944,10 +1987,17 @@ class Main extends BaseController
 
     public function create_dskpn($tm_id)
     {
+        $this->_destroy_all_session();
         // Store tm_id in session
         $this->session->set('tm_id', $tm_id);
         // Redirect or load a view if needed
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
+    }
+
+    public function fresh_create_dskpn()
+    {
+        $this->_destroy_all_session();
+        return redirect()->to(route_to('dskpn_learning_standard'));
     }
 
     public function dskpn_learning_standard()
@@ -2005,6 +2055,9 @@ class Main extends BaseController
             $data['dskpn_code'] = 'K' . $data['topic']['tm_ctm_id'] . 'T' . $data['topic']['tm_year'] . '-';
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
+            $resume_or_new = $this->session->get('subject_description');
+            if(isset($resume_or_new) && !empty($resume_or_new))
+                $data['resume'] = true;
         }
 
         $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');
