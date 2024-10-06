@@ -3,7 +3,12 @@
         <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">Senarai DSKPN yang Didaftarkan</h6>
         </div>
-        <br>
+        <div class="form-check d-flex justify-content-end pe-4 pt-2 pb-2">
+            <input class="form-check-input" type="checkbox" value="" onchange="handleCheckboxChange(this)" <?= $owned==true?'checked':''; ?>>
+            <label class="form-check-label" for="flexCheckChecked">
+                Papar hanya dokumen milik saya.
+            </label>
+        </div>
         <div class="table-responsive">
             <table class="table align-items-center mb-0" id="dskpn_list">
                 <thead>
@@ -52,7 +57,13 @@
                                     $tooltip_title = "";
                                     $icon_color = "text-warning";
                                     $url_action = route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])) . $is_draft_url;
-                                    if(($clusterItem['dskpn_status'] == 5))
+                                    if((($clusterItem['dskpn_status'] == 5) || ($clusterItem['dskpn_status'] == 2)) && ($clusterItem['dskpn_created_by'] != session('sm_id')))
+                                    {
+                                        $url_action = "#";
+                                        $icon_color = "text-dark";
+                                        $tooltip_title = "Dokumen ini hanya boleh di-Edit oleh " . get_user_name($clusterItem['dskpn_created_by']) . ".";
+                                    }
+                                    else if(($clusterItem['dskpn_status'] == 5))
                                         $tooltip_title = "Kemas kini bahagian yang masih belum selesai.";
                                     else if(($clusterItem['dskpn_status'] == null) || empty($clusterItem['dskpn_status']))
                                     {
@@ -106,4 +117,12 @@
             $('[data-toggle="tooltip"]').tooltip()
         })
     });
+
+    function handleCheckboxChange(checkbox) {
+        if (checkbox.checked) {
+            window.location.href = '<?= route_to('list_dskpn') . "?owned=true"; ?>';
+        } else {
+            window.location.href = '<?= route_to('list_dskpn'); ?>';
+        }
+    }
 </script>

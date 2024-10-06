@@ -292,6 +292,8 @@ class Main extends BaseController
     {
         $this->session->set('ex_dskpn_code_init', null); //reset
         $data = [];
+        $own_dskpn = $this->request->getVar("owned");
+        $data['owned'] = $own_dskpn;
 
         $current_role = session('current_role');
         // Query to get the list of DSKPN
@@ -299,13 +301,26 @@ class Main extends BaseController
         {
             $data['dskpn'] = $this->dskpn_model
                 ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
-                ->findAll();
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left');
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                                ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']->findAll();
         } else if($current_role == 'GURU_BESAR')
         {
             $data['dskpn'] = $this->dskpn_model
                 ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left');
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                                ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']
                 ->whereIn('dskpn_status', [1,2,3,4,null])
                 ->orWhere('dskpn_status IS NULL')
                 ->findAll();
@@ -313,8 +328,14 @@ class Main extends BaseController
             $data['dskpn'] = $this->dskpn_model
                 ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
                 ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
-                ->where('dskpn_status', 1)
-                ->findAll();
+                ->where('dskpn_status', 1);
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                                ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']->findAll();
         }
 
         $script = ['data', 'list_registered_dskpn'];
@@ -363,6 +384,7 @@ class Main extends BaseController
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
         if ($this->dskpn_model->update($dskpn_id, [
+            'dskpn_approved_by' => $this->session->get('sm_id'),
             'dskpn_status'  => 4
         ]))
             if ($this->dskpn_model->where('dskpn_id', $dskpn_id)->delete()) {
@@ -1625,6 +1647,7 @@ class Main extends BaseController
     {
         $allData = $this->request->getPost();
         $dskpn_id = $this->session->get("dskpn_id");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
         $success = true;
 
@@ -1634,6 +1657,7 @@ class Main extends BaseController
         $domain_map_sess = $this->session->get("domain_map_session");
         $domain_map_id_sess = $this->session->get("domain_map_id_session_data");
 
+        if(empty($ex_dskpn_id) || ($ex_dskpn_id == $dskpn_id))
         if (isset($domain_map_sess) && (!empty($domain_map_sess) || $domain_map_sess != null) && isset($domain_map_id_sess)) {
             $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
                 ->delete();
@@ -1939,6 +1963,8 @@ class Main extends BaseController
     // Displays a list of DSKPN page
     public function dskpn_by_topic_list()
     {
+        if(session('current_role') != "PENYELARAS") //temporary access control.
+            return redirect()->to(route_to('list_dskpn'));
         // Retrieve tm_id from session
         $tm_id = $this->session->get('tm_id');
         // Check if tm_id is set in the session
