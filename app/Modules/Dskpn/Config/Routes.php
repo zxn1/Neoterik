@@ -20,6 +20,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('review-dskpn',                [Main::class,     'review_dskpn'],                  ['as' => 'review_dskpn']);
     $routes->get('view-standard-performance',   [Main::class,     'view_standard_performance'],     ['as' => 'view_standard_performance']);
     $routes->get('view_core_competency',        [Main::class,     'view_core_competency_list'],     ['as' => 'view_core_competency_list']);
+    $routes->get('fresh-create-dskpn',          [Main::class,     'fresh_create_dskpn'],            ['as' => 'fresh_dskpn']);
 
     $routes->post('store-standard-learning',    [Main::class,     'store_standard_learning'],       ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',     [Main::class,     'store_standard_performance'],    ['as' => 'store_std_perfm']);

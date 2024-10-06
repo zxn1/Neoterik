@@ -45,6 +45,24 @@ function get_user_name($sm_id)
     }
 }
 
+function get_dskpn_code_by_dskpn_id($dskpn_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+    // Build the query to select the desired row
+    $query = $db->table('dskpn')
+        ->select('dskpn_code')
+        ->where('dskpn_id', $dskpn_id)
+        ->get();
+
+    $row = $query->getRowArray();
+    if(!empty($row))
+    {
+        return $row['dskpn_code'];
+    }
+    return null;
+}
+
 function get_tp_ref_code($dskpn_id, $sm_id)
 {
     // Connect to the database

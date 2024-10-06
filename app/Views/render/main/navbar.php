@@ -93,7 +93,7 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="text-sm font-weight-normal mb-1">
-                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= $available_role; ?></span>
+                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= ($available_role == 'GURU_BESAR')?'CHIEF OF EDUCATION<br>(COE)':$available_role; ?></span>
                       </h6>
                     </div>
                   </div>

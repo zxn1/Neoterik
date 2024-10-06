@@ -47,10 +47,27 @@
 
                                 if ((in_array($both_roles[1], get_user_role())) && ($clusterItem['dskpn_status'] != 3)): ?>
                                     &nbsp;&nbsp;
-                                    <?php $is_draft_url = (($clusterItem['dskpn_status'] == 5))?"?draft=true":""; ?>
-                                    <a class="btn btn-link text-warning text-gradient px-1 mb-0" data-toggle="tooltip" data-placement="top" title="<?= (($clusterItem['dskpn_status'] == 5))?"Kemas kini bahagian yang masih belum selesai.":"Kemas kini dokumen ini untuk versi seterusnya." ?>" href="<?= route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])) . $is_draft_url; ?>">
+                                    <?php 
+                                    $is_draft_url = (($clusterItem['dskpn_status'] == 5) || ($clusterItem['dskpn_status'] == 2))?"?draft=true":""; // if draft and rejected
+                                    $tooltip_title = "";
+                                    $icon_color = "text-warning";
+                                    $url_action = route_to('edit_dskpn_initializer', esc($clusterItem['dskpn_id'])) . $is_draft_url;
+                                    if(($clusterItem['dskpn_status'] == 5))
+                                        $tooltip_title = "Kemas kini bahagian yang masih belum selesai.";
+                                    else if(($clusterItem['dskpn_status'] == null) || empty($clusterItem['dskpn_status']))
+                                    {
+                                        $icon_color = "text-dark";
+                                        $url_action = "#";
+                                        $tooltip_title = "Menunggu keputusan COE untuk melulus atau menolak dokumen.";
+                                    }
+                                    else
+                                        $tooltip_title = "Kemas kini dokumen ini untuk versi seterusnya.";
+                                    ?>
+                                    <a class="btn btn-link <?= $icon_color; ?> text-gradient px-1 mb-0" data-toggle="tooltip" data-placement="top" title="<?= $tooltip_title; ?>" href="<?= $url_action; ?>">
                                         <?php
-                                        if($clusterItem['dskpn_status'] != 5)
+                                        if(($clusterItem['dskpn_status'] == null) || empty($clusterItem['dskpn_status']))
+                                            echo '<i class="fa fas fa-stopwatch fa-lg" aria-hidden="true"></i>';
+                                        else if($clusterItem['dskpn_status'] != 5 && $clusterItem['dskpn_status'] != 2)
                                             echo '<i class="fa fal fa-file-signature fa-lg" aria-hidden="true"></i>';
                                         else
                                             echo '<i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>';
@@ -62,7 +79,7 @@
                                     </a>
                                 <?php endif; ?>
 
-                                <?php if ((in_array($both_roles[0], get_user_role())) && ($clusterItem['dskpn_status'] == 3 || $clusterItem['dskpn_status'] == 4)): ?>
+                                <?php if ((in_array($both_roles[0], get_user_role())) && ($clusterItem['dskpn_status'] == 3)): ?>
                                     &nbsp;&nbsp;
                                     <a class="btn btn-danger px-1 mb-0" style="height: 30px;" href="javascript:void(0)" onclick="deleteDSKPN(<?= $clusterItem['dskpn_id']; ?>)">
                                         <span style="position : relative; top : -5px;">&nbsp;&nbsp;Sah Padam&nbsp;&nbsp;</span>
