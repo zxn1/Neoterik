@@ -15,7 +15,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group">
-                            <label for="subjectSelect">Subject</label>
+                            <label for="subjectSelect">Subjek</label>
                             <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
                                 <option disabled selected>-- Sila Pilih Subjek --</option>
                                 <?php foreach ($subject_list as $subject) { ?>

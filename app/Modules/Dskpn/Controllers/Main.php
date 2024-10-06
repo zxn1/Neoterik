@@ -362,8 +362,8 @@ class Main extends BaseController
 
         if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => null,
-            'approved_by'   => null,
-            'deleted_at'    => null,
+            'dskpn_approved_by'   => null,
+            'dskpn_deleted_at'    => null,
             'dskpn_remarks' => null
         ])) {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dibatalkan');
@@ -579,8 +579,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 1,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s')
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s')
         ]);
 
         // Set success message and redirect back
@@ -598,8 +598,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 2,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s'),
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s'),
             'dskpn_remarks' => $remarks
         ]);
 
@@ -1007,6 +1007,15 @@ class Main extends BaseController
             'dskpn_status' => null
         ]);
 
+        $this->_destroy_all_session();
+
+        $script = [];
+        $style = [];
+        $this->render_jscss('mapping_successfully', $data, $script, $style);
+    }
+
+    private function _destroy_all_session($exclude = [])
+    {
         $sessionData = session()->get();
 
         $excludeKeys = [
@@ -1024,15 +1033,17 @@ class Main extends BaseController
             'tm_id'
         ];
 
+        // Remove elements in $exclude from $excludeKeys
+        $result = array_diff($excludeKeys, $exclude);
+
+        // Re-index the array if necessary
+        $excludeKeys = array_values($result);
+
         foreach ($sessionData as $key => $value) {
             if (!in_array($key, $excludeKeys)) {
                 session()->remove($key);
             }
         }
-
-        $script = [];
-        $style = [];
-        $this->render_jscss('mapping_successfully', $data, $script, $style);
     }
 
     public function set_session_edit_dskpn($ex_dskpn_id)
@@ -1944,10 +1955,17 @@ class Main extends BaseController
 
     public function create_dskpn($tm_id)
     {
+        $this->_destroy_all_session();
         // Store tm_id in session
         $this->session->set('tm_id', $tm_id);
         // Redirect or load a view if needed
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
+    }
+
+    public function fresh_create_dskpn()
+    {
+        $this->_destroy_all_session();
+        return redirect()->to(route_to('dskpn_learning_standard'));
     }
 
     public function dskpn_learning_standard()
@@ -2005,6 +2023,9 @@ class Main extends BaseController
             $data['dskpn_code'] = 'K' . $data['topic']['tm_ctm_id'] . 'T' . $data['topic']['tm_year'] . '-';
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
+            $resume_or_new = $this->session->get('subject_description');
+            if(isset($resume_or_new) && !empty($resume_or_new))
+                $data['resume'] = true;
         }
 
         $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');

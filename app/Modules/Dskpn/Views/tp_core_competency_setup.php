@@ -6,7 +6,7 @@
       </div>
       <div class="card-body mb-2">
         <div class="row pb-4">
-          <label>Penatapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
+          <label>Penetapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
           <select name="subject" id="subject-dynamic-field" onchange="selectSubjectToCode(this)" class="form-control select2" aria-label="Default select example" required>
             <option disabled selected>-- Sila Pilih Subjek --</option>
             <?php
