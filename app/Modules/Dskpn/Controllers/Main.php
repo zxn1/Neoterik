@@ -1963,6 +1963,8 @@ class Main extends BaseController
     // Displays a list of DSKPN page
     public function dskpn_by_topic_list()
     {
+        if(session('current_role') != "PENYELARAS") //temporary access control.
+            return redirect()->to(route_to('list_dskpn'));
         // Retrieve tm_id from session
         $tm_id = $this->session->get('tm_id');
         // Check if tm_id is set in the session
