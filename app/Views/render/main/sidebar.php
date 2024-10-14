@@ -218,7 +218,7 @@
       $arrTempA = get_user_role();
       if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
-          <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
+          <a class="nav-link <?= (url_is(route_to('list_dskpn')) || url_is(route_to('dskpn_details'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>

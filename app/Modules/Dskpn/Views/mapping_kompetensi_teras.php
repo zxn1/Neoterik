@@ -55,7 +55,7 @@
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
+      <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
     </div>
     <div class="card-body">
       <div class="row">
@@ -147,7 +147,7 @@
                                       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault11" onclick="return false;">
                                     </div>
                                   </td>
-                                  <td width="5px">
+                                  <td width="5px" style="display: none;">
                                     <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Item Kompetensi Teras bagi subjek <?= $subject['sbm_desc'] ?> masih belum ditetapkan!">
                                       <i class="fas fa-info-circle fa-lg me-2"></i>
                                     </a>
@@ -179,7 +179,13 @@
     </a>
     <div class="text-end p-3">
       <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
-      <button type="submit" class="btn bg-info text-white">Seterusnya</button>
+      <button type="submit" class="btn bg-info text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2-fill" viewBox="0 0 16 16">
+          <path d="M12 2h-2v3h2z" />
+          <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v13A1.5 1.5 0 0 0 1.5 16h13a1.5 1.5 0 0 0 1.5-1.5V2.914a1.5 1.5 0 0 0-.44-1.06L14.147.439A1.5 1.5 0 0 0 13.086 0zM4 6a1 1 0 0 1-1-1V1h10v4a1 1 0 0 1-1 1zM3 9h10a1 1 0 0 1 1 1v5H2v-5a1 1 0 0 1 1-1" />
+        </svg> &nbsp;
+        <span id="savetpchanges">Simpan</span>
+      </button>
     </div>
   </div>
 

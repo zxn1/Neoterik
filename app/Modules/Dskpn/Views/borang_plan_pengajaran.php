@@ -121,8 +121,15 @@
         <div class="container-custom">
             <h5 class="left">SULIT</h5>
             <div class="mid">
-            <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
+            <img src="/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
             </div>
+            <?php
+            if(isset($dskpn_details['dskpn_status']) && $dskpn_details['dskpn_status'] == 5)
+            {
+            ?>
+            <img src="/neoterik/img/assets/draft_watermark.png" style="max-width:200px !important; position : absolute; right : 50px; transform : rotate(30deg); top : 1px; opacity : 0.6;" alt="Your Image">
+            <?php
+            } ?>
             <h5 class="right">SULIT</h5>
         </div>
     </div>

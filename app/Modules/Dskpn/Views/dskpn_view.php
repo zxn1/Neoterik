@@ -654,7 +654,7 @@
             </svg>
           </button>
           <!-- Approve Button -->
-          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-info mt-2 text-white">Lulus&nbsp;
+          <a href="#" onclick="confirmToPassed()" class="btn bg-info mt-2 text-white">Lulus&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM6.97 10.97a.75.75 0 0 1-1.07 0L3.75 8.8a.75.75 0 1 1 1.07-1.05l1.65 1.65 3.58-3.58a.75.75 0 0 1 1.07 1.06l-4.24 4.24z" />
             </svg>
@@ -749,6 +749,28 @@
   $(document).ready(function() {
     $('.select2').select2();
   });
+
+  function confirmToPassed()
+  {
+    Swal.fire({
+      title: "Adakah anda yakin untuk meluluskan dokumen ini?",
+      showDenyButton: true,
+      icon: "warning",
+      confirmButtonText: "Lulus",
+      denyButtonText: `Tidak`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Dokumen DSKPN <?= $dskpn_details['dskpn_code']; ?> diluluskan!", "", "success");
+        const timer = setInterval(()=>{
+          window.location = '<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>';
+          clearInterval(timer);
+        }, 2200);
+      } else if (result.isDenied) {
+        Swal.fire("Permintaan meluluskan dokumen dibatalkan!", "", "error");
+      }
+    });
+  }
 
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
 </script>
