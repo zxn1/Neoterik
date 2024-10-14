@@ -5,7 +5,7 @@
     <div class="py-1">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-gradient-primary">
-          <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
+          <h6 class="my-auto text-white">IDEA PENGAJARAN (AKTIVITI)</h6>
         </div>
         <div id="teaching-idea-and-activity" class="row p-3">
           <?php 
