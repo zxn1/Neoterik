@@ -3,7 +3,7 @@
 <div class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
-      <h6 class="my-auto text-white">Petaan Input Statik</h6>
+      <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
     </div>
     <div class="card-body mb-4 py-2">
       <di class="row">

@@ -135,12 +135,20 @@ class Main extends BaseController
         ]);
 
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
+        $path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
 
         if (file_exists($path)) {
             //encode image to base64
             $imageData = base64_encode(file_get_contents($path));
             $base64Image = 'data:image/png;base64,' . $imageData;
             $data['srsb_logo'] = $base64Image;
+        }
+
+        if (file_exists($path2)) {
+            //encode image to base64
+            $imageData = base64_encode(file_get_contents($path2));
+            $base64Image = 'data:image/png;base64,' . $imageData;
+            $data['draft_watermark_logo'] = $base64Image;
         }
 
         $htmlContent = view('pdf/dskpn', $data);
@@ -158,12 +166,20 @@ class Main extends BaseController
         $data = $this->_populate_dskpn_details();
 
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
+        $path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
 
         if (file_exists($path)) {
             //encode image to base64
             $imageData = base64_encode(file_get_contents($path));
             $base64Image = 'data:image/png;base64,' . $imageData;
             $data['srsb_logo'] = $base64Image;
+        }
+
+        if (file_exists($path2)) {
+            //encode image to base64
+            $imageData = base64_encode(file_get_contents($path2));
+            $base64Image = 'data:image/png;base64,' . $imageData;
+            $data['draft_watermark_logo'] = $base64Image;
         }
 
         return view('pdf/dskpn', $data);
@@ -1482,7 +1498,8 @@ class Main extends BaseController
             $this->learning_standard_model->where('ls_dskpn_id', $data['dskpn_id'])->delete();
 
             //step 4 - delete learning-standard-item
-            $this->learning_standard_item_model->whereIn('lsi_ls_id', $learning_standard_id)->delete();
+            if(!empty($learning_standard_id))
+                $this->learning_standard_item_model->whereIn('lsi_ls_id', $learning_standard_id)->delete();
         } else {
             //else - create dskpn
             $dskpn_create_update_status = $this->dskpn_model->insert([
