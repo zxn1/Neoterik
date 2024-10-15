@@ -42,20 +42,22 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>SENARAI DSKPN</b></h6>
 
-            <?php if ($register_subject_status == true) : ?>
-                <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-info text-white" style="margin-bottom:0 !important">
-                    Tambah Topik Dskpn&nbsp;&nbsp;
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                    </svg>
-                </a>
-            <?php else : ?>
-                <button class="btn bg-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
-                    Tambah Topik Dskpn&nbsp;&nbsp;
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                    </svg>
-                </button>
+            <?php if (session('current_role') == "PENYELARAS") : ?>
+                <?php if ($register_subject_status == true) : ?>
+                    <a href="<?= route_to('create_dskpn', $topic['tm_id']) ?>" id="add-dskpn-button" class="btn bg-info text-white" style="margin-bottom:0 !important">
+                        Tambah Topik Dskpn&nbsp;&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                        </svg>
+                    </a>
+                <?php else : ?>
+                    <button class="btn bg-info" type="button" data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal">
+                        Tambah Topik Dskpn&nbsp;&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
+                        </svg>
+                    </button>
+                <?php endif ?>
             <?php endif ?>
 
         </div>

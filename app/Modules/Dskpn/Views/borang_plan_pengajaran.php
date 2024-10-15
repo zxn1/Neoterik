@@ -124,7 +124,7 @@
             <img src="/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
             </div>
             <?php
-            if(isset($dskpn_details['dskpn_status']) && $dskpn_details['dskpn_status'] == 5)
+            if($dskpn_details['dskpn_status'] == 5 || $dskpn_details['dskpn_status'] == null || empty($dskpn_details['dskpn_status']))
             {
             ?>
             <img src="/neoterik/img/assets/draft_watermark_v1.png" style="max-width:400px !important; position : absolute; right : 35%; transform : rotate(30deg); top : 30%; opacity : 0.6;" alt="Your Image">

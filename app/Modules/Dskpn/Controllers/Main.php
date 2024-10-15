@@ -135,9 +135,12 @@ class Main extends BaseController
         ]);
 
         // Set the watermark text
-        $mpdf->SetWatermarkText('DRAF');
-        $mpdf->showWatermarkText = true;
-        //$mpdf->SetWatermarkImage('path/to/image.png');
+        if($data['dskpn_details']['dskpn_status'] == 5 || $data['dskpn_details']['dskpn_status'] == null)
+        {
+            $mpdf->SetWatermarkText('DRAF');
+            $mpdf->showWatermarkText = true;
+            //$mpdf->SetWatermarkImage('path/to/image.png');
+        }
 
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
         //$path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
@@ -1988,8 +1991,8 @@ class Main extends BaseController
     // Displays a list of DSKPN page
     public function dskpn_by_topic_list()
     {
-        if(session('current_role') != "PENYELARAS") //temporary access control.
-            return redirect()->to(route_to('list_dskpn'));
+        // if(session('current_role') != "PENYELARAS") //temporary access control.
+        //     return redirect()->to(route_to('list_dskpn'));
         // Retrieve tm_id from session
         $tm_id = $this->session->get('tm_id');
         // Check if tm_id is set in the session
@@ -1998,10 +2001,37 @@ class Main extends BaseController
         }
 
         // Query to get the list of DSKPN
-        $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-            ->where('dskpn.dskpn_tm_id', $tm_id)
-            ->findAll();
+        // $data['dskpn'] = $this->dskpn_model
+        //     ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+        //     ->where('dskpn.dskpn_tm_id', $tm_id)
+        //     ->findAll();
+
+        $current_role = session('current_role');
+        // Query to get the list of DSKPN
+        if($current_role == 'PENYELARAS')
+        {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->findAll();
+        } else if($current_role == 'GURU_BESAR')
+        {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->whereIn('dskpn_status', [1,2,3,4,null])
+                ->orWhere('dskpn_status IS NULL')
+                ->findAll();
+        } else {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn_status', 1)
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->findAll();
+        }
 
         // Query get kluster data
         $data['kluster'] = $this->cluster_model->findAll();
