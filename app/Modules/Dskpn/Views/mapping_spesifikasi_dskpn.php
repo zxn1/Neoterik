@@ -171,7 +171,7 @@
     <div class="text-end p-3">
       <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
       <!-- <button type="submit" class="btn bg-info">Semak</button> -->
-      <button type="submit" class="btn bg-warning text-dark" name="submit_status" value="check_dskpn">Deraf</button>
+      <button type="submit" class="btn bg-warning text-dark" name="submit_status" value="check_dskpn">Draf</button>
       <button type="submit" class="btn btn-success" data-dismiss="modal" name="submit_status" value="submit_dskpn">Hantar</button>
     </div>
   </div>
