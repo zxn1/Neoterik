@@ -168,7 +168,10 @@
       <?php endif; ?>
       <!-- End Super Admin -->
 
-      <?php if (in_array($both_roles[1], get_user_role())) : ?>
+      <?php 
+      //if (in_array($both_roles[1], get_user_role())) :
+      $arrTempA = get_user_role();
+      if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('cluster_topic')) || url_is(route_to('dskpn_by_topic_list'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -215,7 +218,7 @@
         </li> -->
       <?php endif; */ ?>
       <?php 
-      $arrTempA = get_user_role();
+      //$arrTempA = get_user_role();
       if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
           <a class="nav-link <?= (url_is(route_to('list_dskpn')) || url_is(route_to('dskpn_details'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
