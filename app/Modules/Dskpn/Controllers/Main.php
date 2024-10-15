@@ -134,8 +134,13 @@ class Main extends BaseController
             'margin_bottom' => 10,
         ]);
 
+        // Set the watermark text
+        $mpdf->SetWatermarkText('DRAF');
+        $mpdf->showWatermarkText = true;
+        //$mpdf->SetWatermarkImage('path/to/image.png');
+
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
-        $path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
+        //$path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
 
         if (file_exists($path)) {
             //encode image to base64
@@ -144,12 +149,12 @@ class Main extends BaseController
             $data['srsb_logo'] = $base64Image;
         }
 
-        if (file_exists($path2)) {
-            //encode image to base64
-            $imageData = base64_encode(file_get_contents($path2));
-            $base64Image = 'data:image/png;base64,' . $imageData;
-            $data['draft_watermark_logo'] = $base64Image;
-        }
+        // if (file_exists($path2)) {
+        //     //encode image to base64
+        //     $imageData = base64_encode(file_get_contents($path2));
+        //     $base64Image = 'data:image/png;base64,' . $imageData;
+        //     $data['draft_watermark_logo'] = $base64Image;
+        // }
 
         $htmlContent = view('pdf/dskpn', $data);
 
@@ -1001,6 +1006,7 @@ class Main extends BaseController
         $this->db->transBegin();
 
         // step 1 - insert activity
+        if(!empty($activity_idea_input))
         foreach ($activity_idea_input as $index => $activity) {
             $this->activity_item_model->insert([
                 'aci_dskpn_id' => $dskpn_id,
@@ -1010,6 +1016,7 @@ class Main extends BaseController
         }
 
         // step 2 - insert assessment
+        if(!empty($assessment_input))
         foreach ($assessment_input as $asc_id => $assess) {
             foreach ($assess as $index => $item) {
                 $this->assessment_item_model->insert([
@@ -1022,6 +1029,7 @@ class Main extends BaseController
         }
 
         // step 3 - insert abm
+        if(!empty($abm))
         foreach ($abm as $item) {
             $this->learning_aid_model->insert([
                 'la_dskpn_id' => $dskpn_id,

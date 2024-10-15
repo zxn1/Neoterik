@@ -127,7 +127,7 @@
             if(isset($dskpn_details['dskpn_status']) && $dskpn_details['dskpn_status'] == 5)
             {
             ?>
-            <img src="/neoterik/img/assets/draft_watermark.png" style="max-width:200px !important; position : absolute; right : 50px; transform : rotate(30deg); top : 1px; opacity : 0.6;" alt="Your Image">
+            <img src="/neoterik/img/assets/draft_watermark_v1.png" style="max-width:400px !important; position : absolute; right : 35%; transform : rotate(30deg); top : 30%; opacity : 0.6;" alt="Your Image">
             <?php
             } ?>
             <h5 class="right">SULIT</h5>

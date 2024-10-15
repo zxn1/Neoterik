@@ -107,13 +107,6 @@
                             </td>
                             <td class="no-border">
                                 <img style="width: 90px;" src="<?= $srsb_logo; ?>">
-                                <?php
-                                if(isset($dskpn_details['dskpn_status']) && $dskpn_details['dskpn_status'] == 5)
-                                {
-                                ?>
-                                    <img style="width: 250px; position : absolute; right : 100px; transform :rotate(30deg);" src="<?= $draft_watermark_logo; ?>">
-                                <?php 
-                                } ?>
                             </td>
                         </tr>
                     </table>
