@@ -10,6 +10,7 @@ $routes->group('login', function ($routes) {
 });
 
 
-//test route
+// route - e-school registeration - linked to Neoterik
 $routes->get('generate-account',    [Main::class,     'generate_account'],  ['as' => 'gen_acc']);
-//  /generate-account?recid_id=<recid_id>&password=<password>
+// route = /generate-account?recid_id=<recid_id>&password=<password>
+// if no password passed - it will use ic number as password
