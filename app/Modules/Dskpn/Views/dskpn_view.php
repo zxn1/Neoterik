@@ -753,7 +753,7 @@
   function confirmToPassed()
   {
     Swal.fire({
-      title: "Adakah anda yakin untuk meluluskan dokumen ini?",
+      title: "Adakah anda pasti ingin meluluskan DSKPN ini?",
       showDenyButton: true,
       icon: "warning",
       confirmButtonText: "Lulus",
