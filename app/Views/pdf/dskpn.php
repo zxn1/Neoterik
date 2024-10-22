@@ -231,7 +231,7 @@
 
                                     if($oac['oac_opm_id'] == $op['opm_id'])
                                     {
-                                        $opm_assessment_code_html .= "<span class='center assessmentcodebadge " . $color_code . "'><b>" . $oac['oac_code'] . "</b></span>";
+                                        $opm_assessment_code_html .= "&nbsp;&nbsp;<span class='center assessmentcodebadge " . $color_code . "'>&nbsp;&nbsp;<b>" . $oac['oac_code'] . "</b>&nbsp;&nbsp;</span>";
                                     }
                                 }
                             }

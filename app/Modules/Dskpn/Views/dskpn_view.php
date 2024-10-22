@@ -69,23 +69,54 @@
     }
   }
 
-
   .zero-top-border {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
+  }
+
+  /* HTML: <div class="ribbon">Your text content</div> */
+  .ribbon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    position : relative;
+    left : -5px;
+    top : -5px;
+    padding : 5px;
+  }
+  .ribbon {
+    --r: .8em; /* control the cutout */
+    
+    border-block: .5em solid #0000;
+    padding-inline: .5em calc(var(--r) + .25em);
+    line-height: 1.8;
+    clip-path: polygon(100% 0,0 0,0 100%,100% 100%,100% calc(100% - .25em),calc(100% - var(--r)) 50%,100% .25em);
+    background:
+    radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+    gray padding-box; /* the color  */
+    width: fit-content;
   }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 <div class="container-fluid py-4">
-
+<a href="<?= route_to('dskpn_by_topic_list'); ?>" class="btn border border-gray text-gray">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5"/>
+  </svg>
+  <span>Kembali</span>
+</a>
+<span class="ribbon"><?= $dskpn_details['dskpn_code']; ?>&nbsp;&nbsp;</span>
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">DSKPN</h6>
+      <div style="height : 40px; position : relative; top : -6px;">
+        <h6 class="my-auto text-white">DSKPN</h6>
+        <span class="text-white text-sm p-0 m-0">Status: </span><?= get_dskpn_status($dskpn_details['dskpn_status']); ?>
+      </div>
       <div class="ms-auto d-flex align-items-center">
         <a href="<?= route_to('generate_dskpn'); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
-          Unduh DSKPN&nbsp;&nbsp;
+          Cetak DSKPN&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0" />
           </svg>
@@ -615,15 +646,15 @@
     ?>
     <?php if (in_array($both_roles[0], get_user_role())) : ?>
       <div class="text-end p-3">
-        <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4])) : ?>
+        <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4, 5])) : ?>
           <!-- Reject Button -->
-          <button class="btn bg-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
+          <button class="btn bg-danger mt-2 text-white" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
             </svg>
           </button>
           <!-- Approve Button -->
-          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-info mt-2">Lulus&nbsp;
+          <a href="#" onclick="confirmToPassed()" class="btn bg-info mt-2 text-white">Lulus&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM6.97 10.97a.75.75 0 0 1-1.07 0L3.75 8.8a.75.75 0 1 1 1.07-1.05l1.65 1.65 3.58-3.58a.75.75 0 0 1 1.07 1.06l-4.24 4.24z" />
             </svg>
@@ -637,20 +668,25 @@
     <div class="col-xl-12">
       <?php if ($dskpn_details['dskpn_status'] == 1) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-info">Approved By: <?= get_user_name($dskpn_details['approved_by']) ?></p>
+        <p class="badge badge-sm bg-info">Approved By: <?= !empty($dskpn_details['dskpn_approved_by'])?get_user_name($dskpn_details['dskpn_approved_by']):""; ?></p>
       <?php endif; ?>
       <?php if ($dskpn_details['dskpn_status'] == 2) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-danger">Rejected By: <?= get_user_name($dskpn_details['approved_by']) ?></p><br>
+        <p class="badge badge-sm bg-danger">Rejected By: <?= !empty($dskpn_details['dskpn_approved_by'])?get_user_name($dskpn_details['dskpn_approved_by']):""; ?></p><br>
         <div class="card-body" style="height: auto;">
           <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_remarks'] ?></textarea>
         </div>
       <?php endif; ?>
+      <?php if ($dskpn_details['dskpn_status'] == 4) : ?>
+        <!-- Display Approved By -->
+        <p class="badge badge-sm bg-danger">Deleted By: <?= !empty($dskpn_details['dskpn_approved_by'])?get_user_name($dskpn_details['dskpn_approved_by']):""; ?></p><br>
+        <h5 class="modal-title" id="alasanpenolakan">Alasan penolakan dokumen:</h5>
+        <div class="card-body" style="height: auto;">
+          <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_delete_reason'] ?></textarea>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
-
-
-
 
 </div>
 <div class="modal fade" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
@@ -665,10 +701,10 @@
           <input type="hidden" name="dskpn_id" value="<?= $dskpn_details['dskpn_id'] ?>">
           <div class="mb-3">
             <label for="remarks" class="form-label">Catatan</label>
-            <textarea id="catatan" class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
+            <textarea id="catatan" name="remarks" rows="3"></textarea>
           </div>
           <div class="text-end">
-            <button class="btn bg-info mt-2" type="submit">Simpan&nbsp;
+            <button class="btn bg-info mt-2 text-white" type="submit">Simpan&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
                 <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
@@ -713,6 +749,28 @@
   $(document).ready(function() {
     $('.select2').select2();
   });
+
+  function confirmToPassed()
+  {
+    Swal.fire({
+      title: "Adakah anda pasti ingin meluluskan DSKPN ini?",
+      showDenyButton: true,
+      icon: "warning",
+      confirmButtonText: "Lulus",
+      denyButtonText: `Tidak`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Dokumen DSKPN <?= $dskpn_details['dskpn_code']; ?> diluluskan!", "", "success");
+        const timer = setInterval(()=>{
+          window.location = '<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>';
+          clearInterval(timer);
+        }, 2200);
+      } else if (result.isDenied) {
+        Swal.fire("Permintaan meluluskan dokumen dibatalkan!", "", "error");
+      }
+    });
+  }
 
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
 </script>
