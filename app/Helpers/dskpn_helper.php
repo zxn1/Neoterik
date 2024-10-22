@@ -231,3 +231,90 @@ function core_competency_exist($sbm_id)
         return false;
     }
 }
+
+// For tccm
+function get_cluster_subject_list($ctm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to select the desired row
+    $query = $db->table('cluster_subject_mapping')
+        ->join('subject_main', 'subject_main.sbm_id = cluster_subject_mapping.csm_sbm_id')
+        ->select('subject_main.sbm_desc')
+        ->where('csm_ctm_id', $ctm_id)
+        ->get();
+
+    // Fetch the results as an array of rows
+    $rows = $query->getResultArray();
+
+    // Initialize an array to store subjects
+    $subjects = [];
+
+    // Check if the rows are not empty
+    if (!empty($rows)) {
+        // Loop through each row to get the 'sbm_desc'
+        foreach ($rows as $row) {
+            $subjects[] = $row['sbm_desc'];
+        }
+        // Return the subjects as a comma-separated string
+        return implode(', ', $subjects);
+    } else {
+        return null; // Return an empty string if no matching records are found
+    }
+}
+
+// For tccm
+function get_cluster_desc($ctm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to select the desired row
+    $query = $db->table('cluster_main')
+        ->select('ctm_desc') // Select only the required column
+        ->where('ctm_id', $ctm_id)
+        ->get();
+
+    // Fetch the results as an array of rows
+    $rows = $query->getResultArray();
+
+    // Check if the rows are not empty and access the first row
+    if (!empty($rows)) {
+        return $rows[0]['ctm_desc']; // Return the description from the first row
+    } else {
+        return null; // Return null if no matching records are found
+    }
+}
+
+
+// For tccm
+function get_subject($tccm_id)
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Get the subject id first from the tccm table
+    $query = $db->table('teacher_cluster_class_mapping')
+        ->select('tccm_sbm_id') // Select only the required column
+        ->where('tccm_id', $tccm_id)
+        ->get()
+        ->getRowArray(); // Fetch the first row as an associative array
+
+    // Check if a subject ID was found
+    if ($query) {
+        // Based on the ID found, get the subject description
+        $query2 = $db->table('subject_main')
+            ->select('sbm_desc') // Select only the required column
+            ->where('sbm_id', $query['tccm_sbm_id']) // Use the sbm_id from the previous query
+            ->get()
+            ->getRowArray(); // Fetch the first row as an associative array
+
+        // Check if a subject description was found
+        if ($query2) {
+            return $query2['sbm_desc']; // Return the subject description
+        }
+    }
+
+    return null; // Return null if no matching records are found
+}

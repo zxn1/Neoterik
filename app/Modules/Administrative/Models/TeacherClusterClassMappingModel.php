@@ -16,6 +16,7 @@ class TeacherClusterClassMappingModel extends Model
         'tccm_sm_recid',
         'tccm_ctm_id',
         'tccm_cls_recid',
+        'tccm_sbm_id',
         'tccm_assigned_by',
         'tccm_assigned_date',
         'tccm_year',
