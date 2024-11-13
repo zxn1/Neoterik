@@ -58,6 +58,13 @@ class Main extends BaseController
                     'list_current_role' => $roles
                 ]);
 
+                if(isset($roles) && !empty($roles))
+                {
+                    $this->session->set([
+                        'current_role' => $roles[0]
+                    ]);
+                }
+
                 return redirect()->to('dashboard');
             } else {
                 //fail
