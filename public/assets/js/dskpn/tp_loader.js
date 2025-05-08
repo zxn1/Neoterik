@@ -27,7 +27,7 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "")
           TPData.forEach(item => {
             subjectTPDiv.append(`<div class="d-flex w-100 align-items-center mb-2" style="display: flex !important;flex-direction: row !important;">
                                   <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" value="${item.sp_tp_level_desc}" disabled>
-                                  <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
+                                  <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" style="display : none;">
                                       <i class="fas fa-info-circle fa-lg me-2"></i>
                                   </a>
                                 </div>`);
@@ -70,7 +70,7 @@ function resetTPForm()
         $("#collection-" + item.sbm_code).empty();
         $("#collection-" + item.sbm_code).append(`<div class="d-flex w-100 align-items-center mb-2" style="display: flex !important;flex-direction: row !important;">
                         <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required readonly>
-                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)">
+                        <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" sty;e="display : none;">
                             <i class="fas fa-info-circle fa-lg me-2"></i>
                         </a>
                     </div>`);

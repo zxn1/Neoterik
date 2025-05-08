@@ -134,7 +134,7 @@
   </main>
 
   <!-- configuration -->
-  <?= view('render/main/configurationbar'); ?>
+  <!-- view('render/main/configurationbar'); -->
   <!-- End configuration -->
 
   <!--   Core JS Files   -->

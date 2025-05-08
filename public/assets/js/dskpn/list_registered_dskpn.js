@@ -1,7 +1,7 @@
 function requestToDeleteDSKPN(dskpn_id)
 {
   Swal.fire({
-    title: "Adakah anda benar-benar ingin memohon untuk memadam DSKPN ini?",
+    title: "Adakah anda pasti ingin memadam DSKPN ini?",
     html: `<textarea id="reason" placeholder="Sila masukkan alasan anda di sini..." cols="50" style="width : 100%;"></textarea>`,
     showDenyButton: true,
     icon: "info",

@@ -1,4 +1,4 @@
-<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 " id="sidenav-main">
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 overflow-hidden " id="sidenav-main">
   <div class="sidenav-header">
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-0" href="dashboard" target="_blank">
@@ -10,7 +10,7 @@
   <center>
   <hr class="hr-lightbit mt-0">
   </center>
-  <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
+  <div class="collapse navbar-collapse  w-auto h-auto overflow-hidden " id="sidenav-collapse-main">
     <ul class="navbar-nav">
       <?php
       $both_roles = [
@@ -168,9 +168,12 @@
       <?php endif; ?>
       <!-- End Super Admin -->
 
-      <?php if (in_array($both_roles[1], get_user_role())) : ?>
+      <?php 
+      //if (in_array($both_roles[1], get_user_role())) :
+      $arrTempA = get_user_role();
+      if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
-          <a class="nav-link <?= (url_is(route_to('cluster_topic'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
+          <a class="nav-link <?= (url_is(route_to('cluster_topic')) || url_is(route_to('dskpn_by_topic_list'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>office</title>
@@ -215,10 +218,10 @@
         </li> -->
       <?php endif; */ ?>
       <?php 
-      $arrTempA = get_user_role();
+      //$arrTempA = get_user_role();
       if (sort($arrTempA) == sort($both_roles)) : ?>
         <li class="nav-item">
-          <a class="nav-link <?= (url_is(route_to('list_dskpn'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
+          <a class="nav-link <?= (url_is(route_to('list_dskpn')) || url_is(route_to('dskpn_details'))) ? 'active' : ''; ?>" href="<?= route_to('list_dskpn'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>credit-card</title>
@@ -311,7 +314,7 @@
               <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('mapping_dynamic_dskpn'))) ? 'active' : ''; ?>" style="overflow : hidden;<?= (!empty(session('is_update_specs')) && !url_is(route_to('mapping_dynamic_dskpn'))) || url_is(route_to('dskpn_complete')) ? $stylish : ''; ?>">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
+                    <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay style="width : 31px;"></dotlottie-player>
                   </div>
                   <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Spesifikasi</span>
                 </a>

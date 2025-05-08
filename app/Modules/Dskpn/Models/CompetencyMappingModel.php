@@ -12,7 +12,7 @@ class CompetencyMappingModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['cmp_cc_code', 'cmp_dskpn_id'];
+    protected $allowedFields = ['cmp_cc_code', 'cmp_cc_batch', 'cmp_dskpn_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;

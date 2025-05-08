@@ -14,7 +14,7 @@
             <div class="row align-items-center">
                 <div class="row">
                     <div class="form-group">
-                        <label for="subjectSelect">Subject</label>
+                        <label for="subjectSelect">Subjek</label>
                         <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
                             <option disabled selected>-- Sila Pilih Subjek --</option>
                             <?php foreach ($subject_list as $subject) { ?>
@@ -31,10 +31,10 @@
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>KOMPETENSI TERAS</b></h6>
             <div>
-                <button class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
+                <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-secondary text-white" id="edit-core-competency" style="margin-bottom:0 !important; display : none;">
                     Ubah Kompetensi Teras Subjek Ini&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
-                </button>
+                </a>
                 <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
                     Tetapan Kompetensi Teras&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
@@ -62,12 +62,15 @@
 </div>
 
 <script>
+    var currentHref = null;
     $(document).ready(function() {
+        currentHref = $('#edit-core-competency').attr('href');
         $('.select2').select2();
         $('#standard_performance_table').DataTable();
         $('#subject').change(function() {
-            $('#edit-tp').hide();
+            $('#edit-core-competency').hide();
             var sbm_id = $(this).val();
+            var subject_text = $(this).find('option:selected').html();
 
             if (sbm_id) {
                 $.ajax({
@@ -76,9 +79,11 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.length <= 0) {
-                            $('#edit-tp').hide();
+                            $('#edit-core-competency').hide();
+                            $('#edit-core-competency').attr('href', currentHref);
                         } else {
-                            $('#edit-tp').show();
+                            $('#edit-core-competency').show();
+                            $('#edit-core-competency').attr('href', currentHref + "?subject=" + subject_text + "&sbm_id=" + sbm_id + "&data=" + JSON.stringify(response));
                         }
                         var counter = 1;
                         var tableBody = $('#tableBody');
@@ -107,6 +112,7 @@
     });
 
     function deleteCoreCompetency(id, sbm_id) {
+        var subject_text = $(this).find('option:selected').html();
         Swal.fire({
             title: "Anda benar-benar ingin delete item Kompetensi Teras ini?",
             showDenyButton: true,
@@ -116,7 +122,7 @@
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                $('#edit-tp').hide();
+                $('#edit-core-competency').hide();
 
                 $.ajax({
                     url: 'get-core-competency-based-subject' + "?sbm_id=" + sbm_id + "&cc_id=" + id + "&action=delete",
@@ -124,9 +130,11 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.length <= 0) {
-                            $('#edit-tp').hide();
+                            $('#edit-core-competency').hide();
+                            $('#edit-core-competency').attr('href', currentHref);
                         } else {
-                            $('#edit-tp').show();
+                            $('#edit-core-competency').show();
+                            $('#edit-core-competency').attr('href', currentHref + "?subject=" + subject_text + "&sbm_id=" + sbm_id + "&data=" + JSON.stringify(response));
                         }
                         var counter = 1;
                         var tableBody = $('#tableBody');

@@ -20,17 +20,19 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('review-dskpn',                [Main::class,     'review_dskpn'],                  ['as' => 'review_dskpn']);
     $routes->get('view-standard-performance',   [Main::class,     'view_standard_performance'],     ['as' => 'view_standard_performance']);
     $routes->get('view_core_competency',        [Main::class,     'view_core_competency_list'],     ['as' => 'view_core_competency_list']);
+    $routes->get('fresh-create-dskpn',          [Main::class,     'fresh_create_dskpn'],            ['as' => 'fresh_dskpn']);
 
     $routes->post('store-standard-learning',    [Main::class,     'store_standard_learning'],       ['as' => 'store_std_learn']);
     $routes->post('store-tahap-penguasaan',     [Main::class,     'store_standard_performance'],    ['as' => 'store_std_perfm']);
     $routes->post('store-domain-mapping',       [Main::class,     'store_domain_mapping'],          ['as' => 'store_domain_map']);
     $routes->post('store-create-cluster',       [Main::class,     'store_create_cluster'],          ['as' => 'store_create_cluster']);
+    $routes->post('update-create-cluster',      [Main::class,     'update_cluster'],                ['as' => 'update_cluster']);
     $routes->post('store-core-mapping',         [Main::class,     'store_core_mapping'],            ['as' => 'store_core_map']);
-    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],  ['as' => 'store-spec-map']);
+    $routes->post('store-specification-mapping',[Main::class,     'store_specification_mapping'],   ['as' => 'store-spec-map']);
     $routes->post('store-activity-assessment',  [Main::class,     'store_activity_assessment'],     ['as' => 'store_actv_asses']);
     $routes->post('store-image-return-url',     [Main::class,     'store_image_ckeditor'],          ['as' => 'store_image_ckedit']);
     $routes->post('store-tp-setup',             [Main::class,     'store_tp_setup'],                ['as' => 'store_tp_setup']);
-    $routes->post('store-core-competency-setup', [Main::class,     'store_core_competency_setup'],  ['as' => 'store_core_competency_setup']);
+    $routes->post('store-core-competency-setup',[Main::class,     'store_core_competency_setup'],   ['as' => 'store_core_competency_setup']);
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
@@ -76,6 +78,7 @@ $routes->group('dskpn', function ($routes) {
         $routes->post('store-create-subject',           [SubjectMain::class,     'store_create_subject'],         ['as' => 'store_create_subject']);
         $routes->delete('delete/(:num)',                [SubjectMain::class,     'delete_subject/$1'],            ['as' => 'delete_subject']);
         $routes->get('get-default-sm-id/(:any)',        [SubjectMain::class,     'get_default_subject_ID'],       ['as' => 'default_sm_id']);
+        $routes->get('get-subject-details-by-id',       [Main::class, 'get_subject_details_by_id'],               ['as' => 'get_subject_by_id']);
     });
 
     //SETTING MAPPING INITIALIZER
