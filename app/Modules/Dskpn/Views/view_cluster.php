@@ -94,7 +94,7 @@
                                 ?>
                             </td>
                             <td>
-                                <i class="fa fa-pencil-square-o fa-lg text-success me-2" onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')" aria-hidden="true"></i>
+                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')" aria-hidden="true"></i>
                             </td>
                         </tr>
                     <?php endforeach; ?>
