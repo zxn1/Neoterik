@@ -84,12 +84,8 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_code']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_desc']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-warning text-gradient px-1 mb-0" 
-                                    href="javascript:void(0);" 
-                                    onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)">
-                                        <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
-                                </a>
+                            <td class="text-m font-weight-normal" style="text-align: center;">
+                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true"></i>
                             </td>
                         </tr>
                     <?php endforeach; ?>
