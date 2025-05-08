@@ -116,9 +116,9 @@ class Main extends BaseController
 
     public function index()
     {
-        $data = [];
-        $this->render_login('login', $data);
-
+        //$data = [];
+        //$this->render_login('login', $data);
+        return redirect()->to(route_to('login'));
         // return view('App\\Modules\\Login\\Views\\login');
     }
 
@@ -302,7 +302,7 @@ class Main extends BaseController
     {
         $data = [];
         $data['topics'] = $this->topic_model
-            ->select('topic_main.*, cluster_main.ctm_desc') // Select columns from both tables
+            ->select('topic_main.*, cluster_main.ctm_id, cluster_main.ctm_desc') // Select columns from both tables
             ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id') // Join the 'cluster' table on the specified condition
             ->findAll(); // Retrieve all the results
         $data['clusters'] = $this->cluster_model->findAll();
