@@ -15,7 +15,7 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('domain-mapping',              [Main::class,     'domain_mapping'],                ['as' => 'domain_mapping']);
     $routes->get('mapping-kompetensi-teras',    [Main::class,     'mapping_kompetensi_teras'],      ['as' => 'mapping_core']);
     $routes->get('mapping-spesifikasi-dskpn',   [Main::class,     'mapping_spesifikasi_dskpn'],     ['as' => 'mapping_dynamic_dskpn']);
-    $routes->get('mapping-aktiviti-pentaksiran', [Main::class,     'activity_and_assessment'],      ['as' => 'activity_n_assessment']);
+    $routes->get('mapping-aktiviti-pentaksiran',[Main::class,     'activity_and_assessment'],       ['as' => 'activity_n_assessment']);
     $routes->get('complete',                    [Main::class,     'mapping_successfully'],          ['as' => 'dskpn_complete']);
     $routes->get('review-dskpn',                [Main::class,     'review_dskpn'],                  ['as' => 'review_dskpn']);
     $routes->get('view-standard-performance',   [Main::class,     'view_standard_performance'],     ['as' => 'view_standard_performance']);
@@ -68,6 +68,7 @@ $routes->group('dskpn', function ($routes) {
     //Topic Main
     $routes->group('topic', function ($routes) {
         $routes->post('create',                         [TopicMain::class,     'create'],                  ['as' => 'create_topic']);
+        $routes->post('update',                         [TopicMain::class,     'update'],                  ['as' => 'update_topic']);
         $routes->delete('delete/(:num)',                [TopicMain::class,     'delete/$1'],               ['as' => 'delete_topic']);
         $routes->get('get-topic-by-kluster/(:num)',     [TopicMain::class,     'getTopicByKluster/$1'],    ['as' => 'topic_by_kluster']);
         $routes->get('get-year-by-tm-id/(:num)',        [TopicMain::class,     'getYear/$1'],              ['as' => 'get_year_by_tm_id']);

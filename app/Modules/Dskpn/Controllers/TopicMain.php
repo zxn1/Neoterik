@@ -43,7 +43,23 @@ class TopicMain extends BaseController
             return $this->response->setJSON(['status' => 'success', 'message' => 'Berjaya menambah Topic dalam Kluster!']);
         }
 
-        return $this->response->setJSON(['status' => 'fail', 'message' => 'Maaf, aksi menambah Topic dalam Kluster tidak berjaya!']);
+        return $this->response->setJSON(['status' => 'fail', 'message' => 'Maaf, tindakan menambah Topic dalam Kluster tidak berjaya!']);
+    }
+
+    public function update()
+    {
+        $id = $this->request->getVar('id');
+        $data = [
+            'tm_desc'   => $this->request->getVar('editTopik'),
+            'tm_year'   => $this->request->getVar('year'),
+            'tm_ctm_id' => $this->request->getVar('cluster')
+        ];
+
+        if ($this->topic_model->update($id, $data)) {
+            return redirect()->back()->with('success', 'Berjaya mengemaskini Topic!');
+        }
+
+        return redirect()->back()->with('fail', 'Maaf, tindakan mengemaskini Topic tidak berjaya!');
     }
 
 
