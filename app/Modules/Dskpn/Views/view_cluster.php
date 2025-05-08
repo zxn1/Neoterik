@@ -64,7 +64,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 35%; text-align: left;">KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">SUBJEK</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">EDIT</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
