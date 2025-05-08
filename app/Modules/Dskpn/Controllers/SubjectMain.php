@@ -28,16 +28,35 @@ class SubjectMain extends BaseController
 
         // Debugging: Check the contents of the $data array
         if (empty($data['sbm_code']) || empty($data['sbm_desc'])) {
-            return redirect()->back()->with('fail', 'Fields cannot be empty!');
+            return redirect()->back()->with('fail', 'data tidak boleh kosong!');
         }
 
         if ($this->subject_model->insert($data)) {
-            return redirect()->back()->with('success', 'Berjaya menambah Subject!');
+            return redirect()->back()->with('success', 'Berjaya menambah Subjek!');
         }
 
         return redirect()->back()->with('fail', 'Maaf, aksi menambah Subject tidak berjaya!');
     }
 
+    public function update_subject()
+    {
+        $id = $this->request->getVar('sbm_id');
+
+        $data = [
+            'sbm_code' => $this->request->getVar('sbm_code'),
+            'sbm_desc' => $this->request->getVar('sbm_desc')
+        ];
+
+        if (empty($data['sbm_code']) || empty($data['sbm_desc']) || empty($id)) {
+            return redirect()->back()->with('fail', 'Maklumat tidak wujud!');
+        }
+
+        if ($this->subject_model->update($id, $data)) {
+            return redirect()->back()->with('success', 'Berjaya kemaskini Subjek!');
+        }
+
+        return redirect()->back()->with('fail', 'Maaf, aksi Kemaskini Subjek tidak berjaya!');
+    }
 
     public function delete_subject($id = null)
     {
