@@ -64,6 +64,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 35%; text-align: left;">KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">SUBJEK</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">EDIT</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,6 +92,9 @@
                                     echo $subject;
                                 }
                                 ?>
+                            </td>
+                            <td>
+                                <i class="fa fa-pencil-square-o fa-lg text-success me-2" onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')" aria-hidden="true"></i>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -139,7 +143,42 @@
     </div>
 </div>
 
+<div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Kluster</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addClusterForm" action="<?= route_to('update_cluster'); ?>" method="POST">
+                    <input type="text" class="form-control" id="editClusterID" name="ctm_id" value="" required hidden>
+                    <div class="mb-3">
+                        <label for="editClusterCode" class="form-label">Kod Kluster</label>
+                        <input type="text" class="form-control" id="editClusterCode" name="ctm_code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editClusterName" class="form-label">Nama Kluster</label>
+                        <input type="text" class="form-control" id="editClusterName" name="ctm_desc" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn bg-info text-white">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    function openEditClusterModal(ctm_id, ctm_code, ctm_desc) {
+        $('#editClusterID').val(ctm_id);
+        $('#editClusterCode').val(decodeURIComponent(ctm_code));
+        $('#editClusterName').val(decodeURIComponent(ctm_desc));
+        $('#editClusterModal').modal('show');
+    }
+
     $(document).ready(function() {
         $('#cluster_list').DataTable();
 

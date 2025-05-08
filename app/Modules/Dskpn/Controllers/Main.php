@@ -2444,10 +2444,29 @@ class Main extends BaseController
         }
 
         if ($this->cluster_model->insert($data)) {
-            return redirect()->back()->with('success', 'Berjaya menambah Cluster!');
+            return redirect()->back()->with('success', 'Berjaya menambah Kluster!');
         }
 
-        return redirect()->back()->with('fail', 'Maaf, aksi menambah Cluster tidak berjaya!');
+        return redirect()->back()->with('fail', 'Maaf, tindakan menambah Kluster tidak berjaya!');
+    }
+
+    public function update_cluster()
+    {
+        $id = $this->request->getVar('ctm_id');
+        $data = [
+            'ctm_code' => $this->request->getVar('ctm_code'),
+            'ctm_desc' => $this->request->getVar('ctm_desc')
+        ];
+
+        if (empty($data['ctm_code']) || empty($data['ctm_desc'])) {
+            return redirect()->back()->with('fail', 'Fields cannot be empty!');
+        }
+
+        if ($this->cluster_model->update($id, $data)) {
+            return redirect()->back()->with('success', 'Berjaya mengemaskini Kluster!');
+        }
+
+        return redirect()->back()->with('fail', 'Maaf, tindakan mengemaskini Kluster tidak berjaya!');
     }
 
     public function review_dskpn()
