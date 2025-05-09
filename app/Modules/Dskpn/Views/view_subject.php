@@ -26,6 +26,35 @@
             </div>
         </div>
     </div>
+   <!-- Edit Modal -->
+<div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Subjek</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editSubjectForm" action="<?= route_to('update_subject'); ?>" method="POST">
+                    <input type="hidden" name="sbm_id" id="edit_sbm_id">
+                    <div class="mb-3">
+                        <label for="edit_subjectCode" class="form-label">Kod Subjek</label>
+                        <input type="text" class="form-control" id="edit_subjectCode" name="sbm_code" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_subjectName" class="form-label">Nama Subjek</label>
+                        <input type="text" class="form-control" id="edit_subjectName" name="sbm_desc" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn bg-info text-white">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>SUBJEK</b></h6>
@@ -44,7 +73,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD SUBJEK</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">SUBJEK</th>
-                        <!-- <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th> -->
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,11 +84,9 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_code']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_desc']) ?></td>
-                            <!-- <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $subject['sbm_id']; ?>').remove(); deleteSubject(<?= $subject['sbm_id']; ?>);">
-                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                </a>
-                            </td> -->
+                            <td class="text-m font-weight-normal" style="text-align: center;">
+                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true"></i>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -95,6 +122,12 @@
         $('#subject_list').DataTable();
     });
 
+    function openEditModal(subject) {
+        $('#edit_sbm_id').val(subject.sbm_id);
+        $('#edit_subjectCode').val(subject.sbm_code);
+        $('#edit_subjectName').val(subject.sbm_desc);
+        $('#editClusterModal').modal('show');
+    }
     document.addEventListener("DOMContentLoaded", function() {
         var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");
         if (lastAccordionItem) {

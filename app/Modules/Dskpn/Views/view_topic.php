@@ -33,6 +33,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="addSubjectForm" action="<?= route_to('create_topic'); ?>" method="POST">
+                        <?= csrf_field() ?>
                         <div class="mb-3">
                             <label for="clusterSelect">Kluster</label>
                             <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
@@ -86,7 +87,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">TAHUN</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="text-align: left;">KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="text-align: left;">TOPIK</th>
-                        <!-- <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th> -->
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: center;">TINDAKAN</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,11 +110,9 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($numbers[$topic['tm_year']]) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($topic['ctm_desc']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($topic['tm_desc']) ?></td>
-                            <!-- <td class="text-m font-weight-normal" style="text-align: left;">
-                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection1-<?= $topic['tm_id']; ?>').remove(); deleteSubject(<?= $topic['tm_id']; ?>);">
-                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                </a>
-                            </td> -->
+                            <td class="text-m font-weight-normal" style="text-align: center;">
+                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')" aria-hidden="true"></i>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -125,6 +124,52 @@
     </div> -->
 </div>
 
+<div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Topik</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSubjectForm" action="<?= route_to('update_topic'); ?>" method="POST">
+                <?= csrf_field() ?>
+                <input type="text" name="id" id="editIdCluster" required hidden>
+                    <div class="mb-3">
+                        <label for="clusterSelect">Kluster</label>
+                        <select style="width:100%;" name="cluster" class="form-control select2" id="editKluster" aria-label="Default select example">
+                            <option disabled selected>-- Sila Pilih Kluster --</option>
+                            <?php foreach ($clusters as $item) { ?>
+                                <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editYearSelect">Tahun</label>
+                        <select style="width:100%;" name="year" class="form-control select2" id="editYearSelect" required>
+                            <option value="" disabled selected>-- Sila Pilih Tahun --</option>
+                            <option value="1">Satu</option>
+                            <option value="2">Dua</option>
+                            <option value="3">Tiga</option>
+                            <option value="4">Empat</option>
+                            <option value="5">Lima</option>
+                            <option value="6">Enam</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="yearInput">Topik</label>
+                        <input type="text" name="editTopik" class="form-control" Placeholder="Sila Masukkan Topik" id="editTopik" required>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn bg-info text-white">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         $('#subject_list').DataTable();
@@ -132,6 +177,16 @@
             dropdownParent: $('#addClusterModal')
         });
     });
+
+    function openEditTopicModal(tm_id, tm_year, ctm_id, tm_desc) {
+        tm_desc = decodeURIComponent(tm_desc);
+        console.log(tm_desc);
+        $('#editYearSelect').val(tm_year).trigger('change');
+        $('#editKluster').val(encodeURIComponent(ctm_id)).trigger('change');
+        $('#editTopik').val(tm_desc);
+        $('#editIdCluster').val(tm_id);
+        $("#editClusterModal").modal('show');
+    }
 
     document.addEventListener("DOMContentLoaded", function() {
         var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");

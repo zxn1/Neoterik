@@ -480,7 +480,29 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="resumeornot" tabindex="-1" aria-labelledby="resumeornot" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="resumeornotlabel">Adakah anda ingin meneruskan?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Adakah anda ingin meneruskan pengisian dokumen bagi DSKPN : <b><?= get_dskpn_code_by_dskpn_id(session('dskpn_code')); ?></b>?<br><br>
+        <a href="<?= route_to('dskpn_learning_standard') . "?flag=true"; ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">Teruskan&nbsp;&nbsp;
+          <i class="fas fa-forward"></i>
+        </a>
+        <a href="<?= route_to('fresh_dskpn'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">Dokumen baru&nbsp;&nbsp;
+          <i class="fas fa-plus fa-lg"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+  var resumeOrNot = <?= isset($resume)&&($resume == true) ? 'true' : 'false' ?>;
   var globalCheckingDSKPNCode = <?= isset($dskpn_code_init) ? 'true' : 'false' ?>;
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';

@@ -52,9 +52,10 @@
           <a href="javascript:;" class="nav-link text-body p-0 d-flex align-items-center" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
             <div class="me-2" style="line-height: 1.2;">
               <span><b><?= session('nickname'); ?></b><br></span>
-              <span class="badge text-bg-dark" style="font-size : 8px;"><?= !empty(session('current_role'))?session('current_role'):'guru'; ?></span>
+              <span class="badge text-bg-dark" style="font-size : 8px;"><?= !empty(session('current_role')) ? (session('current_role') === 'GURU_BESAR' ? 'COE' : session('current_role')) : 'guru'; ?></span>
             </div>
-            <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="rounded-circle shadow-sm" style="width: 40px; height: 40px;" alt="Avatar" />
+            <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/8.webp" class="rounded-circle shadow-sm" style="width: 40px; height: 40px;" alt="Avatar" /> -->
+            <i class="fas fa-user-circle" style="font-size: 40px;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
          
@@ -92,7 +93,7 @@
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="text-sm font-weight-normal mb-1">
-                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= $available_role; ?></span>
+                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= ($available_role == 'GURU_BESAR')?'CHIEF OF EDUCATION<br>(COE)':$available_role; ?></span>
                       </h6>
                     </div>
                   </div>

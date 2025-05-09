@@ -4,15 +4,18 @@ namespace App\Modules\Login\Controllers;
 
 use App\Controllers\BaseController;
 use App\Modules\Login\Models\LoginStaffMainModel;
+use App\Modules\Administrative\Models\StaffMainModel;
 
 class Main extends BaseController
 {
     protected $login_model;
+    protected $staff_main_model;
 
     public function __construct()
     {
         $this->session          = service('session');
         $this->login_model      = new LoginStaffMainModel();
+        $this->staff_main_model = new StaffMainModel();
     }
 
     public function index()
@@ -55,6 +58,13 @@ class Main extends BaseController
                     'list_current_role' => $roles
                 ]);
 
+                if(isset($roles) && !empty($roles))
+                {
+                    $this->session->set([
+                        'current_role' => $roles[0]
+                    ]);
+                }
+
                 return redirect()->to('dashboard');
             } else {
                 //fail
@@ -69,6 +79,26 @@ class Main extends BaseController
     {
         $sm_recid_id = $this->request->getVar('recid_id');
         $sm_new_password = $this->request->getVar('password');
+
+        $staff_exist = $this->staff_main_model->where('sm_recid', $sm_recid_id)->first();
+        $login_exist = $this->login_model->where('lsm_sm_recid', $sm_recid_id)->first();
+
+        if(!isset($staff_exist) || empty($staff_exist))
+        {
+            echo "fail";
+            die();
+        }
+
+        if(isset($login_exist) || !empty($login_exist))
+        {
+            echo "fail - duplicate";
+            die();
+        }
+
+        if(!isset($sm_new_password) || empty($sm_new_password))
+        {
+            $sm_new_password = $staff_exist['sm_icno'];
+        }
 
         if($this->login_model->insert([
             'lsm_sm_recid' => $sm_recid_id,

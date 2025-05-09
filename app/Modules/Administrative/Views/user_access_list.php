@@ -57,7 +57,7 @@
                                 <td><?= $user['sm_fullname']; ?></td>
                                 <td style="text-align: center;"><?= get_user_roles($user['sm_recid']) ?></td>
                                 <td style="text-align: center;">
-                                    <i class="fa fa-pencil-square-o fa-lg text-success me-2" data-user-id="<?= $user['sm_recid']; ?>" data-bs-toggle="modal" data-bs-target="#roleModal" title="Add Role"></i>
+                                    <i class="fa fa-pencil-square-o fa-lg text-warning me-2" data-user-id="<?= $user['sm_recid']; ?>" data-bs-toggle="modal" data-bs-target="#roleModal" title="Add Role"></i>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
