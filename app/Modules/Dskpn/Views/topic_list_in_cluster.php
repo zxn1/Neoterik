@@ -465,7 +465,7 @@
                     <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
                         <div class="mb-3">
                             <label for="clusterCode" class="form-label">Kod Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="ctm_code" required>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" style="text-transform:uppercase;" class="form-control" id="clusterCode" name="ctm_code" required>
                         </div>
                         <div class="mb-3">
                             <label for="clusterName" class="form-label">Nama Kluster</label>
@@ -485,7 +485,7 @@
         <!-- Hidden form content preserved from original -->
     </form>
 </div>
-
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <!-- Sweet Alert handling (preserved from original) -->
 <?php if (session()->has('success')) : ?>
     <script>

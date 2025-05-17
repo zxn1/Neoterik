@@ -2422,7 +2422,8 @@ class Main extends BaseController
         $dskpn_year = $this->request->getPost('dskpnyear');
         $dskpn_year = isset($dskpn_year) ? $dskpn_year : '';
         $dskpn_code = $this->request->getPost('dskpncode');
-        $dskpn_code = preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year; //purified id
+        $dskpn_code = trim(preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year); //purified id
+        $dskpn_code = strtoupper($dskpn_code);
 
         $dskpn = $this->dskpn_model->where('dskpn_code', $dskpn_code)->first();
         if (!$dskpn) {
