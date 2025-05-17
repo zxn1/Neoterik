@@ -1,6 +1,6 @@
 <nav class="navbar navbar-main navbar-expand-lg position-sticky mt-4 top-1 px-0 mx-4 shadow-none border-radius-xl z-index-sticky" id="navbarBlur" data-scroll="true">
   <div class="container-fluid py-1 px-3">
-    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none ">
+    <div class="sidenav-toggler sidenav-toggler-inner d-xl-block">
       <a href="javascript:;" class="nav-link text-body p-0">
         <div class="sidenav-toggler-inner">
           <i class="sidenav-toggler-line"></i>
@@ -17,7 +17,7 @@
       }
 
       if (!empty(session('dskpn_code'))) { ?>
-          <span class="btn btn-outline-primary btn-sm mb-0 me-3">DSKPN# <?= session('dskpn_code') ?></span>
+        <span class="btn btn-outline-primary btn-sm mb-0 me-3">DSKPN# <?= session('dskpn_code') ?></span>
       <?php }
       ?>
 
@@ -58,7 +58,7 @@
             <i class="fas fa-user-circle" style="font-size: 40px;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
-         
+
             <div class="mb-2 d-flex justify-content-center">
               <span class="border-radius-md" href="javascript:;">
                 <div class="d-flex py-1">
@@ -70,7 +70,7 @@
                       <span class="font-weight-bold"><?= session('fullname'); ?></span>
                     </h6>
                     <!-- <p class="text-xs text-secondary mb-0">
-                      Sebagai, <?= !empty(session('current_role'))?session('current_role'):'Guru'; ?>.
+                      Sebagai, <?= !empty(session('current_role')) ? session('current_role') : 'Guru'; ?>.
                     </p> -->
                   </div>
                 </div>
@@ -83,17 +83,17 @@
             $list_current_role = session('list_current_role');
             $current_role = session('current_role');
             $list_current_role[] = "GURU";
-            foreach($list_current_role as $available_role)
-            { ?>
+            sort($list_current_role); // Sort alphabetically
+            foreach ($list_current_role as $available_role) { ?>
               <li class="mb-0">
-                <a class="dropdown-item border-radius-md <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'bg-dark':''; ?>" href="<?= ($current_role != $available_role)?route_to('change_user_role') . "?role=" . $available_role:'#'; ?>">
+                <a class="dropdown-item border-radius-md <?= (($current_role == $available_role) || (($available_role == 'GURU') && $current_role == '')) ? 'bg-dark' : ''; ?>" href="<?= ($current_role != $available_role) ? route_to('change_user_role') . "?role=" . $available_role : '#'; ?>">
                   <div class="d-flex py-1">
                     <div class="my-auto">
                       <img src="<?= base_url() ?>neoterik/img/assets/<?= $available_role; ?>.jpg" class="avatar avatar-sm  me-3 " alt="user image">
                     </div>
                     <div class="d-flex flex-column justify-content-center">
                       <h6 class="text-sm font-weight-normal mb-1">
-                        <span class="font-weight-bold <?= (($current_role == $available_role)||(($available_role == 'GURU') && $current_role == ''))?'text-white':''; ?>"><?= ($available_role == 'GURU_BESAR')?'CHIEF OF EDUCATION<br>(COE)':$available_role; ?></span>
+                        <span class="font-weight-bold <?= (($current_role == $available_role) || (($available_role == 'GURU') && $current_role == '')) ? 'text-white' : ''; ?>"><?= ($available_role == 'GURU_BESAR') ? 'CHIEF OF EDUCATION<br>(COE)' : $available_role; ?></span>
                       </h6>
                     </div>
                   </div>
@@ -155,7 +155,7 @@
           </ul>
         </li>
       </ul>
-      
+
     </div>
   </div>
 </nav>

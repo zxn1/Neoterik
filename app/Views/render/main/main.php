@@ -45,6 +45,7 @@
       navigator.serviceWorker.register('sw.js');
     };
   </script> -->
+
   <?php
   if (!empty($style))
     foreach ($style as $css) { ?>
@@ -104,10 +105,10 @@
       background-color: #7367f0 !important;
     }
 
-    .swal2-styled.swal2-confirm:hover, .swal2-styled.swal2-confirm:focus {
-        background-image: linear-gradient(310deg, #7367f0, #7367f0) !important;
+    .swal2-styled.swal2-confirm:hover,
+    .swal2-styled.swal2-confirm:focus {
+      background-image: linear-gradient(310deg, #7367f0, #7367f0) !important;
     }
-
   </style>
 
 </head>
@@ -178,7 +179,8 @@
   <script src="<?= base_url() ?>assets/js/soft-ui-dashboard.min.js?v=1.1.1"></script>
 
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-  <!-- success message -->
+
+  <!--success message -->
   <?php if (session('success')) : ?>
     <script>
       Swal.fire({
