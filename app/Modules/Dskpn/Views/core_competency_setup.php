@@ -82,6 +82,7 @@
     </div>
   </div>
 </form>
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <?php if (session()->has('success')) : ?>
   <script>
     $(document).ready(function() {
