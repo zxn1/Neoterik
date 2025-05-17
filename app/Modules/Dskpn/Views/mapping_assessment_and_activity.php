@@ -290,6 +290,7 @@
             <tr>
               <td>
                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                  <input type="hidden" name="parent-involvement" id="parentInvolveHidden" value="N">
                   <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($parent_involve) && !empty($parent_involve) && $parent_involve == 'Y') ? 'checked' : ''; ?>>
                 </div>
               </td>
@@ -323,6 +324,12 @@
 <script>
   $(document).ready(function() {
     $('.select2').select2();
+
+    $('#flexSwitchCheckDefault11').prop('checked', $('#parentInvolveHidden').val() === 'Y');
+
+    $('#flexSwitchCheckDefault11').change(function() {
+      $('#parentInvolveHidden').val(this.checked ? 'Y' : 'N');
+    });
   });
 
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
