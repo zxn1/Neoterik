@@ -432,7 +432,7 @@
                 $part2_ex_dskpn = ""; ?>
                 <div class="col-md-8">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode"
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" id="dskpncode" name="dskpncode"
                     value="<?php
                             if (!isset($ex_dskpn_code_init)) {
                               if (isset($dskpn_code)) {
@@ -500,7 +500,7 @@
     </div>
   </div>
 </div>
-
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <script>
   var resumeOrNot = <?= isset($resume)&&($resume == true) ? 'true' : 'false' ?>;
   var globalCheckingDSKPNCode = <?= isset($dskpn_code_init) ? 'true' : 'false' ?>;

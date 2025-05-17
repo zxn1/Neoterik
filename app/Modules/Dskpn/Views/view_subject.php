@@ -11,11 +11,11 @@
                     <form id="addSubjectForm" action="<?= route_to('store_create_subject'); ?>" method="POST">
                         <div class="mb-3">
                             <label for="subjectCode" class="form-label">Kod Subjek</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="subjectCode" name="sbm_code" required>
+                            <input type="text" placeholder="Sila Masukkan Kod Subjek" class="form-control" id="subjectCode" name="sbm_code" style="text-transform:uppercase" required>
                         </div>
                         <div class="mb-3">
                             <label for="subjectName" class="form-label">Nama Subjek</label>
-                            <input type="text" placeholder="Sila Masukkan Nama Kluster" class="form-control" id="subjectName" name="sbm_desc" required>
+                            <input type="text" placeholder="Sila Masukkan Nama Subjek" class="form-control" id="subjectName" name="sbm_desc" required>
                         </div>
                         <div class="text-end">
                             <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
@@ -39,7 +39,7 @@
                     <input type="hidden" name="sbm_id" id="edit_sbm_id">
                     <div class="mb-3">
                         <label for="edit_subjectCode" class="form-label">Kod Subjek</label>
-                        <input type="text" class="form-control" id="edit_subjectCode" name="sbm_code" required>
+                        <input type="text" class="form-control" id="edit_subjectCode" name="sbm_code" style="text-transform:uppercase" required>
                     </div>
                     <div class="mb-3">
                         <label for="edit_subjectName" class="form-label">Nama Subjek</label>
@@ -97,6 +97,7 @@
         <a href="#" class="btn bg-gradient-primary btn-sm mb-0">Seterusnya</a>
     </div> -->
 </div>
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <?php if (session()->has('success')) : ?>
     <script>
         Swal.fire({
