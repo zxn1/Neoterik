@@ -56,10 +56,9 @@ class TopicMain extends BaseController
         ];
 
         if ($this->topic_model->update($id, $data)) {
-            return redirect()->back()->with('success', 'Berjaya mengemaskini Topic!');
+            return $this->response->setJSON(['status' => 'success', 'message' => 'Topik berjaya dikemaskini!']);
         }
-
-        return redirect()->back()->with('fail', 'Maaf, tindakan mengemaskini Topic tidak berjaya!');
+        return $this->response->setJSON(['status' => 'fail', 'message' => 'Maaf, tindakan mengemaskini Topik tidak berjaya!']);
     }
 
 

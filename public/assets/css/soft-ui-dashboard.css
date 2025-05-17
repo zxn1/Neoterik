@@ -10661,7 +10661,8 @@ fieldset:disabled .btn {
 } */
 
 .bg-primary {
-  background-color: #865EBF  !important;
+  /* background-color: #865EBF  !important; */
+  background-color: #613673 !important;
 }
 
 .bg-primary-text-white {
@@ -20500,7 +20501,8 @@ fieldset:disabled .btn {
 
 .btn-primary .btn.bg-outline-primary,
 .btn.bg-gradient-primary .btn.bg-outline-primary {
-  border: 1px solid #cb0c9f;
+  /* border: 1px solid #cb0c9f; */
+  border: 1px solid #613673;
 }
 
 .btn-primary:not(:disabled):not(.disabled).active,
