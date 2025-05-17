@@ -26,7 +26,7 @@
                     <form id="addClusterForm" action="<?= route_to('store_create_cluster'); ?>" method="POST">
                         <div class="mb-3">
                             <label for="clusterCode" class="form-label">Kod Kluster</label>
-                            <input type="text" placeholder="Sila Masukkan Kod Kluster" class="form-control" id="clusterCode" name="ctm_code" required>
+                            <input type="text" placeholder="Sila Masukkan Kod Kluster" style="text-transform:uppercase;" class="form-control" id="clusterCode" name="ctm_code" required>
                         </div>
                         <div class="mb-3">
                             <label for="clusterName" class="form-label">Nama Kluster</label>
@@ -155,7 +155,7 @@
                     <input type="text" class="form-control" id="editClusterID" name="ctm_id" value="" required hidden>
                     <div class="mb-3">
                         <label for="editClusterCode" class="form-label">Kod Kluster</label>
-                        <input type="text" class="form-control" id="editClusterCode" name="ctm_code" required>
+                        <input type="text" class="form-control" style="text-transform:uppercase" id="editClusterCode" name="ctm_code" required>
                     </div>
                     <div class="mb-3">
                         <label for="editClusterName" class="form-label">Nama Kluster</label>
@@ -170,7 +170,7 @@
         </div>
     </div>
 </div>
-
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <script>
     function openEditClusterModal(ctm_id, ctm_code, ctm_desc) {
         $('#editClusterID').val(ctm_id);
