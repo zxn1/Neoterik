@@ -12,6 +12,7 @@ function selectSubjectToCode(element)
     $("#code-tp-rank-div").show();
     $("#dskpn-topic-numbering-div").show();
     $("#reset-n-save-section").show();
+    WysiwygComponent.renderTo('input-tahap-penguasaan-target', { id: '1', inputNameId: "input-tahap-penguasaan"});
 }
 
 function resetForm()
@@ -57,10 +58,16 @@ function getAvailableDskpCode(val)
 function resetTPForm()
 {
     $("#collection-tahap-penguasaan").empty();
+    // $("#collection-tahap-penguasaan").append(`<div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
+    //                                             <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
+    //                                             <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
+    //                                                 <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+    //                                             </a>
+    //                                         </div>`);
     $("#collection-tahap-penguasaan").append(`<div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
-                                                <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
-                                                <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
-                                                    <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                                                </a>
-                                            </div>`);
+        <span class="ribbon badge" style="position : relative; left : -15px;" id="tpcounter">1</span>
+            <div id="input-tahap-penguasaan-target" class="w-100"></div>
+        </div>`);
+        
+    WysiwygComponent.renderTo('input-tahap-penguasaan-target', { id: '1', inputNameId: "input-tahap-penguasaan"});
 }

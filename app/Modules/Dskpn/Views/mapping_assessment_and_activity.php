@@ -71,7 +71,7 @@
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">Petaan Aktiviti dan Pentaksiran</h6>
+      <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
     </div>
     <div class="card-body">
       <div class="row">
@@ -106,7 +106,7 @@
     <div class="py-1">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-          <h6 class="my-auto text-white">Idea Pengajaran (Aktiviti)</h6>
+          <h6 class="my-auto text-white">PENETAPAN IDEA PENGAJARAN (AKTIVITI)</h6>
         </div>
         <div id="teaching-idea-and-activity" class="row p-3">
           <?php
@@ -161,7 +161,7 @@
     <div class="py-4">
       <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-          <h6 class="my-auto text-white">Pentaksiran</h6>
+          <h6 class="my-auto text-white">PENETAPAN PENTAKSIRAN</h6>
         </div>
         <?php foreach ($assessment_category as $index => $category) { ?>
           <div id="assessment-part-<?= $category['asc_id']; ?>" class="row p-2">
@@ -224,7 +224,7 @@
     <div class="col-lg-6">
       <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-          <h6 class="my-auto text-white">Alat Bantu Mengajar (ABM)</h6>
+          <h6 class="my-auto text-white">PENETAPAN ALAT BANTU MENGAJAR (ABM)</h6>
         </div>
         <div class="card-body">
           <div class="row">
@@ -283,13 +283,14 @@
 
       <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-          <h6 class="my-auto text-white">Keperluan Pengilabatan Ibu Bapa</h6>
+          <h6 class="my-auto text-white">KEPERLUAN PENGLIBATAN IBU BAPA</h6>
         </div>
         <div class="card-body">
           <table class="mt-2 card" style="border-style : solid; border-width : 2px;">
             <tr>
               <td>
                 <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
+                  <input type="hidden" name="parent-involvement" id="parentInvolveHidden" value="N">
                   <input class="form-check-input" value="Y" name="parent-involvement" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($parent_involve) && !empty($parent_involve) && $parent_involve == 'Y') ? 'checked' : ''; ?>>
                 </div>
               </td>
@@ -303,19 +304,32 @@
 
     </div>
   </div>
+  <hr class="horizontal dark mb-1 d-xl-block d-none">
 
   <div class="d-flex justify-content-between align-items-center p-2">
     <a href="<?= route_to('domain_mapping'); ?>" class="btn border border-gray text-gray">
       <span>Kembali</span>
     </a>
     <div class="text-end p-3">
-      <button type="submit" class="btn bg-info text-white">Seterusnya</button>
+      <button type="submit" class="btn bg-info text-white">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2-fill" viewBox="0 0 16 16">
+          <path d="M12 2h-2v3h2z" />
+          <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v13A1.5 1.5 0 0 0 1.5 16h13a1.5 1.5 0 0 0 1.5-1.5V2.914a1.5 1.5 0 0 0-.44-1.06L14.147.439A1.5 1.5 0 0 0 13.086 0zM4 6a1 1 0 0 1-1-1V1h10v4a1 1 0 0 1-1 1zM3 9h10a1 1 0 0 1 1 1v5H2v-5a1 1 0 0 1 1-1" />
+        </svg> &nbsp;
+        <span id="savetpchanges">Simpan</span>
+      </button>
     </div>
   </div>
 </form>
 <script>
   $(document).ready(function() {
     $('.select2').select2();
+
+    $('#flexSwitchCheckDefault11').prop('checked', $('#parentInvolveHidden').val() === 'Y');
+
+    $('#flexSwitchCheckDefault11').change(function() {
+      $('#parentInvolveHidden').val(this.checked ? 'Y' : 'N');
+    });
   });
 
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';

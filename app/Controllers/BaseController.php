@@ -73,6 +73,15 @@ abstract class BaseController extends Controller
         echo view('render/login/main', $array);
     }
 
+    public function render_without_main($view)
+    {
+        $uri = service('uri');
+        $modules = $uri->getSegment(1);
+        $view_path = 'App\\Modules\\' . ucfirst($modules) . '\\Views\\' . $view . '.php';
+
+        echo view($view_path);
+    }
+
     public function render($view, $data)
     {
         $uri = service('uri');

@@ -1,0 +1,535 @@
+/* Base styling improvements */
+:root {
+  --primary-color: #613673;
+  --secondary-color: #5e72e4;
+  --text-color: #344767;
+  --light-bg: #f8f9fa;
+  --border-radius: 0.5rem;
+  --box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+  background-color: #f8f9fa;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  border: none;
+  margin-bottom: 20px;
+}
+
+.card-header {
+  border-radius: 10px 10px 0 0 !important;
+  border-bottom: 0;
+  padding: 15px 20px;
+}
+
+/* Enhanced Select2 styling */
+.select2-container .select2-selection__rendered {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4rem;
+  color: var(--text-color);
+  background-color: #fff;
+  border: 1px solid #d2d6da;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  height: 38px;
+}
+
+.select2-container--default .select2-selection--single {
+  border: 0 !important;
+  height: 38px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 38px !important;
+}
+
+.select2-dropdown {
+  border-radius: var(--border-radius);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+
+.select2-container--open .select2-dropdown--below {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.select2-search--dropdown .select2-search__field {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected] {
+  background-color: var(--primary-color);
+}
+
+/* Improved accordion styling */
+.accordion-item {
+  border: none;
+  margin-bottom: 15px;
+  border-radius: var(--border-radius) !important;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+}
+
+.accordion-button {
+  padding: 15px 20px;
+  font-weight: 500;
+  color: var(--text-color);
+  background-color: white;
+  box-shadow: none;
+  border-radius: var(--border-radius) !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
+  box-shadow: none;
+}
+
+.accordion-button::after {
+  background-size: 15px;
+  transition: var(--transition);
+}
+
+.accordion-body {
+  padding: 15px 20px;
+  background-color: white;
+}
+
+/* Topic list styling */
+.topic-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 8px;
+  border-radius: var(--border-radius);
+  background-color: var(--light-bg);
+  transition: var(--transition);
+}
+
+.topic-item:hover {
+  background-color: rgba(97, 54, 115, 0.05);
+}
+
+.topic-item .form-control {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin-right: 10px;
+  flex-grow: 1;
+}
+
+.topic-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.topic-actions .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  padding: 0;
+  transition: var(--transition);
+}
+
+.fa-eye {
+  font-size: 1rem !important;
+}
+
+/* Enhanced year filter */
+.year-filter {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: var(--box-shadow);
+}
+
+.year-filter h6 {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.year-filter .pagination-button {
+  display: flex;
+  width: 100%;
+  padding: 8px 15px;
+  margin-bottom: 8px;
+  text-align: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.year-filter .pagination-button.active {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 500;
+}
+
+.year-filter .pagination-button:hover:not(.active) {
+  background-color: rgba(97, 54, 115, 0.1);
+}
+
+/* Topic search & pagination */
+.topic-search-container {
+  margin-bottom: 15px;
+}
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding-left: 40px;
+  border-radius: var(--border-radius);
+  border: 1px solid #e9ecef;
+  height: 42px;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  color: #adb5bd;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.pagination-info {
+  color: #6c757d;
+  font-size: 0.875rem;
+}
+
+.pagination {
+  display: flex;
+  gap: 5px;
+}
+
+.page-item .page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 50%;
+  color: var(--primary-color);
+  border: 1px solid #e9ecef;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.page-item.active .page-link {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.page-item .page-link:hover:not(.active) {
+  background-color: rgba(97, 54, 115, 0.1);
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: #adb5bd;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* Loading state */
+.topic-loader {
+  display: none;
+  text-align: center;
+  padding: 20px;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(97, 54, 115, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive improvements */
+@media (min-width: 1800px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl,
+  .container-xxl {
+    max-width: 1720px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .container,
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl,
+  .container-xxl {
+    max-width: 1520px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card-header h6 {
+    font-size: 1rem;
+  }
+
+  .year-filter {
+    margin-bottom: 20px;
+  }
+
+  .pagination-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pagination-info {
+    text-align: center;
+  }
+}
+
+/* Responsive tab fixes */
+@media (max-width: 768px) {
+  .cluster-tabs {
+    padding-bottom: 0.25rem;
+  }
+
+  .cluster-tab {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* New Tab Styling */
+.cluster-tabs {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.cluster-tab {
+  white-space: nowrap;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+  background-color: var(--light-bg);
+}
+
+.cluster-tab:hover {
+  background-color: rgba(97, 54, 115, 0.08);
+}
+
+.cluster-tab.active {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.cluster-tab i {
+  margin-right: 0.5rem;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Tab animation */
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Add these styles to your CSS section */
+
+/* Improved search box */
+.search-box {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.search-box input {
+  padding-left: 40px;
+  padding-right: 30px;
+  border-radius: var(--border-radius);
+  border: 1px solid #e9ecef;
+  height: 42px;
+  transition: all 0.2s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(97, 54, 115, 0.25);
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 15px;
+  top: 12px;
+  color: #adb5bd;
+  transition: color 0.2s ease;
+}
+
+.search-box input:focus + .search-icon {
+  color: var(--primary-color);
+}
+
+.search-box .search-clear {
+  position: absolute;
+  right: 12px;
+  top: 10px;
+  width: 22px;
+  height: 22px;
+  font-size: 10px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.search-box .search-clear:hover {
+  opacity: 1;
+}
+
+/* Enhanced empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 20px;
+  text-align: center;
+  background-color: rgba(248, 249, 250, 0.7);
+  border-radius: var(--border-radius);
+  margin: 10px 0;
+}
+
+.empty-state i {
+  font-size: 2.5rem;
+  color: #adb5bd;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  color: #6c757d;
+  font-weight: 500;
+  margin-bottom: 0;
+}
+
+/* Improved loader */
+.topic-loader {
+  display: none;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: var(--border-radius);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(97, 54, 115, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 10px;
+}
+
+/* Add smooth animations for topic items */
+.topic-item {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

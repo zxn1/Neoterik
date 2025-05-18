@@ -12,7 +12,7 @@ class StandardPerformanceDskpMappingModel extends Model
     protected $returnType     = 'array';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['spdm_dskp_code', 'spdm_dskpn_id'];
+    protected $allowedFields = ['spdm_dskp_code', 'spdm_dskp_batch', 'spdm_dskpn_id'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;

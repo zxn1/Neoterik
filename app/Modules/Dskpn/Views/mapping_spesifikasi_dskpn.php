@@ -58,7 +58,7 @@
 
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">16 DOMAIN MAPPING</h6>
+      <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
     </div>
     <div class="card-body">
       <div class="row">
@@ -171,8 +171,8 @@
     <div class="text-end p-3">
       <!-- <a href="domain-mapping" type="button" class="btn bg-secondary">Batal</a> -->
       <!-- <button type="submit" class="btn bg-info">Semak</button> -->
-      <button type="submit" class="btn bg-success text-white" name="submit_status" value="check_dskpn">Semak</button>
-      <button type="submit" class="btn btn-primary" data-dismiss="modal" name="submit_status" value="submit_dskpn">Hantar</button>
+      <button type="submit" class="btn bg-warning text-dark" name="submit_status" value="check_dskpn">Draf</button>
+      <button type="submit" class="btn btn-success" data-dismiss="modal" name="submit_status" value="submit_dskpn">Hantar</button>
     </div>
   </div>
 </form>
