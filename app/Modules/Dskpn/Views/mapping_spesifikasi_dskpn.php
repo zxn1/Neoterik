@@ -100,11 +100,11 @@
               <table class="table mb-0">
                 <thead>
                   <tr>
+                    <th class="text-center" style="max-width: 100px;width: 100px;padding-left: 0.5rem;padding-right: 0.5rem;">
+                      <p class="mb-0">Tindakan</p>
+                    </th>
                     <th class="ps-1" colspan="4">
                       <p class="mb-0">Butiran</p>
-                    </th>
-                    <th class="text-center">
-                      <p class="mb-0">Tindakan</p>
                     </th>
                   </tr>
                 </thead>
@@ -114,14 +114,14 @@
                   if (isset($data[$group['tappc_desc']]))
                     foreach ($data[$group['tappc_desc']] as $item) { ?>
                     <tr>
-                      <td class="ps-1" colspan="4">
-                        <div class="my-auto">
-                          <span class="text-dark d-block text-sm"><?= $item['tapp_desc']; ?></span>
-                        </div>
-                      </td>
                       <td class="justify-content-center">
                         <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                           <input class="form-check-input" name="input-<?= $item['tapp_id'] ?>" value="<?= $item['tapp_id'] ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($item['tapp_id'], $specification_maplist)) ? 'checked' : ''; ?>>
+                        </div>
+                      </td>
+                      <td class="ps-1" colspan="4">
+                        <div class="my-auto">
+                          <span class="text-dark d-block text-sm"><?= $item['tapp_desc']; ?></span>
                         </div>
                       </td>
                     </tr>
@@ -129,11 +129,6 @@
                   if (isset($new_specification_input[$group['tappc_id']]) && !empty($new_specification_input[$group['tappc_id']])) {
                     foreach ($new_specification_input[$group['tappc_id']] as $new_input) { ?>
                       <tr id="new-input-<?= $new_input[1]; ?>">
-                        <td class="ps-1" colspan="4">
-                          <div class="my-auto">
-                            <input type="text" name="new-item[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" class="form-control" placeholder="Tajuk Subjek" required value="<?= $new_input[0]; ?>">
-                          </div>
-                        </td>
                         <td class="d-flex justify-content-center">
                           <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                             <input class="form-check-input" name="new-item-checked[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" value="<?= $group['tappc_id']; ?>" type="checkbox" id="flexSwitchCheckDefault11" <?= (isset($specification_maplist) && in_array($new_input[1], $specification_maplist)) ? 'checked' : ''; ?>>
@@ -141,6 +136,11 @@
                           <a class="btn btn-link text-danger text-gradient mb-0" href="javascript:void(0)" onclick="$('#new-input-<?= $new_input[1]; ?>').remove();">
                             <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
                           </a>
+                        </td>
+                        <td class="ps-1" colspan="4">
+                          <div class="my-auto">
+                            <input type="text" name="new-item[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" class="form-control" placeholder="Tajuk Subjek" required value="<?= $new_input[0]; ?>">
+                          </div>
                         </td>
                       </tr>
                   <?php }
@@ -234,18 +234,20 @@ if ($review) { ?>
     // Create the new field HTML
     var newFieldHTML = `
         <tr id="new-input-` + newFieldId + `">
-          <td class="ps-1" colspan="4">
-            <div class="my-auto">
-              <input type="text" name="new-item[` + id + `][` + newFieldId + `]" class="form-control" placeholder="Tajuk Subjek" required>
+          <td>
+            <div class="d-flex justify-content-center align-items-center">
+              <div class="form-check form-switch mb-0">
+                <input class="form-check-input" name="new-item-checked[` + id + `][` + newFieldId + `]" value="` + id + `" type="checkbox" id="flexSwitchCheckDefault11">
+              </div>
             </div>
           </td>
-          <td class="d-flex justify-content-center">
-            <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
-              <input class="form-check-input" name="new-item-checked[` + id + `][` + newFieldId + `]" value="` + id + `" type="checkbox" id="flexSwitchCheckDefault11">
+          <td class="ps-1" colspan="4">
+            <div class="d-flex align-items-center justify-content-between">
+              <input type="text" name="new-item[` + id + `][` + newFieldId + `]" class="form-control me-2" placeholder="Tajuk Subjek" required>
+              <a class="btn btn-link text-danger text-gradient p-0 m-0" href="javascript:void(0)" onclick="$('#new-input-` + newFieldId + `').remove();">
+                <i class="far fa-trash-alt fa-lg" aria-hidden="true"></i>
+              </a>
             </div>
-            <a class="btn btn-link text-danger text-gradient mb-0" href="javascript:void(0)" onclick="$('#new-input-` + newFieldId + `').remove();">
-              <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-            </a>
           </td>
         </tr>
     `;
