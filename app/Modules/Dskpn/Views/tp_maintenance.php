@@ -1,3 +1,37 @@
+<style>
+    /* HTML: <div class="ribbon">Your text content</div> */
+    .ribbon {
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      position : relative;
+      left : -5px;
+      top : -5px;
+      padding : 5px;
+    }
+    .ribbon {
+      --r: .8em; /* control the cutout */
+      
+      border-block: .5em solid #0000;
+      padding-inline: .5em calc(var(--r) + .25em);
+      line-height: 1.8;
+      clip-path: polygon(100% 0,0 0,0 100%,100% 100%,100% calc(100% - .25em),calc(100% - var(--r)) 50%,100% .25em);
+      background:
+      radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+      gray padding-box; /* the color  */
+      width: fit-content;
+    }
+    ol li[data-list="bullet"] {
+        list-style-type: disc;    /* Tunjuk bullet */
+        list-style-position: inside;
+        counter-reset: none !important;
+    }
+
+    ol li[data-list="bullet"]::before {
+        content: '';              /* Buang numbering auto */
+        counter-increment: none;
+    }
+</style>
 <div class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
