@@ -12,17 +12,13 @@
     .modal-backdrop {
         z-index: 1040;
     }
-
-    .btn {
-        margin-bottom: 0rem !important;
-    }
 </style>
 <div class="container-fluid py-4">
     <!-- Modal Structure -->
     <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary">
+                <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="addClusterModalLabel">Tambah Kluster</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -97,27 +93,9 @@
                                 }
                                 ?>
                             </td>
-                            <td class="text-m font-weight-normal text-center">
-                                <div class="btn-group" role="group" aria-label="Cluster Actions">
-                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
-                                        onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')"
-                                        aria-hidden="true">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-
-                                    <?php
-                                    // Show delete button only if cluster has no subjects mapped
-                                    $subject = get_cluster_subject($cluster['ctm_id']);
-                                    if (is_null($subject)) : ?>
-                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
-                                            onclick="openDeleteClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')"
-                                            aria-hidden="true">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
+                            <td class="text-m font-weight-normal" style="text-align: center;">
+                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')" aria-hidden="true"></i>
                             </td>
-
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -130,10 +108,10 @@
 </div>
 
 <div class="modal fade" id="clusterSubjectMappingModal" tabindex="-1" aria-labelledby="clusterSubjectMappingModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Pemetaan Subjek</h5>
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan Subjek bagi Kluster:</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -141,8 +119,6 @@
 
                     <!-- Hidden input to store ctm_id -->
                     <input type="hidden" id="ctm-id-input" name="ctm_id">
-
-                    <h6 class="modal-title" id="rejectModalLabel"></h6>
 
                     <div class="row pb-4" id="standard-pembelajaran">
                         <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
@@ -168,9 +144,9 @@
 </div>
 
 <div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header bg-info">
                 <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Kluster</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -194,35 +170,6 @@
         </div>
     </div>
 </div>
-
-<!-- Delete Cluster Modal -->
-<div class="modal fade" id="deleteClusterModal" tabindex="-1" aria-labelledby="deleteClusterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white" id="deleteClusterModalLabel">Padam Kluster</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
-                    <h4 class="mt-3">Adakah anda pasti?</h4>
-                    <p class="text-muted">Anda akan memadam kluster "<span id="deleteClusterName" class="fw-bold"></span>" secara kekal. Tindakan ini tidak boleh dibatalkan.</p>
-                </div>
-                <form id="deleteClusterForm" action="<?= route_to('delete_cluster'); ?>" method="POST">
-                    <input type="hidden" id="deleteClusterID" name="ctm_id">
-                    <div class="text-center">
-                        <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn bg-danger text-white">
-                            <i class="fas fa-trash"></i> Padam
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <script>
     function openEditClusterModal(ctm_id, ctm_code, ctm_desc) {
@@ -230,12 +177,6 @@
         $('#editClusterCode').val(decodeURIComponent(ctm_code));
         $('#editClusterName').val(decodeURIComponent(ctm_desc));
         $('#editClusterModal').modal('show');
-    }
-
-    function openDeleteClusterModal(ctm_id, ctm_code, ctm_desc) {
-        $('#deleteClusterID').val(ctm_id);
-        $('#deleteClusterName').text(decodeURIComponent(ctm_desc));
-        $('#deleteClusterModal').modal('show');
     }
 
     $(document).ready(function() {
@@ -291,20 +232,6 @@
         $(document).on('click', '.delete-subject', function() {
             $(this).closest('.subject-card').remove();
         });
-
-        // Handle delete cluster form submission
-        $('#deleteClusterForm').on('submit', function(e) {
-            e.preventDefault();
-
-            // Optional: Add loading state
-            const submitBtn = $(this).find('button[type="submit"]');
-            const originalText = submitBtn.html();
-            submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Memadam...');
-            submitBtn.prop('disabled', true);
-
-            // Submit the form
-            this.submit();
-        });
     });
 </script>
 
@@ -318,6 +245,6 @@
         $('#ctm-id-input').val(ctmId);
 
         // Optionally, update the modal title or content to reflect the selected cluster
-        $('#rejectModalLabel').text('Kluster: ' + ctmDesc);
+        $('#rejectModalLabel').text('Daftarkan Subjek bagi Kluster: ' + ctmDesc);
     });
 </script>

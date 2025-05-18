@@ -233,31 +233,6 @@
     .scroll-indicator.active {
         display: flex;
     }
-
-    .btn.btn-sm i,
-    .btn-group-sm>.btn i {
-        font-size: 1rem !important;
-        color: #613673 !important;
-    }
-
-
-    .btn-edit {
-        margin-bottom: 0 !important;
-    }
-
-    .btn-edit:hover {
-        color: #fff !important;
-        background-color: #613673 !important;
-    }
-
-    .btn-edit:hover i {
-        color: #fff !important;
-    }
-
-    .btn-outline-success {
-        color: #613673 !important;
-        border-color: #613673 !important;
-    }
 </style>
 
 <div class="container-fluid py-4">
