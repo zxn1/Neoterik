@@ -96,6 +96,16 @@
     gray padding-box; /* the color  */
     width: fit-content;
   }
+  ol li[data-list="bullet"] {
+      list-style-type: disc;    /* Tunjuk bullet */
+      list-style-position: inside;
+      counter-reset: none !important;
+  }
+
+  ol li[data-list="bullet"]::before {
+      content: '';              /* Buang numbering auto */
+      counter-increment: none;
+  }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
@@ -196,7 +206,20 @@
                     <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_number'] . ' ' . $ls_desc['lsi_desc'] . "\n"; ?> <?php endif ?><?php endforeach ?></textarea>
+                    <div class="form-control zero-top-border" style="min-height: 200px; max-height: 500px; overflow-y: auto;">
+                    <?php foreach ($learning_standard as $ls_desc) : ?>
+                      <?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?>
+                        <div class="d-flex align-items-start <?= (strpos($ls_desc['lsi_desc'], '<ol>') !== false)?'mb-2':'' ?>">
+                          <div style="min-width: 30px;" class="fw-bold text-end me-2">
+                            <?= $ls_desc['lsi_number'] ?>)
+                          </div>
+                          <div class="flex-grow-1" style="position : relative; top : -2px">
+                            <?= $ls_desc['lsi_desc'] ?>
+                          </div>
+                        </div>
+                      <?php endif ?>
+                    <?php endforeach ?>
+                  </div>
                   </ul>
                 <?php endforeach; ?>
               </div>
@@ -205,7 +228,7 @@
             <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_number'] . ' ' . $op['opm_desc'] . "\n" ?><?php endif ?><?php endforeach ?></textarea>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_number'] . ') ' . $op['opm_desc'] . "\n" ?><?php endif ?><?php endforeach ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $dskpn_details['dskpn_duration']; ?></span></strong>
@@ -262,7 +285,16 @@
                     </div>
                     <?php foreach ($standard_performance as $sp_desc) : ?>
                       <?php if ($row['sbm_id'] == $sp_desc['sbm_id']) : ?>
-                        <li class="list-group-item"><?= $sp_desc['sp_tp_level'] . ' ' . $sp_desc['sp_tp_level_desc']; ?></li>
+                        <li class="list-group-item" style="padding-left : 5px;">
+                          <div class="d-flex">
+                            <div style="min-width: 30px;" class="fw-bold text-end me-2">
+                              <?= $sp_desc['sp_tp_level'] ?>)
+                            </div>
+                            <div class="flex-grow-1">
+                              <?= $sp_desc['sp_tp_level_desc'] ?>
+                            </div>
+                          </div>
+                        </li>
                       <?php endif ?>
                     <?php endforeach ?>
                   </ul>

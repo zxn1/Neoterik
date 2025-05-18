@@ -36,9 +36,31 @@
 
   div.col-md-2.d-flex > select.select2adjustheight + span > span.selection > span > .select2-selection__rendered {
     border: 0px solid #d2d6da;
-}
+  }
+  .ql-toolbar-actions {
+    margin-left: auto;
+  }
+  .stylish-hr {
+    border: none;
+    height: 1px;
+    width: 80%;
+    margin: 1rem auto;
+    padding : 0px;
+    margin-top : 10px;
+    background: linear-gradient(to right, transparent, #333, transparent);
+  }
+  ol li[data-list="bullet"] {
+      list-style-position: inside;
+      counter-reset: none !important;
+  }
 
+  ol li[data-list="bullet"]::before {
+      content: '';              /* Buang numbering auto */
+      counter-increment: none;
+  }
 </style>
+<?= $wysiwyg_include; ?>
+<?= $wysiwyg_js; ?>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.css">
@@ -169,27 +191,60 @@
                       if (!empty($subject_description) && $subject_description != "") {
                         echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
                         foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-2 p-0 pe-1">
-                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
-                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>" required>
-                            </div>
-                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
-                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>">
+                            <!-- <div class="col-12 p-0 pe-1 d-flex d-inline">
+                              <label for="standard-learning-number">Item:&nbsp;</label>
+                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= ''; /*$item_list['sbm_code'];*/ ?>" name="standard-learning-number[<?= ''; /* $item_list['sbm_id']; */ ?>][]" pattern="^\d+(\.\d+)*$" 
+                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan." style="position : relative; top : -5px;"  class="form-control w-10 p-1" placeholder="1.1" value="<?= '';/*isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' */ ?>" required>
+                            </div> -->
+                            <!-- <div class="col-12 d-flex p-0" style="margin-bottom : 5px;"> -->
+                              <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>" class="w-100 pb-5 pe-2"></div>
+                              <script>
+                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>", 
+                              { 
+                                id: '<?= $item_list['sbm_id'] ?>-<?= $index ?>', 
+                                placeholder: "<?= rawurlencode($desc_item); ?>" , 
+                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>]", 
+                                deleteButton : "standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>", 
+                                isLearningStandard: true, 
+                                learningStandard : {
+                                  sbm_id : "<?= $item_list['sbm_id'] ?>",
+                                  sbm_code : "<?= $item_list['sbm_code'] ?>",
+                                  learning_standard_number : "<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>"
+                                }
+                              });
+                              </script>
+                              <!-- <input type="text" class="form-control p-1 me-1" name="subject_description[<?= ''; /*$item_list['sbm_id'];*/ ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= ''; /*$desc_item;*/ ?>">
+                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= ''; /*$item_list['sbm_id'];*/ ?>').remove();selectionPopulateBasedOnNumbering();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                   <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
-                              </div>
-                            </div>
+                              </div> -->
+                            <!-- </div> -->
+                            <hr class="stylish-hr">
                           </div>
                         <?php
                         }
                         echo "</div>";
                       } else { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-2 p-0 pe-1">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>">
+                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>" class="w-100 pb-5 pe-2"></div>
+                            <script>
+                            WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>", 
+                            { 
+                              id: '<?= $item_list['sbm_id'] ?>-<?= $index ?>',  
+                              inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>]", 
+                              deleteButton : "standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>", 
+                              isLearningStandard: true, 
+                              learningStandard : {
+                                sbm_id : "<?= $item_list['sbm_id'] ?>",
+                                sbm_code : "<?= $item_list['sbm_code'] ?>",
+                                learning_standard_number : ""
+                              }
+                            });
+                            </script>
+                            <!-- <div class="col-2 p-0 pe-1">
                               <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
                                 title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
                             </div>
@@ -200,7 +255,8 @@
                                   <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
                               </div>
-                            </div>
+                            </div> -->
+                            <hr class="stylish-hr">
                           </div>
                         </div>
                       <?php
