@@ -28,9 +28,9 @@ $(document).ready(function() {
                 <div class="card-header d-flex p-3 bg-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                     <h6 class="my-auto text-white text-uppercase">${ item.sbm_desc }</h6>
                 </div>
-                <div class="list-group-item" id="collection-${item.sbm_code}" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                <div class="list-group-item" id="collection-${item.sbm_code}" style="padding-left : 0px; border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                     <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}" style="display: flex !important;flex-direction: row !important;">
-                        <input type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required readonly>
+                        <input type="text" class="form-control me-2 ms-3" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required readonly>
                         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" style="display : none;">
                             <i class="fas fa-info-circle fa-lg me-2"></i>
                         </a>
@@ -61,16 +61,29 @@ $(document).ready(function() {
     var newFieldId = Math.floor(Math.random() * 1000000);
 
     // Create the new field HTML
+    // var newFieldHTML = `
+    //     <div class="d-flex w-100 align-items-center mb-2" id="${newFieldId}-${collectionId}">
+    //         <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencipta" value="${text}" required>
+    //         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldId}-${collectionId}').remove();">
+    //             <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
+    //         </a>
+    //     </div>
+    // `;
     var newFieldHTML = `
-        <div class="d-flex w-100 align-items-center mb-2" id="${newFieldId}-${collectionId}">
-            <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencipta" value="${text}" required>
-            <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldId}-${collectionId}').remove();">
-                <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-            </a>
+        <div id="${newFieldId}-${collectionId}">
+            ${countInputs(collectionId) != 0?`<hr style="border-top : solid 1px !important; margin-left : 30px;" id="pleaseignoreme">`:''}
+            <div class="d-flex w-100 align-items-center mb-3">
+                <span class="ribbon badge" style="position : relative; left : -15px;" id="tpcounter">#</span>
+                <div class="w-100" id="${newFieldId}-${bareBoneId}-target"></div>
+            </div>
         </div>
     `;
 
     collection.append(newFieldHTML);
+
+    WysiwygComponent.renderTo(newFieldId + '-' + bareBoneId + '-target', { id: newFieldId + '-' + bareBoneId, placeholder: text, inputNameId: "input-tahap-penguasaan", deleteButton : newFieldId + '-' + collectionId});
+
+    tpUpdateNumbering(collectionId);
 }
 
 function countInputs(collectionId) {
@@ -81,6 +94,34 @@ function countInputs(collectionId) {
     var inputCount = collection.children().length;
 
     return inputCount;
+}
+
+function removeIfFirstIsPleaseIgnoreMe() {
+    var container = $('#collection-tahap-penguasaan');
+    try {
+        var firstChild = container.children().first(); // first child
+
+        if (firstChild.length) {
+            var nestedFirst = firstChild.children().first();
+
+            if (nestedFirst.length && nestedFirst.attr('id') === 'pleaseignoreme') {
+                nestedFirst.remove();
+            }
+        }
+    } catch (err) {
+        //to avoid error on console log
+    }
+}
+
+function tpUpdateNumbering(collectionId) {
+    removeIfFirstIsPleaseIgnoreMe();
+    var counters = $('#' + collectionId).find('[id="tpcounter"]');
+
+    // Loop and assign numbering
+    counters.each(function(index) {
+        // index start at 0, jadi tambah 1 supaya start dari 1
+        $(this).html(index + 1);
+    });
 }
 
 function clearDynamicInputs()

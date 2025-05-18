@@ -164,23 +164,39 @@
             <td class="tg-fymr" colspan="4" style="width: 60%;">REKA BENTUK INSTRUKSI:</td>
         </tr>
         <tr>
-            <td class="tg-0pky" colspan="3" rowspan="9">
-                <?php
-                $sb_flag = false;
-                if (isset($subjects) && !empty($subjects)):
-                    $sb_flag = true; //check if subject contain value
-                    foreach ($subjects as $sb): ?>
-                        <b><?= $sb['sbm_desc'] ?></b><br>
-                        <?php if (isset($learning_standard) && !empty($learning_standard)): ?>
-                            <?php foreach ($learning_standard as $ls): ?>
-                                <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']): ?>
-                                    <?= $ls['lsi_number'] . ". " . $ls['lsi_desc'] ?><br>
-                                <?php endif; ?>
-                            <?php endforeach; ?><br>
-                        <?php endif; ?>
+        
+        <td colspan="3" rowspan="9" style="vertical-align: top;">
+            <?php
+            $sb_flag = false;
+            if (isset($subjects) && !empty($subjects)):
+                $sb_flag = true;
+                foreach ($subjects as $sb): ?>
+                <div style="font-weight: bold; margin-bottom: 4px;">
+                    <?= $sb['sbm_desc'] ?>
+                </div>
+
+                <?php if (isset($learning_standard) && !empty($learning_standard)): ?>
+                    <?php foreach ($learning_standard as $ls): ?>
+                    <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']): ?>
+                        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
+                        <tr style="border: none;">
+                            <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
+                            <p><?= $ls['lsi_number'] ?>.</p>
+                            </td>
+                            <td valign="top" style="border: none;">
+                            <?= $ls['lsi_desc'] ?>
+                            </td>
+                        </tr>
+                        </table>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
+                <br>
                 <?php endforeach;
-                endif; ?>
-            </td>
+            endif; ?>
+        </td>
+
             <td class="tg-0pky" colspan="1" rowspan="2">
                 <?php if (isset($standard_performance) && !empty($standard_performance)): ?>
                     <?php

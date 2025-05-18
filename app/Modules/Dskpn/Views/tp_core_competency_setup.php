@@ -1,3 +1,51 @@
+<?= $wysiwyg_include; ?>
+<?= $wysiwyg_js; ?>
+<style>
+.quill-toolbar-container {
+  display: flex;
+  width: 100%; /* pastikan toolbar guna penuh */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ql-toolbar-group {
+  display: flex;
+  gap: 6px;
+}
+
+.ql-toolbar-actions {
+  margin-left: auto; /* push ke hujung kanan */
+  display: flex;
+  align-items: center;
+}
+/* HTML: <div class="ribbon">Your text content</div> */
+.ribbon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    position : relative;
+    left : -5px;
+    top : -5px;
+    padding : 5px;
+  }
+  .ribbon {
+    --r: .8em; /* control the cutout */
+    
+    border-block: .5em solid #0000;
+    padding-inline: .5em calc(var(--r) + .25em);
+    line-height: 1.8;
+    clip-path: polygon(100% 0,0 0,0 100%,100% 100%,100% calc(100% - .25em),calc(100% - var(--r)) 50%,100% .25em);
+    background:
+    radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+    gray padding-box; /* the color  */
+    width: fit-content;
+  }
+  .ql-editor ol li[data-list="bullet"]::before {
+    content: "• ";
+    list-style-type: disc;
+    counter-reset: none;
+  }
+</style>
 <form method="POST" action="<?= route_to('store_tp_setup'); ?>">
   <div class="container-fluid py-4">
     <div class="card">
@@ -62,10 +110,12 @@
               </div>
               <div class="list-group-item" id="collection-tahap-penguasaan" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                 <div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
-                  <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
-                  <a class="btn btn-link text-danger text px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
+                  <span class="ribbon badge" style="position : relative; left : -15px;" id="tpcounter">1</span>
+                  <div id="input-tahap-penguasaan-target" class="w-100"></div>
+                  <!-- <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required> -->
+                  <!-- <a class="btn btn-link text-danger text px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                  </a>
+                  </a> -->
                 </div>
               </div>
               <div class="p-2 pb-1">
@@ -150,7 +200,7 @@
 
     $(document).ready(function() {
       selectByText('<?= $edit_subject_name; ?>');
-      let data_tp = JSON.parse('<?= $edit_data; ?>').standard_performance_dskp_mapping;
+      let data_tp = (<?= $edit_data; ?>).standard_performance_dskp_mapping;
       
       $('#collection-tahap-penguasaan').empty();
       data_tp.forEach(function(element, index, array) {

@@ -1446,6 +1446,13 @@ class Main extends BaseController
         $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
         $standardNumbering = $this->request->getPost('standard-learning-number');
 
+        //decode description.
+        foreach ($allSubject as $index => $subject) {
+            foreach ($allDescription[$subject] as $itemIndex => $itemDesc) {
+                $allDescription[$subject][$itemIndex] = urldecode($itemDesc);
+            }
+        }
+
         //set session for part 0
         $this->session->set('subject', $allSubject);
         $this->session->set('subject_description', $allDescription);
@@ -2144,6 +2151,9 @@ class Main extends BaseController
         $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');
         $data['ex_dskpn_code_init'] = $this->session->get('ex_dskpn_code_init');
 
+        $data['wysiwyg_include'] = $this->render_without_main('component/wysiwyg/wysiwyg_include');
+        $data['wysiwyg_js'] = $this->render_without_main('component/wysiwyg/wysiwyg_javascript');
+
         $script = ['dynamic-input', 'learning_standard'];
         $style = ['static-field'];
         $this->render_jscss('learning_standard', $data, $script, $style);
@@ -2153,11 +2163,13 @@ class Main extends BaseController
     {
         $data = [];
         $data['edit_dskp_code'] = $this->request->getVar('dskp_code');
-        $data['edit_subject_name'] = $this->request->getVar('subject');
+        $data['edit_subject_name'] = urldecode($this->request->getVar('subject'));
         $data['edit_batch'] = $this->request->getVar('batch');
         $data['edit_data'] = $this->request->getVar('data');
 
         $data['subject_list'] = $this->subject_model->findAll();
+        $data['wysiwyg_include'] = $this->render_without_main('component/wysiwyg/wysiwyg_include');
+        $data['wysiwyg_js'] = $this->render_without_main('component/wysiwyg/wysiwyg_javascript');
 
         $script = ['tp-dynamic-field', 'tp_core_competency_setup'];
         $style = ['static-field'];
@@ -2401,7 +2413,7 @@ class Main extends BaseController
         $sbm_code = $this->request->getVar('sbm_code');
 
         $last_batch = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->orderBy('sp_id', 'DESC')->first();
-        $last_batch = $last_batch['sp_dskp_batch'];
+        $last_batch = $last_batch['sp_dskp_batch']??null;
         $data = $this->standard_performance_model
             ->where('sp_dskp_code', $dskp_code)
             ->where('sp_dskp_batch', $last_batch)

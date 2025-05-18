@@ -3,6 +3,16 @@
         z-index: 9999 !important;
         left: 0;
     }
+    ol li[data-list="bullet"] {
+        list-style-type: disc;    /* Tunjuk bullet */
+        list-style-position: inside;
+        counter-reset: none !important;
+    }
+
+    ol li[data-list="bullet"]::before {
+        content: '';              /* Buang numbering auto */
+        counter-increment: none;
+    }
 </style>
 
 <div class="container-fluid py-4">
@@ -135,7 +145,7 @@
                             let subject_name = $('#subject').select2('data')[0].text;
                             let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
                             let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
-                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + subject_name + "&data=" + JSON.stringify(data));
+                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + encodeURIComponent(subject_name) + "&data=" + encodeURIComponent(JSON.stringify(data)));
                             $('#edit-tp').show();
                         }
                         var counter = 1;

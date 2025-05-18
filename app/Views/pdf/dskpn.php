@@ -170,16 +170,23 @@
                 if($sb_flag)
                 foreach($subjects as $sb)
                 { ?>
-                <td colspan="2" rowspan="3" class="vertical-center">
-                <?php
-                    if(isset($learning_standard)&&!empty($learning_standard))
-                    {
-                        foreach($learning_standard as $ls)
-                        {
-                            if($sb['sbm_id'] == $ls['ls_sbm_id'])
-                                echo $ls['lsi_number'] . ". " . $ls['lsi_desc'] . "<br>";
-                        }
-                    } ?>
+                <td colspan="2" rowspan="3" style="vertical-align: middle;">
+                <?php if (isset($learning_standard) && !empty($learning_standard)) : ?>
+                    <?php foreach ($learning_standard as $ls) : ?>
+                    <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']) : ?>
+                        <table style="width: 100%; margin-bottom: 4px; border-collapse: collapse; border: none;">
+                        <tr style="border: none;">
+                            <td style="width: 30px; font-weight: bold; text-align: right; vertical-align: top; border: none;">
+                            <?= $ls['lsi_number'] ?>)
+                            </td>
+                            <td style="vertical-align: top; border: none;">
+                            <?= $ls['lsi_desc'] ?>
+                            </td>
+                        </tr>
+                        </table>
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
                 </td>
                 <?php } ?>
                 
@@ -307,7 +314,17 @@
                             {
                                 $hasValue = true;
                                 echo '<td class="center vertical-center yellownobold">' . $i . '</td>';
-                                echo '<td class="center vertical-center">'. $sp['sp_tp_level_desc'] .'</td>';
+                                $desc = $sp['sp_tp_level_desc'];
+                                $center_or_not = (
+                                    stripos($desc, '<ol') !== false ||
+                                    stripos($desc, '<ul') !== false
+                                );
+                                $desc = $sp['sp_tp_level_desc'];
+                                if (strpos($desc, 'data-list="bullet"') !== false) {
+                                    // Replace only if it's bullet type
+                                    $desc = str_replace(['<ol>', '</ol>'], ['<ul>', '</ul>'], $desc);
+                                }
+                                echo '<td' . (!$center_or_not ? ' class="center vertical-center"' : '') . '>' . $desc . '</td>';
                                 unset($standard_performance[$index]);
                             }
                         }
