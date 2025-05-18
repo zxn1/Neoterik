@@ -122,14 +122,14 @@
                               </tr>
                               <?php foreach ($data['Pengetahuan Asas'] as $item) { ?>
                                 <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
-                                    </div>
-                                  </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                       <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                    </div>
+                                  </td>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -142,14 +142,14 @@
                               </tr>
                               <?php foreach ($data['Kemandirian'] as $item) { ?>
                                 <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
-                                    </div>
-                                  </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                       <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                    </div>
+                                  </td>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -162,14 +162,14 @@
                               </tr>
                               <?php foreach ($data['Kualiti Keperibadian'] as $item) { ?>
                                 <tr>
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
-                                    </div>
-                                  </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                       <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] . '|' . $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onchange="mapKemahiranInsaniah(event)">
+                                    </div>
+                                  </td>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
@@ -182,14 +182,14 @@
                               </tr>
                               <?php foreach ($data['7 Kemahiran Insaniah'] as $item) { ?>
                                 <tr style="background-color : #dedede;">
-                                  <td class="ps-1" colspan="4">
-                                    <div class="my-auto">
-                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
-                                    </div>
-                                  </td>
                                   <td>
                                     <div class="form-check form-switch mb-0 d-flex align-items-center justify-content-center">
                                       <input name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $item['dmn_id'] ?>" class="form-check-input" type="checkbox" id="<?= $subject['sbm_id'] ?>|<?= $item['dmn_id'] ?>" <?= (isset($domain_map_session["'" . $subject['sbm_code'] . "'"]) && in_array($item['dmn_id'], $domain_map_session["'" . $subject['sbm_code'] . "'"])) ? 'checked' : ''; ?> onclick="return false;" onkeydown="return false;">
+                                    </div>
+                                  </td>
+                                  <td class="ps-1" colspan="4">
+                                    <div class="my-auto">
+                                      <span class="text-dark d-block text-sm"><?= $item['dmn_desc']; ?></span>
                                     </div>
                                   </td>
                                 </tr>
