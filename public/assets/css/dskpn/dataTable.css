@@ -114,3 +114,46 @@ div.dt-container .dt-paging .dt-paging-button {
 div.dt-paging-button {
   color: #613673 !important;
 }
+
+.btn-group-sm,
+.btn.btn-sm i {
+  font-size: 1rem !important;
+}
+.btn-edit > i {
+  color: #613673 !important;
+}
+
+.btn-delete > i {
+  color: #ff0000 !important;
+}
+
+.btn-edit {
+  margin-bottom: 0 !important;
+}
+
+.btn-edit:hover {
+  color: #fff !important;
+  background-color: #613673 !important;
+}
+
+.btn-edit:hover i {
+  color: #fff !important;
+}
+
+.btn-delete {
+  margin-bottom: 0 !important;
+}
+
+.btn-delete:hover {
+  color: #fff !important;
+  background-color: #ff0000 !important;
+}
+
+.btn-delete:hover i {
+  color: #fff !important;
+}
+
+.btn-outline-success {
+  color: #613673 !important;
+  border-color: #613673 !important;
+}

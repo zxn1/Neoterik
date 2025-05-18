@@ -26,34 +26,34 @@
             </div>
         </div>
     </div>
-   <!-- Edit Modal -->
-<div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Subjek</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="editSubjectForm" action="<?= route_to('update_subject'); ?>" method="POST">
-                    <input type="hidden" name="sbm_id" id="edit_sbm_id">
-                    <div class="mb-3">
-                        <label for="edit_subjectCode" class="form-label">Kod Subjek</label>
-                        <input type="text" class="form-control" id="edit_subjectCode" name="sbm_code" style="text-transform:uppercase" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit_subjectName" class="form-label">Nama Subjek</label>
-                        <input type="text" class="form-control" id="edit_subjectName" name="sbm_desc" required>
-                    </div>
-                    <div class="text-end">
-                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn bg-info text-white">Simpan</button>
-                    </div>
-                </form>
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Subjek</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editSubjectForm" action="<?= route_to('update_subject'); ?>" method="POST">
+                        <input type="hidden" name="sbm_id" id="edit_sbm_id">
+                        <div class="mb-3">
+                            <label for="edit_subjectCode" class="form-label">Kod Subjek</label>
+                            <input type="text" class="form-control" id="edit_subjectCode" name="sbm_code" style="text-transform:uppercase" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_subjectName" class="form-label">Nama Subjek</label>
+                            <input type="text" class="form-control" id="edit_subjectName" name="sbm_desc" required>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn bg-info text-white">Simpan</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
@@ -85,7 +85,9 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_code']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_desc']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: center;">
-                                <i class="fa fa-pencil-square-o fa-lg text-warning me-2" onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true"></i>
+                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                             </td>
                         </tr>
                     <?php endforeach; ?>

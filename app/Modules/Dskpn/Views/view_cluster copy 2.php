@@ -1,28 +1,9 @@
-<style>
-    .select2-container {
-        z-index: 1060 !important;
-        /* Ensure this is higher than the modal */
-    }
-
-    .modal {
-        z-index: 1050;
-        /* Standard Bootstrap modal z-index */
-    }
-
-    .modal-backdrop {
-        z-index: 1040;
-    }
-
-    .btn {
-        margin-bottom: 0rem !important;
-    }
-</style>
 <div class="container-fluid py-4">
     <!-- Modal Structure -->
     <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary">
+                <div class="modal-header bg-info">
                     <h5 class="modal-title text-white" id="addClusterModalLabel">Tambah Kluster</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -45,7 +26,6 @@
             </div>
         </div>
     </div>
-
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>KLUSTER</b></h6>
@@ -59,81 +39,76 @@
             </div>
         </div>
 
-        <br>
-        <div class="table-responsive">
-            <table class="table align-items-center mb-0" id="cluster_list">
-                <thead>
-                    <tr>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD KLUSTER</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 35%; text-align: left;">KLUSTER</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">SUBJEK</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">TINDAKAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $counter = 1;
-                    foreach ($clusters as $cluster) : ?>
+        <!-- Replace tabs with dropdown selector -->
+        <div class="px-4 pt-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="form-group mb-0">
+                        <label for="clusterFilter" class="form-label">Filter by Kluster:</label>
+                        <select class="form-select" id="clusterFilter">
+                            <option value="all" selected>Semua Kluster</option>
+                            <?php foreach ($clusters as $cluster): ?>
+                                <option value="<?= esc($cluster['ctm_id']) ?>"><?= esc($cluster['ctm_desc']) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Single table that shows all data -->
+        <div class="p-4">
+            <div class="table-responsive">
+                <table class="table align-items-center m-0 cluster-table" id="clusterTable">
+                    <thead>
                         <tr>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_code']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($cluster['ctm_desc']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: left;">
-                                <?php
-                                $subject = get_cluster_subject($cluster['ctm_id']);
-                                if (is_null($subject)) { ?>
-                                    <button type="button" class="btn bg-info text-white" style="margin-bottom:0 !important"
-                                        data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal"
-                                        data-ctm-id="<?= esc($cluster['ctm_id']) ?>"
-                                        data-ctm-desc="<?= esc($cluster['ctm_desc']) ?>">
-                                        Pemetaan Subjek&nbsp;&nbsp;
-                                        <i class="fas fa-wrench"></i>
-                                    </button>
-
-                                <?php
-                                } else {
-                                    // Proceed with the subject data
-                                    echo $subject;
-                                }
-                                ?>
-                            </td>
-                            <td class="text-m font-weight-normal text-center">
-                                <div class="btn-group" role="group" aria-label="Cluster Actions">
-                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
-                                        onclick="openEditClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')"
-                                        aria-hidden="true">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-
-                                    <?php
-                                    // Show delete button only if cluster has no subjects mapped
-                                    $subject = get_cluster_subject($cluster['ctm_id']);
-                                    if (is_null($subject)) : ?>
-                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
-                                            onclick="openDeleteClusterModal(<?php echo $cluster['ctm_id']; ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')"
-                                            aria-hidden="true">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    <?php endif; ?>
-                                </div>
-                            </td>
-
+                            <th style="width: 5%; text-align: left;">BIL</th>
+                            <th style="width: 10%; text-align: left;">KOD KLUSTER</th>
+                            <th style="width: 35%; text-align: left;">KLUSTER</th>
+                            <th style="width: 50%; text-align: left;">SUBJEK</th>
+                            <th style="width: 50%; text-align: left;">TINDAKAN</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php $counter = 1; ?>
+                        <?php foreach ($clusters as $cluster): ?>
+                            <tr data-cluster-id="<?= esc($cluster['ctm_id']) ?>">
+                                <td style="text-align: left;"><?= $counter++ ?></td>
+                                <td style="text-align: left;"><?= esc($cluster['ctm_code']) ?></td>
+                                <td style="text-align: left;"><?= esc($cluster['ctm_desc']) ?></td>
+                                <td style="text-align: left;">
+                                    <?php
+                                    $subject = get_cluster_subject($cluster['ctm_id']);
+                                    if (is_null($subject)) { ?>
+                                        <button type="button" class="btn bg-info text-white"
+                                            data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal"
+                                            data-ctm-id="<?= esc($cluster['ctm_id']) ?>"
+                                            data-ctm-desc="<?= esc($cluster['ctm_desc']) ?>">
+                                            Pemetaan Subjek&nbsp;&nbsp;<i class="fas fa-wrench"></i>
+                                        </button>
+                                    <?php } else {
+                                        echo $subject;
+                                    } ?>
+                                </td>
+                                <td style="text-align: center;">
+                                    <i class="fa fa-pencil-square-o fa-lg text-warning me-2"
+                                        onclick="openEditClusterModal(<?= $cluster['ctm_id'] ?>, '<?= rawurlencode($cluster['ctm_code']) ?>', '<?= rawurlencode($cluster['ctm_desc']) ?>')"
+                                        aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <!-- <div class="text-end pt-3">
-        <a href="#" class="btn bg-gradient-primary btn-sm mb-0">Seterusnya</a>
-    </div> -->
 </div>
 
 <div class="modal fade" id="clusterSubjectMappingModal" tabindex="-1" aria-labelledby="clusterSubjectMappingModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Pemetaan Subjek</h5>
+            <div class="modal-header">
+                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan Subjek bagi Kluster:</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -141,8 +116,6 @@
 
                     <!-- Hidden input to store ctm_id -->
                     <input type="hidden" id="ctm-id-input" name="ctm_id">
-
-                    <h6 class="modal-title" id="rejectModalLabel"></h6>
 
                     <div class="row pb-4" id="standard-pembelajaran">
                         <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
@@ -168,9 +141,9 @@
 </div>
 
 <div class="modal fade" id="editClusterModal" tabindex="-1" aria-labelledby="editClusterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
+            <div class="modal-header bg-info">
                 <h5 class="modal-title text-white" id="editClusterModalLabel">Edit Kluster</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -194,55 +167,98 @@
         </div>
     </div>
 </div>
-
-<!-- Delete Cluster Modal -->
-<div class="modal fade" id="deleteClusterModal" tabindex="-1" aria-labelledby="deleteClusterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white" id="deleteClusterModalLabel">Padam Kluster</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
-                    <h4 class="mt-3">Adakah anda pasti?</h4>
-                    <p class="text-muted">Anda akan memadam kluster "<span id="deleteClusterName" class="fw-bold"></span>" secara kekal. Tindakan ini tidak boleh dibatalkan.</p>
-                </div>
-                <form id="deleteClusterForm" action="<?= route_to('delete_cluster'); ?>" method="POST">
-                    <input type="hidden" id="deleteClusterID" name="ctm_id">
-                    <div class="text-center">
-                        <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn bg-danger text-white">
-                            <i class="fas fa-trash"></i> Padam
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <script>
-    function openEditClusterModal(ctm_id, ctm_code, ctm_desc) {
-        $('#editClusterID').val(ctm_id);
-        $('#editClusterCode').val(decodeURIComponent(ctm_code));
-        $('#editClusterName').val(decodeURIComponent(ctm_desc));
-        $('#editClusterModal').modal('show');
-    }
+    // Custom DataTables language options
+    const languageOptions = {
+        search: "Cari:",
+        lengthMenu: "Papar _MENU_ rekod",
+        info: "Paparan _START_ hingga _END_ daripada _TOTAL_ rekod",
+    };
 
-    function openDeleteClusterModal(ctm_id, ctm_code, ctm_desc) {
-        $('#deleteClusterID').val(ctm_id);
-        $('#deleteClusterName').text(decodeURIComponent(ctm_desc));
-        $('#deleteClusterModal').modal('show');
-    }
-
+    // Initialize DataTable with search capability
     $(document).ready(function() {
-        $('#cluster_list').DataTable();
+        // Initialize the DataTable
+        var table = $('#clusterTable').DataTable({
+            language: languageOptions,
+            responsive: true,
+            pageLength: 10,
+            lengthMenu: [
+                [10, 25, 50, -1],
+                [10, 25, 50, "Semua"]
+            ],
+            order: [
+                [0, 'asc']
+            ],
+            initComplete: function() {
+                // Custom styling for search and length elements
+                $('#clusterTable_filter input').addClass('topic-search').attr('placeholder', 'Cari...');
+                $('#clusterTable_length select').addClass('form-select form-select-sm');
+            }
+        });
 
+        // Handle the filter dropdown change event
+        $('#clusterFilter').on('change', function() {
+            var selectedValue = $(this).val();
+
+            // Clear any existing filters
+            table.columns(0).search('').draw();
+
+            if (selectedValue === 'all') {
+                // If "All Clusters" is selected, show all rows
+                table.columns(0).search('').draw();
+                // Reset the counter for visible rows
+                updateRowNumbers();
+            } else {
+                // Custom filtering function to filter by data attribute
+                $.fn.dataTable.ext.search.push(
+                    function(settings, data, dataIndex) {
+                        var row = table.row(dataIndex).node();
+                        var clusterID = $(row).data('cluster-id');
+                        return clusterID == selectedValue;
+                    }
+                );
+
+                // Apply the filter
+                table.draw();
+
+                // Remove the custom filter function after it's applied
+                $.fn.dataTable.ext.search.pop();
+
+                // Update row numbers for visible rows
+                updateRowNumbers();
+            }
+        });
+
+        // Function to update row numbers for visible rows
+        function updateRowNumbers() {
+            var counter = 1;
+            table.rows({
+                search: 'applied'
+            }).every(function() {
+                var data = this.data();
+                data[0] = counter++;
+                this.data(data);
+            });
+        }
+
+        // Function to handle the edit modal
+        function openEditClusterModal(ctm_id, ctm_code, ctm_desc) {
+            $('#editClusterID').val(ctm_id);
+            $('#editClusterCode').val(decodeURIComponent(ctm_code));
+            $('#editClusterName').val(decodeURIComponent(ctm_desc));
+            $('#editClusterModal').modal('show');
+        }
+
+        // Make the openEditClusterModal function globally available
+        window.openEditClusterModal = openEditClusterModal;
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
         // Listener for add subject button
-        counter = 0;
+        let counter = 0;
         $('#add-subject-btn').on('click', function() {
             try {
                 document.getElementById("hinting-no-subject").style.display = "none";
@@ -276,34 +292,20 @@
 
             // Initialize Select2 on the new select element
             $(`#subject-${counter}`).select2();
-        });
 
-        // Show the submit button after adding a subject
-        $('#add-subject-btn').on('click', function() {
-            try {
-                document.getElementById("submit-btn").style.display = "inline";
-            } catch (err) {
-                // Do nothing
-            }
+            // Show the submit button
+            document.getElementById("submit-btn").style.display = "inline";
         });
 
         // Attach a delegated event listener for the delete buttons
         $(document).on('click', '.delete-subject', function() {
             $(this).closest('.subject-card').remove();
-        });
 
-        // Handle delete cluster form submission
-        $('#deleteClusterForm').on('submit', function(e) {
-            e.preventDefault();
-
-            // Optional: Add loading state
-            const submitBtn = $(this).find('button[type="submit"]');
-            const originalText = submitBtn.html();
-            submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Memadam...');
-            submitBtn.prop('disabled', true);
-
-            // Submit the form
-            this.submit();
+            // Hide submit button if no subject cards remain
+            if ($('.subject-card').length === 0) {
+                document.getElementById("submit-btn").style.display = "none";
+                document.getElementById("hinting-no-subject").style.display = "block";
+            }
         });
     });
 </script>
@@ -312,12 +314,12 @@
     $('#clusterSubjectMappingModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var ctmId = button.data('ctm-id'); // Extract info from data-ctm-id attribute
-        var ctmDesc = button.data('ctm-desc'); // Extract info from data-ctm-id attribute
+        var ctmDesc = button.data('ctm-desc'); // Extract info from data-ctm-desc attribute
 
         // Update the modal's hidden input with the ctm_id value
         $('#ctm-id-input').val(ctmId);
 
-        // Optionally, update the modal title or content to reflect the selected cluster
-        $('#rejectModalLabel').text('Kluster: ' + ctmDesc);
+        // Update the modal title to reflect the selected cluster
+        $('#rejectModalLabel').text('Daftarkan Subjek bagi Kluster: ' + ctmDesc);
     });
 </script>
