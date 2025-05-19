@@ -12,6 +12,7 @@ $routes->group('administrative', function ($routes) {
     $routes->post('get_list_of_subject_name',                   [Main::class,     'get_list_of_subject_name'],              ['as' => 'get_list_of_subject_name']);
 
     $routes->get('view_user_access',                            [UserAccessController::class,     'view_user_access'],          ['as' => 'view_user_access']);
+    $routes->post('versioning_setting',                         [UserAccessController::class,     'update_versioning_setting'], ['as' => 'update_versioning']);
     $routes->get('get_roles',                                   [UserAccessController::class,     'get_roles'],                 ['as' => 'get_roles']);
     $routes->post('save_user_roles',                            [UserAccessController::class,     'save_user_roles'],           ['as' => 'save_user_roles']);
 

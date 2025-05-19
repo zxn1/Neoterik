@@ -205,6 +205,53 @@
     </script>
   <?php endif; ?>
 
+  <script>
+$(document).ready(function () {
+  const versioning = {
+    isLoaded: false,
+    modalId: '#versioningModal',
+    loadUrl: '<?= route_to('load_dskpn_versioning') ?>',
+
+    showModal() {
+      $(this.modalId).modal('show');
+    },
+
+    showError() {
+      Swal.fire({
+        icon: 'error',
+        text: 'An error occurred while loading the versioning settings.',
+        timer: 3000,
+        showConfirmButton: false
+      });
+    },
+
+    fetchModal() {
+      $.ajax({
+        url: this.loadUrl,
+        method: 'POST',
+        success: (response) => {
+          $('body').append(response);
+          this.isLoaded = true;
+          this.showModal();
+        },
+        error: () => this.showError()
+      });
+    },
+
+    handleClick() {
+      if (this.isLoaded) {
+        this.showModal();
+      } else {
+        this.fetchModal();
+      }
+    }
+  };
+
+  $('#openVersioningModal').on('click', function () {
+    versioning.handleClick();
+  });
+});
+</script>
 </body>
 
 </html>
