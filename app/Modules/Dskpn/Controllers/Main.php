@@ -293,6 +293,21 @@ class Main extends BaseController
         $this->render_jscss('view_subject', $data, $script, $style);
     }
 
+    public function delete_subject()
+    {
+        $sbm_id = $this->request->getPost('sbm_id');
+
+        if($sbm_id){
+            if ($this->subject_model->delete($sbm_id)){
+                return redirect()->back()->with('success', 'Subjek berjaya dipadam.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memadam subjek.');
+            }
+        }
+    }
+
+
+
     public function view_cluster()
     {
         $data = [];

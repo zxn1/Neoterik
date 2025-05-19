@@ -203,6 +203,20 @@ function get_cluster_subject($ctm_id)
     }
 }
 
+// Get mapped cluster(s) for a subject
+function get_subject_cluster($sbm_id)
+{
+    $db = \Config\Database::connect();
+
+    $query = $db->table('cluster_subject_mapping')
+        ->where('csm_sbm_id', $sbm_id)
+        ->get();
+
+    $rows = $query->getResultArray();
+
+    return !empty($rows) ? $rows : null;
+}
+
 function get_user_roles($sm_recid)
 {
     // Connect to the database
