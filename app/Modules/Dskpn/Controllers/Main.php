@@ -236,11 +236,17 @@ class Main extends BaseController
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
 
+    public function load_dskpn_versioning() {
+        echo $this->render_without_main('component/versioning_dskpn');
+    }
+
     public function topic_list_in_cluster()
     {
         $data = [];
         $data['cluster_listing'] = $this->cluster_model->findAll();
         $data['years'] = range(1, 6); // Hardcoding years from 1 to 6
+
+        $data['setting_dskpn_versioning'] = $this->render_without_main('component/versioning_dskpn');
 
         $selectedYear = $this->request->getGet('year');
         if (empty($selectedYear)) {
@@ -317,6 +323,8 @@ class Main extends BaseController
         $data = [];
         $own_dskpn = $this->request->getVar("owned");
         $data['owned'] = $own_dskpn;
+
+        $data['setting_dskpn_versioning'] = $this->render_without_main('component/versioning_dskpn');
 
         $current_role = session('current_role');
         // Query to get the list of DSKPN

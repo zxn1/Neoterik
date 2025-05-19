@@ -141,6 +141,16 @@
                 </a>
               </li>
             </ul>
+            <ul class="nav ms-1 ps-1">
+              <li class="nav-item ">
+                <a class="nav-link" href="#" style="overflow : hidden;" id="openVersioningModal">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-user-tie" style="color : #3c4242; height : 16px; width : 16px;"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">DSKPN Versioning</span>
+                </a>
+              </li>
+            </ul>
           </div>
         </li>
         <li class="nav-item">

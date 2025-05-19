@@ -149,6 +149,28 @@ function get_dskpn_tema($dskpn_theme)
     }
 }
 
+function get_versioning_status()
+{
+    // Connect to the database
+    $db = Database::connect();
+
+    // Build the query to select the desired row
+    $query = $db->table('settings')
+    ->select('value')
+    ->where('key', 'dskpn_versioning')
+    ->get();
+
+    // Fetch the first row (since you're expecting one row)
+    $row = $query->getRow();
+
+    // Check if row is returned and access the value
+    if ($row) {
+        return $row->value;
+    } else {
+        return null;  // In case no result is found
+    }
+}
+
 // Get mapped subject for clusters
 function get_cluster_subject($ctm_id)
 {

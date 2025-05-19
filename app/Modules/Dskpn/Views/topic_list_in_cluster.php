@@ -8,6 +8,11 @@
     <div class="card">
         <div class="card-header d-flex p-3" style="background-color: var(--primary-color);">
             <h6 class="my-auto text-white"><i class="fas fa-layer-group me-2"></i> <b>Topik Dan Kluster</b></h6>
+            <?php if(in_array('ADMIN', get_user_role())): ?>
+            <button class="btn btn-primary ms-auto mb-0" data-toggle="modal" data-target="#versioningModal">
+                <i class="fas fa-code-branch"></i>&nbsp;&nbsp;Versioning Setting
+            </button>
+            <?php endif; ?>
         </div>
         <div class="container py-3">
             <div class="row">
@@ -150,7 +155,7 @@
         </div>
     </div>
 </div>
-
+<?= $setting_dskpn_versioning; ?>
 <script>
     // Store all topics in a JavaScript object for client-side search and pagination
     const topicsData = {};

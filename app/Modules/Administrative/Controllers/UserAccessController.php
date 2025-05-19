@@ -6,12 +6,14 @@ use App\Controllers\BaseController;
 use App\Modules\Administrative\Models\AccessRolesModel;
 use App\Modules\Administrative\Models\StaffMainModel;
 use App\Modules\Administrative\Models\UserAccessRolesModel;
+use App\Modules\Administrative\Models\SettingModel;
 
 class UserAccessController extends BaseController
 {
     protected $staff_main_model;
     protected $access_roles_model;
     protected $user_access_roles_model;
+    protected $setting_model;
 
     public function __construct()
     {
@@ -19,6 +21,19 @@ class UserAccessController extends BaseController
         $this->staff_main_model         = new StaffMainModel();
         $this->access_roles_model       = new AccessRolesModel();
         $this->user_access_roles_model  = new UserAccessRolesModel();
+        $this->setting_model            = new SettingModel();
+    }
+
+    public function update_versioning_setting() {
+        $request = $this->request;
+        $versioning = $request->getPost('versioning');
+
+        $versioning_key_id = $this->setting_model->select('id')->where('key', 'dskpn_versioning')->get();
+        $versioning_key_id = $versioning_key_id->getFirstRow()->id;
+
+        if($this->setting_model->update($versioning_key_id ,['value' => $versioning]))
+            return redirect()->back()->with('success', 'Tetapan DSKPN pengesanan berjaya dikemaskini!');
+        return redirect()->back()->with('fail', 'Tetapan DSKPN pengesanan gagal dikemaskini');
     }
 
     public function view_user_access()

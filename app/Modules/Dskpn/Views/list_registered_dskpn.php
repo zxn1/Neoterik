@@ -2,6 +2,11 @@
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
             <h6 class="my-auto text-white">Senarai DSKPN yang Didaftarkan</h6>
+            <?php if(in_array('ADMIN', get_user_role())): ?>
+            <button class="btn btn-primary ms-auto mb-0" data-toggle="modal" data-target="#versioningModal">
+                <i class="fas fa-code-branch"></i>&nbsp;&nbsp;Versioning Setting
+            </button>
+            <?php endif; ?>
         </div>
         <div class="form-check d-flex justify-content-end pe-4 pt-2 pb-2">
             <input class="form-check-input" type="checkbox" value="" onchange="handleCheckboxChange(this)" <?= $owned==true?'checked':''; ?>>
@@ -104,6 +109,7 @@
         </div>
     </div>
 </div>
+<?= $setting_dskpn_versioning; ?>
 <script>
     const req_delete_dskpn_endpoint = '<?= route_to('req_delete_dskpn'); ?>';
     const delete_dskpn_endpoint = '<?= route_to('delete_dskpn'); ?>';

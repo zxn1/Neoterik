@@ -489,7 +489,7 @@
               <div class="row">
                 <?php $part1_ex_dskpn = "";
                 $part2_ex_dskpn = ""; ?>
-                <div class="col-md-8">
+                <div class="col-md-<?= get_versioning_status()?'8':'12' ?>">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
                   <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" id="dskpncode" name="dskpncode"
                     value="<?php
@@ -513,6 +513,7 @@
                             }
                             ?>">
                 </div>
+                <?php if(get_versioning_status()): ?>
                 <div class="col-md-4">
                   <?php
                   if (empty($part2_ex_dskpn)) { ?>
@@ -521,6 +522,7 @@
                   <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
                   <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn) ? date("Y") : $part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn) ? '' : 'disabled'; ?> />
                 </div>
+                <?php endif; ?>
               </div>
             </div>
           </div>
