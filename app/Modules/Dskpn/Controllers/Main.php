@@ -332,6 +332,20 @@ class Main extends BaseController
         $this->render_jscss('view_topic', $data, $script, $style);
     }
 
+    public function delete_topic()
+    {
+        $tm_id = $this->request->getPost('tm_id');
+
+        if ($tm_id) {
+            if ($this->topic_model->delete($tm_id)) {
+                return redirect()->back()->with('success', 'Topik berjaya dipadam.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memadam topik.');
+            }
+        }
+    }
+
+
     public function list_registered_dskpn()
     {
         $this->session->set('ex_dskpn_code_init', null); //reset

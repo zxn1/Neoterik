@@ -320,9 +320,23 @@
                                         <td><?= esc($topic['ctm_desc']) ?></td>
                                         <td><?= esc($topic['tm_desc']) ?></td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                    onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                    aria-hidden="true">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+
+                                                <?php 
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
+                                                    <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                        onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                <?php endif; ?>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -357,9 +371,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -395,9 +423,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -433,9 +475,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -471,9 +527,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -509,9 +579,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -547,10 +631,23 @@
                                             <td><?= esc($topic['ctm_desc']) ?></td>
                                             <td><?= esc($topic['tm_desc']) ?></td>
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" title="Klik untuk mengemaskini topik" onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')">
-                                                    <i class="fas fa-edit"></i>
-                                                </button>
+                                                <div class="btn-group" role="group" aria-label="Topic Actions">
+                                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                                        onclick="openEditTopicModal(<?= $topic['tm_id'] ?>, <?= $topic['tm_year'] ?>, <?= $topic['ctm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                        aria-hidden="true">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
 
+                                                    <?php 
+                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                        if (is_null($has_dskpn)) : ?>
+                                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                                            onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
+                                                            aria-hidden="true">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </td>
                                         </tr>
                                 <?php endif;
@@ -656,6 +753,38 @@
         </div>
     </div>
 </div>
+
+<!-- Delete Topic Modal -->
+<div class="modal fade" id="deleteTopicModal" tabindex="-1" aria-labelledby="deleteTopicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white" id="deleteTopicModalLabel">Padam Topik</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                    <h4 class="mt-3">Adakah anda pasti?</h4>
+                    <p class="text-muted">
+                        Anda akan memadam topik "<span id="deleteTopicDesc" class="fw-bold"></span>" secara kekal.
+                        Tindakan ini tidak boleh dibatalkan.
+                    </p>
+                </div>
+                <form id="deleteTopicForm" action="<?= route_to('delete_topic'); ?>" method="POST">
+                    <input type="hidden" id="DeleteTmID" name="tm_id">
+                    <div class="text-center">
+                        <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn bg-danger text-white">
+                            <i class="fas fa-trash"></i> Padam
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         // Initialize Select2
@@ -884,4 +1013,11 @@
         // Show the modal
         $('#editClusterModal').modal('show');
     }
+
+    function openDeleteTopicModal(tm_id, tm_desc) {
+        document.getElementById('DeleteTmID').value = tm_id;
+        document.getElementById('deleteTopicDesc').textContent = decodeURIComponent(tm_desc);
+        new bootstrap.Modal(document.getElementById('deleteTopicModal')).show();
+    }
+
 </script>

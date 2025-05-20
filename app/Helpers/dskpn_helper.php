@@ -217,6 +217,19 @@ function get_subject_cluster($sbm_id)
     return !empty($rows) ? $rows : null;
 }
 
+function get_topic_dskpn($tm_id){
+
+    $db = \Config\Database::connect();
+
+    $query = $db->table('dskpn')
+        ->where('dskpn_tm_id', $tm_id)
+        ->get();
+
+     $rows = $query->getResultArray();
+    
+    return !empty($rows) ? $rows : null;
+}
+
 function get_user_roles($sm_recid)
 {
     // Connect to the database

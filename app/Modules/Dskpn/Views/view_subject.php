@@ -117,8 +117,7 @@
                             <td class="text-m font-weight-normal text-center">
                                 <div class="btn-group" role="group" aria-label="Subject Actions">
                                     <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
-                                        onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)"
-                                        aria-hidden="true">
+                                        onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true">
                                         <i class="fas fa-edit"></i>
                                     </button>
 
@@ -178,10 +177,10 @@
     }
 
    function openDeleteSubjectModal(sbm_id, sbm_code, sbm_desc) {
-    $('#deleteSubjectID').val(sbm_id);
-    $('#deleteSubjectName').text(decodeURIComponent(sbm_desc));
-    $('#deleteSubjectModal').modal('show');
-}
+        $('#deleteSubjectID').val(sbm_id);
+        $('#deleteSubjectName').text(decodeURIComponent(sbm_desc));
+        $('#deleteSubjectModal').modal('show');
+    }
 
     document.addEventListener("DOMContentLoaded", function() {
         var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");
