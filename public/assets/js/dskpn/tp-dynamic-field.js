@@ -9,7 +9,7 @@ $(document).ready(function() {
 
  function initializeTPField()
  {
-    subjectData.forEach(function(item){
+    subjectData.forEach(function(item, index){
         item = item[0];
 
         $('#tahap-penguasaan').append(`
@@ -18,18 +18,18 @@ $(document).ready(function() {
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-9 p-0 ps-2">
-                            <input id="dskp-code-subject-${item.sbm_id}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
+                            <input id="dskp-code-subject-${item.sbm_id}-${index}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
                         </div>
                         <div class="col-3 p-0 pe-2">
-                            <button type="button" class="btn bg-secondary p-3 text-white" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}')">Semak</button>
+                            <button type="button" class="btn bg-secondary p-3 text-white" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}', '${index}')">Semak</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-header d-flex p-3 bg-primary" style="border-top-left-radius: 1rem;border-top-right-radius: 1rem;">
                     <h6 class="my-auto text-white text-uppercase">${ item.sbm_desc }</h6>
                 </div>
-                <div class="list-group-item" id="collection-${item.sbm_code}" style="padding-left : 0px; border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
-                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}" style="display: flex !important;flex-direction: row !important;">
+                <div class="list-group-item" id="collection-${item.sbm_code}-${index}" style="padding-left : 0px; border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
+                    <div class="d-flex w-100 align-items-center mb-2" id="1-collection-${item.sbm_code}-${index}" style="display: flex !important;flex-direction: row !important;">
                         <input type="text" class="form-control me-2 ms-3" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required readonly>
                         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" style="display : none;">
                             <i class="fas fa-info-circle fa-lg me-2"></i>
@@ -61,14 +61,6 @@ $(document).ready(function() {
     var newFieldId = Math.floor(Math.random() * 1000000);
 
     // Create the new field HTML
-    // var newFieldHTML = `
-    //     <div class="d-flex w-100 align-items-center mb-2" id="${newFieldId}-${collectionId}">
-    //         <input type="text" name="input-${bareBoneId}[]" class="form-control me-2" placeholder="Menilai dan mencipta" value="${text}" required>
-    //         <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" onclick="$('#${newFieldId}-${collectionId}').remove();">
-    //             <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-    //         </a>
-    //     </div>
-    // `;
     var newFieldHTML = `
         <div id="${newFieldId}-${collectionId}">
             ${countInputs(collectionId) != 0?`<hr style="border-top : solid 1px !important; margin-left : 30px;" id="pleaseignoreme">`:''}

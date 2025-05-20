@@ -176,7 +176,7 @@
             <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
             <?php
           } else {
-            foreach ($subject as $index => $sub) {
+            foreach ($subject as $idx => $sub) {
             ?>
 
               <div class="col-md-4 subject-card">
@@ -194,27 +194,25 @@
 
                       <?php
                       if (!empty($subject_description) && $subject_description != "") {
-                        echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
-                        foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>">
-                            <!-- <div class="col-12 p-0 pe-1 d-flex d-inline">
-                              <label for="standard-learning-number">Item:&nbsp;</label>
-                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= ''; /*$item_list['sbm_code'];*/ ?>" name="standard-learning-number[<?= ''; /* $item_list['sbm_id']; */ ?>][]" pattern="^\d+(\.\d+)*$" 
-                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan." style="position : relative; top : -5px;"  class="form-control w-10 p-1" placeholder="1.1" value="<?= '';/*isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' */ ?>" required>
-                            </div> -->
-                            <!-- <div class="col-12 d-flex p-0" style="margin-bottom : 5px;"> -->
-                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>" class="w-100 pb-5 pe-2"></div>
+                        echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "-" . $idx . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
+                        foreach ($subject_description[$item_list['sbm_id']][$idx] as $index => $desc_item) { 
+                          //var_dump($subject_standard_numbering[$item_list['sbm_id']][$idx]);
+                          $randomNumber = mt_rand(1000000000, 9999999999);
+                          ?>
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>">
+                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>" class="w-100 pb-5 pe-2"></div>
                             <script>
-                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>", {
-                                id: '<?= $item_list['sbm_id'] ?>-<?= $index ?>',
+                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>", {
+                                id: '<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>',
                                 placeholder: "<?= rawurlencode($desc_item); ?>",
-                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>]",
-                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>",
+                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>][<?= $idx; ?>]",
+                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>",
                                 isLearningStandard: true,
                                 learningStandard: {
                                   sbm_id: "<?= $item_list['sbm_id'] ?>",
                                   sbm_code: "<?= $item_list['sbm_code'] ?>",
-                                  learning_standard_number: "<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>"
+                                  learning_standard_number: "<?= isset($subject_standard_numbering[$item_list['sbm_id']][$idx][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$idx][$index] : '' ?>",
+                                  index: "<?= $idx; ?>"
                                 }
                               });
                             </script>
@@ -231,34 +229,23 @@
                         }
                         echo "</div>";
                       } else { ?>
-                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>">
-                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>" class="w-100 pb-5 pe-2"></div>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>-<?= $idx; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $idx ?>">
+                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $idx ?>" class="w-100 pb-5 pe-2"></div>
                             <script>
-                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $index ?>", {
-                                id: '<?= $item_list['sbm_id'] ?>-<?= $index ?>',
-                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>]",
-                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $index ?>",
+                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $idx ?>", {
+                                id: '<?= $item_list['sbm_id'] ?>-<?= $idx ?>',
+                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>][<?= $idx; ?>]",
+                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $idx ?>",
                                 isLearningStandard: true,
                                 learningStandard: {
                                   sbm_id: "<?= $item_list['sbm_id'] ?>",
                                   sbm_code: "<?= $item_list['sbm_code'] ?>",
-                                  learning_standard_number: ""
+                                  learning_standard_number: "",
+                                  index: "<?= $idx; ?>"
                                 }
                               });
                             </script>
-                            <!-- <div class="col-2 p-0 pe-1">
-                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
-                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
-                            </div>
-                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
-                              <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
-                                <button class="input-group-text" id="btnGroupAddon">
-                                  <i class="fas fa-trash-alt" style="color:red;"></i>
-                                </button>
-                              </div>
-                            </div> -->
                             <hr class="stylish-hr">
                           </div>
                         </div>
@@ -266,7 +253,7 @@
                       } ?>
 
                       <div class="p-1">
-                        <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>')">Tambah &nbsp;&nbsp;
+                        <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>', '<?= $idx; ?>', '<?= $idx; ?>')">Tambah &nbsp;&nbsp;
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                           </svg>

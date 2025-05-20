@@ -201,14 +201,44 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
               <div class="d-flex top-0 w-100">
                 <!-- foreach subjek -->
+                <?php
+                  $lsi_ids = []; //this use to differentiate between ls item and same subject.
+                  $ls_ids = []; //this use to differentiate between ls item and same subject.
+                ?>
                 <?php foreach ($subjects as $row) : ?>
+                  <?php
+                  $current_ls_id = "";
+                  ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <div class="form-control zero-top-border" style="min-height: 200px; max-height: 500px; overflow-y: auto;">
                     <?php foreach ($learning_standard as $ls_desc) : ?>
-                      <?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?>
+                      <?php
+                        $flagSameColumnSubject = false;
+                        if(empty($ls_ids) && $current_ls_id == "")
+                        {
+                          $current_ls_id = $ls_desc['ls_id'];
+                          $ls_ids[] = $ls_desc['ls_id'];
+                        } else {
+                          if(!in_array($ls_desc['ls_id'], $ls_ids) && $current_ls_id == "")
+                          {
+                            $ls_ids[] = $ls_desc['ls_id'];
+                            $current_ls_id = $ls_desc['ls_id'];
+                          }
+                        }
+
+                        if(($current_ls_id == $ls_desc['ls_id']))
+                        {
+                          if(!in_array($ls_desc['lsi_id'], $lsi_ids))
+                          {
+                            $lsi_ids[] = $ls_desc['lsi_id'];
+                            $flagSameColumnSubject = true;
+                          }
+                        } 
+                        ?>
+                      <?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL && $flagSameColumnSubject) : ?>
                         <div class="d-flex align-items-start <?= (strpos($ls_desc['lsi_desc'], '<ol>') !== false)?'mb-2':'' ?>">
                           <div style="min-width: 30px;" class="fw-bold text-end me-2">
                             <?= $ls_desc['lsi_number'] ?>)
@@ -278,12 +308,14 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
               <div class="d-flex top-0 w-100">
                 <!-- Tahap Penguasaan-->
-                <?php foreach ($subjects as $row) : ?>
+                <?php foreach ($subjects as $index => $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <?php foreach ($standard_performance as $sp_desc) : ?>
+                    <?php 
+                    if(isset($standard_performance[$index]))
+                    foreach ($standard_performance[$index] as $sp_desc) : ?>
                       <?php if ($row['sbm_id'] == $sp_desc['sbm_id']) : ?>
                         <li class="list-group-item" style="padding-left : 5px;">
                           <div class="d-flex">
@@ -306,13 +338,13 @@
               <div class="d-flex top-0 w-100">
                 <!-- kompetensi teras -->
                 <!-- foreach kompetensi teras -->
-                <?php foreach ($subjects as $row) : ?>
+                <?php foreach ($subjects as $idx => $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sbm_id'] == $cc_desc['sbm_id']) : ?>
+                      <?php if (($row['sbm_id'] == $cc_desc['sbm_id']) && (!is_null($cc_desc['cmp_column_index'])?($idx == $cc_desc['cmp_column_index']):true)) : ?>
                         <li class="list-group-item"><?= $cc_desc['cc_desc']; ?></li>
                       <?php endif ?>
                     <?php endforeach ?>
@@ -323,7 +355,7 @@
             <!-- 16 Domain kemenjadian murid -->
             <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
               <div class="row">
-                <?php foreach ($subjects as $subject) { ?>
+                <?php foreach ($subjects as $idx => $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-primary">
@@ -337,7 +369,7 @@
                               <?php
                               $dpa_flag = false;
                               foreach ($domain_pengetahuan_asas as $dpa) :
-                                if ($subject['sbm_id'] == $dpa['dm_sbm_id']) : ?>
+                                if ($subject['sbm_id'] == $dpa['dm_sbm_id'] && (!is_null($dpa['dm_column_index'])?($idx == $dpa['dm_column_index']):true)) : ?>
                                   <?php if ($dpa != NULL && $dpa_flag == false) : ?>
                                     <tr>
                                       <th class="bg-light" colspan="5">
@@ -360,7 +392,7 @@
                               <!-- KEMANDIRIAN -->
                               <?php $dkem_flag = false;
                               foreach ($domain_kemandirian as $dkem) :
-                                if ($subject['sbm_id'] == $dkem['dm_sbm_id']) :
+                                if ($subject['sbm_id'] == $dkem['dm_sbm_id'] && (!is_null($dkem['dm_column_index'])?($idx == $dkem['dm_column_index']):true)) :
                               ?>
                                   <?php if ($dkem != NULL && $dkem_flag == false) : ?>
                                     <tr>
@@ -386,7 +418,7 @@
                               <!-- KUALITI KEPERIBADIAN -->
                               <?php $dkk_flag = false;
                               foreach ($domain_kualiti_keperibadian as $dkk) :
-                                if ($subject['sbm_id'] == $dkk['dm_sbm_id']) :
+                                if ($subject['sbm_id'] == $dkk['dm_sbm_id'] && (!is_null($dkk['dm_column_index'])?($idx == $dkk['dm_column_index']):true)) :
                                   $found = true; // Set the flag if the condition is met
                               ?>
                                   <?php if ($dkk != NULL && $dkk_flag == false) : ?>
@@ -422,7 +454,7 @@
             <!-- 7 Kemahiran Insaniah -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
               <div class="row">
-                <?php foreach ($subjects as $subject) { ?>
+                <?php foreach ($subjects as $idx => $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-primary">
@@ -434,7 +466,7 @@
                             <?php
                             $found = false; // Initialize a flag
                             foreach ($kemahiran_insaniah as $ki) :
-                              if ($subject['sbm_id'] == $ki['dm_sbm_id']) : ?>
+                              if ($subject['sbm_id'] == $ki['dm_sbm_id'] && (!is_null($ki['dm_column_index'])?($idx == $ki['dm_column_index']):true)) : ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">

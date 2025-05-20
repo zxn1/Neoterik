@@ -95,7 +95,7 @@
 
                 <?php
                 if (isset($subjects))
-                  foreach ($subjects as $subject) { ?>
+                  foreach ($subjects as $idx => $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-primary">
@@ -107,8 +107,8 @@
                             <tbody id="item-placing-<?= $subject['sbm_code'] ?>">
 
                               <?php
-                              if (isset($core_competency_item[$subject['sbm_id']])) {
-                                foreach ($core_competency_item[$subject['sbm_id']] as $core_map) {
+                              if (isset($core_competency_item[$idx][$subject['sbm_id']])) {
+                                foreach ($core_competency_item[$idx][$subject['sbm_id']] as $core_map) {
                                   $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                                   $charactersLength = strlen($characters);
                                   $randomString = '';
@@ -123,13 +123,13 @@
                                     <td class="ps-1" colspan="4">
                                       <div class="my-auto">
                                         <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" value="<?= $core_map[1]; ?>" readonly>
-                                        <input type="text" name="input-<?= $subject['sbm_code'] ?>[]" value="<?= $core_map[0]; ?>" readonly hidden>
+                                        <input type="text" name="input-<?= $idx; ?>-<?= $subject['sbm_code'] ?>[]" value="<?= $core_map[0]; ?>" readonly hidden>
                                       </div>
                                     </td>
                                     <td width="10px">
                                       <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
                                         <input class="form-check-input" type="checkbox" value="<?= $subject['sbm_code'] ?>" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '<?= $randomString . $subject['sbm_code'] ?>', this.value)" <?= $core_map[2] == 'Y' ? 'checked' : ''; ?>>
-                                        <input type="text" value="<?= $core_map[2] == 'Y' ? $subject['sbm_code'] : 'off'; ?>" name="checked-<?= $subject['sbm_code'] ?>[]" id="<?= $randomString . $subject['sbm_code'] ?>" hidden />
+                                        <input type="text" value="<?= $core_map[2] == 'Y' ? $subject['sbm_code'] : 'off'; ?>" name="checked-<?= $idx; ?>-<?= $subject['sbm_code'] ?>[]" id="<?= $randomString . $subject['sbm_code'] ?>" hidden />
                                       </div>
                                     </td>
                                   </tr>
