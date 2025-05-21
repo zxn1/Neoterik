@@ -124,6 +124,7 @@ class Main extends BaseController
 
     public function generate_view_pdf()
     {
+
         $data = $this->_populate_dskpn_details();
         $mpdf = new Mpdf([
             'orientation' => 'L',
@@ -157,6 +158,7 @@ class Main extends BaseController
         //     $base64Image = 'data:image/png;base64,' . $imageData;
         //     $data['draft_watermark_logo'] = $base64Image;
         // }
+        // dd($data['learning_standard']);
 
         $htmlContent = view('pdf/dskpn', $data);
 
@@ -164,7 +166,6 @@ class Main extends BaseController
         $dskpn_code = empty($dskpn_code) ? 'dskpn' : $dskpn_code;
 
         $mpdf->WriteHTML($htmlContent);
-
         return $mpdf->Output($dskpn_code . '.pdf', 'D');
     }
 
@@ -236,7 +237,8 @@ class Main extends BaseController
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
 
-    public function load_dskpn_versioning() {
+    public function load_dskpn_versioning()
+    {
         echo $this->render_without_main('component/versioning_dskpn');
     }
 
@@ -496,16 +498,14 @@ class Main extends BaseController
             ->join('subject_main', 'subject_main.sbm_id = dskp.dskp_sbm_id')
             ->where('spdm_dskpn_id', $dskpn_id)
             ->findAll();
-        
+
         //dd($standard_performance);
 
         $tp_level = 0;
         $index = 0;
         $new_standard_performance = [];
-        foreach($standard_performance as $idx => $sp)
-        {
-            if($tp_level < $sp['sp_tp_level'])
-            {
+        foreach ($standard_performance as $idx => $sp) {
+            if ($tp_level < $sp['sp_tp_level']) {
                 $tp_level = $sp['sp_tp_level'];
                 $new_standard_performance[$index][] = $sp;
             } else {
@@ -866,7 +866,7 @@ class Main extends BaseController
                     $batch_num = $check_core_competency['cc_batch'];
 
                 $core_competency_temp = $this->core_competency_model->where('cc_sbm_id', $subject_id)->where('cc_batch', $batch_num)->findAll();
-                $core_competency[$index] = $core_competency_temp;//array_merge($core_competency, $core_competency_temp);
+                $core_competency[$index] = $core_competency_temp; //array_merge($core_competency, $core_competency_temp);
             }
 
             //dd($core_competency); //OKK
@@ -1181,15 +1181,13 @@ class Main extends BaseController
         $subject_description = [];
         $subject_standard_numbering = [];
         $learning_standard_ids = [];
-        foreach($subject_list as $index => $sbjk)
-        {
+        foreach ($subject_list as $index => $sbjk) {
             $subject[] = $sbjk['sbm_id'];
             foreach ($learning_standard as $item) {
-                if($item['ls_id'] == $sbjk['ls_id'])
-                {
+                if ($item['ls_id'] == $sbjk['ls_id']) {
                     $subject_description[$item['sbm_id']][$index][] = $item['lsi_desc'];
                     $subject_standard_numbering[$item['sbm_id']][$index][] = $item['lsi_number'];
-        
+
                     if (!in_array($item['ls_id'], $learning_standard_ids))
                         $learning_standard_ids[] = $item['ls_id'];
                 }
@@ -1276,24 +1274,21 @@ class Main extends BaseController
         $core_mapping_id_session_data = [];
         $column_index_is_null = false;
         foreach ($core_map as $cmp) {
-            if(!is_null($cmp['cmp_column_index'])){
+            if (!is_null($cmp['cmp_column_index'])) {
                 $core_map_sess[$cmp['cmp_column_index']][$cmp['sbm_code']][$cmp['cmp_id']] = [$cmp['cmp_cc_code'], 'Y'];
 
-            if (!in_array($cmp['cmp_id'], $core_mapping_id_session_data))
-                $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
+                if (!in_array($cmp['cmp_id'], $core_mapping_id_session_data))
+                    $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
             } else {
                 $column_index_is_null = true;
             }
         }
-        if($column_index_is_null)
-        {
-            for($i = 0; $i < count($subject_list); $i++)
-            {
+        if ($column_index_is_null) {
+            for ($i = 0; $i < count($subject_list); $i++) {
                 foreach ($core_map as $cmp) {
-                    if($subject_list[$i]['sbm_id'] == $cmp['sbm_id'])
-                    {
+                    if ($subject_list[$i]['sbm_id'] == $cmp['sbm_id']) {
                         $core_map_sess[$i][$cmp['sbm_code']][$cmp['cmp_id']] = [$cmp['cmp_cc_code'], 'Y'];
-        
+
                         if (!in_array($cmp['cmp_id'], $core_mapping_id_session_data))
                             $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
                     }
@@ -1316,20 +1311,17 @@ class Main extends BaseController
 
         $column_index_is_null = false;
         foreach ($domain_map as $dmp) {
-            if(!is_null($dmp['dm_column_index'])){
+            if (!is_null($dmp['dm_column_index'])) {
                 $domain_map_session[$dmp['dm_column_index']]["'" . $dmp['sbm_code'] . "'"][] = $dmp['dmn_id'];
                 $domain_map_id_session_data[] = (int)$dmp['dm_id'];
             } else {
                 $column_index_is_null = true;
             }
         }
-        if($column_index_is_null)
-        {
-            for($i = 0; $i < count($subject_list); $i++)
-            {
+        if ($column_index_is_null) {
+            for ($i = 0; $i < count($subject_list); $i++) {
                 foreach ($domain_map as $dmp) {
-                    if($subject_list[$i]['sbm_id'] == $dmp['dm_sbm_id'])
-                    {
+                    if ($subject_list[$i]['sbm_id'] == $dmp['dm_sbm_id']) {
                         $domain_map_session[$i]["'" . $dmp['sbm_code'] . "'"][] = $dmp['dmn_id'];
                         $domain_map_id_session_data[] = (int)$dmp['dm_id'];
                     }
@@ -1533,7 +1525,7 @@ class Main extends BaseController
                 }
                 //$allDescription[$subject][$itemIndex] = urldecode($itemDesc); //previous structure 2D
             }
-        }        
+        }
         //dd(['data' => $allDescription, 'numbering' => $standardNumbering]);
 
         //set session for part 0
@@ -1795,12 +1787,10 @@ class Main extends BaseController
         //this part to check if contain same subject or not. if Smae, put running number/column index - to later used to differentiate.
         $curSubject = "";
         $duplicateDetected = false;
-        foreach($isSameSubject as $column_index => $isSame)
-        {    
-            $curSubject = $isSame[0];      
-            foreach($isSameSubject as $col_idx => $same)
-            {
-                if($same[0] == $curSubject && $column_index != $col_idx)
+        foreach ($isSameSubject as $column_index => $isSame) {
+            $curSubject = $isSame[0];
+            foreach ($isSameSubject as $col_idx => $same) {
+                if ($same[0] == $curSubject && $column_index != $col_idx)
                     $duplicateDetected = true;
             }
         }
@@ -1832,7 +1822,7 @@ class Main extends BaseController
                         'dm_dmn_code' => $dm_dmn_code,
                         'dm_sbm_id' => $ls_id['ls_sbm_id'],
                         'dm_dskpn_id' => $dskpn_id,
-                        'dm_column_index' => $duplicateDetected == true?$columnIndex:null
+                        'dm_column_index' => $duplicateDetected == true ? $columnIndex : null
                     ])) {
                         // do nothing
                         $domain_map_session_data[$columnIndex][$this->db->escape($subjectIndex)][] = $d_id;
@@ -1892,20 +1882,17 @@ class Main extends BaseController
         //this part to check if contain same subject or not. if Smae, put running number/column index - to later used to differentiate.
         $curSubject = "";
         $duplicateDetected = false;
-        foreach($isSameSubject as $column_index => $isSame)
-        {    
-            $curSubject = $isSame[0];      
-            foreach($isSameSubject as $col_idx => $same)
-            {
-                if($same[0] == $curSubject && $column_index != $col_idx)
+        foreach ($isSameSubject as $column_index => $isSame) {
+            $curSubject = $isSame[0];
+            foreach ($isSameSubject as $col_idx => $same) {
+                if ($same[0] == $curSubject && $column_index != $col_idx)
                     $duplicateDetected = true;
             }
         }
 
         //loop to store
         //0. loop index column.
-        foreach($processedData as $col_index => $processed)
-        {
+        foreach ($processedData as $col_index => $processed) {
             //1. loop to get key - subject
             foreach ($processed as $key => $inputCode) {
                 //1.1 get sm_id based on inputCodeKey
@@ -1920,7 +1907,7 @@ class Main extends BaseController
                             'cmp_cc_code'  => $input['value'],
                             'cmp_cc_batch' => $core_competency['cc_batch'],
                             'cmp_dskpn_id' => $dskpn_id,
-                            'cmp_column_index' => $duplicateDetected == true?$col_index:null
+                            'cmp_column_index' => $duplicateDetected == true ? $col_index : null
                         ]);
 
                         $lastInsertedID = $this->competency_mapping_model->insertID();
@@ -2547,7 +2534,7 @@ class Main extends BaseController
         $sbm_code = $this->request->getVar('sbm_code');
 
         $last_batch = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->orderBy('sp_id', 'DESC')->first();
-        $last_batch = $last_batch['sp_dskp_batch']??null;
+        $last_batch = $last_batch['sp_dskp_batch'] ?? null;
         $data = $this->standard_performance_model
             ->where('sp_dskp_code', $dskp_code)
             ->where('sp_dskp_batch', $last_batch)
