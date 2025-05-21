@@ -13,7 +13,7 @@ class DomainMappingModel extends Model
     protected $useSoftDeletes = true;
 
     //if ls_id is missing it refers to specification part (not related to subject mapping - ex: Reka bentuk instruksi, Kaedah, Integrasi Teknologi and Pendekatan part)
-    protected $allowedFields = ['dm_sbm_id', 'dm_dmn_code', 'dm_dskpn_id'];
+    protected $allowedFields = ['dm_sbm_id', 'dm_dmn_code', 'dm_dskpn_id', 'dm_column_index'];
 
     // If you want to use timestamps
     protected $useTimestamps = true;

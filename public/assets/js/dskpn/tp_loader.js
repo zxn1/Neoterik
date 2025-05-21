@@ -2,15 +2,15 @@ $(document).ready(function() {
   if(tpSessRefcode.length > 0 && subjectData.length > 0)
   {
     subjectData.forEach((sub, index) => {
-      $("#dskp-code-subject-" + sub[0].sbm_id).val(tpSessRefcode[index]);
-      getTPFromDSKPCode(sub[0].sbm_id, sub[0].sbm_code, sub[0].sbm_desc);
+      $("#dskp-code-subject-" + sub[0].sbm_id + '-' + index).val(tpSessRefcode[index]);
+      getTPFromDSKPCode(sub[0].sbm_id, sub[0].sbm_code, sub[0].sbm_desc, index);
     });
   }
 });
 
-function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "")
+function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "", $index = 0)
 {
-  let dskpCode = $("#dskp-code-subject-" + sbm_id).val();
+  let dskpCode = $("#dskp-code-subject-" + sbm_id + "-" + $index).val();
   $.ajax({
     url: getTPListEndpoint + "?dskp_code=" + dskpCode + "&sbm_code=" + sbm_code,
     type: 'GET',
@@ -21,7 +21,7 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "")
         let TPData = response.data;
         if(TPData.length > 0)
         {
-          let subjectTPDiv = $("#collection-" + sbm_code);
+          let subjectTPDiv = $("#collection-" + sbm_code + "-" + $index);
 
           subjectTPDiv.empty();
           let counter = 1;
@@ -37,7 +37,7 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "")
                                 </div>`);
             counter++;
           });
-          $("#dskp-code-subject-" + sbm_id).prop("readonly", true);
+          $("#dskp-code-subject-" + sbm_id + "-" + $index).prop("readonly", true);
         } else {
           Swal.fire({
             icon: "error",

@@ -25,9 +25,9 @@
 
       if(learningStandard != null)
       {
-        let { sbm_code, sbm_id, learning_standard_number } = learningStandard;
+        let { sbm_code, sbm_id, learning_standard_number, index } = learningStandard;
         extra_tool = `<label for="standard-learning-number" style="position : relative; top : 2px;">Item:&nbsp;</label>
-                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="${sbm_code}" name="standard-learning-number[${sbm_id}][]" pattern="^\\d+(\\.\\d+)*$" 
+                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="${sbm_code}" name="standard-learning-number[${sbm_id}][${index}][]" pattern="^\\d+(\\.\\d+)*$" 
                       title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan." style="position : relative; top : -2px;"  class="form-control w-15 p-1" placeholder="1.1" value="${learning_standard_number}" required>`; 
       } else {
         extra_tool = "";
