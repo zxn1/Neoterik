@@ -164,37 +164,53 @@
             <td class="tg-fymr" colspan="4" style="width: 60%;">REKA BENTUK INSTRUKSI:</td>
         </tr>
         <tr>
-        
-        <td colspan="3" rowspan="9" style="vertical-align: top;">
-            <?php
-            $sb_flag = false;
-            if (isset($subjects) && !empty($subjects)):
-                $sb_flag = true;
-                foreach ($subjects as $sb): ?>
-                <div style="font-weight: bold; margin-bottom: 4px;">
-                    <?= $sb['sbm_desc'] ?>
-                </div>
+            
+       <td colspan="3" rowspan="9" style="vertical-align: top;">
+            <?php if (isset($learning_standard) && !empty($learning_standard) && isset($subjects) && !empty($subjects)): ?>
+                <?php
+                // Map subjects for easy lookup: sbm_id => sbm_desc
+                $subjectMap = [];
+                foreach ($subjects as $sb) {
+                    $subjectMap[$sb['sbm_id']] = $sb['sbm_desc'];
+                }
 
-                <?php if (isset($learning_standard) && !empty($learning_standard)): ?>
-                    <?php foreach ($learning_standard as $ls): ?>
-                    <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']): ?>
-                        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
-                        <tr style="border: none;">
-                            <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
-                            <p><?= $ls['lsi_number'] ?>.</p>
-                            </td>
-                            <td valign="top" style="border: none;">
-                            <?= $ls['lsi_desc'] ?>
-                            </td>
-                        </tr>
-                        </table>
-                    <?php endif; ?>
+                // Group learning standards by subject ID and learning standard group ID
+                $grouped = [];
+                foreach ($learning_standard as $ls) {
+                    $subjectId = $ls['ls_sbm_id'];
+                    $lsiId = $ls['lsi_ls_id'];
+                    $grouped[$subjectId][$lsiId][] = $ls;
+                }
+                ?>
+
+                <?php foreach ($grouped as $subjectId => $lsiGroups): ?>
+                    <?php 
+                        $subjectName = $subjectMap[$subjectId] ?? 'Unknown Subject';
+                    ?>
+                    <div style="font-weight: bold; margin-bottom: 4px;">
+                        <?= $subjectName ?>
+                    </div>
+
+                    <?php foreach ($lsiGroups as $lsi_ls_id => $items): ?>
+                        <?php foreach ($items as $item): ?>
+                            <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
+                                <tr style="border: none;">
+                                    <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
+                                        <p><?= $item['lsi_number'] ?>.</p>
+                                    </td>
+                                    <td valign="top" style="border: none;">
+                                        <?= $item['lsi_desc'] ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
-                <?php endif; ?>
 
-                <br>
-                <?php endforeach;
-            endif; ?>
+                    <br>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No learning standards available.</p>
+            <?php endif; ?>
         </td>
 
             <td class="tg-0pky" colspan="1" rowspan="2">
