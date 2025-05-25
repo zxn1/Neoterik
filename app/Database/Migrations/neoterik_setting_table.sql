@@ -7,4 +7,4 @@ CREATE TABLE `settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-INSERT INTO `neoterik`.`settings` (`key`, `value`) VALUES ('dskpn_versioning', 0);
+INSERT INTO `settings` (`key`, `value`) VALUES ('dskpn_versioning', 0);
