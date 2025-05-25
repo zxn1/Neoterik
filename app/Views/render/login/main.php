@@ -607,10 +607,10 @@
                                             <?= session('errors.password') ?>
                                         </div>
 
-                                        <div class="form-check form-switch ms-1 mb-4">
+                                        <!-- <div class="form-check form-switch ms-1 mb-4">
                                             <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
                                             <label class="form-check-label small" for="rememberMe">Ingat saya</label>
-                                        </div>
+                                        </div> -->
 
                                         <button type="submit" class="btn login-btn w-100">
                                             Log Masuk

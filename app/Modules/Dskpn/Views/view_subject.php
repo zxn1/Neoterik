@@ -54,6 +54,36 @@
             </div>
         </div>
     </div>
+    <!-- Delete Subject Modal -->
+    <div class="modal fade" id="deleteSubjectModal" tabindex="-1" aria-labelledby="deleteSubjectModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title text-white" id="deleteSubjectModalLabel">Padam Subjek</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
+                        <h4 class="mt-3">Adakah anda pasti?</h4>
+                        <p class="text-muted">
+                            Anda akan memadam subjek "<span id="deleteSubjectName" class="fw-bold"></span>" secara kekal. 
+                            Tindakan ini tidak boleh dibatalkan.
+                        </p>
+                    </div>
+                    <form id="deleteSubjectForm" action="<?= route_to('delete_subject'); ?>" method="POST">
+                        <input type="hidden" id="deleteSubjectID" name="sbm_id">
+                        <div class="text-center">
+                            <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn bg-danger text-white">
+                                <i class="fas fa-trash"></i> Padam
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
@@ -84,10 +114,24 @@
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= $counter++; ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_code']) ?></td>
                             <td class="text-m font-weight-normal" style="text-align: left;"><?= esc($subject['sbm_desc']) ?></td>
-                            <td class="text-m font-weight-normal" style="text-align: center;">
-                                <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success" onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true">
-                                    <i class="fas fa-edit"></i>
-                                </button>
+                            <td class="text-m font-weight-normal text-center">
+                                <div class="btn-group" role="group" aria-label="Subject Actions">
+                                    <button type="button" class="btn btn-sm action-icon btn-edit btn-outline-success"
+                                        onclick="openEditModal(<?= htmlspecialchars(json_encode($subject), ENT_QUOTES, 'UTF-8') ?>)" aria-hidden="true">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+
+                                   <?php
+                                    $clusters = get_subject_cluster($subject['sbm_id']);
+                                    if (is_null($clusters)) : ?>
+                                        <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
+                                            onclick="openDeleteSubjectModal(<?= $subject['sbm_id'] ?>, '<?= rawurlencode($subject['sbm_code']) ?>', '<?= rawurlencode($subject['sbm_desc']) ?>')"
+                                            aria-hidden="true">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    <?php endif; ?>
+
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -131,6 +175,13 @@
         $('#edit_subjectName').val(subject.sbm_desc);
         $('#editClusterModal').modal('show');
     }
+
+   function openDeleteSubjectModal(sbm_id, sbm_code, sbm_desc) {
+        $('#deleteSubjectID').val(sbm_id);
+        $('#deleteSubjectName').text(decodeURIComponent(sbm_desc));
+        $('#deleteSubjectModal').modal('show');
+    }
+
     document.addEventListener("DOMContentLoaded", function() {
         var lastAccordionItem = document.querySelector(".accordion-item:last-of-type");
         if (lastAccordionItem) {

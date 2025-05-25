@@ -39,8 +39,10 @@ $routes->group('dskpn', function ($routes) {
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
     $routes->get('view-subject',                [Main::class,     'view_subject'],                  ['as' => 'view_subject']);
+    $routes->post('delete-subject',             [Main::class,     'delete_subject'],                ['as' => 'delete_subject']);
     $routes->get('view-cluster',                [Main::class,     'view_cluster'],                  ['as' => 'view_cluster']);
     $routes->get('view-topic',                  [Main::class,     'view_topic'],                    ['as' => 'view_topic']);
+    $routes->post('delete-topic',              [Main::class,     'delete_topic'],                   ['as' => 'delete_topic']);
     $routes->get('view-tp-core-competency-setup', [Main::class,   'view_tp_core_competency'],       ['as' => 'view_tp_core_setup']);
     $routes->get('view-core-competency-setup',  [Main::class,     'view_core_competency'],          ['as' => 'view_core_competency_setup']);
     $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'], ['as' => 'get_dskp_code_available']);
