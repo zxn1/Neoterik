@@ -6,7 +6,7 @@
                 <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">NAMA</th>
                 <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KELAS</th>
                 <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KLUSTER</th>
-                <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">SUBJEK</th>
+                <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">MATA PELAJARAN</th>
                 <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
             </tr>
         </thead>

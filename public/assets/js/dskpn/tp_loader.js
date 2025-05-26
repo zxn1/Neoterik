@@ -42,7 +42,7 @@ function getTPFromDSKPCode(sbm_id, sbm_code, sbm_name = "", $index = 0)
           Swal.fire({
             icon: "error",
             title: "Maaf!",
-            text: "Tiada rekod Tahap Penguasaan bagi Kod '" + dskpCode + "' " + sbm_name?"yang berkait subjek '" + sbm_name + "'":"."
+            text: "Tiada rekod Tahap Penguasaan bagi Kod '" + dskpCode + "' " + sbm_name?"yang berkait mata pelajaran '" + sbm_name + "'":"."
           });
         }
       } else {

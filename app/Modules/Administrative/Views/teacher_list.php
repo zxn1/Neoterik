@@ -41,7 +41,7 @@
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" class="custom-control-input" id="defaultInline2Radio" name="pemetaan_guru" value="subjek">
-                                <label class="custom-control-label" for="defaultInline2Radio">Pemetaan Guru-Subjek</label>
+                                <label class="custom-control-label" for="defaultInline2Radio">Pemetaan Guru & Mata Pelajaran</label>
                             </div>
                         </div>
 
@@ -58,9 +58,9 @@
 
                         <!-- Subjek Dropdown (Initially hidden) -->
                         <div class="form-group" id="subjekDropdown" style="display:none;">
-                            <label for="subjekSelect">Subjek</label>
+                            <label for="subjekSelect">Mata Pelajaran</label>
                             <select style="width:100%;" name="subjek" class="form-control select2" id="subjek_list" aria-label="Default select example">
-                                <option disabled selected>-- Sila Pilih Subjek --</option>
+                                <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
                                 <?php foreach ($subjects as $subject) { ?>
                                     <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                                 <?php } ?>
@@ -135,7 +135,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">NAMA</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KELAS</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KLUSTER</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">SUBJEK</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">MATA PELAJARAN</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>

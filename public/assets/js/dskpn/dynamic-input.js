@@ -105,7 +105,7 @@ $('#add-subject-button').on('click', function() {
         Swal.fire({
             icon: "error",
             title: "Maaf",
-            text: "Maksimum subjek dibenarkan adalah " + get_default_subject.length  + "!"
+            text: "Maksimum mata pelajaran dibenarkan adalah " + get_default_subject.length  + "!"
         });
         return;
     }
@@ -133,7 +133,7 @@ $('#add-subject-button').on('click', function() {
         <div class="col-md-4 subject-card">
             <div class="card mt-4">
             <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                     ${htmlOptions}
                 </select>
                 <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
@@ -280,7 +280,7 @@ $('#topik-dynamic-field').on('change', function() {
                         <div class="col-md-4 subject-card">
                             <div class="card mt-4">
                                 <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                                         ${htmlOptions}
                                     </select>
                                     <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
@@ -327,7 +327,7 @@ $('#topik-dynamic-field').on('change', function() {
                 Swal.fire({
                     icon: "error",
                     title: "Maaf",
-                    text: "Subjek bagi Kluster ini masih belum dikonfigurasi!"
+                    text: "Mata Pelajaran bagi Kluster ini masih belum dikonfigurasi!"
                 });
             }
         },
@@ -337,7 +337,7 @@ $('#topik-dynamic-field').on('change', function() {
             Swal.fire({
                 icon: "error",
                 title: "Maaf",
-                text: "Subjek bagi Kluster ini masih belum dikonfigurasi!"
+                text: "Mata Pelajaran bagi Kluster ini masih belum dikonfigurasi!"
             });
         }
     });

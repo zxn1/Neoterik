@@ -14,9 +14,9 @@
             <div class="row align-items-center">
                 <div class="row">
                     <div class="form-group">
-                        <label for="subjectSelect">Subjek</label>
+                        <label for="subjectSelect">Mata Pelajaran</label>
                         <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
-                            <option disabled selected>-- Sila Pilih Subjek --</option>
+                            <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
                             <?php foreach ($subject_list as $subject) { ?>
                                 <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                             <?php } ?>
@@ -32,7 +32,7 @@
             <h6 class="my-auto text-white"><b>KOMPETENSI TERAS</b></h6>
             <div>
                 <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-secondary text-white" id="edit-core-competency" style="margin-bottom:0 !important; display : none;">
-                    Ubah Kompetensi Teras Subjek Ini&nbsp;&nbsp;
+                    Ubah Kompetensi Teras Mata Pelajaran Ini&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
                 </a>
                 <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">

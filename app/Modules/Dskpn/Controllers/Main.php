@@ -122,51 +122,114 @@ class Main extends BaseController
         // return view('App\\Modules\\Login\\Views\\login');
     }
 
+    // public function generate_view_pdf()
+    // {
+
+    //     $data = $this->_populate_dskpn_details();
+    //     $mpdf = new Mpdf([
+    //         'orientation' => 'L',
+    //         'format' => 'A1', //[594, 850], //A2
+    //         'margin_left' => 10,
+    //         'margin_right' => 10,
+    //         'margin_top' => 10,
+    //         'margin_bottom' => 10,
+    //     ]);
+
+    //     // Set the watermark text
+    //     if ($data['dskpn_details']['dskpn_status'] == 5 || $data['dskpn_details']['dskpn_status'] == null) {
+    //         $mpdf->SetWatermarkText('DRAF');
+    //         $mpdf->showWatermarkText = true;
+    //         //$mpdf->SetWatermarkImage('path/to/image.png');
+    //     }
+
+    //     $path = FCPATH . 'neoterik/img/logo_srsb.png';
+    //     //$path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
+
+    //     if (file_exists($path)) {
+    //         //encode image to base64
+    //         $imageData = base64_encode(file_get_contents($path));
+    //         $base64Image = 'data:image/png;base64,' . $imageData;
+    //         $data['srsb_logo'] = $base64Image;
+    //     }
+
+    //     // if (file_exists($path2)) {
+    //     //     //encode image to base64
+    //     //     $imageData = base64_encode(file_get_contents($path2));
+    //     //     $base64Image = 'data:image/png;base64,' . $imageData;
+    //     //     $data['draft_watermark_logo'] = $base64Image;
+    //     // }
+    //     // dd($data['learning_standard']);
+
+    //     $htmlContent = view('pdf/dskpn', $data);
+
+    //     $dskpn_code = $this->session->get('dskpn_code');
+    //     $dskpn_code = empty($dskpn_code) ? 'dskpn' : $dskpn_code;
+
+    //     $mpdf->WriteHTML($htmlContent);
+    //     return $mpdf->Output($dskpn_code . '.pdf', 'D');
+    // }
+
+    /*
+    Code asli dibiar diatas (commented out), atas kemungkinan kod auto adjust height ini mempunyai performance issue.
+    Kemungkinan perlu revert kembali.
+    */
     public function generate_view_pdf()
     {
-
         $data = $this->_populate_dskpn_details();
-        $mpdf = new Mpdf([
-            'orientation' => 'L',
-            'format' => 'A1', //[594, 850], //A2
-            'margin_left' => 10,
-            'margin_right' => 10,
-            'margin_top' => 10,
-            'margin_bottom' => 10,
-        ]);
-
-        // Set the watermark text
-        if ($data['dskpn_details']['dskpn_status'] == 5 || $data['dskpn_details']['dskpn_status'] == null) {
-            $mpdf->SetWatermarkText('DRAF');
-            $mpdf->showWatermarkText = true;
-            //$mpdf->SetWatermarkImage('path/to/image.png');
-        }
-
+        // Logo fallback
+        $data['srsb_logo'] = null;
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
-        //$path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
-
+        
         if (file_exists($path)) {
-            //encode image to base64
             $imageData = base64_encode(file_get_contents($path));
             $base64Image = 'data:image/png;base64,' . $imageData;
             $data['srsb_logo'] = $base64Image;
         }
 
-        // if (file_exists($path2)) {
-        //     //encode image to base64
-        //     $imageData = base64_encode(file_get_contents($path2));
-        //     $base64Image = 'data:image/png;base64,' . $imageData;
-        //     $data['draft_watermark_logo'] = $base64Image;
-        // }
-        // dd($data['learning_standard']);
-
         $htmlContent = view('pdf/dskpn', $data);
 
-        $dskpn_code = $this->session->get('dskpn_code');
-        $dskpn_code = empty($dskpn_code) ? 'dskpn' : $dskpn_code;
+        // Fasa 1: Render untuk kira pages
+        $tempMpdf = $this->mpdf_init(100);
+        //new \Mpdf\Mpdf(['orientation' => 'L', 'format' => [100, 594]]);
+        $tempMpdf->WriteHTML($htmlContent);
+        $pageCount = $tempMpdf->page;
+
+        // Fasa 2: Render semula dengan tinggi gabungan
+        $estimatedHeight = 150 * $pageCount;
+        $mpdf = $this->mpdf_init($estimatedHeight);
 
         $mpdf->WriteHTML($htmlContent);
-        return $mpdf->Output($dskpn_code . '.pdf', 'D');
+        $secondTest = $mpdf->page;
+
+        if($secondTest > 1)
+        {
+            $estimatedHeight = 180 * $pageCount;
+            $mpdf = $this->mpdf_init($estimatedHeight);
+
+            $html = view('pdf/dskpn', $data);
+            $mpdf->WriteHTML($html);
+        }
+
+        // Watermark DRAF
+        if (!isset($data['dskpn_details']['dskpn_status']) || $data['dskpn_details']['dskpn_status'] == 5) {
+            $mpdf->SetWatermarkText('DRAF');
+            $mpdf->showWatermarkText = true;
+        }
+
+        $filename = $this->session->get('dskpn_code') ?? 'dskpn';
+        return $mpdf->Output($filename . '.pdf', 'D');
+    }
+
+    public function mpdf_init($height)
+    {
+        return new \Mpdf\Mpdf([
+                'orientation' => 'L',
+                'format' => [$height, 594],
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 10,
+            ]);
     }
 
     public function test_view_pdf_in_html()

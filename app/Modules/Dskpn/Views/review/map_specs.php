@@ -45,7 +45,7 @@
                   <tr id="new-input-<?= $new_input[1]; ?>">
                     <td class="ps-1" colspan="4">
                       <div class="my-auto">
-                        <input type="text" class="form-control" placeholder="Tajuk Subjek" required value="<?= $new_input[0]; ?>" disabled>
+                        <input type="text" class="form-control" placeholder="Tajuk Mata Pelajaran" required value="<?= $new_input[0]; ?>" disabled>
                       </div>
                     </td>
                     <td class="justify-content-center">

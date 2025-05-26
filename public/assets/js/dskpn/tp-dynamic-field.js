@@ -18,7 +18,7 @@ $(document).ready(function() {
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-9 p-0 ps-2">
-                            <input id="dskp-code-subject-${item.sbm_id}-${index}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required value="${item.sbm_code}">
+                            <input id="dskp-code-subject-${item.sbm_id}-${index}" type="text" name="sub_ref_code[]" class="form-control subject-title" style="font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required value="${item.sbm_code}">
                         </div>
                         <div class="col-3 p-0 pe-2">
                             <button type="button" class="btn bg-secondary p-3 text-white" style="height: 40px; line-height: 5px;" onclick="getTPFromDSKPCode(${item.sbm_id}, '${item.sbm_code}', '${item.sbm_desc}', '${index}')">Semak</button>
