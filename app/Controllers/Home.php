@@ -8,4 +8,9 @@ class Home extends BaseController
     {
         return redirect()->to(route_to('dashboard'));
     }
+
+    public function maintenance()
+    {
+        return view('maintenance');
+    }
 }
