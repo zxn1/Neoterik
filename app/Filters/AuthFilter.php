@@ -14,6 +14,8 @@ class AuthFilter implements FilterInterface
             return redirect()->to(route_to('maintenance'));
         } else if(env('UNDERMAINTENANCE') == false && $request->getUri()->getPath() === route_to('maintenance')) {
             return redirect()->to('login/');
+        } else if(env('UNDERMAINTENANCE') == true && $request->getUri()->getPath() === route_to('maintenance')) {
+            return;
         }
 
         // Excluded url list

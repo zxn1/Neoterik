@@ -20,6 +20,10 @@ class Main extends BaseController
 
     public function index()
     {
+        if (env('UNDERMAINTENANCE') == true) {
+            return redirect()->to(route_to('maintenance'));
+        }
+
         // Check if the user has logged in permissions
         if ($this->session->has('sm_id')) {
             return redirect()->to('dashboard');
