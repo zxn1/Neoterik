@@ -148,7 +148,7 @@
                                     </div>
                                   </td>
                                   <td width="5px" style="display: none;">
-                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Item Kompetensi Teras bagi subjek <?= $subject['sbm_desc'] ?> masih belum ditetapkan!">
+                                    <a class="btn btn-link text-danger text-gradient px-1 mb-0" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Item Kompetensi Teras bagi mata pelajaran <?= $subject['sbm_desc'] ?> masih belum ditetapkan!">
                                       <i class="fas fa-info-circle fa-lg me-2"></i>
                                     </a>
                                   </td>

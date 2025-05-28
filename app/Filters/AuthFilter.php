@@ -10,6 +10,14 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        if (env('UNDERMAINTENANCE') == true && $request->getUri()->getPath() !== route_to('maintenance')) {
+            return redirect()->to(route_to('maintenance'));
+        } else if(env('UNDERMAINTENANCE') == false && $request->getUri()->getPath() === route_to('maintenance')) {
+            return redirect()->to('login/');
+        } else if(env('UNDERMAINTENANCE') == true && $request->getUri()->getPath() === route_to('maintenance')) {
+            return;
+        }
+
         // Excluded url list
         $excluded_url = [
             route_to('gen_acc')

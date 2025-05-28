@@ -81,7 +81,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-chalkboard-teacher" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Guru - Kluster</span>
+                  <span class="nav-link-text ms-1">Guru & Kluster</span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -180,7 +180,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Subjek</span>
+                  <span class="nav-link-text ms-1">Mata Pelajaran</span>
                 </a>
               </li>
               <li class="nav-item ">

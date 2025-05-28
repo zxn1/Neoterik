@@ -50,13 +50,13 @@
   <div class="container-fluid py-4">
     <div class="card">
       <div class="card-header d-flex p-3 bg-primary">
-        <h6 class="my-auto text-white"><b>SUBJEK</b></h6>
+        <h6 class="my-auto text-white"><b>MATA PELAJARAN</b></h6>
       </div>
       <div class="card-body mb-2">
         <div class="row pb-4">
-          <label>Penetapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
+          <label>Penetapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Mata Pelajaran:</label>
           <select name="subject" id="subject-dynamic-field" onchange="selectSubjectToCode(this)" class="form-control select2" aria-label="Default select example" required>
-            <option disabled selected>-- Sila Pilih Subjek --</option>
+            <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
             <?php
             foreach ($subject_list as $subject)
               echo "<option value='" . $subject['sbm_id'] . "' data-code='" . $subject['sbm_code'] . "'>" . $subject['sbm_desc'] . "</option>";
@@ -69,7 +69,7 @@
             <table>
               <tr>
                 <td hidden>
-                  <label>Kod Subjek</label>
+                  <label>Kod Mata Pelajaran</label>
                   <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required readonly>
                 </td>
                 <td id="code-tp-rank-div" style="display : none;">

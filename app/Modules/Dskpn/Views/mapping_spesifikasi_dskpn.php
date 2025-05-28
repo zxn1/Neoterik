@@ -139,7 +139,7 @@
                         </td>
                         <td class="ps-1" colspan="4">
                           <div class="my-auto">
-                            <input type="text" name="new-item[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" class="form-control" placeholder="Tajuk Subjek" required value="<?= $new_input[0]; ?>">
+                            <input type="text" name="new-item[<?= $group['tappc_id']; ?>][<?= $new_input[1]; ?>]" class="form-control" placeholder="Tajuk Mata Pelajaran" required value="<?= $new_input[0]; ?>">
                           </div>
                         </td>
                       </tr>
@@ -243,7 +243,7 @@ if ($review) { ?>
           </td>
           <td class="ps-1" colspan="4">
             <div class="d-flex align-items-center justify-content-between">
-              <input type="text" name="new-item[` + id + `][` + newFieldId + `]" class="form-control me-2" placeholder="Tajuk Subjek" required>
+              <input type="text" name="new-item[` + id + `][` + newFieldId + `]" class="form-control me-2" placeholder="Tajuk Mata Pelajaran" required>
               <a class="btn btn-link text-danger text-gradient p-0 m-0" href="javascript:void(0)" onclick="$('#new-input-` + newFieldId + `').remove();">
                 <i class="far fa-trash-alt fa-lg" aria-hidden="true"></i>
               </a>

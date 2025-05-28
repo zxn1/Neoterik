@@ -67,7 +67,7 @@
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD KLUSTER</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 35%; text-align: left;">KLUSTER</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">SUBJEK</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">MATA PELAJARAN</th>
                         <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 50%; text-align: left;">TINDAKAN</th>
                     </tr>
                 </thead>
@@ -86,7 +86,7 @@
                                         data-bs-toggle="modal" data-bs-target="#clusterSubjectMappingModal"
                                         data-ctm-id="<?= esc($cluster['ctm_id']) ?>"
                                         data-ctm-desc="<?= esc($cluster['ctm_desc']) ?>">
-                                        Pemetaan Subjek&nbsp;&nbsp;
+                                        Pemetaan Mata Pelajaran&nbsp;&nbsp;
                                         <i class="fas fa-wrench"></i>
                                     </button>
 
@@ -133,7 +133,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Pemetaan Subjek</h5>
+                <h5 class="modal-title text-white">Pemetaan Mata Pelajaran</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -145,11 +145,11 @@
                     <h6 class="modal-title" id="rejectModalLabel"></h6>
 
                     <div class="row pb-4" id="standard-pembelajaran">
-                        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+                        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn bg-secondary text-white" style="margin-bottom:0 !important" data-bs-dismiss="modal">Batal</button>
-                        <span id="add-subject-btn" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+                        <span id="add-subject-btn" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Mata Pelajaran&nbsp;&nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                             </svg>
@@ -262,7 +262,7 @@
                 <div class="col-md-12 subject-card">
                     <div class="card">
                         <div class="d-flex p-2">
-                            <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Subjek" required>
+                            <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Mata Pelajaran" required>
                                 <option value="" selected disabled>--Select Subject--</option>
                                 ${options}
                             </select>

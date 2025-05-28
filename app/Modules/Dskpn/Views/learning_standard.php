@@ -162,7 +162,7 @@
     <div class="card pb-3">
       <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
         <h6 class="my-auto text-white"><b>STANDARD PEMBELAJARAN</b></h6>
-        <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+        <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Mata Pelajaran&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
           </svg>
@@ -173,7 +173,7 @@
           <?php
           if (empty($subject)) {
           ?>
-            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
             <?php
           } else {
             foreach ($subject as $idx => $sub) {
@@ -184,7 +184,7 @@
                   <?php if ($item_list['sbm_id'] == $sub) : ?>
                     <div class="card mt-4">
                       <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                           <option class="dropdown-item" value='<?= $item_list['sbm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sbm_desc'] ?></option>
                         </select>
                         <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
@@ -216,7 +216,7 @@
                                 }
                               });
                             </script>
-                            <!-- <input type="text" class="form-control p-1 me-1" name="subject_description[<?= ''; /*$item_list['sbm_id'];*/ ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= ''; /*$desc_item;*/ ?>">
+                            <!-- <input type="text" class="form-control p-1 me-1" name="subject_description[<?= ''; /*$item_list['sbm_id'];*/ ?>][]" placeholder="Objektif bagi Mata Pelajaran ini." value="<?= ''; /*$desc_item;*/ ?>">
                               <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= ''; /*$item_list['sbm_id'];*/ ?>').remove();selectionPopulateBasedOnNumbering();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                   <i class="fas fa-trash-alt" style="color:red;"></i>

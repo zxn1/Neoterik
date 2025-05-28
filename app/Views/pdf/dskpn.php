@@ -320,10 +320,12 @@
                 if (isset($standard_performance) && !empty($standard_performance)) {
                     $sp_flag = true;
                     foreach ($standard_performance as $group) {
-                        foreach ($group as $sp) {
-                            if (!in_array($sp['dskp_code'], $dskp_code))
-                                $dskp_code[] = $sp['dskp_code'];
-                        }
+                        if(isset($group[0]['dskp_code']))
+                            $dskp_code[] = $group[0]['dskp_code'];
+                        // foreach ($group as $sp) {
+                        //     if (!in_array($sp['dskp_code'], $dskp_code))
+                        //         $dskp_code[] = $sp['dskp_code'];
+                        // }
                     }
                 }
                 foreach ($dskp_code as $dc) { ?>
@@ -413,19 +415,29 @@
             $acc_flag = false;
             $tempAccArr = [];
             if ($sb_flag) {
-                foreach ($subjects as $sb) {
+                foreach ($subjects as $idx => $sb) {
                     if (isset($all_core_competency) && !empty($all_core_competency)) {
                         $acc_flag = true;
                         foreach ($all_core_competency as $acc) {
                             if ($sb['sbm_id'] == $acc['sbm_id'])
-                                $tempAccArr[$sb['sbm_id']][] = $acc;
+                                $tempAccArr[$sb['sbm_id']][$idx][] = $acc;
                         }
                     }
                 }
-                foreach ($tempAccArr as $sbm_id => $sbmArr) {
-                    if ($highest_val_item_for_sbm_id < count($sbmArr)) {
-                        $highest_val_item_for_sbm_id = count($sbmArr);
-                        $highest_sbm_id = $sbm_id;
+                foreach ($subjects as $idx => $sb) {
+                    if(isset($tempAccArr[$sb['sbm_id']]))
+                    {
+                        foreach ($tempAccArr[$sb['sbm_id']] as $sb_idx => $sbmArr) {
+                            if ($highest_val_item_for_sbm_id < count($sbmArr)) {
+                                $highest_val_item_for_sbm_id = count($sbmArr);
+                                $highest_sbm_id = $sb['sbm_id'];
+                            }
+                        }
+                    }
+                    else
+                    {
+                        $highest_val_item_for_sbm_id = 0;
+                        $highest_sbm_id = 0;
                     }
                 }
             }
@@ -439,22 +451,22 @@
                     echo '<td colspan="2" rowspan="' . $highest_val_item_for_sbm_id . '" class="center vertical-center yellow">KOMPETENSI TERAS<br>SKOR 1-6</td>';
 
                 if ($acc_flag && (isset($subjects) && !empty($subjects))) {
-                    foreach ($subjects as $sb) {
-                        if (isset($tempAccArr[$sb['sbm_id']][$i]['cc_desc']) && !empty($tempAccArr[$sb['sbm_id']][$i]['cc_desc'])) {
+                    foreach ($subjects as $idx => $sb) {
+                        if (isset($tempAccArr[$sb['sbm_id']][$idx][$i]['cc_desc']) && !empty($tempAccArr[$sb['sbm_id']][$idx][$i]['cc_desc'])) {
                             $ticked = "";
                             foreach ($core_competency as $indeks => $cc) {
-                                if ($cc['cmp_cc_code'] == $tempAccArr[$sb['sbm_id']][$i]['cc_code']) {
+                                if ($cc['cmp_cc_code'] == $tempAccArr[$sb['sbm_id']][$idx][$i]['cc_code'] && $idx == $cc['cmp_column_index']) {
                                     $ticked = "&#x2714;";
                                     unset($core_competency[$indeks]);
                                 }
                             }
-                            $item_inside = count($tempAccArr[$sb['sbm_id']]);
+                            $item_inside = count($tempAccArr[$sb['sbm_id']][$idx]);
 
                             if (($i + 1) == $item_inside) {
                                 $differenceRow = $highest_val_item_for_sbm_id - $item_inside;
-                                echo '<td class="center vertical-center" rowspan="' . $differenceRow + 1  . '">' . $ticked . '</td><td class="vertical-center" rowspan="' . $differenceRow + 1  . '">(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
+                                echo '<td class="center vertical-center" rowspan="' . $differenceRow + 1  . '">' . $ticked . '</td><td class="vertical-center" rowspan="' . $differenceRow + 1  . '">(' . $tempAccArr[$sb['sbm_id']][$idx][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$idx][$i]['cc_desc'] . '</td>';
                             } else if (($i + 1) < $item_inside) {
-                                echo '<td class="center vertical-center">' . $ticked . '</td><td>(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
+                                echo '<td class="center vertical-center">' . $ticked . '</td><td>(' . $tempAccArr[$sb['sbm_id']][$idx][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$idx][$i]['cc_desc'] . '</td>';
                             }
                             //echo '<td class="center vertical-center">' . $ticked . '</td><td>(' . $tempAccArr[$sb['sbm_id']][$i]['cc_code'] . ") " . $tempAccArr[$sb['sbm_id']][$i]['cc_desc'] . '</td>';
                         } else {

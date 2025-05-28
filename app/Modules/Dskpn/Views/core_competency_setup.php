@@ -2,13 +2,13 @@
   <div class="container-fluid py-4">
     <div class="card">
       <div class="card-header d-flex p-3 bg-primary">
-        <h6 class="my-auto text-white">SUBJEK</h6>
+        <h6 class="my-auto text-white">MATA PELAJARAN</h6>
       </div>
       <div class="card-body mb-2">
         <div class="row pb-4">
-          <label>Penatapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
+          <label>Penatapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Mata Pelajaran:</label>
           <select name="subject" id="subject-dynamic-field" onchange="selectSubjectToCode(this)" class="form-control select2" aria-label="Default select example" required>
-            <option disabled selected>-- Sila Pilih Subjek --</option>
+            <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
             <?php
             foreach ($subject_list as $subject)
             if(!core_competency_exist($subject['sbm_id']))

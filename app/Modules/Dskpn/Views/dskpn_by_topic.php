@@ -142,7 +142,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan Subjek bagi Kluster:</h5>
+                <h5 class="modal-title" id="rejectModalLabel">Sila Daftarkan Mata Pelajaran bagi Kluster:</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -151,12 +151,12 @@
                     <input type="text" name="cm_id" value="<?= $topic['tm_ctm_id'] ?>" hidden>
                     <input type="text" name="tm_id" value="<?= $topic['tm_id'] ?>" hidden>
                     <div class="row pb-4" id="standard-pembelajaran">
-                        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+                        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
 
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn bg-secondary" style="margin-bottom:0 !important" data-bs-dismiss="modal">Batal</button>
-                        <span id="add-subject-btn" class="btn bg-info" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+                        <span id="add-subject-btn" class="btn bg-info" style="margin-bottom:0 !important">Tambah Mata Pelajaran&nbsp;&nbsp;
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
                             </svg>
@@ -206,7 +206,7 @@
                 <div class="col-md-12 subject-card">
                     <div class="card mt-4">
                         <div class="d-flex p-2 bg-primary">
-                            <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Subjek" required>
+                            <select id="subject-${counter}" name="subject[]" class="form-control select2" placeholder="Tajuk Mata Pelajaran" required>
                                 <option value="" selected disabled>--Select Subject--</option>
                                 ${options}
                             </select>

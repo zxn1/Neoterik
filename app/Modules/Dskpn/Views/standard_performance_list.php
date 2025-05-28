@@ -25,9 +25,9 @@
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group">
-                            <label for="subjectSelect">Subjek</label>
+                            <label for="subjectSelect">Mata Pelajaran</label>
                             <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
-                                <option disabled selected>-- Sila Pilih Subjek --</option>
+                                <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
                                 <?php foreach ($subject_list as $subject) { ?>
                                     <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                                 <?php } ?>
