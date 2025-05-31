@@ -16,7 +16,7 @@
   </script>
   <link rel="icon" type="image/png" href="<?= base_url('neoterik/img/logo_srsb.png') ?>">
   <title>
-    SISTEM NEOTERIK
+    SISTEM BUDIMAN
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
