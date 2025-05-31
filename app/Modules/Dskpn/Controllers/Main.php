@@ -179,7 +179,7 @@ class Main extends BaseController
         // Logo fallback
         $data['srsb_logo'] = null;
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
-        
+
         if (file_exists($path)) {
             $imageData = base64_encode(file_get_contents($path));
             $base64Image = 'data:image/png;base64,' . $imageData;
@@ -187,28 +187,7 @@ class Main extends BaseController
         }
 
         $htmlContent = view('pdf/dskpn', $data);
-
-        // Fasa 1: Render untuk kira pages
-        $tempMpdf = $this->mpdf_init(100);
-        //new \Mpdf\Mpdf(['orientation' => 'L', 'format' => [100, 594]]);
-        $tempMpdf->WriteHTML($htmlContent);
-        $pageCount = $tempMpdf->page;
-
-        // Fasa 2: Render semula dengan tinggi gabungan
-        $estimatedHeight = 150 * $pageCount;
-        $mpdf = $this->mpdf_init($estimatedHeight);
-
-        $mpdf->WriteHTML($htmlContent);
-        $secondTest = $mpdf->page;
-
-        if($secondTest > 1)
-        {
-            $estimatedHeight = 180 * $pageCount;
-            $mpdf = $this->mpdf_init($estimatedHeight);
-
-            $html = view('pdf/dskpn', $data);
-            $mpdf->WriteHTML($html);
-        }
+        $mpdf = $this->generate_single_page_pdf($htmlContent);
 
         // Watermark DRAF
         if (!isset($data['dskpn_details']['dskpn_status']) || $data['dskpn_details']['dskpn_status'] == 5) {
@@ -218,6 +197,39 @@ class Main extends BaseController
 
         $filename = $this->session->get('dskpn_code') ?? 'dskpn';
         return $mpdf->Output($filename . '.pdf', 'D');
+    }
+
+    //temporary solution - later can change use another package.
+    //could slower the performance - as it could loop too many (max 20 process - ibarat process 20 pdf serentak).
+    private function generate_single_page_pdf($htmlContent)
+    {
+        $initialHeight = 120;
+        $increment = 20;
+        $maxAttempts = 20;
+        $attempt = 0;
+        $height = $initialHeight;
+
+        do {
+            $mpdf = $this->mpdf_init($height);
+            $mpdf->WriteHTML($htmlContent);
+            $pages = $mpdf->page;
+
+            if ($pages <= 1) {
+                // dd($attempt);
+                return $mpdf;
+            }
+
+            if($height != 150) //must equivalent with initialHeight
+                $initialHeight += $increment;
+
+            $height = $initialHeight * $pages;
+            $attempt++;
+
+        } while ($pages > 1 && $attempt < $maxAttempts);
+
+        // dd($height);
+        $mpdf->SetAutoPageBreak(false, 0);
+        return $mpdf; // fallback: return last generated (might still be > 1 page)
     }
 
     public function mpdf_init($height)
@@ -1537,6 +1549,19 @@ class Main extends BaseController
         if (isset($newItem) && !empty($newItem)) {
             foreach ($newItem as $tappc_id => $itemArr) {
                 foreach ($itemArr as $randomItemID => $item_desc) {
+                    // $checkExists = $this->teaching_approach_model->where(['tapp_desc' => $item_desc, 'tapp_status' => 2, 'tapp_tappc_id' => $tappc_id])->first();
+                    // if(empty($checkExists))
+                    // {
+                    //     $this->teaching_approach_model->insert([
+                    //         'tapp_desc' => $item_desc,
+                    //         'tapp_status' => 2,
+                    //         'tapp_tappc_id' => $tappc_id
+                    //     ]);
+
+                    //     $insertedID = $this->teaching_approach_model->insertID();
+                    // } else {
+                    //     $insertedID = $checkExists['tapp_id'];
+                    // }
                     $this->teaching_approach_model->insert([
                         'tapp_desc' => $item_desc,
                         'tapp_status' => 2,

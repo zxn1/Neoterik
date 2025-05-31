@@ -137,10 +137,28 @@
                         </center>
                 </td>
             </tr>
+            <?php
+            $ls_id = [];
+
+            foreach ($learning_standard as $ls) {
+                if (!in_array($ls['ls_id'], $ls_id)) {
+                    $ls_id[] = $ls['ls_id']; // Store full object instead of just id
+                }
+            }
+            ?>
             <tr>
                 <td class="bold">KLUSTER</td>
                 <td class="bold" colspan="3"><?= isset($cluster_details) && !empty($cluster_details) ? $cluster_details['ctm_desc'] : '' ?></td>
-                <td colspan="7" class="no-border" style="text-align: right;">
+                <?php
+                $adjustColumnYear = 9;
+                if(count($ls_id) == 1)
+                    $adjustColumnYear = 3;
+                else if (count($ls_id) == 2)
+                    $adjustColumnYear = 5;
+                else if(count($ls_id) == 3)
+                    $adjustColumnYear = 7;
+                ?>
+                <td colspan="<?= $adjustColumnYear ?>" class="no-border" style="text-align: right;">
                     <b>TAHUN</b>
                 </td>
 
@@ -164,7 +182,7 @@
             <tr>
             <tr>
                 <td class="center vertical-center header" colspan="2" rowspan="2">TEMA</td>
-                <td class="center header" colspan="6">STANDARD PEMBELAJARAN</td>
+                <td class="center header" colspan="<?= count($ls_id) * 2 ?>">STANDARD PEMBELAJARAN</td>
                 <td class="center vertical-center header" colspan="4" rowspan="2">OBJEKTIF PRESTASI (OP)</td>
             </tr>
             <tr>
@@ -192,16 +210,10 @@
                 if ($sb_flag)
                 ?>
                 <?php
-            $ls_id = [];
             $lsi_item = [];
 
             if (isset($learning_standard) && !empty($learning_standard)) {
                 $ls_flag = true;
-                foreach ($learning_standard as $ls) {
-                    if (!in_array($ls['ls_id'], $ls_id)) {
-                        $ls_id[] = $ls['ls_id']; // Store full object instead of just id
-                    }
-                }
                 $data = [
                     'ls_id' => $ls_id,
                     'learning_standard' => $learning_standard,
@@ -303,7 +315,7 @@
                 <td colspan="2" rowspan="8" class="center vertical-center yellow">
                     TAHAP PENGUASAAN
                 </td>
-                <td colspan="6" class="center vertical-center header">
+                <td colspan="<?= count($ls_id) * 2 ?>" class="center vertical-center header">
                     STANDARD PRESTASI
                 </td>
                 <td colspan="3" class="center vertical-center header">
@@ -520,6 +532,89 @@
             $max_adk_val = 0;
             $max_adkk_val = 0;
             $max_aki_val = 0;
+
+            //dd($kaedah);
+            //remove duplicate in kaedah
+            //kekalkan id yang ada dalam all kaedah based on kaedah yang mapped.
+            $unique_kaedah = [];
+            $seen_desc = []; // untuk jejak tapp_desc yang dah diproses
+
+            foreach ($all_kaedah as $kaedah_item) {
+                $desc = strtolower(preg_replace('/\s+/', '', $kaedah_item['tapp_desc']));
+                // var_dump($desc); // Debug jika perlu
+
+                if (!isset($seen_desc[$desc])) {
+                    // Cari semua kaedah yang ada tapp_desc sama
+                    $duplicates = array_filter($all_kaedah, function($item) use ($desc) {
+                        return strtolower(preg_replace('/\s+/', '', $item['tapp_desc'])) === $desc;
+                    });
+
+                    // Check kalau ada dalam $kaedah
+                    $match = null;
+                    foreach ($duplicates as $dup) {
+                        foreach ($kaedah as $k_item) {
+                            if ($k_item['tapp_id'] == $dup['tapp_id']) {
+                                $match = $dup;
+                                break 2;
+                            }
+                        }
+                    }
+
+                    // Pilih sama ada yang matched, atau fallback ke satu
+                    $selected = $match ?: reset($duplicates);
+
+                    // tapis yang tak aktif & tak digunakan
+                    if ($selected['tapp_status'] == 2 && !$match) {
+                        continue;
+                    }
+
+                    // Simpan sebagai unique
+                    $unique_kaedah[] = $selected;
+                    $seen_desc[$desc] = true;
+                }
+            }
+            //then baru removed duplicate
+            $all_kaedah = $unique_kaedah;
+
+            //remove duplicate in pendekatan
+            $unique_pendekatan = [];
+            $seen_pendekatan_desc = [];
+
+            foreach ($all_pendekatan as $item) {
+                $desc = strtolower(preg_replace('/\s+/', '', $item['tapp_desc']));
+
+                if (!isset($seen_pendekatan_desc[$desc])) {
+                    // Cari semua pendekatan yang ada tapp_desc sama
+                    $duplicates = array_filter($all_pendekatan, function($x) use ($desc) {
+                        return strtolower(preg_replace('/\s+/', '', $x['tapp_desc'])) === $desc;
+                    });
+
+                    // Utamakan yang wujud dalam $pendekatan
+                    $match = null;
+                    foreach ($duplicates as $dup) {
+                        foreach ($pendekatan as $pdkt) {
+                            if ($dup['tapp_id'] == $pdkt['tapp_id']) {
+                                $match = $dup;
+                                break 2;
+                            }
+                        }
+                    }
+
+                    // Pilih yang match atau fallback ke yang pertama
+                    $selected = $match ?: reset($duplicates);
+
+                    // kalau tapp_status == 2 dan tiada dalam $pendekatan → skip
+                    if ($selected['tapp_status'] == 2 && !$match) {
+                        // Abaikan, jangan simpan
+                        continue;
+                    }
+
+                    $unique_pendekatan[] = $selected;
+                    $seen_pendekatan_desc[$desc] = true;
+                }
+            }
+
+            $all_pendekatan = $unique_pendekatan;
 
             if (isset($all_domain_pengetahuan_asas) && !empty($all_domain_pengetahuan_asas))
                 $max_adpa_val = count($all_domain_pengetahuan_asas);
