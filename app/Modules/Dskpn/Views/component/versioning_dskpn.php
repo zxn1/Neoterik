@@ -242,6 +242,10 @@ if (!(strpos(current_url(), route_to('load_dskpn_versioning')) !== false)) { ?>
             $('#optionActivate').removeClass('active-outline');
         });
 
+        $('.custom-close-btn').on('click', function () {
+            $('#versioningModal').modal('hide');
+        });
+
         <?php
         if ($status) { ?>
             $('#activateVersioning').prop('checked', true); // Set the radio button to "checked"
