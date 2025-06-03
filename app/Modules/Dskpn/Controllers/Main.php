@@ -1823,8 +1823,18 @@ class Main extends BaseController
                 $data['learning_standard_id'][] = $ls_id;
 
                 // #NOTES - sini dah okey, dia dah linked dengan learning_standard yang berasingan 3...
-                if(!isset($allDescription[$subject][$index]))
-                    $index++;
+                $max = 5;
+                $count = 0;
+                while($count < $max)
+                {
+                    if(!isset($allDescription[$subject][$index]))
+                    {
+                        $index++;
+                    } else {
+                        break;
+                    }
+                    $count++;
+                }
 
                 if(isset($allDescription[$subject][$index]))
                 foreach ($allDescription[$subject][$index] as $itemIndex => $itemDesc) {
