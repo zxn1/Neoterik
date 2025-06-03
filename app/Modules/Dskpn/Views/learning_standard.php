@@ -197,7 +197,7 @@
                         echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "-" . $idx . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
                         foreach ($subject_description[$item_list['sbm_id']][$idx] as $index => $desc_item) { 
                           //var_dump($subject_standard_numbering[$item_list['sbm_id']][$idx]);
-                          $randomNumber = mt_rand(1000000000, 9999999999);
+                          $randomNumber = mt_rand(100000, 999999);
                           ?>
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>">
                             <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>" class="w-100 pb-5 pe-2"></div>
