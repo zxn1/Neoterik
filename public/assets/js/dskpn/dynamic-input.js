@@ -117,59 +117,108 @@ $('#add-subject-button').on('click', function() {
         //do nothing
     }
 
+    // step 1: get container dulu.
+    const container = document.getElementById("standard-pembelajaran");
+
+    // Step 2: Find all select elements with name="subject[]" inside the container
+    const subjectSelects = container.querySelectorAll('select[name="subject[]"]');
+
+    // Step 3: Extract selected values
+    const selectedValues = Array.from(subjectSelects).map(select => select.value);
+
     let htmlOptions = ``;
     let sbm_code = '';
+    let currentSubjectId = null;
     subject_list.forEach(function(item) {
-        if(get_default_subject != null && (item.sbm_id == get_default_subject[countSubject]))
+        if (get_default_subject && 
+            get_default_subject.includes(item.sbm_id) && 
+            !selectedValues.includes(item.sbm_id) && sbm_code == '')
         {
             sbm_code = item.sbm_code;
+            currentSubjectId = item.sbm_id;
             htmlOptions += `<option selected class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
-        }  
+        } //else {
+            //htmlOptions += `<option class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
+        //}
     });
 
     var newFieldColl = Math.floor(Math.random() * 1000000);
 
-    $('#standard-pembelajaran').append(`
+    // Selitkan ikut index
+    const existingCards = $('#standard-pembelajaran').children('.subject-card');
+
+    // Nilai subject yang baru nak dimasukkan
+    //currentSubjectId;
+
+    // Cari index dia dalam default list
+    const insertIndex = get_default_subject.indexOf(currentSubjectId);
+
+    // Cari elemen selepas dia
+    let inserted = false;
+    let indexToInsert = null;
+    let nextIndexInDOM = null;
+    for (let i = insertIndex + 1; i < get_default_subject.length; i++) {
+        const nextId = get_default_subject[i];
+        if (selectedValues.includes(nextId.toString())) {
+            indexToInsert = nextId;
+            // Jumpa next element yang ada dalam DOM, insert sebelum dia
+            nextIndexInDOM = selectedValues.indexOf(nextId.toString());
+            inserted = true;
+            break;
+        }
+    }
+
+    // Kalau tak jumpa, baru append ke hujung
+    if (!inserted)
+        indexToInsert = countSubject;
+
+    // Construct your HTML card first
+    const newCardHtml = `
         <div class="col-md-4 subject-card">
             <div class="card mt-4">
-            <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
-                    ${htmlOptions}
-                </select>
-                <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
-                    <i class="fas fa-trash-alt"></i>
-                </button>
-            </div>
-            
-    
-            <div id="standard-subject-` + get_default_subject[countSubject] + '-' + newFieldColl + `" style="margin-top : 5px; margin-bottom : 5px;">
-                <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`-${newFieldColl}">
-                    <div id="subject_description-${get_default_subject[countSubject]}-${newFieldColl}" class="w-100 pb-5 pe-2"></div>
-                    <hr class="stylish-hr">
+                <div class="card-header d-flex p-1 bg-secondary align-items-center">
+                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
+                        ${htmlOptions}
+                    </select>
+                    <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+
+                <div id="standard-subject-${currentSubjectId}-${newFieldColl}" style="margin-top : 5px; margin-bottom : 5px;">
+                    <div class="row m-1" id="standard-item-${currentSubjectId}-${newFieldColl}">
+                        <div id="subject_description-${currentSubjectId}-${newFieldColl}" class="w-100 pb-5 pe-2"></div>
+                        <hr class="stylish-hr">
+                    </div>
+                </div>
+
+                <div class="p-1">
+                    <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${currentSubjectId}', '${sbm_code}', '${newFieldColl}', '${insertIndex}')">Tambah &nbsp;&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </span>
                 </div>
             </div>
-    
-            <div class="p-1">
-                <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}', '${sbm_code}', '${newFieldColl}', '${(countSubject)}')">Tambah &nbsp;&nbsp;
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                    </svg>
-                </span>
-            </div>
         </div>
-        `);
+    `;
 
-    WysiwygComponent.renderTo("subject_description-" + get_default_subject[countSubject] + "-" + newFieldColl, 
+    if(inserted)
+        existingCards.eq(nextIndexInDOM).before(newCardHtml);
+    else
+        $('#standard-pembelajaran').append(newCardHtml);
+
+    WysiwygComponent.renderTo("subject_description-" + currentSubjectId + "-" + newFieldColl, 
     { 
-        id: get_default_subject[countSubject] + '-' + newFieldColl, 
-        inputNameId: "subject_description[" + get_default_subject[countSubject] + "][" + (countSubject) + "]", 
-        deleteButton : "standard-item-" + get_default_subject[countSubject] + "-" + newFieldColl, 
+        id: currentSubjectId + '-' + newFieldColl, 
+        inputNameId: "subject_description[" + currentSubjectId + "][" + (insertIndex) + "]", 
+        deleteButton : "standard-item-" + currentSubjectId + "-" + newFieldColl, 
         isLearningStandard: true, 
         learningStandard : {
-            sbm_id : get_default_subject[countSubject],
+            sbm_id : currentSubjectId,
             sbm_code : sbm_code,
             learning_standard_number : "",
-            index : countSubject
+            index : insertIndex
         }
     });
 });
