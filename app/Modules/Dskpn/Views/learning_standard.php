@@ -194,6 +194,19 @@
                       </div>
 
                       <?php
+                      $max = 5;
+                      $count = 0;
+                      while($count < $max)
+                      {
+                          if(!isset($subject_description[$item_list['sbm_id']][$idx]))
+                          {
+                              $idx++;
+                          } else {
+                              break;
+                          }
+                          $idx++;
+                      }
+                      
                       if (!empty($subject_description) && $subject_description != "") {
                         echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "-" . $idx . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
                         if(!isset($subject_description[$item_list['sbm_id']][$idx]))
