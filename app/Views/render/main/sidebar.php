@@ -77,6 +77,14 @@
           <div class="collapse <?= $in_main_configuration ? 'show' : ''; ?>" id="dskpn-configuration">
             <ul class="nav ms-1 ps-1">
               <li class="nav-item ">
+                <a class="nav-link <?= (url_is(route_to('view_topic'))) ? 'active' : ''; ?>" href="<?= route_to('view_topic'); ?>" style="overflow : hidden;">
+                  <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                    <i class="fas fa-bookmark" style="color : #3c4242; height : 16px; width : 16px;"></i>
+                  </div>
+                  <span class="nav-link-text ms-1">Topik</span>
+                </a>
+              </li>
+              <li class="nav-item ">
                 <a class="nav-link <?= (url_is(route_to('view_teacher_cluster'))) ? 'active' : ''; ?>" href="<?= route_to('view_teacher_cluster'); ?>" style="overflow : hidden;">
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-chalkboard-teacher" style="color : #3c4242; height : 16px; width : 16px;"></i>
