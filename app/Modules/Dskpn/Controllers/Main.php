@@ -1822,20 +1822,26 @@ class Main extends BaseController
                 $ls_id = $this->learning_standard_model->insertID();
                 $data['learning_standard_id'][] = $ls_id;
 
-                // #NOTES - sini dah okey, dia dah linked dengan learning_standard yang berasingan 3...
-                $max = 5;
-                $count = 0;
-                while($count < $max)
-                {
-                    if(!isset($allDescription[$subject][$index]))
-                    {
-                        $index++;
-                    } else {
-                        break;
-                    }
-                    $count++;
+                // $max = 5;
+                // $count = 0;
+                // while($count < $max)
+                // {
+                //     if(!isset($allDescription[$subject][$index]))
+                //     {
+                //         $index++;
+                //     } else {
+                //         break;
+                //     }
+                //     $count++;
+                // }
+                
+                $max = 0;
+                while (!isset($allDescription[$subject][$index]) && $max < 5) {
+                    $index++;
+                    $max++;
                 }
 
+                // #NOTES - sini dah okey, dia dah linked dengan learning_standard yang berasingan 3...
                 if(isset($allDescription[$subject][$index]))
                 foreach ($allDescription[$subject][$index] as $itemIndex => $itemDesc) {
                     //step 4 - insert learning-standard-item
