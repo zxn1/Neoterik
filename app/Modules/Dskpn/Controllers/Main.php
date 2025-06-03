@@ -1635,8 +1635,10 @@ class Main extends BaseController
 
         //decode description.
         foreach ($allSubject as $subject) {
+            if(isset($allDescription[$subject]))
             foreach ($allDescription[$subject] as $subject_column_index => &$item_maps) {
                 // Decode semua item dalam $item_maps
+                if(is_array($item_maps) || is_object($item_maps))
                 foreach ($item_maps as $item_map_key => &$item) {
                     $item = urldecode($item);
                 }
@@ -1749,6 +1751,7 @@ class Main extends BaseController
         $arr_objective_assessment = [];
         if ($dskpn_create_update_status) {
             //step 2 - add objective performance
+            if(isset($objective))
             foreach ($objective as $index => $obj) {
                 $this->objective_performance_model->insert([
                     'opm_number'        => isset($objectiveNumber[$index]) ? $objectiveNumber[$index] : null,
@@ -1808,7 +1811,8 @@ class Main extends BaseController
                 }
             }
 
-            foreach ($allSubject as $index => $subject) {
+            $index = 0;
+            foreach ($allSubject as $subject) {
                 //step 3 - insert learning-standard
                 $this->learning_standard_model->insert([
                     'ls_sbm_id' => $subject,
@@ -1819,6 +1823,10 @@ class Main extends BaseController
                 $data['learning_standard_id'][] = $ls_id;
 
                 // #NOTES - sini dah okey, dia dah linked dengan learning_standard yang berasingan 3...
+                if(!isset($allDescription[$subject][$index]))
+                    $index++;
+
+                if(isset($allDescription[$subject][$index]))
                 foreach ($allDescription[$subject][$index] as $itemIndex => $itemDesc) {
                     //step 4 - insert learning-standard-item
                     $this->learning_standard_item_model->insert([
@@ -1827,6 +1835,7 @@ class Main extends BaseController
                         'lsi_desc'      => $itemDesc
                     ]);
                 }
+                $index++;
             }
         } else {
             die('DSKPN failed to be created. Please refreshed and try again!');
