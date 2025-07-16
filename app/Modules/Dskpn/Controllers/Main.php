@@ -1700,7 +1700,9 @@ class Main extends BaseController
 
             //step 1 - update DSKPN
             $dskpn_create_update_status = $this->dskpn_model->update($data['dskpn_id'], [
-                'dskpn_duration'    => $duration
+                'dskpn_duration'    => $duration,
+                'dskpn_theme'       => $tema,
+                'dskpn_sub_theme'   => $subtema
             ]);
 
             //step 2 - delete object performance
