@@ -165,7 +165,7 @@
         </tr>
         <tr>
             
-       <td colspan="3" rowspan="9" style="vertical-align: top;">
+       <td class="tg-0pky" colspan="3" rowspan="9" style="vertical-align: top;">
             <?php if (isset($learning_standard) && !empty($learning_standard) && isset($subjects) && !empty($subjects)): ?>
                 <?php
                 // Map subjects for easy lookup: sbm_id => sbm_desc
@@ -177,33 +177,31 @@
                 // Group learning standards by subject ID and learning standard group ID
                 $grouped = [];
                 foreach ($learning_standard as $ls) {
-                    $subjectId = $ls['ls_sbm_id'];
-                    $lsiId = $ls['lsi_ls_id'];
-                    $grouped[$subjectId][$lsiId][] = $ls;
+                    $lsId = $ls['lsi_ls_id']; // i.e. the 'learning standard' group
+                    $grouped[$lsId]['subject_id'] = $ls['ls_sbm_id']; // keep subject ID for label
+                    $grouped[$lsId]['items'][] = $ls;
                 }
                 ?>
 
-                <?php foreach ($grouped as $subjectId => $lsiGroups): ?>
+                <?php foreach ($grouped as $lsId => $group): ?>
                     <?php 
-                        $subjectName = $subjectMap[$subjectId] ?? 'Unknown Subject';
+                        $subjectName = $subjectMap[$group['subject_id']] ?? 'Unknown Subject';
                     ?>
                     <div style="font-weight: bold; margin-bottom: 4px;">
                         <?= $subjectName ?>
                     </div>
 
-                    <?php foreach ($lsiGroups as $lsi_ls_id => $items): ?>
-                        <?php foreach ($items as $item): ?>
-                            <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
-                                <tr style="border: none;">
-                                    <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
-                                        <p><?= $item['lsi_number'] ?>.</p>
-                                    </td>
-                                    <td valign="top" style="border: none;">
-                                        <?= $item['lsi_desc'] ?>
-                                    </td>
-                                </tr>
-                            </table>
-                        <?php endforeach; ?>
+                    <?php foreach ($group['items'] as $item): ?>
+                        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
+                            <tr style="border: none;">
+                                <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
+                                    <p><?= $item['lsi_number'] ?>.</p>
+                                </td>
+                                <td valign="top" style="border: none;">
+                                    <?= $item['lsi_desc'] ?>
+                                </td>
+                            </tr>
+                        </table>
                     <?php endforeach; ?>
 
                     <br>
@@ -218,9 +216,13 @@
                     <?php
                     // Collect all 'dskp_code' values from the nested arrays
                     $dskp_codes = [];
-                    foreach ($standard_performance as $item) {
-                        if (isset($item['dskp_code'])) {
-                            $dskp_codes[] = $item['dskp_code']; // Collect dskp_code values
+                     // Loop through outer array sebab it nested array bukan flat array
+                    foreach ($standard_performance as $group) {
+                        // Loop through inner array
+                        foreach ($group as $item) {
+                            if (isset($item['dskp_code'])) {
+                                $dskp_codes[] = $item['dskp_code'];
+                            }
                         }
                     }
 
@@ -310,7 +312,7 @@
                 <?php if (isset($pendekatan) && !empty($pendekatan)): ?>
                     <div style="display: flex; flex-wrap: wrap;">
                         <?php foreach ($pendekatan as $index => $item): ?>
-                            <label style="display: inline-block; margin-right: 20px; width: 45%;">
+                            <label style="display: inline-block; margin-right: 20px; width: auto; white-space: nowrap;">
                                 <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
                             </label>
                             <?php if (($index + 1) % 2 == 0): ?>
