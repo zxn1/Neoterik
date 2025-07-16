@@ -50,11 +50,15 @@
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
             <h6 class="my-auto text-white"><b>TAHAP PENGUASAAN</b></h6>
-            <div>
-                <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
-                    Ubah Tahap Penguasaan&nbsp;&nbsp;
-                    <i class="fas fa-pencil-ruler"></i>
-                </a>
+            <div class="d-flex">
+                <form action="<?= route_to('view_tp_core_setup'); ?>" id="tp-core-url-form" method="POST">
+                    <input type="text" id="data-tp-core" name="data-tp" hidden/>
+                    <button type="submit" class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
+                        Ubah Tahap Penguasaan&nbsp;&nbsp;
+                        <i class="fas fa-pencil-ruler"></i>
+                    </button>
+                    &nbsp;
+                </form>
                 <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
                     Tetapan Tahap Penguasaan&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
@@ -84,7 +88,7 @@
 <script>
     var currentHref = null;
     $(document).ready(function() {
-        currentHref = $('#edit-tp').attr('href');
+        currentHref = $('#tp-core-url-form').attr('action');
         $('.select2').select2();
         $('#standard_performance_table').DataTable();
         $('#subject').change(function() {
@@ -140,12 +144,17 @@
                     success: function(data) {
                         if (data.standard_performance_dskp_mapping.length <= 0) {
                             $('#edit-tp').hide();
-                            $('#edit-tp').attr('href', currentHref);
+                            //$('#edit-tp').attr('href', currentHref);
+                            $('#tp-core-url-form').attr('action', currentHref);
+                            $('#data-tp-core').val("");
                         } else {
                             let subject_name = $('#subject').select2('data')[0].text;
                             let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
                             let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
-                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + encodeURIComponent(subject_name) + "&data=" + encodeURIComponent(JSON.stringify(data)));
+                            //$('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + encodeURIComponent(subject_name));
+                            $('#tp-core-url-form').attr('action', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number + '&subject=' + encodeURIComponent(subject_name));
+                            //data dari sini
+                            $('#data-tp-core').val(encodeURIComponent(JSON.stringify(data)));
                             $('#edit-tp').show();
                         }
                         var counter = 1;
@@ -166,13 +175,17 @@
                                 '</td>' +
                                 '</tr>';
 
+                            //letak sini
+
                             tableBody.append(tableRow);
                         });
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching data:', error);
                         $('#edit-tp').hide();
-                        $('#edit-tp').attr('href', currentHref);
+                        //$('#edit-tp').attr('href', currentHref);
+                        $('#tp-core-url-form').attr('action', currentHref);
+                        $('#data-tp-core').val("");
                     }
                 });
             }
@@ -204,12 +217,16 @@
                     success: function(data) {
                         if (data.standard_performance_dskp_mapping.length <= 0) {
                             $('#edit-tp').hide();
-                            $('#edit-tp').attr('href', currentHref);
+                            // $('#edit-tp').attr('href', currentHref);
+                            $('#tp-core-url-form').attr('action', currentHref);
+                            $('#data-tp-core').val("");
                         } else {
                             $('#edit-tp').show();
                             let batch_number = data.standard_performance_dskp_mapping[0].sp_current_batch_count;
                             let dskp_code = data.standard_performance_dskp_mapping[0].sp_dskp_code;
-                            $('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
+                            //$('#edit-tp').attr('href', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
+                            $('#tp-core-url-form').attr('action', currentHref + '?dskp_code=' + dskp_code + '&batch=' + batch_number);
+                            $('#data-tp-core').val("");
                         }
 
                         var counter = 1;

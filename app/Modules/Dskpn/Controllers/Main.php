@@ -2433,7 +2433,8 @@ class Main extends BaseController
         $data['edit_dskp_code'] = $this->request->getVar('dskp_code');
         $data['edit_subject_name'] = urldecode($this->request->getVar('subject'));
         $data['edit_batch'] = $this->request->getVar('batch');
-        $data['edit_data'] = $this->request->getVar('data');
+        //$data['edit_data'] = $this->request->getVar('data');
+        $data['edit_data'] = urldecode($this->request->getPost('data-tp'));
 
         $data['subject_list'] = $this->subject_model->findAll();
         $data['wysiwyg_include'] = $this->render_without_main('component/wysiwyg/wysiwyg_include');
