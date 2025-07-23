@@ -204,7 +204,8 @@
         <tbody>
             <tr>
                 <td colspan="2" class="center vertical-center bold">
-                    Individu
+                    <?= isset($dskpn_details['dskpn_theme']) && !empty($dskpn_details['dskpn_theme']) ? $dskpn_details['dskpn_theme'] : '' ?>
+                    <!-- Individu -->
                 </td>
                 <?php
                 if ($sb_flag)
@@ -307,7 +308,9 @@
             </tr>
             <tr>
                 <td class="center vertical-center bold" colspan="2">
-                    TUBUH DAN KESIHATAN
+                    <!-- TUBUH DAN KESIHATAN -->
+                    <?= isset($dskpn_details['dskpn_sub_theme']) && !empty($dskpn_details['dskpn_sub_theme']) ? $dskpn_details['dskpn_sub_theme'] : '' ?>
+
                 </td>
             </tr>
 
