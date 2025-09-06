@@ -30,11 +30,11 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('update-create-cluster',      [Main::class,     'update_cluster'],                ['as' => 'update_cluster']);
     $routes->post('delete-cluster',             [Main::class,     'delete_cluster'],                ['as' => 'delete_cluster']);
     $routes->post('store-core-mapping',         [Main::class,     'store_core_mapping'],            ['as' => 'store_core_map']);
-    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],   ['as' => 'store-spec-map']);
+    $routes->post('store-specification-mapping', [Main::class,     'store_specification_mapping'],  ['as' => 'store-spec-map']);
     $routes->post('store-activity-assessment',  [Main::class,     'store_activity_assessment'],     ['as' => 'store_actv_asses']);
     $routes->post('store-image-return-url',     [Main::class,     'store_image_ckeditor'],          ['as' => 'store_image_ckedit']);
     $routes->post('store-tp-setup',             [Main::class,     'store_tp_setup'],                ['as' => 'store_tp_setup']);
-    $routes->post('store-core-competency-setup', [Main::class,     'store_core_competency_setup'],   ['as' => 'store_core_competency_setup']);
+    $routes->post('store-core-competency-setup', [Main::class,     'store_core_competency_setup'],  ['as' => 'store_core_competency_setup']);
 
     $routes->get('dskpn-by-topic/(:any)',       [Main::class,     'dskpn_by_topic/$1'],             ['as' => 'dskpn_by_topic']);
     $routes->get('dskpn-by-topic-list',         [Main::class,     'dskpn_by_topic_list'],           ['as' => 'dskpn_by_topic_list']);
@@ -42,8 +42,9 @@ $routes->group('dskpn', function ($routes) {
     $routes->post('delete-subject',             [Main::class,     'delete_subject'],                ['as' => 'delete_subject']);
     $routes->get('view-cluster',                [Main::class,     'view_cluster'],                  ['as' => 'view_cluster']);
     $routes->get('view-topic',                  [Main::class,     'view_topic'],                    ['as' => 'view_topic']);
-    $routes->post('delete-topic',              [Main::class,     'delete_topic'],                   ['as' => 'delete_topic']);
-    $routes->get('view-tp-core-competency-setup', [Main::class,   'view_tp_core_competency'],       ['as' => 'view_tp_core_setup']);
+    $routes->post('delete-topic',               [Main::class,     'delete_topic'],                  ['as' => 'delete_topic']);
+    $routes->match(['GET', 'POST'], 'view-tp-core-competency-setup', 
+                                                [Main::class,   'view_tp_core_competency'],         ['as' => 'view_tp_core_setup']);
     $routes->get('view-core-competency-setup',  [Main::class,     'view_core_competency'],          ['as' => 'view_core_competency_setup']);
     $routes->get('get-dskp-code-available',     [Main::class,     'getDskpCodeAvailableBasedOnString'], ['as' => 'get_dskp_code_available']);
     $routes->get('get-standard-performance',    [Main::class,     'getStandardPerformanceBasedOnDSKPCode'],     ['as' => 'get_standard_performance']);
