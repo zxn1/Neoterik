@@ -71,7 +71,7 @@ function deleteSubject(subjectID) {
                 Swal.fire({
                     icon: "success",
                     title: "Berjaya",
-                    text: "Subjek berkaitan berjaya dipadam!"
+                    text: "Mata Pelajaran berkaitan berjaya dipadam!"
                 }).then(function() {
                     // Optionally remove the row from the table
                     $('#row-' + subjectID).remove();
@@ -82,7 +82,7 @@ function deleteSubject(subjectID) {
                 Swal.fire({
                     icon: "error",
                     title: "Maaf",
-                    text: "Proses pemadaman subjek gagal!"
+                    text: "Proses pemadaman mata pelajaran gagal!"
                 });
             }
         },
@@ -90,7 +90,7 @@ function deleteSubject(subjectID) {
             Swal.fire({
                 icon: "error",
                 title: "Maaf",
-                text: "Proses pemadaman subjek gagal!\n" + error
+                text: "Proses pemadaman mata pelajaran gagal!\n" + error
             });
         }
     });

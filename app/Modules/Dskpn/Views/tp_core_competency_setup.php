@@ -1,27 +1,75 @@
+<?= $wysiwyg_include; ?>
+<?= $wysiwyg_js; ?>
+<style>
+.quill-toolbar-container {
+  display: flex;
+  width: 100%; /* pastikan toolbar guna penuh */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ql-toolbar-group {
+  display: flex;
+  gap: 6px;
+}
+
+.ql-toolbar-actions {
+  margin-left: auto; /* push ke hujung kanan */
+  display: flex;
+  align-items: center;
+}
+/* HTML: <div class="ribbon">Your text content</div> */
+.ribbon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    position : relative;
+    left : -5px;
+    top : -5px;
+    padding : 5px;
+  }
+  .ribbon {
+    --r: .8em; /* control the cutout */
+    
+    border-block: .5em solid #0000;
+    padding-inline: .5em calc(var(--r) + .25em);
+    line-height: 1.8;
+    clip-path: polygon(100% 0,0 0,0 100%,100% 100%,100% calc(100% - .25em),calc(100% - var(--r)) 50%,100% .25em);
+    background:
+    radial-gradient(.2em 50% at left,#000a,#0000) border-box,
+    gray padding-box; /* the color  */
+    width: fit-content;
+  }
+  .ql-editor ol li[data-list="bullet"]::before {
+    content: "• ";
+    list-style-type: disc;
+    counter-reset: none;
+  }
+</style>
 <form method="POST" action="<?= route_to('store_tp_setup'); ?>">
   <div class="container-fluid py-4">
     <div class="card">
       <div class="card-header d-flex p-3 bg-primary">
-        <h6 class="my-auto text-white"><b>SUBJEK</b></h6>
+        <h6 class="my-auto text-white"><b>MATA PELAJARAN</b></h6>
       </div>
       <div class="card-body mb-2">
         <div class="row pb-4">
-          <label>Penatapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Subjek:</label>
+          <label>Penetapan Tahap Penguasaan (TP) dan Kompetensi Teras bagi Mata Pelajaran:</label>
           <select name="subject" id="subject-dynamic-field" onchange="selectSubjectToCode(this)" class="form-control select2" aria-label="Default select example" required>
-            <option disabled selected>-- Sila Pilih Subjek --</option>
+            <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
             <?php
             foreach ($subject_list as $subject)
               echo "<option value='" . $subject['sbm_id'] . "' data-code='" . $subject['sbm_code'] . "'>" . $subject['sbm_desc'] . "</option>";
             ?>
           </select>
         </div>
-        <div class="row pt-1">
+        <div class="row pt-1" id="chooseleveldropdown">
           <!-- <h6 style="position : relative; top : 10px;">Tahun</h6> -->
           <div class="mb-3 d-flex">
             <table>
               <tr>
                 <td hidden>
-                  <label>Kod Subjek</label>
+                  <label>Kod Mata Pelajaran</label>
                   <input type="text" id="kod-rujukan" name="kod-rujukan" class="form-control" style="height: 45px; margin-right : 5px;" placeholder="Setkan Kod Rujukan" required readonly>
                 </td>
                 <td id="code-tp-rank-div" style="display : none;">
@@ -62,10 +110,12 @@
               </div>
               <div class="list-group-item" id="collection-tahap-penguasaan" style="border-bottom-left-radius: 1rem;border-bottom-right-radius: 1rem;">
                 <div class="d-flex w-100 align-items-center mb-2" id="1-collection-tahap-penguasaan" style="display: flex !important;flex-direction: row !important;">
-                  <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required>
-                  <a class="btn btn-link text-danger text px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
+                  <span class="ribbon badge" style="position : relative; left : -15px;" id="tpcounter">1</span>
+                  <div id="input-tahap-penguasaan-target" class="w-100"></div>
+                  <!-- <input name="input-tahap-penguasaan[]" type="text" class="form-control me-2" id="exampleFormControlInput1" placeholder="Menilai dan mencipta" required> -->
+                  <!-- <a class="btn btn-link text-danger text px-1 mb-0" href="javascript:void(0)" onclick="$('#1-collection-tahap-penguasaan').remove();">
                     <i class="far fa-trash-alt fa-lg me-2" aria-hidden="true"></i>
-                  </a>
+                  </a> -->
                 </div>
               </div>
               <div class="p-2 pb-1">
@@ -87,9 +137,7 @@
 
         <div class="d-flex justify-content-end" id="reset-n-save-section" style="display : none !important;">
           <span class="btn bg-secondary me-1 bg-primary-text-white" onclick="resetTPForm()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
-              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
-            </svg> &nbsp;
+            <i class="fas fa-pencil-ruler"></i>&nbsp;
             Set Semula
           </span>
           <button type="submit" class="btn bg-info bg-primary-text-white">
@@ -127,6 +175,44 @@
         title: "Maaf",
         text: "<?= session('fail'); ?>"
       });
+    });
+  </script>
+<?php endif; ?>
+<?php if (isset($edit_dskp_code) && !empty($edit_dskp_code)) : ?>
+  <script>
+    function selectByText(text) {
+        // Find the option that matches the text
+        var option = $('#subject-dynamic-field option').filter(function() {
+            return $(this).text() === text;
+        });
+
+        // If the option is found, set the value and trigger change
+        if (option.length) {
+            $('#subject-dynamic-field').val(option.val()).trigger('change');
+            //$('#subject-dynamic-field').prop('disabled', true).trigger('change');
+            let currentValue = option.val();
+
+            $('#subject-dynamic-field').on('change', function(e) {
+                $(this).val(currentValue).trigger('change'); // Revert to the original value
+            });
+        }
+    }
+
+    $(document).ready(function() {
+      selectByText('<?= $edit_subject_name; ?>');
+      let data_tp = (<?= $edit_data; ?>).standard_performance_dskp_mapping;
+      
+      $('#collection-tahap-penguasaan').empty();
+      data_tp.forEach(function(element, index, array) {
+        addField('tahap-penguasaan', element.sp_tp_level_desc);
+      });
+
+      $('#chooseleveldropdown').hide();
+      // Clear existing options
+      $('#dskpn-topic-numbering-list').empty();
+      // Add new options
+      $('#dskpn-topic-numbering-list').append('<option value="<?= $edit_dskp_code; ?>"><?= $edit_dskp_code; ?></option>');
+      $('#kod-rujukan').val('<?= $edit_dskp_code; ?>');
     });
   </script>
 <?php endif; ?>

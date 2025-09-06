@@ -19,18 +19,18 @@
           <?php
           if (empty($subject)) {
           ?>
-            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
             <?php
           } else {
             foreach ($subject as $index => $sub) {
             ?>
 
               <div class="col-md-4 subject-card">
-                <?php foreach ($subject_list as $item_list) : ?>
+                <?php foreach ($subject_list as $idx => $item_list) : ?>
                   <?php if ($item_list['sbm_id'] == $sub) : ?>
                     <div class="card mt-4">
                       <div class="card-header d-flex p-1 bg-gradient-secondary align-items-center">
-                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                           <option class="dropdown-item" value='<?= $item_list['sbm_id'] ?>' <?= (true) ? 'selected' : '' ?>><?= $item_list['sbm_desc'] ?></option>
                         </select>
                       </div>
@@ -41,11 +41,11 @@
                         foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
                             <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
                               <div class="col-2 p-0 pe-1">
-                                <input type="text" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
+                                <input type="text" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][<?= $index; ?>][]" pattern="^\d+(\.\d+)*$" 
                                   title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index])?$subject_standard_numbering[$item_list['sbm_id']][$index]:'' ?>" disabled>
                               </div>
                               <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                                <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>" disabled>
+                                <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][<?= $index ?>][]" placeholder="Objektif bagi Mata Pelajaran ini." value="<?= $desc_item; ?>" disabled>
                               </div>
                             </div>
                         <?php

@@ -121,8 +121,15 @@
         <div class="container-custom">
             <h5 class="left">SULIT</h5>
             <div class="mid">
-            <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
+            <img src="/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
             </div>
+            <?php
+            if($dskpn_details['dskpn_status'] == 5 || $dskpn_details['dskpn_status'] == null || empty($dskpn_details['dskpn_status']))
+            {
+            ?>
+            <img src="/neoterik/img/assets/draft_watermark_v1.png" style="max-width:400px !important; position : absolute; right : 35%; transform : rotate(30deg); top : 30%; opacity : 0.6;" alt="Your Image">
+            <?php
+            } ?>
             <h5 class="right">SULIT</h5>
         </div>
     </div>
@@ -157,31 +164,65 @@
             <td class="tg-fymr" colspan="4" style="width: 60%;">REKA BENTUK INSTRUKSI:</td>
         </tr>
         <tr>
-            <td class="tg-0pky" colspan="3" rowspan="9">
+            
+       <td class="tg-0pky" colspan="3" rowspan="9" style="vertical-align: top;">
+            <?php if (isset($learning_standard) && !empty($learning_standard) && isset($subjects) && !empty($subjects)): ?>
                 <?php
-                $sb_flag = false;
-                if (isset($subjects) && !empty($subjects)):
-                    $sb_flag = true; //check if subject contain value
-                    foreach ($subjects as $sb): ?>
-                        <b><?= $sb['sbm_desc'] ?></b><br>
-                        <?php if (isset($learning_standard) && !empty($learning_standard)): ?>
-                            <?php foreach ($learning_standard as $ls): ?>
-                                <?php if ($sb['sbm_id'] == $ls['ls_sbm_id']): ?>
-                                    <?= $ls['lsi_number'] . ". " . $ls['lsi_desc'] ?><br>
-                                <?php endif; ?>
-                            <?php endforeach; ?><br>
-                        <?php endif; ?>
-                <?php endforeach;
-                endif; ?>
-            </td>
+                // Map subjects for easy lookup: sbm_id => sbm_desc
+                $subjectMap = [];
+                foreach ($subjects as $sb) {
+                    $subjectMap[$sb['sbm_id']] = $sb['sbm_desc'];
+                }
+
+                // Group learning standards by subject ID and learning standard group ID
+                $grouped = [];
+                foreach ($learning_standard as $ls) {
+                    $lsId = $ls['lsi_ls_id']; // i.e. the 'learning standard' group
+                    $grouped[$lsId]['subject_id'] = $ls['ls_sbm_id']; // keep subject ID for label
+                    $grouped[$lsId]['items'][] = $ls;
+                }
+                ?>
+
+                <?php foreach ($grouped as $lsId => $group): ?>
+                    <?php 
+                        $subjectName = $subjectMap[$group['subject_id']] ?? 'Unknown Subject';
+                    ?>
+                    <div style="font-weight: bold; margin-bottom: 4px;">
+                        <?= $subjectName ?>
+                    </div>
+
+                    <?php foreach ($group['items'] as $item): ?>
+                        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
+                            <tr style="border: none;">
+                                <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
+                                    <p><?= $item['lsi_number'] ?>.</p>
+                                </td>
+                                <td valign="top" style="border: none;">
+                                    <?= $item['lsi_desc'] ?>
+                                </td>
+                            </tr>
+                        </table>
+                    <?php endforeach; ?>
+
+                    <br>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No learning standards available.</p>
+            <?php endif; ?>
+        </td>
+
             <td class="tg-0pky" colspan="1" rowspan="2">
                 <?php if (isset($standard_performance) && !empty($standard_performance)): ?>
                     <?php
                     // Collect all 'dskp_code' values from the nested arrays
                     $dskp_codes = [];
-                    foreach ($standard_performance as $item) {
-                        if (isset($item['dskp_code'])) {
-                            $dskp_codes[] = $item['dskp_code']; // Collect dskp_code values
+                     // Loop through outer array sebab it nested array bukan flat array
+                    foreach ($standard_performance as $group) {
+                        // Loop through inner array
+                        foreach ($group as $item) {
+                            if (isset($item['dskp_code'])) {
+                                $dskp_codes[] = $item['dskp_code'];
+                            }
                         }
                     }
 
@@ -271,7 +312,7 @@
                 <?php if (isset($pendekatan) && !empty($pendekatan)): ?>
                     <div style="display: flex; flex-wrap: wrap;">
                         <?php foreach ($pendekatan as $index => $item): ?>
-                            <label style="display: inline-block; margin-right: 20px; width: 45%;">
+                            <label style="display: inline-block; margin-right: 20px; width: auto; white-space: nowrap;">
                                 <input type="checkbox" checked> <?= $item['tapp_desc'] ?>
                             </label>
                             <?php if (($index + 1) % 2 == 0): ?>

@@ -7,7 +7,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="<?= base_url() ?>assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="<?= base_url() ?>neoterik/img/logo_srsb.png">
   <title>
-    SISTEM NEOTERIK
+    SISTEM BUDIMAN
   </title>
 
   <!-- jQuery -->
@@ -45,6 +45,7 @@
       navigator.serviceWorker.register('sw.js');
     };
   </script> -->
+
   <?php
   if (!empty($style))
     foreach ($style as $css) { ?>
@@ -104,10 +105,10 @@
       background-color: #7367f0 !important;
     }
 
-    .swal2-styled.swal2-confirm:hover, .swal2-styled.swal2-confirm:focus {
-        background-image: linear-gradient(310deg, #7367f0, #7367f0) !important;
+    .swal2-styled.swal2-confirm:hover,
+    .swal2-styled.swal2-confirm:focus {
+      background-image: linear-gradient(310deg, #7367f0, #7367f0) !important;
     }
-
   </style>
 
 </head>
@@ -134,7 +135,7 @@
   </main>
 
   <!-- configuration -->
-  <?= view('render/main/configurationbar'); ?>
+  <!-- view('render/main/configurationbar'); -->
   <!-- End configuration -->
 
   <!--   Core JS Files   -->
@@ -178,7 +179,8 @@
   <script src="<?= base_url() ?>assets/js/soft-ui-dashboard.min.js?v=1.1.1"></script>
 
   <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-  <!-- success message -->
+
+  <!--success message -->
   <?php if (session('success')) : ?>
     <script>
       Swal.fire({
@@ -203,6 +205,53 @@
     </script>
   <?php endif; ?>
 
+  <script>
+$(document).ready(function () {
+  const versioning = {
+    isLoaded: false,
+    modalId: '#versioningModal',
+    loadUrl: '<?= route_to('load_dskpn_versioning') ?>',
+
+    showModal() {
+      $(this.modalId).modal('show');
+    },
+
+    showError() {
+      Swal.fire({
+        icon: 'error',
+        text: 'An error occurred while loading the versioning settings.',
+        timer: 3000,
+        showConfirmButton: false
+      });
+    },
+
+    fetchModal() {
+      $.ajax({
+        url: this.loadUrl,
+        method: 'POST',
+        success: (response) => {
+          $('body').append(response);
+          this.isLoaded = true;
+          this.showModal();
+        },
+        error: () => this.showError()
+      });
+    },
+
+    handleClick() {
+      if (this.isLoaded) {
+        this.showModal();
+      } else {
+        this.fetchModal();
+      }
+    }
+  };
+
+  $('#openVersioningModal').on('click', function () {
+    versioning.handleClick();
+  });
+});
+</script>
 </body>
 
 </html>

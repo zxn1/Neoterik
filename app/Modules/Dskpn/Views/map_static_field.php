@@ -3,7 +3,7 @@
 <div class="container-fluid py-4">
   <div class="card">
     <div class="card-header d-flex p-3 bg-gradient-primary">
-      <h6 class="my-auto text-white">Petaan Input Statik</h6>
+      <h6 class="my-auto text-white">MAKLUMAT DSKPN</h6>
     </div>
     <div class="card-body mb-4 py-2">
       <di class="row">
@@ -47,7 +47,7 @@
     </div>
     <div class="card-body py-2">
       <div class="text-end">
-        <span id="add-subject-button" class="btn bg-gradient-info">Tambah Subjek&nbsp;&nbsp;
+        <span id="add-subject-button" class="btn bg-gradient-info">Tambah Mata Pelajaran&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
           </svg>
@@ -55,7 +55,7 @@
       </div>
 
       <div class="row pb-4" id="standard-pembelajaran">
-        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+        <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
       </div>
 
       <div class="card">

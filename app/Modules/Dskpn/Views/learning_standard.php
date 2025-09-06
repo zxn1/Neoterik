@@ -29,16 +29,42 @@
     font-size: 14px !important;
   }
 
-  div.col-md-2.d-flex > select.select2adjustheight + span > span.selection > span {
+  div.col-md-2.d-flex>select.select2adjustheight+span>span.selection>span {
     height: 40px;
-    margin-left : 5px;
+    margin-left: 5px;
   }
 
-  div.col-md-2.d-flex > select.select2adjustheight + span > span.selection > span > .select2-selection__rendered {
+  div.col-md-2.d-flex>select.select2adjustheight+span>span.selection>span>.select2-selection__rendered {
     border: 0px solid #d2d6da;
-}
+  }
 
+  .ql-toolbar-actions {
+    margin-left: auto;
+  }
+
+  .stylish-hr {
+    border: none;
+    height: 1px;
+    width: 80%;
+    margin: 1rem auto;
+    padding: 0px;
+    margin-top: 10px;
+    background: linear-gradient(to right, transparent, #333, transparent);
+  }
+
+  ol li[data-list="bullet"] {
+    list-style-position: inside;
+    counter-reset: none !important;
+  }
+
+  ol li[data-list="bullet"]::before {
+    content: '';
+    /* Buang numbering auto */
+    counter-increment: none;
+  }
 </style>
+<?= $wysiwyg_include; ?>
+<?= $wysiwyg_js; ?>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.css">
@@ -110,6 +136,7 @@
               $arrS = [
                 'Individu',
                 'Keluarga',
+                'Sekolah',
                 'Masyarakat',
                 'Negara',
                 'Dunia'
@@ -135,7 +162,7 @@
     <div class="card pb-3">
       <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
         <h6 class="my-auto text-white"><b>STANDARD PEMBELAJARAN</b></h6>
-        <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Subjek&nbsp;&nbsp;
+        <span id="add-subject-button" class="btn bg-info text-white" style="margin-bottom:0 !important">Tambah Mata Pelajaran&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z" />
           </svg>
@@ -146,10 +173,11 @@
           <?php
           if (empty($subject)) {
           ?>
-            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah subjek</span>
+            <span style="color : red;" id="hinting-no-subject">Hint : Anda masih belum menambah mata pelajaran</span>
             <?php
           } else {
-            foreach ($subject as $index => $sub) {
+            $idx = 0;
+            foreach ($subject as $sub) {
             ?>
 
               <div class="col-md-4 subject-card">
@@ -157,7 +185,7 @@
                   <?php if ($item_list['sbm_id'] == $sub) : ?>
                     <div class="card mt-4">
                       <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                        <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                           <option class="dropdown-item" value='<?= $item_list['sbm_id'] ?>' <?= ($flag) ? 'selected' : '' ?>><?= $item_list['sbm_desc'] ?></option>
                         </select>
                         <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
@@ -166,48 +194,83 @@
                       </div>
 
                       <?php
+                      $max = 5;
+                      $count = 0;
+                      while($count < $max)
+                      {
+                          if(!isset($subject_description[$item_list['sbm_id']][$idx]))
+                          {
+                              $idx++;
+                          } else {
+                              break;
+                          }
+                          $count++;
+                      }
+
                       if (!empty($subject_description) && $subject_description != "") {
-                        echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
-                        foreach ($subject_description[$item_list['sbm_id']] as $index => $desc_item) { ?>
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-2 p-0 pe-1">
-                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
-                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" value="<?= isset($subject_standard_numbering[$item_list['sbm_id']][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$index] : '' ?>" required>
-                            </div>
-                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini." value="<?= $desc_item; ?>">
-                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
+                        echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "-" . $idx . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
+                        if(!isset($subject_description[$item_list['sbm_id']][$idx]))
+                          $idx++;
+                        if(isset($subject_description[$item_list['sbm_id']][$idx]))
+                        foreach ($subject_description[$item_list['sbm_id']][$idx] as $index => $desc_item) { 
+                          //var_dump($subject_standard_numbering[$item_list['sbm_id']][$idx]);
+                          $randomNumber = mt_rand(100000, 999999);
+                          ?>
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>">
+                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>" class="w-100 pb-5 pe-2"></div>
+                            <script>
+                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>", {
+                                id: '<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>',
+                                placeholder: "<?= rawurlencode($desc_item); ?>",
+                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>][<?= $idx; ?>]",
+                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>",
+                                isLearningStandard: true,
+                                learningStandard: {
+                                  sbm_id: "<?= $item_list['sbm_id'] ?>",
+                                  sbm_code: "<?= $item_list['sbm_code'] ?>",
+                                  learning_standard_number: "<?= isset($subject_standard_numbering[$item_list['sbm_id']][$idx][$index]) ? $subject_standard_numbering[$item_list['sbm_id']][$idx][$index] : '' ?>",
+                                  index: "<?= $idx; ?>"
+                                }
+                              });
+                            </script>
+                            <!-- <input type="text" class="form-control p-1 me-1" name="subject_description[<?= ''; /*$item_list['sbm_id'];*/ ?>][]" placeholder="Objektif bagi Mata Pelajaran ini." value="<?= ''; /*$desc_item;*/ ?>">
+                              <div class="input-group-prepend me-1" style="margin-right : 5px;" onclick="$('#standard-item-<?= ''; /*$item_list['sbm_id'];*/ ?>').remove();selectionPopulateBasedOnNumbering();">
                                 <button class="input-group-text" id="btnGroupAddon">
                                   <i class="fas fa-trash-alt" style="color:red;"></i>
                                 </button>
-                              </div>
-                            </div>
+                              </div> -->
+                            <!-- </div> -->
+                            <hr class="stylish-hr">
                           </div>
                         <?php
                         }
                         echo "</div>";
                       } else { ?>
-                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
-                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>">
-                            <div class="col-2 p-0 pe-1">
-                              <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="<?= $item_list['sbm_code']; ?>" name="standard-learning-number[<?= $item_list['sbm_id']; ?>][]" pattern="^\d+(\.\d+)*$" 
-                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
-                            </div>
-                            <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                              <input type="text" class="form-control p-1 me-1" name="subject_description[<?= $item_list['sbm_id']; ?>][]" placeholder="Objektif bagi Subjek ini.">
-                              <div class="input-group-prepend me-1" onclick="$('#standard-item-<?= $item_list['sbm_id']; ?>').remove();selectionPopulateBasedOnNumbering();">
-                                <button class="input-group-text" id="btnGroupAddon">
-                                  <i class="fas fa-trash-alt" style="color:red;"></i>
-                                </button>
-                              </div>
-                            </div>
+                        <div id="standard-subject-<?= $item_list['sbm_id']; ?>-<?= $idx; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
+                          <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $idx ?>">
+                            <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $idx ?>" class="w-100 pb-5 pe-2"></div>
+                            <script>
+                              WysiwygComponent.renderTo("subject_description-<?= $item_list['sbm_id'] ?>-<?= $idx ?>", {
+                                id: '<?= $item_list['sbm_id'] ?>-<?= $idx ?>',
+                                inputNameId: "subject_description[<?= $item_list['sbm_id']; ?>][<?= $idx; ?>]",
+                                deleteButton: "standard-item-<?= $item_list['sbm_id']; ?>-<?= $idx ?>",
+                                isLearningStandard: true,
+                                learningStandard: {
+                                  sbm_id: "<?= $item_list['sbm_id'] ?>",
+                                  sbm_code: "<?= $item_list['sbm_code'] ?>",
+                                  learning_standard_number: "",
+                                  index: "<?= $idx; ?>"
+                                }
+                              });
+                            </script>
+                            <hr class="stylish-hr">
                           </div>
                         </div>
                       <?php
                       } ?>
 
                       <div class="p-1">
-                        <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>')">Tambah &nbsp;&nbsp;
+                        <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('<?= $item_list['sbm_id']; ?>', '<?= $item_list['sbm_code']; ?>', '<?= $idx; ?>', '<?= $idx; ?>')">Tambah &nbsp;&nbsp;
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                           </svg>
@@ -219,6 +282,7 @@
                 <?php endforeach; ?>
               </div>
           <?php
+            $idx++;
             }
           }
           ?>
@@ -260,7 +324,7 @@
                   } else {
                     ?>
                     <option disabled>-- Sila pilih Kod --</option>
-                  <?php } 
+                  <?php }
                   $selectedValues = isset($selected_assessment_code[$index]) ? $selected_assessment_code[$index] : []; //used for pentaksiran code
                   ?>
                 </select>
@@ -318,8 +382,8 @@
           for ($i = 0; $i < 3; $i++) { ?>
             <div class="input-group" style="margin-bottom: 10px;" id="objective-prestasi-<?= $i; ?>">
               <div class="col pe-1">
-                <input type="text" name="objective-prestasi-number[]" pattern="^\d+(\.\d+)*$" 
-                  title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control" placeholder="1.1" required>
+                <input type="text" name="objective-prestasi-number[]" pattern="^\d+(\.\d+)*$"
+                  title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan." class="form-control" placeholder="1.1" required>
               </div>
               <div class="col-md-6 pe-1">
                 <input type="text" name="objective-prestasi-desc[]" class="form-control" placeholder="Objektif prestasi bagi Topik DSKPN ini.">
@@ -380,7 +444,7 @@
         <?php
           }
         }
-        ?> 
+        ?>
 
       </div>
 
@@ -430,9 +494,9 @@
               <div class="row">
                 <?php $part1_ex_dskpn = "";
                 $part2_ex_dskpn = ""; ?>
-                <div class="col-md-8">
+                <div class="col-md-<?= get_versioning_status()?'8':'12' ?>">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
-                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" name="dskpncode"
+                  <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" id="dskpncode" name="dskpncode"
                     value="<?php
                             if (!isset($ex_dskpn_code_init)) {
                               if (isset($dskpn_code)) {
@@ -454,6 +518,7 @@
                             }
                             ?>">
                 </div>
+                <?php if(get_versioning_status()): ?>
                 <div class="col-md-4">
                   <?php
                   if (empty($part2_ex_dskpn)) { ?>
@@ -462,6 +527,7 @@
                   <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
                   <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn) ? date("Y") : $part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn) ? '' : 'disabled'; ?> />
                 </div>
+                <?php endif; ?>
               </div>
             </div>
           </div>
@@ -480,7 +546,29 @@
   </div>
 </div>
 
+
+<div class="modal fade" id="resumeornot" tabindex="-1" aria-labelledby="resumeornot" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary">
+        <h5 class="modal-title text-white" id="resumeornotlabel">Adakah anda ingin meneruskan?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Adakah anda ingin meneruskan pengisian dokumen bagi DSKPN : <b><?= get_dskpn_code_by_dskpn_id(session('dskpn_code')); ?></b>?<br><br>
+        <a href="<?= route_to('dskpn_learning_standard') . "?flag=true"; ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">Teruskan&nbsp;&nbsp;
+          <i class="fas fa-forward"></i>
+        </a>
+        <a href="<?= route_to('fresh_dskpn'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">Dokumen baru&nbsp;&nbsp;
+          <i class="fas fa-plus fa-lg"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="<?= base_url('assets/js/AutoTitleCase.js') ?>"></script>
 <script>
+  var resumeOrNot = <?= isset($resume) && ($resume == true) ? 'true' : 'false' ?>;
   var globalCheckingDSKPNCode = <?= isset($dskpn_code_init) ? 'true' : 'false' ?>;
   const subject_list = <?= json_encode($subject_list); ?>;
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';

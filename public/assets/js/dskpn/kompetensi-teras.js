@@ -16,7 +16,7 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
-function addField(subject_code, text = "") {
+function addField(subject_code, text = "", index = 0) {
     bareBoneId = subject_code;
     subject_code = 'item-placing-' + subject_code;
 
@@ -31,13 +31,13 @@ function addField(subject_code, text = "") {
     <tr id="${newFieldId}-${subject_code}">
         <td class="ps-1" colspan="4">
         <div class="my-auto">
-            <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" name="input-${bareBoneId}[]" value="${text}">
+            <input type="text" class="form-control text-dark d-block text-sm" placeholder="Menilai dan mencipta" name="input-${index}-${bareBoneId}[]" value="${text}">
         </div>
         </td>
         <td width="10px">
         <div class="form-check form-switch mb-0 mt-2 d-flex align-items-center justify-content-center">
             <input class="form-check-input" type="checkbox" value="${bareBoneId}" id="flexSwitchCheckDefault11" onchange="setCheckBox(this, '${newFieldId}${bareBoneId}', this.value)">
-            <input type="text" value="off" name="checked-${bareBoneId}[]" id="${newFieldId}${bareBoneId}" hidden/>
+            <input type="text" value="off" name="checked-${index}-${bareBoneId}[]" id="${newFieldId}${bareBoneId}" hidden/>
         </div>
         </td>
         <td width="5px">

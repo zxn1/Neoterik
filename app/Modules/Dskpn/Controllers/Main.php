@@ -116,25 +116,140 @@ class Main extends BaseController
 
     public function index()
     {
-        $data = [];
-        $this->render_login('login', $data);
-
+        //$data = [];
+        //$this->render_login('login', $data);
+        return redirect()->to(route_to('login'));
         // return view('App\\Modules\\Login\\Views\\login');
     }
 
+    // public function generate_view_pdf()
+    // {
+
+    //     $data = $this->_populate_dskpn_details();
+    //     $mpdf = new Mpdf([
+    //         'orientation' => 'L',
+    //         'format' => 'A1', //[594, 850], //A2
+    //         'margin_left' => 10,
+    //         'margin_right' => 10,
+    //         'margin_top' => 10,
+    //         'margin_bottom' => 10,
+    //     ]);
+
+    //     // Set the watermark text
+    //     if ($data['dskpn_details']['dskpn_status'] == 5 || $data['dskpn_details']['dskpn_status'] == null) {
+    //         $mpdf->SetWatermarkText('DRAF');
+    //         $mpdf->showWatermarkText = true;
+    //         //$mpdf->SetWatermarkImage('path/to/image.png');
+    //     }
+
+    //     $path = FCPATH . 'neoterik/img/logo_srsb.png';
+    //     //$path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
+
+    //     if (file_exists($path)) {
+    //         //encode image to base64
+    //         $imageData = base64_encode(file_get_contents($path));
+    //         $base64Image = 'data:image/png;base64,' . $imageData;
+    //         $data['srsb_logo'] = $base64Image;
+    //     }
+
+    //     // if (file_exists($path2)) {
+    //     //     //encode image to base64
+    //     //     $imageData = base64_encode(file_get_contents($path2));
+    //     //     $base64Image = 'data:image/png;base64,' . $imageData;
+    //     //     $data['draft_watermark_logo'] = $base64Image;
+    //     // }
+    //     // dd($data['learning_standard']);
+
+    //     $htmlContent = view('pdf/dskpn', $data);
+
+    //     $dskpn_code = $this->session->get('dskpn_code');
+    //     $dskpn_code = empty($dskpn_code) ? 'dskpn' : $dskpn_code;
+
+    //     $mpdf->WriteHTML($htmlContent);
+    //     return $mpdf->Output($dskpn_code . '.pdf', 'D');
+    // }
+
+    /*
+    Code asli dibiar diatas (commented out), atas kemungkinan kod auto adjust height ini mempunyai performance issue.
+    Kemungkinan perlu revert kembali.
+    */
     public function generate_view_pdf()
     {
         $data = $this->_populate_dskpn_details();
-        $mpdf = new Mpdf([
-            'orientation' => 'L',
-            'format' => 'A1',//[594, 850], //A2
-            'margin_left' => 10,
-            'margin_right' => 10,
-            'margin_top' => 10,
-            'margin_bottom' => 10,
-        ]);
+        // Logo fallback
+        $data['srsb_logo'] = null;
+        $path = FCPATH . 'neoterik/img/logo_srsb.png';
+
+        if (file_exists($path)) {
+            $imageData = base64_encode(file_get_contents($path));
+            $base64Image = 'data:image/png;base64,' . $imageData;
+            $data['srsb_logo'] = $base64Image;
+        }
+
+        $htmlContent = view('pdf/dskpn', $data);
+        $mpdf = $this->generate_single_page_pdf($htmlContent);
+
+        // Watermark DRAF
+        if (!isset($data['dskpn_details']['dskpn_status']) || $data['dskpn_details']['dskpn_status'] == 5) {
+            $mpdf->SetWatermarkText('DRAF');
+            $mpdf->showWatermarkText = true;
+        }
+
+        $filename = $this->session->get('dskpn_code') ?? 'dskpn';
+        return $mpdf->Output($filename . '.pdf', 'D');
+    }
+
+    //temporary solution - later can change use another package.
+    //could slower the performance - as it could loop too many (max 20 process - ibarat process 20 pdf serentak).
+    private function generate_single_page_pdf($htmlContent)
+    {
+        $initialHeight = 120;
+        $increment = 20;
+        $maxAttempts = 20;
+        $attempt = 0;
+        $height = $initialHeight;
+
+        do {
+            $mpdf = $this->mpdf_init($height);
+            $mpdf->WriteHTML($htmlContent);
+            $pages = $mpdf->page;
+
+            if ($pages <= 1) {
+                // dd($attempt);
+                return $mpdf;
+            }
+
+            if($height != 150) //must equivalent with initialHeight
+                $initialHeight += $increment;
+
+            $height = $initialHeight * $pages;
+            $attempt++;
+
+        } while ($pages > 1 && $attempt < $maxAttempts);
+
+        // dd($height);
+        $mpdf->SetAutoPageBreak(false, 0);
+        return $mpdf; // fallback: return last generated (might still be > 1 page)
+    }
+
+    public function mpdf_init($height)
+    {
+        return new \Mpdf\Mpdf([
+                'orientation' => 'L',
+                'format' => [$height, 594],
+                'margin_left' => 10,
+                'margin_right' => 10,
+                'margin_top' => 10,
+                'margin_bottom' => 10,
+            ]);
+    }
+
+    public function test_view_pdf_in_html()
+    {
+        $data = $this->_populate_dskpn_details();
 
         $path = FCPATH . 'neoterik/img/logo_srsb.png';
+        $path2 = FCPATH . 'neoterik/img/assets/draft_watermark.png';
 
         if (file_exists($path)) {
             //encode image to base64
@@ -143,27 +258,11 @@ class Main extends BaseController
             $data['srsb_logo'] = $base64Image;
         }
 
-        $htmlContent = view('pdf/dskpn', $data);
-
-        $dskpn_code = $this->session->get('dskpn_code');
-        $dskpn_code = empty($dskpn_code)?'dskpn':$dskpn_code;
-
-        $mpdf->WriteHTML($htmlContent);
-
-        return $mpdf->Output($dskpn_code . '.pdf', 'D');
-    }
-
-    public function test_view_pdf_in_html()
-    {
-        $data = $this->_populate_dskpn_details();
-
-        $path = FCPATH . 'neoterik/img/logo_srsb.png';
-
-        if (file_exists($path)) {
+        if (file_exists($path2)) {
             //encode image to base64
-            $imageData = base64_encode(file_get_contents($path));
+            $imageData = base64_encode(file_get_contents($path2));
             $base64Image = 'data:image/png;base64,' . $imageData;
-            $data['srsb_logo'] = $base64Image;
+            $data['draft_watermark_logo'] = $base64Image;
         }
 
         return view('pdf/dskpn', $data);
@@ -213,11 +312,18 @@ class Main extends BaseController
         $this->render_jscss('tp_maintenance', $data, $script, $style);
     }
 
+    public function load_dskpn_versioning()
+    {
+        echo $this->render_without_main('component/versioning_dskpn');
+    }
+
     public function topic_list_in_cluster()
     {
         $data = [];
         $data['cluster_listing'] = $this->cluster_model->findAll();
         $data['years'] = range(1, 6); // Hardcoding years from 1 to 6
+
+        $data['setting_dskpn_versioning'] = $this->render_without_main('component/versioning_dskpn');
 
         $selectedYear = $this->request->getGet('year');
         if (empty($selectedYear)) {
@@ -264,6 +370,21 @@ class Main extends BaseController
         $this->render_jscss('view_subject', $data, $script, $style);
     }
 
+    public function delete_subject()
+    {
+        $sbm_id = $this->request->getPost('sbm_id');
+
+        if($sbm_id){
+            if ($this->subject_model->delete($sbm_id)){
+                return redirect()->back()->with('success', 'Subjek berjaya dipadam.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memadam subjek.');
+            }
+        }
+    }
+
+
+
     public function view_cluster()
     {
         $data = [];
@@ -278,7 +399,7 @@ class Main extends BaseController
     {
         $data = [];
         $data['topics'] = $this->topic_model
-            ->select('topic_main.*, cluster_main.ctm_desc') // Select columns from both tables
+            ->select('topic_main.*, cluster_main.ctm_id, cluster_main.ctm_desc') // Select columns from both tables
             ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id') // Join the 'cluster' table on the specified condition
             ->findAll(); // Retrieve all the results
         $data['clusters'] = $this->cluster_model->findAll();
@@ -288,16 +409,69 @@ class Main extends BaseController
         $this->render_jscss('view_topic', $data, $script, $style);
     }
 
+    public function delete_topic()
+    {
+        $tm_id = $this->request->getPost('tm_id');
+
+        if ($tm_id) {
+            if ($this->topic_model->delete($tm_id)) {
+                return redirect()->back()->with('success', 'Topik berjaya dipadam.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memadam topik.');
+            }
+        }
+    }
+
+
     public function list_registered_dskpn()
     {
         $this->session->set('ex_dskpn_code_init', null); //reset
         $data = [];
+        $own_dskpn = $this->request->getVar("owned");
+        $data['owned'] = $own_dskpn;
 
+        $data['setting_dskpn_versioning'] = $this->render_without_main('component/versioning_dskpn');
+
+        $current_role = session('current_role');
         // Query to get the list of DSKPN
-        $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-            ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
-            ->findAll();
+        if ($current_role == 'PENYELARAS') {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left');
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                    ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']->findAll();
+        } else if ($current_role == 'GURU_BESAR') {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left');
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                    ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']
+                ->whereIn('dskpn_status', [1, 2, 3, 4, null])
+                ->orWhere('dskpn_status IS NULL')
+                ->findAll();
+        } else {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn_status', 1);
+
+            if (!empty($own_dskpn)) {
+                $data['dskpn'] = $data['dskpn']
+                    ->where('dskpn_created_by', session('sm_id'));
+            }
+
+            $data['dskpn'] = $data['dskpn']->findAll();
+        }
 
         $script = ['data', 'list_registered_dskpn'];
         $style = ['static-field'];
@@ -345,6 +519,7 @@ class Main extends BaseController
             return "Tiada parameter DSKPN dihantar! Gagal!";
 
         if ($this->dskpn_model->update($dskpn_id, [
+            'dskpn_approved_by' => $this->session->get('sm_id'),
             'dskpn_status'  => 4
         ]))
             if ($this->dskpn_model->where('dskpn_id', $dskpn_id)->delete()) {
@@ -362,8 +537,8 @@ class Main extends BaseController
 
         if ($this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => null,
-            'approved_by'   => null,
-            'deleted_at'    => null,
+            'dskpn_approved_by'   => null,
+            'dskpn_deleted_at'    => null,
             'dskpn_remarks' => null
         ])) {
             return redirect()->back()->with('success', 'Permintaan memadam DSKPN berjaya dibatalkan');
@@ -396,7 +571,7 @@ class Main extends BaseController
     {
         $dskpn_id = $this->session->get('dskpn_id');
 
-        $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->first();
+        $dskpn_details = $this->dskpn_model->where('dskpn_id', $dskpn_id)->withDeleted()->first();
 
         // Get DSKPN learning_standard
         $learning_standard = $this->learning_standard_model
@@ -404,26 +579,47 @@ class Main extends BaseController
             ->where('ls_dskpn_id', $dskpn_id)
             ->findAll();
 
+        //dd($learning_standard);
+
         $subjects = $this->subject_model
-            ->select('subject_main.sbm_id, subject_main.sbm_desc, subject_main.sbm_code')
+            ->select('subject_main.sbm_id, subject_main.sbm_desc, subject_main.sbm_code, ls_deleted_at')
             ->join('learning_standard', 'subject_main.sbm_id = learning_standard.ls_sbm_id')
-            ->where('ls_dskpn_id', $dskpn_id)
-            ->groupBy('sbm_id')
+            ->where('ls_dskpn_id', $dskpn_id)->where('ls_deleted_at', null)
+            ->groupBy('sbm_id, ls_id')
             ->findAll();
 
         //Get topic main by tm_id
         $tm_details = $this->topic_model->where('tm_id', $dskpn_details['dskpn_tm_id'])->first();
+        $this->session->set('tm_id', $dskpn_details['dskpn_tm_id']); //must to avoid error when go back
 
         // Get cluster based on tm_id cm_id
         $cluster_details = $this->cluster_model->where('ctm_id', $tm_details['tm_ctm_id'])->first();
 
         // Get standard_performance
         $standard_performance = $this->standard_performance_dskp_mapping_model
-            ->join('dskp', 'dskp.dskp_code = standard_performance_dskp_mapping.spdm_dskp_code')
-            ->join('standard_performance', 'standard_performance.sp_dskp_code = dskp.dskp_code')
+            ->join('dskp', 'dskp.dskp_code = standard_performance_dskp_mapping.spdm_dskp_code AND dskp.dskp_batch = standard_performance_dskp_mapping.spdm_dskp_batch')
+            ->join('standard_performance', 'standard_performance.sp_dskp_code = dskp.dskp_code AND standard_performance.sp_dskp_batch = dskp.dskp_batch')
             ->join('subject_main', 'subject_main.sbm_id = dskp.dskp_sbm_id')
             ->where('spdm_dskpn_id', $dskpn_id)
             ->findAll();
+
+        //dd($standard_performance);
+
+        $tp_level = 0;
+        $index = 0;
+        $new_standard_performance = [];
+        foreach ($standard_performance as $idx => $sp) {
+            if ($tp_level < $sp['sp_tp_level']) {
+                $tp_level = $sp['sp_tp_level'];
+                $new_standard_performance[$index][] = $sp;
+            } else {
+                $tp_level = 0;
+                $index++;
+                $new_standard_performance[$index][] = $sp;
+            }
+        }
+
+        $standard_performance = $new_standard_performance;
 
         $objective_performance = $this->objective_performance_model->where('opm_dskpn_id', $dskpn_id)->findAll();
         $all_reff_code_op = $this->objective_performance_model
@@ -442,14 +638,30 @@ class Main extends BaseController
             ->join('assessment_category', 'assessment_item.asi_asc_id = assessment_category.asc_id')
             ->where('assessment_item.asi_dskpn_id', $dskpn_id)->findAll();
         $core_competency    = $this->competency_mapping_model
-            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code')
+            ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
             ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
             ->where('cmp_dskpn_id', $dskpn_id)->findAll();
 
-        $ls_sbm_ids = array_column($learning_standard, 'ls_sbm_id');
-        $all_core_competency = $this->core_competency_model
-            ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
-            ->whereIn('cc_sbm_id', $ls_sbm_ids)->findAll();
+        //dd($core_competency);
+
+        $ls_sbm_ids = array_unique(array_column($learning_standard, 'ls_sbm_id')); //array_unique to ensure no duplicate/redundant issue
+        $all_core_competency = [];
+        foreach ($ls_sbm_ids as $sub_id) {
+            $check_core_competency = $this->competency_mapping_model
+                ->join('core_competency', 'competency_mapping.cmp_cc_code = core_competency.cc_code AND competency_mapping.cmp_cc_batch = core_competency.cc_batch')
+                // ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
+                ->where('cmp_dskpn_id', $dskpn_id)
+                ->where('cc_sbm_id', $sub_id)
+                ->orderBy('cmp_id', 'DESC')
+                ->first();
+
+            //$this->core_competency_model->where('cc_sbm_id', $sub_id)->orderBy('cc_id', 'DESC')->first();
+            $tmp_core_competency = $this->core_competency_model
+                ->join('subject_main', 'subject_main.sbm_id = core_competency.cc_sbm_id')
+                ->where('cc_sbm_id', $sub_id)->where('cc_batch', $check_core_competency['cc_batch'] ?? 0)->findAll();
+
+            $all_core_competency = array_merge($all_core_competency, $tmp_core_competency);
+        }
 
         // Get 16 Domain List by tahap
         $domain_pengetahuan_asas = $this->domain_mapping_model->getDomain($dskpn_id, 'Pengetahuan Asas');
@@ -563,8 +775,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 1,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s')
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s')
         ]);
 
         // Set success message and redirect back
@@ -582,8 +794,8 @@ class Main extends BaseController
         // Update DSKPN table
         $this->dskpn_model->update($dskpn_id, [
             'dskpn_status'  => 2,
-            'approved_by'   => $staff_main_id,
-            'approved_at'   => date('Y-m-d H:i:s'),
+            'dskpn_approved_by'   => $staff_main_id,
+            'dskpn_approved_at'   => date('Y-m-d H:i:s'),
             'dskpn_remarks' => $remarks
         ]);
 
@@ -736,7 +948,7 @@ class Main extends BaseController
 
             //step 1 - get all subjects related to iterate horizontally
             //step 1.1 - get learning standard to get list of subject.
-            $data['subjects'] = $this->subject_model->select('subject_main.sbm_code, subject_main.sbm_desc, subject_main.sbm_id')
+            $data['subjects'] = $this->subject_model->select('subject_main.sbm_code, subject_main.sbm_desc, subject_main.sbm_id, ls.ls_id')
                 ->join('learning_standard as ls', 'ls.ls_sbm_id = subject_main.sbm_id')
                 ->where('ls.ls_dskpn_id', $data['dskpn_id'])->where('ls.ls_deleted_at', null)->findAll();
 
@@ -748,29 +960,43 @@ class Main extends BaseController
                 $subjectCodeArray[] = $subject['sbm_code'];
             }
 
-            $core_competency = $this->core_competency_model->whereIn('cc_sbm_id', $subjectIdsArray)->findAll();
+            //dd(['ids' => $subjectIdsArray, 'code' => $subjectCodeArray]); //OK
+
+            $core_competency = [];
+            foreach ($subjectIdsArray as $index => $subject_id) {
+                $batch_num = 0;
+                $check_core_competency = $this->core_competency_model->where('cc_sbm_id', $subject_id)->orderBy('cc_id', 'DESC')->first();
+                if (isset($check_core_competency) && !empty($check_core_competency))
+                    $batch_num = $check_core_competency['cc_batch'];
+
+                $core_competency_temp = $this->core_competency_model->where('cc_sbm_id', $subject_id)->where('cc_batch', $batch_num)->findAll();
+                $core_competency[$index] = $core_competency_temp; //array_merge($core_competency, $core_competency_temp);
+            }
+
+            //dd($core_competency); //OKK
 
             //step 2.1 - structuring the data to pass over view
             foreach ($subjectIdsArray as $index => $sbm_id) {
                 if (isset($is_update_Core) && !empty($is_update_Core)) {
-                    foreach ($core_competency as $i => $item) {
+                    foreach ($core_competency[$index] as $i => $item) {
                         if ($sbm_id == $item['cc_sbm_id']) {
                             $flag = false;
-                            if (isset($core_map_sess[$subjectCodeArray[$index]]) && !empty($core_map_sess[$subjectCodeArray[$index]]))
-                                foreach ($core_map_sess[$subjectCodeArray[$index]] as $core) {
+                            //dd($core_map_sess[$index][$subjectCodeArray[$index]]); //OKK
+                            if (isset($core_map_sess[$index][$subjectCodeArray[$index]]) && !empty($core_map_sess[$index][$subjectCodeArray[$index]]))
+                                foreach ($core_map_sess[$index][$subjectCodeArray[$index]] as $core) {
                                     if ($core[0] == $item['cc_code']) {
                                         $flag = true;
-                                        $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], $core[1]);
+                                        $data['core_competency_item'][$index][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], $core[1]);
                                     }
                                 }
                             if (!$flag)
-                                $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                                $data['core_competency_item'][$index][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
                         }
                     }
                 } else {
-                    foreach ($core_competency as $item) {
+                    foreach ($core_competency[$index] as $item) {
                         if ($sbm_id == $item['cc_sbm_id'])
-                            $data['core_competency_item'][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
+                            $data['core_competency_item'][$index][$sbm_id][] = array($item['cc_code'], $item['cc_desc'], 'N');
                     }
                 }
             }
@@ -919,33 +1145,36 @@ class Main extends BaseController
         $this->db->transBegin();
 
         // step 1 - insert activity
-        foreach ($activity_idea_input as $index => $activity) {
-            $this->activity_item_model->insert([
-                'aci_dskpn_id' => $dskpn_id,
-                'aci_number' => isset($activity_idea_number[$index]) ? $activity_idea_number[$index] : '',
-                'aci_desc' => $activity
-            ]);
-        }
-
-        // step 2 - insert assessment
-        foreach ($assessment_input as $asc_id => $assess) {
-            foreach ($assess as $index => $item) {
-                $this->assessment_item_model->insert([
-                    'asi_dskpn_id'  => $dskpn_id,
-                    'asi_desc_number' => isset($assessment_number[$asc_id][$index]) ? $assessment_number[$asc_id][$index] : '',
-                    'asi_desc' => $item,
-                    'asi_asc_id' => $asc_id
+        if (!empty($activity_idea_input))
+            foreach ($activity_idea_input as $index => $activity) {
+                $this->activity_item_model->insert([
+                    'aci_dskpn_id' => $dskpn_id,
+                    'aci_number' => isset($activity_idea_number[$index]) ? $activity_idea_number[$index] : '',
+                    'aci_desc' => $activity
                 ]);
             }
-        }
+
+        // step 2 - insert assessment
+        if (!empty($assessment_input))
+            foreach ($assessment_input as $asc_id => $assess) {
+                foreach ($assess as $index => $item) {
+                    $this->assessment_item_model->insert([
+                        'asi_dskpn_id'  => $dskpn_id,
+                        'asi_desc_number' => isset($assessment_number[$asc_id][$index]) ? $assessment_number[$asc_id][$index] : '',
+                        'asi_desc' => $item,
+                        'asi_asc_id' => $asc_id
+                    ]);
+                }
+            }
 
         // step 3 - insert abm
-        foreach ($abm as $item) {
-            $this->learning_aid_model->insert([
-                'la_dskpn_id' => $dskpn_id,
-                'la_desc' => $item
-            ]);
-        }
+        if (!empty($abm))
+            foreach ($abm as $item) {
+                $this->learning_aid_model->insert([
+                    'la_dskpn_id' => $dskpn_id,
+                    'la_desc' => $item
+                ]);
+            }
 
         // step 4 - update dskpn - parental-involvement
         $this->dskpn_model->update($dskpn_id, [
@@ -976,6 +1205,20 @@ class Main extends BaseController
         $data['dskpn_id'] = $this->session->get("dskpn_id");
         $data['dskpn_code'] = $this->session->get("dskpn_code");
 
+        //update dskpn status
+        $this->dskpn_model->update($data['dskpn_id'], [
+            'dskpn_status' => null
+        ]);
+
+        $this->_destroy_all_session();
+
+        $script = [];
+        $style = [];
+        $this->render_jscss('mapping_successfully', $data, $script, $style);
+    }
+
+    private function _destroy_all_session($exclude = [])
+    {
         $sessionData = session()->get();
 
         $excludeKeys = [
@@ -989,53 +1232,265 @@ class Main extends BaseController
             'current_role',
             'list_current_role',
             'ccm_id',
-            'ccm_name'
+            'ccm_name',
+            'tm_id'
         ];
+
+        // Remove elements in $exclude from $excludeKeys
+        $result = array_diff($excludeKeys, $exclude);
+
+        // Re-index the array if necessary
+        $excludeKeys = array_values($result);
 
         foreach ($sessionData as $key => $value) {
             if (!in_array($key, $excludeKeys)) {
                 session()->remove($key);
             }
         }
-
-        $script = [];
-        $style = [];
-        $this->render_jscss('mapping_successfully', $data, $script, $style);
     }
 
     public function set_session_edit_dskpn($ex_dskpn_id)
     {
+        helper('dskpn_helper');
+        $this->_destroy_all_session();
+        $is_draft = $this->request->getVar('draft');
+
+        //page - Penetapan Standard Pembelajaran
         //set all attribute
         $this->session->set('is_update', true); //need to check if currently update process
         if (!empty($ex_dskpn_id))
             $this->session->set('ex_dskpn_id', $ex_dskpn_id);
 
-        //ex_dskpn
         $dskpn = $this->dskpn_model->where('dskpn_id', $ex_dskpn_id)
-            ->join('objective_performance', 'objective_performance.op_id = dskpn.op_id')->first();
+            //->join('objective_performance', 'objective_performance.opm_dskpn_id = dskpn.dskpn_id')
+            ->join('topic_main', 'topic_main.tm_id = dskpn.dskpn_tm_id')
+            ->join('cluster_main', 'cluster_main.ctm_id = topic_main.tm_ctm_id')
+            ->first();
 
-        $this->session->set('ex_dskpn', $dskpn);
+        //set session
+        $this->session->set('tm_id', $dskpn['dskpn_tm_id']);
 
-        $learning_standard = $this->learning_standard_model->where('dskpn_id', $ex_dskpn_id)
-            ->join('subject_main', 'subject_main.sm_id = learning_standard.sm_id')
+        $learning_standard = $this->learning_standard_model->where('ls_dskpn_id', $ex_dskpn_id)
+            ->join('subject_main', 'subject_main.sbm_id = learning_standard.ls_sbm_id')
+            ->join('learning_standard_item', 'learning_standard_item.lsi_ls_id = learning_standard.ls_id')
+            ->findAll();
+
+        $subject_list = $this->learning_standard_model->select('sbm_id, ls_id')->where('ls_dskpn_id', $ex_dskpn_id)
+            ->join('subject_main', 'subject_main.sbm_id = learning_standard.ls_sbm_id')
+            ->join('learning_standard_item', 'learning_standard_item.lsi_ls_id = learning_standard.ls_id')
+            ->groupBy('ls_id,ls_sbm_id')
             ->findAll();
 
         $subject = [];
         $subject_description = [];
-        foreach ($learning_standard as $item) {
-            $subject[] = $item['sm_id'];
-            $subject_description[] = $item['ls_details'];
+        $subject_standard_numbering = [];
+        $learning_standard_ids = [];
+        foreach ($subject_list as $index => $sbjk) {
+            $subject[] = $sbjk['sbm_id'];
+            foreach ($learning_standard as $item) {
+                if ($item['ls_id'] == $sbjk['ls_id']) {
+                    $subject_description[$item['sbm_id']][$index][] = $item['lsi_desc'];
+                    $subject_standard_numbering[$item['sbm_id']][$index][] = $item['lsi_number'];
+
+                    if (!in_array($item['ls_id'], $learning_standard_ids))
+                        $learning_standard_ids[] = $item['ls_id'];
+                }
+            }
         }
 
+        //dd($subject_standard_numbering);
+
         $this->session->set('subject', $subject);
+
+        //dskpn_code_init (x)
+        //dskpn_code (x)
+        //$this->session->set('is_update', 'Y'); if draft + ex_dskpn_id must same. then only update
+        //is_update_TP":"Y" //if draft this one is needed
+        if (isset($is_draft) && !empty($is_draft)) {
+            $this->session->set('dskpn_code_init', $ex_dskpn_id);
+            $this->session->set('dskpn_code', $ex_dskpn_id);
+            $this->session->set('is_update', 'Y');
+            $this->session->set('is_update_TP', 'Y');
+        }
+
         $this->session->set('subject_description', $subject_description);
-        $this->session->set('objective', $dskpn['op_desc']);
-        $this->session->set('duration', $dskpn['op_duration']);
+        $this->session->set('subject_standard_numbering', $subject_standard_numbering);
+        $this->session->set('kluster', $dskpn['ctm_id']);
+        $this->session->set('cluster_id', $dskpn['ctm_id']);
+        $this->session->set('tahun', year_to_string($dskpn['tm_year']));
+        $this->session->set('topik', $dskpn['tm_id']);
+        $this->session->set('topic_id', $dskpn['tm_id']);
+        $this->session->set('duration', $dskpn['dskpn_duration']);
         $this->session->set('tema', $dskpn['dskpn_theme']);
         $this->session->set('subtema', $dskpn['dskpn_sub_theme']);
-        $this->session->set('ex_dskpn_code_init', $dskpn['dskpn_code']);
-        $this->session->set('dskpn_code_init', null); //reset
-        $this->session->set('tm_id', $dskpn['tm_id']);
+        $this->session->set('dskpn_id', $dskpn['dskpn_id']);
+        $this->session->set('learning_standard_id', $learning_standard_ids);
+        $objective_perform = $this->objective_performance_model->where('opm_dskpn_id', $ex_dskpn_id)->findAll();
+        $objective = [];
+        $objective_number = [];
+        $objective_ref = [];
+        $objective_assessment = [];
+        $arr_objective_ref = [];
+        $arr_objective_assessment = [];
+        $objective_performance_selection_listing = [];
+        foreach ($objective_perform as $opm) {
+            $objective[] = $opm['opm_desc'];
+            $objective_number[] = $opm['opm_number'];
+            $rand = generateRandomNumber();
+            $orc = $this->opm_reff_code_model->where('orc_opm_id', $opm['opm_id'])->findAll();
+            $objective_ref[$rand] = !empty($orc) ? array_column($orc, 'orc_code') : [];
+
+            if (isset($orc) && !empty($orc)) {
+                $objective_performance_selection_listing = array_merge($objective_performance_selection_listing, array_column($orc, 'orc_code'));
+                $arr_objective_ref[] = array_column($orc, 'orc_code');
+            }
+
+            $oac = $this->opm_assessment_code_model->where('oac_opm_id', $opm['opm_id'])->findAll();
+            $objective_assessment[$rand] = !empty($oac) ? array_column($oac, 'oac_code') : [];
+
+            if (isset($oac) && !empty($oac))
+                $arr_objective_assessment[] = array_column($oac, 'oac_code');
+        }
+        $this->session->set('objective', $objective);
+        $this->session->set('objective_number', $objective_number);
+        $this->session->set('objective_ref', $objective_ref);
+        $this->session->set('objective_assessment', $objective_assessment);
+        $this->session->set('arr_objective_ref', $arr_objective_ref);
+        $this->session->set('arr_objective_assessment', $arr_objective_assessment);
+        $this->session->set('objective_performance_selection_listing', json_encode($objective_performance_selection_listing));
+        //end page - Penetapan Standard Pembelajaran
+
+        //page - Penetapan Tahap Penguasaan
+        $tp_map = $this->standard_performance_dskp_mapping_model->where('spdm_dskpn_id', $ex_dskpn_id)->findAll();
+        $tp_sess_refcode = [];
+        foreach ($tp_map as $tp)
+            $tp_sess_refcode[] = $tp['spdm_dskp_code'];
+        $this->session->set('tp_sess_refcode', $tp_sess_refcode);
+        //end page - Penetapan Tahap Penguasaan
+
+        //page - Penetapan Pemetaan Teras
+        $core_map = $this->competency_mapping_model->where('cmp_dskpn_id', $ex_dskpn_id)
+            ->join('core_competency', 'core_competency.cc_code = competency_mapping.cmp_cc_code AND core_competency.cc_batch = competency_mapping.cmp_cc_batch')
+            ->join('subject_main', 'core_competency.cc_sbm_id = subject_main.sbm_id')
+            ->findAll();
+
+        $core_map_sess = [];
+        $core_mapping_id_session_data = [];
+        $column_index_is_null = false;
+        foreach ($core_map as $cmp) {
+            if (!is_null($cmp['cmp_column_index'])) {
+                $core_map_sess[$cmp['cmp_column_index']][$cmp['sbm_code']][$cmp['cmp_id']] = [$cmp['cmp_cc_code'], 'Y'];
+
+                if (!in_array($cmp['cmp_id'], $core_mapping_id_session_data))
+                    $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
+            } else {
+                $column_index_is_null = true;
+            }
+        }
+        if ($column_index_is_null) {
+            for ($i = 0; $i < count($subject_list); $i++) {
+                foreach ($core_map as $cmp) {
+                    if ($subject_list[$i]['sbm_id'] == $cmp['sbm_id']) {
+                        $core_map_sess[$i][$cmp['sbm_code']][$cmp['cmp_id']] = [$cmp['cmp_cc_code'], 'Y'];
+
+                        if (!in_array($cmp['cmp_id'], $core_mapping_id_session_data))
+                            $core_mapping_id_session_data[] = (int)$cmp['cmp_id'];
+                    }
+                }
+            }
+        }
+
+        $this->session->set('core_map_sess', $core_map_sess);
+        $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
+        $this->session->set('is_update_core', 'Y'); //is must - to display - but make sure dskpn_id is current new dskpn_id
+        //end page - Penetapan Pemetaan Teras
+
+        //page - Penetapan Pemetaan Domain
+        $domain_map_session = [];
+        $domain_map_id_session_data = [];
+        $domain_map = $this->domain_mapping_model->where('dm_dskpn_id', $ex_dskpn_id)
+            ->join('subject_main', 'subject_main.sbm_id = domain_mapping.dm_sbm_id')
+            ->join('domain', 'domain.dmn_code = domain_mapping.dm_dmn_code')
+            ->findAll();
+
+        $column_index_is_null = false;
+        foreach ($domain_map as $dmp) {
+            if (!is_null($dmp['dm_column_index'])) {
+                $domain_map_session[$dmp['dm_column_index']]["'" . $dmp['sbm_code'] . "'"][] = $dmp['dmn_id'];
+                $domain_map_id_session_data[] = (int)$dmp['dm_id'];
+            } else {
+                $column_index_is_null = true;
+            }
+        }
+        if ($column_index_is_null) {
+            for ($i = 0; $i < count($subject_list); $i++) {
+                foreach ($domain_map as $dmp) {
+                    if ($subject_list[$i]['sbm_id'] == $dmp['dm_sbm_id']) {
+                        $domain_map_session[$i]["'" . $dmp['sbm_code'] . "'"][] = $dmp['dmn_id'];
+                        $domain_map_id_session_data[] = (int)$dmp['dm_id'];
+                    }
+                }
+            }
+        }
+
+        $this->session->set('domain_map_session', $domain_map_session);
+        $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
+        $this->session->set('is_update_domain', 'Y');
+        //end page - Penetapan Pemetaan Domain
+
+        //page - Penetapan Pemetaan Aktiviti & Pentaksiran
+        $activity_idea_number = [];
+        $activity_idea_input = [];
+        $assessment_number = [];
+        $assessment_input = [];
+        $abm = array_column($this->learning_aid_model->where('la_dskpn_id', $ex_dskpn_id)->findAll() ?? [], 'la_desc');
+        $this->session->set('abm', $abm);
+
+        $activity_idea = $this->activity_item_model->where('aci_dskpn_id', $ex_dskpn_id)->findAll();
+        foreach ($activity_idea as $act_item) {
+            $activity_idea_number[] = $act_item['aci_number'];
+            $activity_idea_input[] = $act_item['aci_desc'];
+        }
+
+        $this->session->set('activity_idea_number', $activity_idea_number);
+        $this->session->set('activity_idea_input', $activity_idea_input);
+
+        $assess = $this->assessment_item_model->where('asi_dskpn_id', $ex_dskpn_id)->findAll();
+        foreach ($assess as $asses_item) {
+            $assessment_number[$asses_item['asi_asc_id']][] = $asses_item['asi_desc_number'];
+            $assessment_input[$asses_item['asi_asc_id']][] = $asses_item['asi_desc'];
+        }
+        $this->session->set('assessment_number', $assessment_number);
+        $this->session->set('assessment_input', $assessment_input);
+
+
+        $this->session->set('parent_involve', $dskpn['dskpn_parent_involvement'] ?? null);
+        $this->session->set('is_update_activity_assessment', 'Y');
+        //end page - Penetapan Pemetaan Aktiviti & Pentaksiran
+
+        //page - Penetapan Pemetaan Spesifikasi
+        $specification_mapist_sess = [];
+        $specification_mapping_id_list_sess = [];
+        $new_specification_id_list_sess = [];
+        $new_specification_input_details = [];
+        $specs_map = $this->teaching_approach_mapping_model->where('tappm_dskpn_id', $ex_dskpn_id)
+            ->join('teaching_approach', 'teaching_approach.tapp_id = teaching_approach_mapping.tappm_tapp_id')
+            ->findAll();
+        foreach ($specs_map as $sp_map) {
+            $specification_mapist_sess[] = (string)$sp_map['tappm_tapp_id'];
+            $specification_mapping_id_list_sess[] = (int)$sp_map['tappm_id'];
+
+            if ((int)$sp_map['tapp_id'] > 23) {
+                $new_specification_id_list_sess[] = (int)$sp_map['tappm_tapp_id'];
+                $new_specification_input_details[$sp_map['tapp_tappc_id']][] = [$sp_map['tapp_desc'], (string)$sp_map['tapp_id']];
+            }
+        }
+        $this->session->set('specification_mapist_sess', $specification_mapist_sess);
+        $this->session->set('specification_mapping_id_list_sess', $specification_mapping_id_list_sess);
+        $this->session->set('is_update_specs', 'Y');
+        $this->session->set('new_specification_id_list_sess', $new_specification_id_list_sess);
+        $this->session->set('new_specification_input_details', $new_specification_input_details);
+        //end page - Penetapan Pemetaan Spesifikasi
 
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
     }
@@ -1094,6 +1549,19 @@ class Main extends BaseController
         if (isset($newItem) && !empty($newItem)) {
             foreach ($newItem as $tappc_id => $itemArr) {
                 foreach ($itemArr as $randomItemID => $item_desc) {
+                    // $checkExists = $this->teaching_approach_model->where(['tapp_desc' => $item_desc, 'tapp_status' => 2, 'tapp_tappc_id' => $tappc_id])->first();
+                    // if(empty($checkExists))
+                    // {
+                    //     $this->teaching_approach_model->insert([
+                    //         'tapp_desc' => $item_desc,
+                    //         'tapp_status' => 2,
+                    //         'tapp_tappc_id' => $tappc_id
+                    //     ]);
+
+                    //     $insertedID = $this->teaching_approach_model->insertID();
+                    // } else {
+                    //     $insertedID = $checkExists['tapp_id'];
+                    // }
                     $this->teaching_approach_model->insert([
                         'tapp_desc' => $item_desc,
                         'tapp_status' => 2,
@@ -1158,8 +1626,26 @@ class Main extends BaseController
 
         //part 0
         $allSubject     = $this->request->getPost('subject'); //multi-array
-        $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (refers to item mapped)
+        $allDescription = $this->request->getPost('subject_description'); //multi-array - first loop (refers to subject = key = sm_id) - second loop (subject column) - third loop (refers to item mapped)
         $standardNumbering = $this->request->getPost('standard-learning-number');
+
+        //May20, 2025 - new structure of subject_description.
+        //request to able capture learning standard for 3 same subject.
+        //New structure: subject_description[subject_id][subject_column_index][items]
+
+        //decode description.
+        foreach ($allSubject as $subject) {
+            if(isset($allDescription[$subject]))
+            foreach ($allDescription[$subject] as $subject_column_index => &$item_maps) {
+                // Decode semua item dalam $item_maps
+                if(is_array($item_maps) || is_object($item_maps))
+                foreach ($item_maps as $item_map_key => &$item) {
+                    $item = urldecode($item);
+                }
+                //$allDescription[$subject][$itemIndex] = urldecode($itemDesc); //previous structure 2D
+            }
+        }
+        //dd(['data' => $allDescription, 'numbering' => $standardNumbering]);
 
         //set session for part 0
         $this->session->set('subject', $allSubject);
@@ -1214,7 +1700,9 @@ class Main extends BaseController
 
             //step 1 - update DSKPN
             $dskpn_create_update_status = $this->dskpn_model->update($data['dskpn_id'], [
-                'dskpn_duration'    => $duration
+                'dskpn_duration'    => $duration,
+                'dskpn_theme'       => $tema,
+                'dskpn_sub_theme'   => $subtema
             ]);
 
             //step 2 - delete object performance
@@ -1224,14 +1712,15 @@ class Main extends BaseController
             $this->learning_standard_model->where('ls_dskpn_id', $data['dskpn_id'])->delete();
 
             //step 4 - delete learning-standard-item
-            $this->learning_standard_item_model->whereIn('lsi_ls_id', $learning_standard_id)->delete();
+            if (!empty($learning_standard_id))
+                $this->learning_standard_item_model->whereIn('lsi_ls_id', $learning_standard_id)->delete();
         } else {
             //else - create dskpn
             $dskpn_create_update_status = $this->dskpn_model->insert([
                 'dskpn_code'        => $dskpn_code_init,
                 'dskpn_theme'       => $tema,
                 'dskpn_sub_theme'   => $subtema,
-                'dskpn_status'      => null,
+                'dskpn_status'      => 5,
                 'dskpn_remarks'     => null,
                 'dskpn_delete_reason' => null,
                 'dskpn_created_by'  => $sm_id, //sm_id is not subject_main ID
@@ -1264,6 +1753,7 @@ class Main extends BaseController
         $arr_objective_assessment = [];
         if ($dskpn_create_update_status) {
             //step 2 - add objective performance
+            if(isset($objective))
             foreach ($objective as $index => $obj) {
                 $this->objective_performance_model->insert([
                     'opm_number'        => isset($objectiveNumber[$index]) ? $objectiveNumber[$index] : null,
@@ -1278,12 +1768,19 @@ class Main extends BaseController
                     foreach ($objectiveRef as $key => $reffItem) {
                         if ($index == $indeks) {
                             foreach ($reffItem as $ref) {
-                                $this->opm_reff_code_model->insert(
-                                    [
+                                // Check if the record already exists
+                                $exists = $this->opm_reff_code_model->where([
+                                    'orc_opm_id' => $op_last_id,
+                                    'orc_code'   => $ref
+                                ])->findAll();
+
+                                if (empty($exists)) {
+                                    // If it does not exist, insert the new record
+                                    $this->opm_reff_code_model->insert([
                                         'orc_opm_id' => $op_last_id,
                                         'orc_code'   => $ref
-                                    ]
-                                );
+                                    ]);
+                                }
                                 $arr_objective_ref[$indeks][] = $ref;
                             }
                         }
@@ -1296,12 +1793,18 @@ class Main extends BaseController
                     foreach ($objectiveAssessment as $key => $assessmentItem) {
                         if ($index == $indeks) {
                             foreach ($assessmentItem as $asmt) {
-                                $this->opm_assessment_code_model->insert(
-                                    [
-                                        'oac_opm_id' => $op_last_id,
-                                        'oac_code'   => $asmt
-                                    ]
-                                );
+                                $exists = $this->opm_assessment_code_model->where([
+                                    'oac_opm_id' => $op_last_id,
+                                    'oac_code'   => $asmt
+                                ])->findAll();
+                                if (empty($exists)) {
+                                    $this->opm_assessment_code_model->insert(
+                                        [
+                                            'oac_opm_id' => $op_last_id,
+                                            'oac_code'   => $asmt
+                                        ]
+                                    );
+                                }
                                 $arr_objective_assessment[$indeks][] = $asmt;
                             }
                         }
@@ -1310,7 +1813,8 @@ class Main extends BaseController
                 }
             }
 
-            foreach ($allSubject as $index => $subject) {
+            $index = 0;
+            foreach ($allSubject as $subject) {
                 //step 3 - insert learning-standard
                 $this->learning_standard_model->insert([
                     'ls_sbm_id' => $subject,
@@ -1320,14 +1824,36 @@ class Main extends BaseController
                 $ls_id = $this->learning_standard_model->insertID();
                 $data['learning_standard_id'][] = $ls_id;
 
-                foreach ($allDescription[$subject] as $itemIndex => $itemDesc) {
+                // $max = 5;
+                // $count = 0;
+                // while($count < $max)
+                // {
+                //     if(!isset($allDescription[$subject][$index]))
+                //     {
+                //         $index++;
+                //     } else {
+                //         break;
+                //     }
+                //     $count++;
+                // }
+                
+                $max = 0;
+                while (!isset($allDescription[$subject][$index]) && $max < 5) {
+                    $index++;
+                    $max++;
+                }
+
+                // #NOTES - sini dah okey, dia dah linked dengan learning_standard yang berasingan 3...
+                if(isset($allDescription[$subject][$index]))
+                foreach ($allDescription[$subject][$index] as $itemIndex => $itemDesc) {
                     //step 4 - insert learning-standard-item
                     $this->learning_standard_item_model->insert([
                         'lsi_ls_id'     => $ls_id,
-                        'lsi_number'    => isset($standardNumbering[$subject][$itemIndex]) ? $standardNumbering[$subject][$itemIndex] : null,
+                        'lsi_number'    => isset($standardNumbering[$subject][$index][$itemIndex]) ? $standardNumbering[$subject][$index][$itemIndex] : null,
                         'lsi_desc'      => $itemDesc
                     ]);
                 }
+                $index++;
             }
         } else {
             die('DSKPN failed to be created. Please refreshed and try again!');
@@ -1358,8 +1884,10 @@ class Main extends BaseController
         }
 
         foreach ($allRefCode as $item) {
+            $sp_last_batch = $this->standard_performance_model->where('sp_dskp_code', $item)->orderBy('sp_id', 'DESC')->first();
             $this->standard_performance_dskp_mapping_model->insert([
                 'spdm_dskp_code' => $item,
+                'spdm_dskp_batch' => $sp_last_batch['sp_dskp_batch'],
                 'spdm_dskpn_id' => $dskpn_id
             ]);
         }
@@ -1374,6 +1902,7 @@ class Main extends BaseController
     {
         $allData = $this->request->getPost();
         $dskpn_id = $this->session->get("dskpn_id");
+        $ex_dskpn_id = $this->session->get("ex_dskpn_id");
 
         $success = true;
 
@@ -1383,19 +1912,45 @@ class Main extends BaseController
         $domain_map_sess = $this->session->get("domain_map_session");
         $domain_map_id_sess = $this->session->get("domain_map_id_session_data");
 
-        if (isset($domain_map_sess) && (!empty($domain_map_sess) || $domain_map_sess != null) && isset($domain_map_id_sess)) {
-            $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
-                ->delete();
+        if (empty($ex_dskpn_id) || ($ex_dskpn_id == $dskpn_id))
+            if (isset($domain_map_sess) && (!empty($domain_map_sess) || $domain_map_sess != null) && isset($domain_map_id_sess)) {
+                $this->domain_mapping_model->whereIn('dm_id', $domain_map_id_sess)
+                    ->delete();
+            }
+
+        //get duplicate or not first
+        $isSameSubject = [];
+        foreach ($allData as $key => $data) {
+            $parts = explode('-', $key);
+            if ($parts[0] == 'input') {
+                $columnIndex = $parts[1];
+                $subjectIndex = $parts[2];
+                $isSameSubject[$columnIndex][] = $subjectIndex;
+            }
         }
+        //this part to check if contain same subject or not. if Smae, put running number/column index - to later used to differentiate.
+        $curSubject = "";
+        $duplicateDetected = false;
+        foreach ($isSameSubject as $column_index => $isSame) {
+            $curSubject = $isSame[0];
+            foreach ($isSameSubject as $col_idx => $same) {
+                if ($same[0] == $curSubject && $column_index != $col_idx)
+                    $duplicateDetected = true;
+            }
+        }
+        //end duplicate checking
+
 
         //probably loop 2/3/4 time only. because input were put in arrays.
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             if ($parts[0] == 'input') {
+                $columnIndex = $parts[1];
+                $subjectIndex = $parts[2];
 
                 //first repeatition max is only 4/5.
                 $ls_id = $this->learning_standard_model->select('learning_standard.ls_sbm_id')
-                    ->join('subject_main', 'subject_main.sbm_code = ' . $this->db->escape($parts[1]))
+                    ->join('subject_main', 'subject_main.sbm_code = ' . $this->db->escape($subjectIndex))
                     ->where('learning_standard.ls_sbm_id = subject_main.sbm_id')->first();
 
                 foreach ($data as $d_id) {
@@ -1410,10 +1965,11 @@ class Main extends BaseController
                     if ($this->domain_mapping_model->insert([
                         'dm_dmn_code' => $dm_dmn_code,
                         'dm_sbm_id' => $ls_id['ls_sbm_id'],
-                        'dm_dskpn_id' => $dskpn_id
+                        'dm_dskpn_id' => $dskpn_id,
+                        'dm_column_index' => $duplicateDetected == true ? $columnIndex : null
                     ])) {
                         // do nothing
-                        $domain_map_session_data[$this->db->escape($parts[1])][] = $d_id;
+                        $domain_map_session_data[$columnIndex][$this->db->escape($subjectIndex)][] = $d_id;
                         $domain_map_id_session_data[] = $this->domain_mapping_model->insertID();
                     } else {
                         $success = false;
@@ -1421,6 +1977,7 @@ class Main extends BaseController
                 }
             }
         }
+        //dd($domain_map_session_data);
 
         $this->session->set('domain_map_session', $domain_map_session_data);
         $this->session->set('domain_map_id_session_data', $domain_map_id_session_data);
@@ -1446,41 +2003,66 @@ class Main extends BaseController
         $core_map_session_data = [];
         $core_mapping_id_session_data = [];
 
+        //dd($allData);
+
         //structure data first
+        $isSameSubject = [];
         foreach ($allData as $key => $data) {
             $parts = explode('-', $key);
             if ($parts[0] == 'input') {
                 $inputIndex = $parts[1];
+                $subjectIndex = $parts[2];
+                $isSameSubject[$inputIndex][] = $subjectIndex;
+                //dd(['1' => $parts[0], '2' => $parts[1], '3' => $parts[2]]);
                 foreach ($data as $index => $value) {
-                    $processedData[$inputIndex][] = [
+                    $processedData[$inputIndex][$subjectIndex][] = [
                         'value' => $value,
-                        'checked' => (($allData['checked-' . $inputIndex][$index]) == 'off') ? 'N' : 'Y'
+                        'checked' => (($allData['checked-' . $inputIndex . '-' . $subjectIndex][$index]) == 'off') ? 'N' : 'Y'
                     ];
                 }
             }
         }
 
+        //this part to check if contain same subject or not. if Smae, put running number/column index - to later used to differentiate.
+        $curSubject = "";
+        $duplicateDetected = false;
+        foreach ($isSameSubject as $column_index => $isSame) {
+            $curSubject = $isSame[0];
+            foreach ($isSameSubject as $col_idx => $same) {
+                if ($same[0] == $curSubject && $column_index != $col_idx)
+                    $duplicateDetected = true;
+            }
+        }
+
         //loop to store
-        //1. loop to get key - subject
-        foreach ($processedData as $key => $inputCode) {
-            //1.1 get sm_id based on inputCodeKey
-            $subject_data = $this->subject_model->where('sbm_code', $key)->first();
+        //0. loop index column.
+        foreach ($processedData as $col_index => $processed) {
+            //1. loop to get key - subject
+            foreach ($processed as $key => $inputCode) {
+                //1.1 get sm_id based on inputCodeKey
+                $subject_data = $this->subject_model->where('sbm_code', $key)->first();
+                $core_competency = $this->core_competency_model->where('cc_sbm_id', $subject_data['sbm_id'])->orderBy('cc_id', "DESC")->first();
 
-            //2. loop to get value inside that inputcode
-            foreach ($inputCode as $input) {
-                //3. store domain first.
-                if ($input['checked'] == 'Y') {
-                    $this->competency_mapping_model->insert([
-                        'cmp_cc_code'  => $input['value'],
-                        'cmp_dskpn_id' => $dskpn_id
-                    ]);
+                //2. loop to get value inside that inputcode
+                foreach ($inputCode as $input) {
+                    //3. store domain first.
+                    if ($input['checked'] == 'Y') {
+                        $this->competency_mapping_model->insert([
+                            'cmp_cc_code'  => $input['value'],
+                            'cmp_cc_batch' => $core_competency['cc_batch'],
+                            'cmp_dskpn_id' => $dskpn_id,
+                            'cmp_column_index' => $duplicateDetected == true ? $col_index : null
+                        ]);
 
-                    $lastInsertedID = $this->competency_mapping_model->insertID();
-                    $core_mapping_id_session_data[] = $lastInsertedID;
-                    $core_map_session_data[$subject_data['sbm_code']][$lastInsertedID] = [$input['value'], $input['checked']];
+                        $lastInsertedID = $this->competency_mapping_model->insertID();
+                        $core_mapping_id_session_data[] = $lastInsertedID;
+                        $core_map_session_data[$col_index][$subject_data['sbm_code']][$lastInsertedID] = [$input['value'], $input['checked']];
+                    }
                 }
             }
         }
+
+        //dd($core_map_session_data); //OKK
 
         $this->session->set('core_map_sess', $core_map_session_data);
         $this->session->set('core_mapping_id_session_data', $core_mapping_id_session_data);
@@ -1686,6 +2268,8 @@ class Main extends BaseController
     // Displays a list of DSKPN page
     public function dskpn_by_topic_list()
     {
+        // if(session('current_role') != "PENYELARAS") //temporary access control.
+        //     return redirect()->to(route_to('list_dskpn'));
         // Retrieve tm_id from session
         $tm_id = $this->session->get('tm_id');
         // Check if tm_id is set in the session
@@ -1694,10 +2278,35 @@ class Main extends BaseController
         }
 
         // Query to get the list of DSKPN
-        $data['dskpn'] = $this->dskpn_model
-            ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
-            ->where('dskpn.dskpn_tm_id', $tm_id)
-            ->findAll();
+        // $data['dskpn'] = $this->dskpn_model
+        //     ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+        //     ->where('dskpn.dskpn_tm_id', $tm_id)
+        //     ->findAll();
+
+        $current_role = session('current_role');
+        // Query to get the list of DSKPN
+        if ($current_role == 'PENYELARAS') {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->findAll();
+        } else if ($current_role == 'GURU_BESAR') {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->whereIn('dskpn_status', [1, 2, 3, 4, null])
+                ->orWhere('dskpn_status IS NULL')
+                ->findAll();
+        } else {
+            $data['dskpn'] = $this->dskpn_model
+                ->join('topic_main', 'dskpn.dskpn_tm_id = topic_main.tm_id', 'left')
+                ->join('cluster_main', 'topic_main.tm_ctm_id = cluster_main.ctm_id', 'left')
+                ->where('dskpn_status', 1)
+                ->where('dskpn.dskpn_tm_id', $tm_id)
+                ->findAll();
+        }
 
         // Query get kluster data
         $data['kluster'] = $this->cluster_model->findAll();
@@ -1734,10 +2343,17 @@ class Main extends BaseController
 
     public function create_dskpn($tm_id)
     {
+        $this->_destroy_all_session();
         // Store tm_id in session
         $this->session->set('tm_id', $tm_id);
         // Redirect or load a view if needed
         return redirect()->to(route_to('dskpn_learning_standard') . "?flag=true");
+    }
+
+    public function fresh_create_dskpn()
+    {
+        $this->_destroy_all_session();
+        return redirect()->to(route_to('dskpn_learning_standard'));
     }
 
     public function dskpn_learning_standard()
@@ -1795,10 +2411,16 @@ class Main extends BaseController
             $data['dskpn_code'] = 'K' . $data['topic']['tm_ctm_id'] . 'T' . $data['topic']['tm_year'] . '-';
         } else {
             $data['kluster'] = $this->cluster_model->findAll();
+            $resume_or_new = $this->session->get('subject_description');
+            if (isset($resume_or_new) && !empty($resume_or_new))
+                $data['resume'] = true;
         }
 
         $data['dskpn_code_init'] = $this->session->get('dskpn_code_init');
         $data['ex_dskpn_code_init'] = $this->session->get('ex_dskpn_code_init');
+
+        $data['wysiwyg_include'] = $this->render_without_main('component/wysiwyg/wysiwyg_include');
+        $data['wysiwyg_js'] = $this->render_without_main('component/wysiwyg/wysiwyg_javascript');
 
         $script = ['dynamic-input', 'learning_standard'];
         $style = ['static-field'];
@@ -1808,8 +2430,14 @@ class Main extends BaseController
     public function view_tp_core_competency()
     {
         $data = [];
+        $data['edit_dskp_code'] = $this->request->getVar('dskp_code');
+        $data['edit_subject_name'] = urldecode($this->request->getVar('subject'));
+        $data['edit_batch'] = $this->request->getVar('batch');
+        $data['edit_data'] = $this->request->getVar('data');
 
         $data['subject_list'] = $this->subject_model->findAll();
+        $data['wysiwyg_include'] = $this->render_without_main('component/wysiwyg/wysiwyg_include');
+        $data['wysiwyg_js'] = $this->render_without_main('component/wysiwyg/wysiwyg_javascript');
 
         $script = ['tp-dynamic-field', 'tp_core_competency_setup'];
         $style = ['static-field'];
@@ -1842,7 +2470,13 @@ class Main extends BaseController
             $this->core_competency_model->where('cc_id', $cc_id)->delete();
         }
 
-        $core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll();
+        $batch_number = 0;
+        $core_competency_exist = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->orderBy('cc_id', 'DESC')->first();
+
+        if (isset($core_competency_exist) && !empty($core_competency_exist))
+            $batch_number = $core_competency_exist['cc_batch'];
+
+        $core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->where('cc_batch', $batch_number)->findAll();
 
         return response()->setJSON($core_competency);
     }
@@ -1863,26 +2497,48 @@ class Main extends BaseController
         $sp_id = $this->request->getPost('sp_id');
         $sbm_id = $this->request->getPost('sbm_id');
         if (isset($action) && $action == 'delete') {
-            $this->standard_performance_model->where('sp_id', $sp_id)->delete();
+            $sp_target = $this->standard_performance_model->where('sp_id', $sp_id)->first();
+            $this->standard_performance_model->delete($sp_target['sp_id']);
 
-            $check = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->findAll();
+            $check = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->where('sp_dskp_batch', $sp_target['sp_dskp_batch'])->findAll();
             if (empty($check)) {
-                $this->standard_performance_dskp_mapping_model->where('spdm_dskp_code', $dskp_code)->delete();
-                $this->dskp_model->where('dskp_code', $dskp_code)->delete();
+                $this->standard_performance_dskp_mapping_model->where('spdm_dskp_code', $dskp_code)->where('spdm_dskp_batch', $sp_target['sp_dskp_batch'])->delete();
+                $this->dskp_model->where('dskp_code', $dskp_code)->where('dskp_batch', $sp_target['sp_dskp_batch'])->delete();
             }
         }
 
-        $data['standard_performance_dskp_mapping'] = $this->standard_performance_model
+        $last_batch_number = $this->standard_performance_model->select('sp_dskp_batch')
             ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code')
             ->where('sp_dskp_code', $dskp_code)->where('dskp_sbm_id', $sbm_id)
+            ->orderBy('sp_id', 'DESC')->first();
+
+        $data['standard_performance_dskp_mapping'] = $this->standard_performance_model
+            ->join('dskp', 'dskp.dskp_code = standard_performance.sp_dskp_code AND dskp.dskp_batch = standard_performance.sp_dskp_batch')
+            ->where('sp_dskp_code', $dskp_code)->where('dskp_sbm_id', $sbm_id)
+            ->where('dskp.dskp_batch', $last_batch_number['sp_dskp_batch'])
             ->findAll();
 
+        return $this->response->setJSON($data);
+    }
+
+    public function get_subject_details_by_id()
+    {
+        $data = [];
+        $req = $this->request->getVar('sbm_id');
+
+        if (!isset($req) || empty($req))
+            return null;
+
+        $data['subject'] = $this->subject_model->where('sbm_id', $req)->first();
         return $this->response->setJSON($data);
     }
 
     public function view_core_competency()
     {
         $data = [];
+        $data['edit_subject_name'] = $this->request->getVar('subject');
+        $data['edit_sbm_id'] = $this->request->getVar('sbm_id');
+        $data['edit_data'] = $this->request->getVar('data');
 
         $data['subject_list'] = $this->subject_model->findAll();
 
@@ -1897,18 +2553,29 @@ class Main extends BaseController
         $core_competency = $this->request->getPost('input-core-competency');
         $sbm_id = $this->request->getPost('subject');
 
-        if (!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
-            return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
+        // if (!empty($this->core_competency_model->where('cc_sbm_id', $sbm_id)->findAll()))
+        //     return redirect()->back()->with('fail', 'Kompetensi Teras bagi subjek ini telah didaftarkan!');
+
+        $batch_number = 0;
+        $exit_core_competency = $this->core_competency_model->where('cc_sbm_id', $sbm_id)->orderBy('cc_id', 'DESC')->first();
+        if (isset($exit_core_competency) && !empty($exit_core_competency))
+            $batch_number = $exit_core_competency['cc_batch'] + 1;
 
         if (!empty($core_competency)) {
             foreach ($core_competency as $index => $item) {
                 if (isset($core_competency_code[$index]) && !empty($core_competency_code[$index]))
                     $this->core_competency_model->insert([
-                        'cc_code' => $core_competency_code[$index],
-                        'cc_desc' => $item,
+                        'cc_code'   => $core_competency_code[$index],
+                        'cc_batch'  => $batch_number,
+                        'cc_desc'   => $item,
                         'cc_sbm_id' => $sbm_id
                     ]);
             }
+        }
+
+        if ($exit_core_competency) {
+            session()->setFlashdata('success', 'Kompetensi Teras berjaya dikemaskini!');
+            return redirect()->to(route_to('view_core_competency_list'));
         }
 
         return redirect()->back()->with('success', 'Berjaya menetapkan Kompetensi Teras!');
@@ -1922,23 +2589,33 @@ class Main extends BaseController
         $sbm_id = $this->request->getPost('subject');
 
         $tp_data = $this->request->getPost('input-tahap-penguasaan');
+        $exist_tp = $this->standard_performance_model->withDeleted()->where('sp_dskp_code', $subject_code)->orderBy('sp_id', 'DESC')->first();
+        $batch_count = 0;
 
-        if (!$code_tp_rank)
-            return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
+        if (!empty($exist_tp)) {
+            //batch = increase + 1
+            $batch_count = $exist_tp['sp_dskp_batch'] + 1;
+            $dskp_code = $subject_code;
+        } else {
+            //batch = 0
+            if (!$code_tp_rank)
+                return redirect()->back()->with('fail', 'Pastikan anda telah memilih tahap.');
 
-        if (!$topic_numbering)
-            return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
+            if (!$topic_numbering)
+                return redirect()->back()->with('fail', 'Pastikan anda telah memilih penomboran.');
 
-        //step 1 - store dskp record
-        $code_tp_rank = sprintf('%01d', $code_tp_rank);
-        $topic_numbering = sprintf('%02d', $topic_numbering);
+            //step 1 - store dskp record
+            $code_tp_rank = sprintf('%01d', $code_tp_rank);
+            $topic_numbering = sprintf('%02d', $topic_numbering);
 
-        $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
-        if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
-            return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
+            $dskp_code = $subject_code . $code_tp_rank . $topic_numbering;
+            if (!empty($this->dskp_model->where('dskp_code', $dskp_code)->findAll()))
+                return redirect()->back()->with('fail', 'Rekod bagi DSKP Code \'' . $dskp_code . '\' telah wujud didalam pangkalan data.');
+        }
 
         $res = $this->dskp_model->insert([
             'dskp_code'     => $dskp_code,
+            'dskp_batch'    => $batch_count,
             'dskp_sbm_id'   => $sbm_id
         ]);
 
@@ -1948,12 +2625,17 @@ class Main extends BaseController
                 $tpLevel = $index + 1;
                 $this->standard_performance_model->insert([
                     'sp_dskp_code'  => $dskp_code,
+                    'sp_dskp_batch' => $batch_count,
                     'sp_tp_level'   => $tpLevel,
                     'sp_tp_level_desc' => $item
                 ]);
             }
         }
 
+        if (!empty($exist_tp)) {
+            session()->setFlashdata('success', 'Tahap Penguasaan berjaya dikemaskini!');
+            return redirect()->to(route_to('view_standard_performance'));
+        }
         return redirect()->back()->with('success', 'Berjaya menetapkan Tahap Penguasaan!');
     }
 
@@ -1995,8 +2677,11 @@ class Main extends BaseController
         $dskp_code = $this->request->getVar('dskp_code');
         $sbm_code = $this->request->getVar('sbm_code');
 
+        $last_batch = $this->standard_performance_model->where('sp_dskp_code', $dskp_code)->orderBy('sp_id', 'DESC')->first();
+        $last_batch = $last_batch['sp_dskp_batch'] ?? null;
         $data = $this->standard_performance_model
             ->where('sp_dskp_code', $dskp_code)
+            ->where('sp_dskp_batch', $last_batch)
             ->like('sp_dskp_code', $sbm_code . '%')->findAll();
 
         if (!empty($data)) {
@@ -2014,7 +2699,8 @@ class Main extends BaseController
         $dskpn_year = $this->request->getPost('dskpnyear');
         $dskpn_year = isset($dskpn_year) ? $dskpn_year : '';
         $dskpn_code = $this->request->getPost('dskpncode');
-        $dskpn_code = preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year; //purified id
+        $dskpn_code = trim(preg_replace('/\s+/', '', $dskpn_code) . $dskpn_year); //purified id
+        $dskpn_code = strtoupper($dskpn_code);
 
         $dskpn = $this->dskpn_model->where('dskpn_code', $dskpn_code)->first();
         if (!$dskpn) {
@@ -2036,10 +2722,46 @@ class Main extends BaseController
         }
 
         if ($this->cluster_model->insert($data)) {
-            return redirect()->back()->with('success', 'Berjaya menambah Cluster!');
+            return redirect()->back()->with('success', 'Berjaya menambah Kluster!');
         }
 
-        return redirect()->back()->with('fail', 'Maaf, aksi menambah Cluster tidak berjaya!');
+        return redirect()->back()->with('fail', 'Maaf, tindakan menambah Kluster tidak berjaya!');
+    }
+
+    public function update_cluster()
+    {
+        $id = $this->request->getVar('ctm_id');
+        $data = [
+            'ctm_code' => $this->request->getVar('ctm_code'),
+            'ctm_desc' => $this->request->getVar('ctm_desc')
+        ];
+
+        if (empty($data['ctm_code']) || empty($data['ctm_desc'])) {
+            return redirect()->back()->with('fail', 'Fields cannot be empty!');
+        }
+
+        if ($this->cluster_model->update($id, $data)) {
+            return redirect()->back()->with('success', 'Berjaya mengemaskini Kluster!');
+        }
+
+        return redirect()->back()->with('fail', 'Maaf, tindakan mengemaskini Kluster tidak berjaya!');
+    }
+
+
+    public function delete_cluster()
+    {
+        $ctm_id = $this->request->getPost('ctm_id');
+
+        if ($ctm_id) {
+
+            if ($this->cluster_model->delete($ctm_id)) {
+                return redirect()->back()->with('success', 'Kluster berjaya dipadam.');
+            } else {
+                return redirect()->back()->with('error', 'Gagal memadam kluster.');
+            }
+        }
+
+        return redirect()->back()->with('error', 'ID kluster tidak sah.');
     }
 
     public function review_dskpn()

@@ -105,7 +105,7 @@ $('#add-subject-button').on('click', function() {
         Swal.fire({
             icon: "error",
             title: "Maaf",
-            text: "Maksimum subjek dibenarkan adalah " + get_default_subject.length  + "!"
+            text: "Maksimum mata pelajaran dibenarkan adalah " + get_default_subject.length  + "!"
         });
         return;
     }
@@ -117,54 +117,110 @@ $('#add-subject-button').on('click', function() {
         //do nothing
     }
 
+    // step 1: get container dulu.
+    const container = document.getElementById("standard-pembelajaran");
+
+    // Step 2: Find all select elements with name="subject[]" inside the container
+    const subjectSelects = container.querySelectorAll('select[name="subject[]"]');
+
+    // Step 3: Extract selected values
+    const selectedValues = Array.from(subjectSelects).map(select => select.value);
+
     let htmlOptions = ``;
     let sbm_code = '';
+    let currentSubjectId = null;
     subject_list.forEach(function(item) {
-        if(get_default_subject != null && (item.sbm_id == get_default_subject[countSubject]))
+        if (get_default_subject && 
+            get_default_subject.includes(item.sbm_id) && 
+            !selectedValues.includes(item.sbm_id) && sbm_code == '')
         {
             sbm_code = item.sbm_code;
+            currentSubjectId = item.sbm_id;
             htmlOptions += `<option selected class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
-        }  
+        } //else {
+            //htmlOptions += `<option class="dropdown-item" value='${item.sbm_id}'>${item.sbm_desc}</option>`;
+        //}
     });
 
-    $('#standard-pembelajaran').append(`
-    <div class="col-md-4 subject-card">
-        <div class="card mt-4">
-        <div class="card-header d-flex p-1 bg-secondary align-items-center">
-            <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
-                ${htmlOptions}
-            </select>
-            <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
-                <i class="fas fa-trash-alt"></i>
-            </button>
-        </div>
+    var newFieldColl = Math.floor(Math.random() * 1000000);
 
-        <div id="standard-subject-` + get_default_subject[countSubject] + `" style="margin-top : 5px; margin-bottom : 5px;">
-            <div class="row m-1" id="standard-item-`+get_default_subject[countSubject]+`">
-                <div class="col-2 p-0 pe-1">
-                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sbm_code + `" name="standard-learning-number[`+get_default_subject[countSubject]+`][]" pattern="^\\d+(\\.\\d+)*$" 
-                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
+    // Selitkan ikut index
+    const existingCards = $('#standard-pembelajaran').children('.subject-card');
+
+    // Nilai subject yang baru nak dimasukkan
+    //currentSubjectId;
+
+    // Cari index dia dalam default list
+    const insertIndex = get_default_subject.indexOf(currentSubjectId);
+
+    // Cari elemen selepas dia
+    let inserted = false;
+    let indexToInsert = null;
+    let nextIndexInDOM = null;
+    for (let i = insertIndex + 1; i < get_default_subject.length; i++) {
+        const nextId = get_default_subject[i];
+        if (selectedValues.includes(nextId.toString())) {
+            indexToInsert = nextId;
+            // Jumpa next element yang ada dalam DOM, insert sebelum dia
+            nextIndexInDOM = selectedValues.indexOf(nextId.toString());
+            inserted = true;
+            break;
+        }
+    }
+
+    // Kalau tak jumpa, baru append ke hujung
+    if (!inserted)
+        indexToInsert = countSubject;
+
+    // Construct your HTML card first
+    const newCardHtml = `
+        <div class="col-md-4 subject-card">
+            <div class="card mt-4">
+                <div class="card-header d-flex p-1 bg-secondary align-items-center">
+                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
+                        ${htmlOptions}
+                    </select>
+                    <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </div>
-                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+get_default_subject[countSubject]+`][]" placeholder="Objektif bagi Subjek ini.">
-                    <div class="input-group-prepend me-1" onclick="$('#standard-item-`+get_default_subject[countSubject]+`').remove();selectionPopulateBasedOnNumbering();">
-                        <button class="input-group-text" id="btnGroupAddon">
-                            <i class="fas fa-trash-alt" style="color:red;"></i>
-                        </button>
+
+                <div id="standard-subject-${currentSubjectId}-${newFieldColl}" style="margin-top : 5px; margin-bottom : 5px;">
+                    <div class="row m-1" id="standard-item-${currentSubjectId}-${newFieldColl}">
+                        <div id="subject_description-${currentSubjectId}-${newFieldColl}" class="w-100 pb-5 pe-2"></div>
+                        <hr class="stylish-hr">
                     </div>
+                </div>
+
+                <div class="p-1">
+                    <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${currentSubjectId}', '${sbm_code}', '${newFieldColl}', '${insertIndex}')">Tambah &nbsp;&nbsp;
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+                    </span>
                 </div>
             </div>
         </div>
+    `;
 
-        <div class="p-1">
-            <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${get_default_subject[countSubject]}', '${sbm_code}')">Tambah &nbsp;&nbsp;
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
-                </svg>
-            </span>
-        </div>
-    </div>
-    `);
+    if(inserted)
+        existingCards.eq(nextIndexInDOM).before(newCardHtml);
+    else
+        $('#standard-pembelajaran').append(newCardHtml);
+
+    WysiwygComponent.renderTo("subject_description-" + currentSubjectId + "-" + newFieldColl, 
+    { 
+        id: currentSubjectId + '-' + newFieldColl, 
+        inputNameId: "subject_description[" + currentSubjectId + "][" + (insertIndex) + "]", 
+        deleteButton : "standard-item-" + currentSubjectId + "-" + newFieldColl, 
+        isLearningStandard: true, 
+        learningStandard : {
+            sbm_id : currentSubjectId,
+            sbm_code : sbm_code,
+            learning_standard_number : "",
+            index : insertIndex
+        }
+    });
 });
 
 // Attach a delegated event listener for the delete buttons
@@ -255,7 +311,7 @@ $('#topik-dynamic-field').on('change', function() {
 
                 document.getElementById('loading-screen').style.display = "none";
                 get_default_subject = data.clean_data;
-                data.data.forEach(function(item){
+                data.data.forEach(function(item, index){
                     //populate subject here
                     let htmlOptions = ``;
                     subject_list.forEach(function(itemz) {
@@ -267,11 +323,13 @@ $('#topik-dynamic-field').on('change', function() {
                         }
                     });
 
+                    let newFieldColl = Math.floor(Math.random() * 1000000);
+
                     $('#standard-pembelajaran').append(`
                         <div class="col-md-4 subject-card">
                             <div class="card mt-4">
                                 <div class="card-header d-flex p-1 bg-secondary align-items-center">
-                                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Subjek" required>
+                                    <select name="subject[]" class="form-control subject-title" style="background-color: transparent; border: 0px; outline: none; color: white; font-size: 1em; font-weight: bold;" placeholder="Tajuk Mata Pelajaran" required>
                                         ${htmlOptions}
                                     </select>
                                     <button type="button" style="margin-bottom:0 !important;" class="btn btn-link text-white ms-auto delete-subject">
@@ -279,25 +337,15 @@ $('#topik-dynamic-field').on('change', function() {
                                     </button>
                                 </div>
 
-                                <div id="standard-subject-` + item.sbm_id + `" style="margin-top : 5px; margin-bottom : 5px;">
-                                    <div class="row m-1" id="standard-item-`+item.sbm_id+`">
-                                        <div class="col-2 p-0 pe-1">
-                                            <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + item.sbm_code + `" name="standard-learning-number[`+item.sbm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
-                                                title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
-                                        </div>
-                                        <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                                            <input type="text" class="form-control p-1 me-1" name="subject_description[`+item.sbm_id+`][]" placeholder="Objektif bagi Subjek ini.">
-                                            <div class="input-group-prepend me-1" onclick="$('#standard-item-`+item.sbm_id+`').remove();selectionPopulateBasedOnNumbering();">
-                                                <button type="button" class="input-group-text" id="btnGroupAddon">
-                                                    <i class="fas fa-trash-alt" style="color:red;"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+                                <div id="standard-subject-` + item.sbm_id + '-' + newFieldColl + `" style="margin-top : 5px; margin-bottom : 5px;">
+                                    <div class="row m-1" id="standard-item-`+item.sbm_id+`-${newFieldColl}">
+                                        <div id="subject_description-${item.sbm_id}-${newFieldColl}" class="w-100 pb-5 pe-2"></div>
+                                        <hr class="stylish-hr">                                    
                                     </div>
                                 </div>
 
                                 <div class="p-1">
-                                    <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${item.sbm_id}', '${item.sbm_code}')">Tambah &nbsp;&nbsp;
+                                    <span class="btn bg-primary mt-2 text-white" onclick="addStandardPembelajaran('${item.sbm_id}', '${item.sbm_code}', '${newFieldColl}', '${index}')">Tambah &nbsp;&nbsp;
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"></path>
                                         </svg>
@@ -307,6 +355,20 @@ $('#topik-dynamic-field').on('change', function() {
                         </div>
                     `);
 
+                    WysiwygComponent.renderTo("subject_description-" + item.sbm_id + "-" + newFieldColl, 
+                    { 
+                        id: item.sbm_id + '-' + newFieldColl, 
+                        inputNameId: "subject_description[" + item.sbm_id + "][" + (index) +"]", 
+                        deleteButton : "standard-item-" + item.sbm_id + "-" + newFieldColl, 
+                        isLearningStandard: true, 
+                        learningStandard : {
+                            sbm_id : item.sbm_id,
+                            sbm_code : item.sbm_code,
+                            learning_standard_number : "",
+                            index : index
+                        }
+                    });
+
                     //end populate subject
                 });
             } else {
@@ -314,7 +376,7 @@ $('#topik-dynamic-field').on('change', function() {
                 Swal.fire({
                     icon: "error",
                     title: "Maaf",
-                    text: "Subjek bagi Kluster ini masih belum dikonfigurasi!"
+                    text: "Mata Pelajaran bagi Kluster ini masih belum dikonfigurasi!"
                 });
             }
         },
@@ -324,36 +386,39 @@ $('#topik-dynamic-field').on('change', function() {
             Swal.fire({
                 icon: "error",
                 title: "Maaf",
-                text: "Subjek bagi Kluster ini masih belum dikonfigurasi!"
+                text: "Mata Pelajaran bagi Kluster ini masih belum dikonfigurasi!"
             });
         }
     });
 });
 
-function addStandardPembelajaran(sm_id, sm_code)
+function addStandardPembelajaran(sm_id, sm_code, idx = '', index = 0)
 {
-    var divStandardPembelajaran = $('#standard-subject-' + sm_id);
+    var divStandardPembelajaran = $('#standard-subject-' + sm_id + '-' + idx);
         
     // Generate a unique ID for the new field
     var newFieldColl = Math.floor(Math.random() * 1000000);
-
-    let newInputHTMLField = `<div class="row m-1" id="standard-item-`+newFieldColl+`">
-                                <div class="col-2 p-0 pe-1">
-                                    <input type="text" onchange="selectionPopulateBasedOnNumbering()" id="standard-learning-number" data-subject="` + sm_code + `" name="standard-learning-number[`+sm_id+`][]" pattern="^\\d+(\\.\\d+)*$" 
-                                        title="Sila masukkan format nombor yang sah (contoh: 1.1.1 atau 1.2.3.4). Hanya angka dan titik dibenarkan."  class="form-control p-1" placeholder="1.1" required>
-                                </div>
-                                <div class="col-10 d-flex p-0" style="margin-bottom : 5px;">
-                                    <input type="text" class="form-control p-1 me-1" name="subject_description[`+sm_id+`][]" placeholder="Objektif bagi Subjek ini.">
-                                    <div class="input-group-prepend me-1" onclick="$('#standard-item-${newFieldColl}').remove();selectionPopulateBasedOnNumbering();">
-                                        <button class="input-group-text" id="btnGroupAddon">
-                                            <i class="fas fa-trash-alt" style="color:red;"></i>
-                                        </button>
-                                    </div>
-                                </div>
+    let newInputHTMLField = `<div class="row m-1" id="standard-item-`+ sm_id + '-' + newFieldColl+`">
+                                <div id="subject_description-${sm_id}-${newFieldColl}" class="w-100 pb-5 pe-2"></div>
+                                <hr class="stylish-hr">
                             </div>
                             `;
 
     divStandardPembelajaran.append(newInputHTMLField);
+
+    WysiwygComponent.renderTo("subject_description-" + sm_id + "-" + newFieldColl, 
+    { 
+        id: newFieldColl, 
+        inputNameId: "subject_description[" + sm_id +"][" + index + "]", 
+        deleteButton : "standard-item-" + sm_id + "-" + newFieldColl, 
+        isLearningStandard: true, 
+        learningStandard : {
+        sbm_id : sm_id,
+        sbm_code : sm_code,
+        learning_standard_number : "",
+        index : index
+        }
+    });
 }
 // Use in objective prestasi
 var select2Counter = 2; // Start counter at 3 since you have 3 select2 elements initially

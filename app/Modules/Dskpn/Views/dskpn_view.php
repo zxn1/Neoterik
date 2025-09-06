@@ -69,23 +69,70 @@
     }
   }
 
-
   .zero-top-border {
     border-top-left-radius: 0 !important;
     border-top-right-radius: 0 !important;
+  }
+
+  /* HTML: <div class="ribbon">Your text content</div> */
+  .ribbon {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    position: relative;
+    left: -5px;
+    top: -5px;
+    padding: 5px;
+  }
+
+  .ribbon {
+    --r: .8em;
+    /* control the cutout */
+
+    border-block: .5em solid #0000;
+    padding-inline: .5em calc(var(--r) + .25em);
+    line-height: 1.8;
+    clip-path: polygon(100% 0, 0 0, 0 100%, 100% 100%, 100% calc(100% - .25em), calc(100% - var(--r)) 50%, 100% .25em);
+    background:
+      radial-gradient(.2em 50% at left, #000a, #0000) border-box,
+      gray padding-box;
+    /* the color  */
+    width: fit-content;
+  }
+
+  ol li[data-list="bullet"] {
+    list-style-type: disc;
+    /* Tunjuk bullet */
+    list-style-position: inside;
+    counter-reset: none !important;
+  }
+
+  ol li[data-list="bullet"]::before {
+    content: '';
+    /* Buang numbering auto */
+    counter-increment: none;
   }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="/neoterik/assets/ckeditor5/ckeditor.js"></script>
 
 <div class="container-fluid py-4">
-
+  <a href="<?= route_to('dskpn_by_topic_list'); ?>" class="btn border border-gray text-gray">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M14.5 1.5a.5.5 0 0 1 .5.5v4.8a2.5 2.5 0 0 1-2.5 2.5H2.707l3.347 3.346a.5.5 0 0 1-.708.708l-4.2-4.2a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 8.3H12.5A1.5 1.5 0 0 0 14 6.8V2a.5.5 0 0 1 .5-.5" />
+    </svg>
+    <span>Kembali</span>
+  </a>
+  <span class="ribbon"><?= $dskpn_details['dskpn_code']; ?>&nbsp;&nbsp;</span>
   <div class="card">
     <div class="card-header d-flex p-3 bg-primary">
-      <h6 class="my-auto text-white">DSKPN</h6>
+      <div style="height : 40px; position : relative; top : -6px;">
+        <h6 class="my-auto text-white">DSKPN</h6>
+        <span class="text-white text-sm p-0 m-0">Status: </span><?= get_dskpn_status($dskpn_details['dskpn_status']); ?>
+      </div>
       <div class="ms-auto d-flex align-items-center">
         <a href="<?= route_to('generate_dskpn'); ?>" class="btn bg-info text-white me-2" style="margin-bottom:0 !important">
-          Unduh DSKPN&nbsp;&nbsp;
+          Cetak DSKPN&nbsp;&nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
             <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0" />
           </svg>
@@ -160,12 +207,51 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="standard_pembelajaran" role="tabpanel" aria-labelledby="standard_pembelajaran">
               <div class="d-flex top-0 w-100">
                 <!-- foreach subjek -->
+                <?php
+                $lsi_ids = []; //this use to differentiate between ls item and same subject.
+                $ls_ids = []; //this use to differentiate between ls item and same subject.
+                ?>
                 <?php foreach ($subjects as $row) : ?>
+                  <?php
+                  $current_ls_id = "";
+                  ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($learning_standard as $ls_desc) : ?><?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL) : ?><?= $ls_desc['lsi_number'] . ' ' . $ls_desc['lsi_desc'] . "\n"; ?> <?php endif ?><?php endforeach ?></textarea>
+                    <div class="form-control zero-top-border" style="min-height: 200px; max-height: 500px; overflow-y: auto;">
+                      <?php foreach ($learning_standard as $ls_desc) : ?>
+                        <?php
+                        $flagSameColumnSubject = false;
+                        if (empty($ls_ids) && $current_ls_id == "") {
+                          $current_ls_id = $ls_desc['ls_id'];
+                          $ls_ids[] = $ls_desc['ls_id'];
+                        } else {
+                          if (!in_array($ls_desc['ls_id'], $ls_ids) && $current_ls_id == "") {
+                            $ls_ids[] = $ls_desc['ls_id'];
+                            $current_ls_id = $ls_desc['ls_id'];
+                          }
+                        }
+
+                        if (($current_ls_id == $ls_desc['ls_id'])) {
+                          if (!in_array($ls_desc['lsi_id'], $lsi_ids)) {
+                            $lsi_ids[] = $ls_desc['lsi_id'];
+                            $flagSameColumnSubject = true;
+                          }
+                        }
+                        ?>
+                        <?php if ($row['sbm_id'] == $ls_desc['ls_sbm_id'] && $ls_desc['lsi_desc'] != NULL && $flagSameColumnSubject) : ?>
+                          <div class="d-flex align-items-start <?= (strpos($ls_desc['lsi_desc'], '<ol>') !== false) ? 'mb-2' : '' ?>">
+                            <div style="min-width: 30px;" class="fw-bold text-end me-2">
+                              <?= $ls_desc['lsi_number'] ?>)
+                            </div>
+                            <div class="flex-grow-1" style="position : relative; top : -2px">
+                              <?= $ls_desc['lsi_desc'] ?>
+                            </div>
+                          </div>
+                        <?php endif ?>
+                      <?php endforeach ?>
+                    </div>
                   </ul>
                 <?php endforeach; ?>
               </div>
@@ -174,7 +260,7 @@
             <div class="tab-pane fade position-relative border-radius-lg" id="objektif_prestasi" role="tabpanel" aria-labelledby="objektif_prestasi">
               <div class="d-flex top-0 w-100">
                 <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
-                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_number'] . ' ' . $op['opm_desc'] . "\n" ?><?php endif ?><?php endforeach ?></textarea>
+                  <textarea class="multisteps-form__textarea form-control zero-top-border" rows="15" readonly><?php foreach ($objective_performance as $op) : ?><?php if ($op != NULL) : ?><?= $op['opm_number'] . ') ' . $op['opm_desc'] . "\n" ?><?php endif ?><?php endforeach ?></textarea>
                   <br>
                   <div class="alert alert-dark text-white" role="alert">
                     DURASI PERLAKSANAAN (MINIT): &nbsp; <strong><span class="badge badge-primary text-dark" style="background-color: #d2d6da;"><?= $dskpn_details['dskpn_duration']; ?></span></strong>
@@ -224,14 +310,25 @@
             <div class="tab-pane fade position-relative border-radius-lg active show" id="tahap_penguasaan" role="tabpanel" aria-labelledby="tahap_penguasaan">
               <div class="d-flex top-0 w-100">
                 <!-- Tahap Penguasaan-->
-                <?php foreach ($subjects as $row) : ?>
+                <?php foreach ($subjects as $index => $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary" style="border-top-right-radius: 1rem;border-top-left-radius: 1rem;">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
-                    <?php foreach ($standard_performance as $sp_desc) : ?>
+                    <?php
+                    if (isset($standard_performance[$index]))
+                      foreach ($standard_performance[$index] as $sp_desc) : ?>
                       <?php if ($row['sbm_id'] == $sp_desc['sbm_id']) : ?>
-                        <li class="list-group-item"><?= $sp_desc['sp_tp_level'] . ' ' . $sp_desc['sp_tp_level_desc']; ?></li>
+                        <li class="list-group-item" style="padding-left : 5px;">
+                          <div class="d-flex">
+                            <div style="min-width: 30px;" class="fw-bold text-end me-2">
+                              <?= $sp_desc['sp_tp_level'] ?>)
+                            </div>
+                            <div class="flex-grow-1">
+                              <?= $sp_desc['sp_tp_level_desc'] ?>
+                            </div>
+                          </div>
+                        </li>
                       <?php endif ?>
                     <?php endforeach ?>
                   </ul>
@@ -243,13 +340,13 @@
               <div class="d-flex top-0 w-100">
                 <!-- kompetensi teras -->
                 <!-- foreach kompetensi teras -->
-                <?php foreach ($subjects as $row) : ?>
+                <?php foreach ($subjects as $idx => $row) : ?>
                   <ul class="list-group flex-grow-1 mx-2" style="flex-basis: 0; flex-grow: 1;">
                     <div class="card-header d-flex p-3 bg-primary">
                       <h6 class="my-auto text-white"><?= $row['sbm_desc']; ?></h6>
                     </div>
                     <?php foreach ($core_competency as $cc_desc) : ?>
-                      <?php if ($row['sbm_id'] == $cc_desc['sbm_id']) : ?>
+                      <?php if (($row['sbm_id'] == $cc_desc['sbm_id']) && (!is_null($cc_desc['cmp_column_index']) ? ($idx == $cc_desc['cmp_column_index']) : true)) : ?>
                         <li class="list-group-item"><?= $cc_desc['cc_desc']; ?></li>
                       <?php endif ?>
                     <?php endforeach ?>
@@ -260,7 +357,7 @@
             <!-- 16 Domain kemenjadian murid -->
             <div class="tab-pane fade position-relative border-radius-lg" id="domain" role="tabpanel" aria-labelledby="16_domain">
               <div class="row">
-                <?php foreach ($subjects as $subject) { ?>
+                <?php foreach ($subjects as $idx => $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-primary">
@@ -274,7 +371,7 @@
                               <?php
                               $dpa_flag = false;
                               foreach ($domain_pengetahuan_asas as $dpa) :
-                                if ($subject['sbm_id'] == $dpa['dm_sbm_id']) : ?>
+                                if ($subject['sbm_id'] == $dpa['dm_sbm_id'] && (!is_null($dpa['dm_column_index']) ? ($idx == $dpa['dm_column_index']) : true)) : ?>
                                   <?php if ($dpa != NULL && $dpa_flag == false) : ?>
                                     <tr>
                                       <th class="bg-light" colspan="5">
@@ -297,7 +394,7 @@
                               <!-- KEMANDIRIAN -->
                               <?php $dkem_flag = false;
                               foreach ($domain_kemandirian as $dkem) :
-                                if ($subject['sbm_id'] == $dkem['dm_sbm_id']) :
+                                if ($subject['sbm_id'] == $dkem['dm_sbm_id'] && (!is_null($dkem['dm_column_index']) ? ($idx == $dkem['dm_column_index']) : true)) :
                               ?>
                                   <?php if ($dkem != NULL && $dkem_flag == false) : ?>
                                     <tr>
@@ -323,7 +420,7 @@
                               <!-- KUALITI KEPERIBADIAN -->
                               <?php $dkk_flag = false;
                               foreach ($domain_kualiti_keperibadian as $dkk) :
-                                if ($subject['sbm_id'] == $dkk['dm_sbm_id']) :
+                                if ($subject['sbm_id'] == $dkk['dm_sbm_id'] && (!is_null($dkk['dm_column_index']) ? ($idx == $dkk['dm_column_index']) : true)) :
                                   $found = true; // Set the flag if the condition is met
                               ?>
                                   <?php if ($dkk != NULL && $dkk_flag == false) : ?>
@@ -359,7 +456,7 @@
             <!-- 7 Kemahiran Insaniah -->
             <div class="tab-pane fade position-relative border-radius-lg" id="kemahiran" role="tabpanel" aria-labelledby="7_kemahiran">
               <div class="row">
-                <?php foreach ($subjects as $subject) { ?>
+                <?php foreach ($subjects as $idx => $subject) { ?>
                   <div class="col-md-4">
                     <div class="card mt-4" id="notifications">
                       <div class="card-header d-flex p-3 bg-primary">
@@ -371,7 +468,7 @@
                             <?php
                             $found = false; // Initialize a flag
                             foreach ($kemahiran_insaniah as $ki) :
-                              if ($subject['sbm_id'] == $ki['dm_sbm_id']) : ?>
+                              if ($subject['sbm_id'] == $ki['dm_sbm_id'] && (!is_null($ki['dm_column_index']) ? ($idx == $ki['dm_column_index']) : true)) : ?>
                                 <tr>
                                   <td class="ps-1" colspan="4">
                                     <div class="my-auto">
@@ -615,15 +712,15 @@
     ?>
     <?php if (in_array($both_roles[0], get_user_role())) : ?>
       <div class="text-end p-3">
-        <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4])) : ?>
+        <?php if (!in_array($dskpn_details['dskpn_status'], [1, 2, 3, 4, 5])) : ?>
           <!-- Reject Button -->
-          <button class="btn bg-danger mt-2" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
+          <button class="btn bg-danger mt-2 text-white" type="button" data-bs-toggle="modal" data-bs-target="#rejectModal">Tolak&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
             </svg>
           </button>
           <!-- Approve Button -->
-          <a href="<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>" class="btn bg-info mt-2">Lulus&nbsp;
+          <a href="#" onclick="confirmToPassed()" class="btn bg-info mt-2 text-white">Lulus&nbsp;
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
               <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zM6.97 10.97a.75.75 0 0 1-1.07 0L3.75 8.8a.75.75 0 1 1 1.07-1.05l1.65 1.65 3.58-3.58a.75.75 0 0 1 1.07 1.06l-4.24 4.24z" />
             </svg>
@@ -637,20 +734,25 @@
     <div class="col-xl-12">
       <?php if ($dskpn_details['dskpn_status'] == 1) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-info">Approved By: <?= get_user_name($dskpn_details['approved_by']) ?></p>
+        <p class="badge badge-sm bg-info">Approved By: <?= !empty($dskpn_details['dskpn_approved_by']) ? get_user_name($dskpn_details['dskpn_approved_by']) : ""; ?></p>
       <?php endif; ?>
       <?php if ($dskpn_details['dskpn_status'] == 2) : ?>
         <!-- Display Approved By -->
-        <p class="badge badge-sm bg-danger">Rejected By: <?= get_user_name($dskpn_details['approved_by']) ?></p><br>
+        <p class="badge badge-sm bg-danger">Rejected By: <?= !empty($dskpn_details['dskpn_approved_by']) ? get_user_name($dskpn_details['dskpn_approved_by']) : ""; ?></p><br>
         <div class="card-body" style="height: auto;">
           <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_remarks'] ?></textarea>
         </div>
       <?php endif; ?>
+      <?php if ($dskpn_details['dskpn_status'] == 4) : ?>
+        <!-- Display Approved By -->
+        <p class="badge badge-sm bg-danger">Deleted By: <?= !empty($dskpn_details['dskpn_approved_by']) ? get_user_name($dskpn_details['dskpn_approved_by']) : ""; ?></p><br>
+        <h5 class="modal-title" id="alasanpenolakan">Alasan penolakan dokumen:</h5>
+        <div class="card-body" style="height: auto;">
+          <textarea class="multisteps-form__textarea form-control" rows="1" readonly><?= $dskpn_details['dskpn_delete_reason'] ?></textarea>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
-
-
-
 
 </div>
 <div class="modal fade" id="rejectModal" aria-labelledby="rejectModalLabel" aria-hidden="true">
@@ -665,10 +767,10 @@
           <input type="hidden" name="dskpn_id" value="<?= $dskpn_details['dskpn_id'] ?>">
           <div class="mb-3">
             <label for="remarks" class="form-label">Catatan</label>
-            <textarea id="catatan" class="form-control" id="remarks" name="remarks" rows="3" required></textarea>
+            <textarea id="catatan" name="remarks" rows="3"></textarea>
           </div>
           <div class="text-end">
-            <button class="btn bg-info mt-2" type="submit">Simpan&nbsp;
+            <button class="btn bg-info mt-2 text-white" type="submit">Simpan&nbsp;
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0H3v5.5A1.5 1.5 0 0 0 4.5 7h7A1.5 1.5 0 0 0 13 5.5V0h.086a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5H14v-5.5A1.5 1.5 0 0 0 12.5 9h-9A1.5 1.5 0 0 0 2 10.5V16h-.5A1.5 1.5 0 0 1 0 14.5z"></path>
                 <path d="M3 16h10v-5.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5zm9-16H4v5.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5zM9 1h2v4H9z"></path>
@@ -713,6 +815,27 @@
   $(document).ready(function() {
     $('.select2').select2();
   });
+
+  function confirmToPassed() {
+    Swal.fire({
+      title: "Adakah anda pasti ingin meluluskan DSKPN ini?",
+      showDenyButton: true,
+      icon: "warning",
+      confirmButtonText: "Lulus",
+      denyButtonText: `Tidak`
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Dokumen DSKPN <?= $dskpn_details['dskpn_code']; ?> diluluskan!", "", "success");
+        const timer = setInterval(() => {
+          window.location = '<?= route_to('approve_dskpn', $dskpn_details['dskpn_id']) ?>';
+          clearInterval(timer);
+        }, 2200);
+      } else if (result.isDenied) {
+        Swal.fire("Permintaan meluluskan dokumen dibatalkan!", "", "error");
+      }
+    });
+  }
 
   const ckeditor_upload_url = '<?= route_to('store_image_ckedit'); ?>';
 </script>
