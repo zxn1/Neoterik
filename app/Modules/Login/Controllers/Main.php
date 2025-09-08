@@ -20,6 +20,9 @@ class Main extends BaseController
 
     public function index()
     {
+        $locale = session('lang') ?? 'en';
+        // Halaman Log Masuk
+
         if (env('UNDERMAINTENANCE') == true) {
             return redirect()->to(route_to('maintenance'));
         }
@@ -41,7 +44,7 @@ class Main extends BaseController
                 'password'  => $this->request->getPost('um_password'),
             ];
 
-            if(empty($userData['username']) || empty($userData['password']))
+            if (empty($userData['username']) || empty($userData['password']))
                 return redirect()->to(route_to('login'))->with('swal_fail', 'Sila masukkan Username dan Password anda!');
 
             // Verification process
@@ -62,8 +65,7 @@ class Main extends BaseController
                     'list_current_role' => $roles
                 ]);
 
-                if(isset($roles) && !empty($roles))
-                {
+                if (isset($roles) && !empty($roles)) {
                     $this->session->set([
                         'current_role' => $roles[0]
                     ]);
@@ -87,24 +89,21 @@ class Main extends BaseController
         $staff_exist = $this->staff_main_model->where('sm_recid', $sm_recid_id)->first();
         $login_exist = $this->login_model->where('lsm_sm_recid', $sm_recid_id)->first();
 
-        if(!isset($staff_exist) || empty($staff_exist))
-        {
+        if (!isset($staff_exist) || empty($staff_exist)) {
             echo "fail";
             die();
         }
 
-        if(isset($login_exist) || !empty($login_exist))
-        {
+        if (isset($login_exist) || !empty($login_exist)) {
             echo "fail - duplicate";
             die();
         }
 
-        if(!isset($sm_new_password) || empty($sm_new_password))
-        {
+        if (!isset($sm_new_password) || empty($sm_new_password)) {
             $sm_new_password = $staff_exist['sm_icno'];
         }
 
-        if($this->login_model->insert([
+        if ($this->login_model->insert([
             'lsm_sm_recid' => $sm_recid_id,
             'lsm_password' => password_hash($sm_new_password, PASSWORD_DEFAULT)
         ])) {

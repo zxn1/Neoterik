@@ -11,7 +11,10 @@
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Lato", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
         background-color: #f5f7fa;
     }
 
@@ -533,7 +536,7 @@
             topicsData['<?= $clust['ctm_code']; ?>'] = [];
             currentPage['<?= $clust['ctm_code']; ?>'] = 1;
             filteredTopics['<?= $clust['ctm_code']; ?>'] = [];
-            
+
             // Load topics when accordion is opened
             $('#heading<?= $clust['ctm_code']; ?> button').on('click', function() {
                 const isCollapsed = $(this).hasClass('collapsed');
@@ -547,7 +550,7 @@
         function loadTopics(clusterCode, clusterId) {
             const spinner = document.getElementById(`spinner-${clusterCode}`);
             spinner.style.display = 'block';
-            
+
             // In a real application, you would fetch this data from the server
             // For now, we'll use the data already in the DOM
             <?php foreach ($topik_main as $topik) { ?>
@@ -562,13 +565,13 @@
 
             // Update topic count badge
             $(`.cluster-item[data-cluster="${clusterCode}"] .topic-count`).text(topicsData[clusterCode].length + ' topik');
-            
+
             // Set filtered topics to all topics initially
             filteredTopics[clusterCode] = [...topicsData[clusterCode]];
-            
+
             // Render the first page
             renderTopics(clusterCode);
-            
+
             // Hide spinner after a brief delay (simulating network load)
             setTimeout(() => {
                 spinner.style.display = 'none';
@@ -581,11 +584,11 @@
             const paginationContainer = document.getElementById(`pagination-${clusterCode}`);
             const topics = filteredTopics[clusterCode];
             const page = currentPage[clusterCode];
-            
+
             // Clear existing content
             container.innerHTML = '';
             paginationContainer.innerHTML = '';
-            
+
             // If no topics, show message
             if (topics.length === 0) {
                 container.innerHTML = `
@@ -595,12 +598,12 @@
                 `;
                 return;
             }
-            
+
             // Calculate pagination
             const totalPages = Math.ceil(topics.length / topicsPerPage);
             const startIndex = (page - 1) * topicsPerPage;
             const endIndex = Math.min(startIndex + topicsPerPage, topics.length);
-            
+
             // Generate topics HTML
             const topicsHTML = topics.slice(startIndex, endIndex).map(topic => `
                 <div class="topic-item">
@@ -614,23 +617,23 @@
                     </div>
                 </div>
             `).join('');
-            
+
             container.innerHTML = topicsHTML;
-            
+
             // Generate pagination
             if (totalPages > 1) {
                 let paginationHTML = '';
-                
+
                 // Previous button
                 if (page > 1) {
                     paginationHTML += `<button class="topics-pagination-btn" data-page="${page-1}">«</button>`;
                 }
-                
+
                 // Page numbers
                 for (let i = 1; i <= totalPages; i++) {
                     if (
-                        i === 1 || 
-                        i === totalPages || 
+                        i === 1 ||
+                        i === totalPages ||
                         (i >= page - 1 && i <= page + 1)
                     ) {
                         paginationHTML += `<button class="topics-pagination-btn ${i === page ? 'active' : ''}" data-page="${i}">${i}</button>`;
@@ -638,14 +641,14 @@
                         paginationHTML += `<span class="mx-1">...</span>`;
                     }
                 }
-                
+
                 // Next button
                 if (page < totalPages) {
                     paginationHTML += `<button class="topics-pagination-btn" data-page="${page+1}">»</button>`;
                 }
-                
+
                 paginationContainer.innerHTML = paginationHTML;
-                
+
                 // Add click handlers to pagination buttons
                 paginationContainer.querySelectorAll('.topics-pagination-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
@@ -661,19 +664,19 @@
         if (searchInput) {
             searchInput.addEventListener('input', function() {
                 const searchTerm = this.value.toLowerCase().trim();
-                
+
                 // Filter topics for each cluster
                 <?php foreach ($cluster as $clust) { ?>
-                    filteredTopics['<?= $clust['ctm_code']; ?>'] = topicsData['<?= $clust['ctm_code']; ?>'].filter(topic => 
+                    filteredTopics['<?= $clust['ctm_code']; ?>'] = topicsData['<?= $clust['ctm_code']; ?>'].filter(topic =>
                         topic.desc.toLowerCase().includes(searchTerm)
                     );
-                    
+
                     // Only reset page if the accordion is open
                     if (!$('#collapse<?= $clust['ctm_code']; ?>').hasClass('collapse')) {
                         currentPage['<?= $clust['ctm_code']; ?>'] = 1;
                         renderTopics('<?= $clust['ctm_code']; ?>');
                     }
-                    
+
                     // Update topic count badge
                     $(`.cluster-item[data-cluster="<?= $clust['ctm_code']; ?>"] .topic-count`).text(
                         filteredTopics['<?= $clust['ctm_code']; ?>'].length + ' topik'

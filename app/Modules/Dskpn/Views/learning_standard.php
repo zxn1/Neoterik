@@ -20,10 +20,41 @@
   }
 
   div.col-md-3.d-flex>div.ms-parent>button>span {
-    background-color: white !important;
+    /* background-color: white !important;
     margin-top: 5px !important;
-    margin-left: 5px !important;
+    margin-left: 5px !important; */
+    display: none;
   }
+
+  /* div.col-md-3.d-flex>div.ms-parent>button::before {
+    content: "Standard Pembelajaran";
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: normal;
+    padding-left: 10px;
+    color: #b9c0c7;
+  }
+
+  div.col-md-2.d-flex>select.select2adjustheight+span>span.selection>span::before {
+    content: "Domain";
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    font-weight: normal;
+    padding-left: 10px;
+    color: #b9c0c7;
+  } */
+
+  /* .ms-choice .placeholder {
+    color: #b9c0c7;
+    font-family: "Lato", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    padding-left: 10px;
+  } */
+
+
 
   div.col-md-3.d-flex>div.ms-parent>div>ul>li>label>span {
     font-size: 14px !important;
@@ -196,26 +227,24 @@
                       <?php
                       $max = 5;
                       $count = 0;
-                      while($count < $max)
-                      {
-                          if(!isset($subject_description[$item_list['sbm_id']][$idx]))
-                          {
-                              $idx++;
-                          } else {
-                              break;
-                          }
-                          $count++;
+                      while ($count < $max) {
+                        if (!isset($subject_description[$item_list['sbm_id']][$idx])) {
+                          $idx++;
+                        } else {
+                          break;
+                        }
+                        $count++;
                       }
 
                       if (!empty($subject_description) && $subject_description != "") {
                         echo "<div id=\"standard-subject-" . $item_list['sbm_id'] . "-" . $idx . "\" style=\"margin-top : 5px; margin-bottom : 5px; margin-left : 5px;\">";
-                        if(!isset($subject_description[$item_list['sbm_id']][$idx]))
+                        if (!isset($subject_description[$item_list['sbm_id']][$idx]))
                           $idx++;
-                        if(isset($subject_description[$item_list['sbm_id']][$idx]))
-                        foreach ($subject_description[$item_list['sbm_id']][$idx] as $index => $desc_item) { 
-                          //var_dump($subject_standard_numbering[$item_list['sbm_id']][$idx]);
-                          $randomNumber = mt_rand(100000, 999999);
-                          ?>
+                        if (isset($subject_description[$item_list['sbm_id']][$idx]))
+                          foreach ($subject_description[$item_list['sbm_id']][$idx] as $index => $desc_item) {
+                            //var_dump($subject_standard_numbering[$item_list['sbm_id']][$idx]);
+                            $randomNumber = mt_rand(100000, 999999);
+                      ?>
                           <div class="row m-1" id="standard-item-<?= $item_list['sbm_id']; ?>-<?= $randomNumber ?>">
                             <div id="subject_description-<?= $item_list['sbm_id'] ?>-<?= $randomNumber ?>" class="w-100 pb-5 pe-2"></div>
                             <script>
@@ -243,7 +272,7 @@
                             <hr class="stylish-hr">
                           </div>
                         <?php
-                        }
+                          }
                         echo "</div>";
                       } else { ?>
                         <div id="standard-subject-<?= $item_list['sbm_id']; ?>-<?= $idx; ?>" style="margin-top : 5px; margin-bottom : 5px; margin-left : 5px;">
@@ -282,7 +311,7 @@
                 <?php endforeach; ?>
               </div>
           <?php
-            $idx++;
+              $idx++;
             }
           }
           ?>
@@ -494,7 +523,7 @@
               <div class="row">
                 <?php $part1_ex_dskpn = "";
                 $part2_ex_dskpn = ""; ?>
-                <div class="col-md-<?= get_versioning_status()?'8':'12' ?>">
+                <div class="col-md-<?= get_versioning_status() ? '8' : '12' ?>">
                   <label for="dskpncode" class="form-label">KOD DSKPN</label>
                   <input type="text" style='text-transform:uppercase' class="form-control text-dark text-sm" placeholder="K1T4-001-" id="dskpncode" name="dskpncode"
                     value="<?php
@@ -518,15 +547,15 @@
                             }
                             ?>">
                 </div>
-                <?php if(get_versioning_status()): ?>
-                <div class="col-md-4">
-                  <?php
-                  if (empty($part2_ex_dskpn)) { ?>
-                    <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)">
-                  <?php } ?>
-                  <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
-                  <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn) ? date("Y") : $part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn) ? '' : 'disabled'; ?> />
-                </div>
+                <?php if (get_versioning_status()): ?>
+                  <div class="col-md-4">
+                    <?php
+                    if (empty($part2_ex_dskpn)) { ?>
+                      <input type="checkbox" value="" id="year-dskpn-checkbox" onchange="yearDSKPNChecked(event)">
+                    <?php } ?>
+                    <label for="dskpnyear" class="form-label">Tahun DSKPN</label>
+                    <input type="number" id="year-dskpn-input" name="dskpnyear" class="form-control text-dark" min="1900" max="9999" step="1" value="<?= empty($part2_ex_dskpn) ? date("Y") : $part2_ex_dskpn; ?>" <?= !empty($part2_ex_dskpn) ? '' : 'disabled'; ?> />
+                  </div>
                 <?php endif; ?>
               </div>
             </div>

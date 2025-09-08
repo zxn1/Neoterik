@@ -7,7 +7,10 @@
     <title>Lesson Plan Layout</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
             height: 100%;
         }
 
@@ -151,11 +154,11 @@
                 <td class="bold" colspan="3"><?= isset($cluster_details) && !empty($cluster_details) ? $cluster_details['ctm_desc'] : '' ?></td>
                 <?php
                 $adjustColumnYear = 9;
-                if(count($ls_id) == 1)
+                if (count($ls_id) == 1)
                     $adjustColumnYear = 3;
                 else if (count($ls_id) == 2)
                     $adjustColumnYear = 5;
-                else if(count($ls_id) == 3)
+                else if (count($ls_id) == 3)
                     $adjustColumnYear = 7;
                 ?>
                 <td colspan="<?= $adjustColumnYear ?>" class="no-border" style="text-align: right;">
@@ -335,7 +338,7 @@
                 if (isset($standard_performance) && !empty($standard_performance)) {
                     $sp_flag = true;
                     foreach ($standard_performance as $group) {
-                        if(isset($group[0]['dskp_code']))
+                        if (isset($group[0]['dskp_code']))
                             $dskp_code[] = $group[0]['dskp_code'];
                         // foreach ($group as $sp) {
                         //     if (!in_array($sp['dskp_code'], $dskp_code))
@@ -440,17 +443,14 @@
                     }
                 }
                 foreach ($subjects as $idx => $sb) {
-                    if(isset($tempAccArr[$sb['sbm_id']]))
-                    {
+                    if (isset($tempAccArr[$sb['sbm_id']])) {
                         foreach ($tempAccArr[$sb['sbm_id']] as $sb_idx => $sbmArr) {
                             if ($highest_val_item_for_sbm_id < count($sbmArr)) {
                                 $highest_val_item_for_sbm_id = count($sbmArr);
                                 $highest_sbm_id = $sb['sbm_id'];
                             }
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $highest_val_item_for_sbm_id = 0;
                         $highest_sbm_id = 0;
                     }
@@ -548,7 +548,7 @@
 
                 if (!isset($seen_desc[$desc])) {
                     // Cari semua kaedah yang ada tapp_desc sama
-                    $duplicates = array_filter($all_kaedah, function($item) use ($desc) {
+                    $duplicates = array_filter($all_kaedah, function ($item) use ($desc) {
                         return strtolower(preg_replace('/\s+/', '', $item['tapp_desc'])) === $desc;
                     });
 
@@ -588,7 +588,7 @@
 
                 if (!isset($seen_pendekatan_desc[$desc])) {
                     // Cari semua pendekatan yang ada tapp_desc sama
-                    $duplicates = array_filter($all_pendekatan, function($x) use ($desc) {
+                    $duplicates = array_filter($all_pendekatan, function ($x) use ($desc) {
                         return strtolower(preg_replace('/\s+/', '', $x['tapp_desc'])) === $desc;
                     });
 

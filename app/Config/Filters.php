@@ -5,6 +5,7 @@ namespace Config;
 use App\Filters\AuthFilter;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
+use App\Filters\LanguageFilter;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\ForceHTTPS;
@@ -36,6 +37,7 @@ class Filters extends BaseFilters
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
         'AuthFilter'    => AuthFilter::class,
+        'language'      => LanguageFilter::class,
     ];
 
     /**
@@ -74,9 +76,11 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'language',
             'AuthFilter' => [
                 'except' => [
                     '/login',
+                    'lang/*',
                     '/login/attempt_login',
                     '/register/'
                 ]

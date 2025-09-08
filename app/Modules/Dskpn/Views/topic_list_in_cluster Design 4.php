@@ -12,7 +12,10 @@
 
     /* Base styling improvements */
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: "Lato", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
         background-color: #f5f7fa;
         color: #495057;
     }
@@ -237,19 +240,19 @@
         .card-header {
             padding: 1rem;
         }
-        
+
         .container {
             padding: 1rem;
         }
-        
+
         .accordion-button {
             padding: 0.75rem 1rem;
         }
-        
+
         .accordion-body {
             padding: 1rem;
         }
-        
+
         .topic-item {
             padding: 0.5rem 0.75rem;
         }
@@ -315,7 +318,7 @@
                                     <label class="form-check-label small" for="expandAllSwitch">Buka semua</label>
                                 </div>
                             </div>
-                            
+
                             <?php foreach ($cluster as $clust) { ?>
                                 <div class="accordion-item mb-3">
                                     <h5 class="accordion-header" id="heading<?= $clust['ctm_code']; ?>">
@@ -332,7 +335,7 @@
                                                     <i class="fas fa-search search-icon"></i>
                                                     <input type="text" class="form-control topic-search-input" placeholder="Cari topik..." data-cluster-id="<?= $clust['ctm_id']; ?>">
                                                 </div>
-                                                
+
                                                 <div class="topic-list" id="topic-items-<?= $clust['ctm_id']; ?>">
                                                     <!-- Topics will be loaded dynamically -->
                                                     <div class="d-flex justify-content-center">
@@ -341,7 +344,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="topics-pagination-container mt-3">
                                                     <nav aria-label="Topics pagination">
                                                         <ul class="pagination topics-pagination justify-content-center" id="pagination-<?= $clust['ctm_id']; ?>">
@@ -494,7 +497,7 @@
         // Topic list management
         const ITEMS_PER_PAGE = 10;
         let topicData = {};
-        
+
         // Fetch topics for each cluster
         function loadTopics() {
             <?php foreach ($cluster as $clust) { ?>
@@ -502,8 +505,8 @@
                 // For demo purposes, we're extracting it from the existing page
                 const clusterId = <?= $clust['ctm_id']; ?>;
                 topicData[clusterId] = [];
-                
-                <?php foreach ($topik_main as $topik) { 
+
+                <?php foreach ($topik_main as $topik) {
                     if ($topik['tm_ctm_id'] == $clust['ctm_id']) { ?>
                         topicData[clusterId].push({
                             id: <?= $topik['tm_id']; ?>,
@@ -512,39 +515,39 @@
                         });
                 <?php }
                 } ?>
-                
+
                 // Set topic count badge
                 $('.topic-count[data-cluster="' + clusterId + '"]').text(topicData[clusterId].length);
-                
+
                 // Initialize with the first page
                 displayTopics(clusterId, 1, '');
             <?php } ?>
         }
-        
+
         // Search functionality
         $(document).on('input', '.topic-search-input', function() {
             const clusterId = $(this).data('cluster-id');
             const searchTerm = $(this).val().toLowerCase();
-            
+
             // Reset to first page when searching
             displayTopics(clusterId, 1, searchTerm);
         });
-        
+
         // Display topics with pagination
         function displayTopics(clusterId, currentPage, searchTerm) {
-            const filteredTopics = searchTerm ? 
-                topicData[clusterId].filter(topic => 
+            const filteredTopics = searchTerm ?
+                topicData[clusterId].filter(topic =>
                     topic.description.toLowerCase().includes(searchTerm.toLowerCase())
-                ) : 
+                ) :
                 topicData[clusterId];
-            
+
             const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
             const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredTopics.length);
             const paginatedTopics = filteredTopics.slice(startIndex, endIndex);
-            
+
             const topicContainer = $(`#topic-items-${clusterId}`);
             topicContainer.empty();
-            
+
             if (paginatedTopics.length === 0) {
                 topicContainer.html(`
                     <div class="empty-results">
@@ -566,24 +569,24 @@
                     `);
                 });
             }
-            
+
             // Update pagination
             updatePagination(clusterId, currentPage, filteredTopics.length, searchTerm);
         }
-        
+
         // Create pagination
         function updatePagination(clusterId, currentPage, totalItems, searchTerm) {
             const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
             const paginationContainer = $(`#pagination-${clusterId}`);
             paginationContainer.empty();
-            
+
             if (totalPages <= 1) {
                 paginationContainer.hide();
                 return;
             }
-            
+
             paginationContainer.show();
-            
+
             // Previous button
             paginationContainer.append(`
                 <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
@@ -592,10 +595,10 @@
                     </a>
                 </li>
             `);
-            
+
             // Page numbers
             const displayPages = getDisplayPages(currentPage, totalPages);
-            
+
             for (let i = 0; i < displayPages.length; i++) {
                 if (displayPages[i] === '...') {
                     paginationContainer.append(`
@@ -611,7 +614,7 @@
                     `);
                 }
             }
-            
+
             // Next button
             paginationContainer.append(`
                 <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
@@ -621,69 +624,71 @@
                 </li>
             `);
         }
-        
+
         // Calculate which page numbers to display
         function getDisplayPages(currentPage, totalPages) {
             let pages = [];
-            
+
             if (totalPages <= 7) {
                 for (let i = 1; i <= totalPages; i++) {
                     pages.push(i);
                 }
             } else {
                 pages.push(1);
-                
+
                 if (currentPage > 3) {
                     pages.push('...');
                 }
-                
+
                 let start = Math.max(2, currentPage - 1);
                 let end = Math.min(totalPages - 1, currentPage + 1);
-                
+
                 if (currentPage <= 3) {
                     end = 5;
                 }
-                
+
                 if (currentPage >= totalPages - 2) {
                     start = totalPages - 4;
                 }
-                
+
                 for (let i = start; i <= end; i++) {
                     pages.push(i);
                 }
-                
+
                 if (currentPage < totalPages - 2) {
                     pages.push('...');
                 }
-                
+
                 pages.push(totalPages);
             }
-            
+
             return pages;
         }
-        
+
         // Handle pagination clicks
         $(document).on('click', '.page-link', function(e) {
             e.preventDefault();
-            
+
             const page = $(this).data('page');
             if (!page) return;
-            
+
             const clusterId = $(this).data('cluster-id');
             const searchTerm = $(this).data('search');
-            
+
             displayTopics(clusterId, page, searchTerm);
-            
+
             // Scroll to top of topics container
             const container = $(`#topic-list-${clusterId}`);
-            container.closest('.accordion-body').animate({ scrollTop: 0 }, 'fast');
+            container.closest('.accordion-body').animate({
+                scrollTop: 0
+            }, 'fast');
         });
-        
+
         // Load topics on accordion open to improve performance
         $('.accordion-button').on('click', function() {
             const target = $(this).attr('data-bs-target');
             const isExpanded = $(this).attr('aria-expanded') === 'true';
-            
+
             if (!isExpanded) {
                 // It's being expanded now
                 const clusterId = $(target).find('.topic-list-container').data('cluster-id');
@@ -694,7 +699,7 @@
                 }
             }
         });
-        
+
         // Load all topic data initially
         loadTopics();
     });

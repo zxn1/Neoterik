@@ -10,7 +10,10 @@
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Lato", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
         background-color: #f8f9fa;
     }
 
@@ -191,12 +194,14 @@
         transition: var(--transition);
     }
 
-    .btn-primary, .bg-primary {
+    .btn-primary,
+    .bg-primary {
         background-color: var(--primary-color) !important;
         border-color: var(--primary-color) !important;
     }
 
-    .btn-info, .bg-info {
+    .btn-info,
+    .bg-info {
         background-color: var(--secondary-color) !important;
         border-color: var(--secondary-color) !important;
         color: white !important;
@@ -224,14 +229,16 @@
     }
 
     /* Form controls */
-    .form-control, .form-select {
+    .form-control,
+    .form-select {
         padding: 0.65rem 1rem;
         border-radius: var(--border-radius);
         border: 1px solid #ced4da;
         transition: var(--transition);
     }
 
-    .form-control:focus, .form-select:focus {
+    .form-control:focus,
+    .form-select:focus {
         border-color: rgba(97, 54, 115, 0.25);
         box-shadow: 0 0 0 0.25rem rgba(97, 54, 115, 0.1);
     }
@@ -386,26 +393,26 @@
                                             <div id="collapse<?= $clust['ctm_code']; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?= $clust['ctm_code']; ?>" data-bs-parent="#accordionRental">
                                                 <div class="accordion-body p-3">
                                                     <div class="topics-container">
-                                                        <?php 
+                                                        <?php
                                                         $topicCount = 0;
                                                         foreach ($topik_main as $topik) {
                                                             if ($topik['tm_ctm_id'] == $clust['ctm_id']) {
                                                                 $topicCount++;
                                                         ?>
-                                                            <div class="topic-item topic-data" data-topic="<?= strtolower($topik['tm_desc']); ?>">
-                                                                <div class="topic-content"><?= $topik['tm_desc']; ?></div>
-                                                                <div class="topic-actions">
-                                                                    <a class="btn btn-sm btn-outline-primary" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>" title="Lihat">
-                                                                        <i class="far fa-eye"></i>
-                                                                    </a>
+                                                                <div class="topic-item topic-data" data-topic="<?= strtolower($topik['tm_desc']); ?>">
+                                                                    <div class="topic-content"><?= $topik['tm_desc']; ?></div>
+                                                                    <div class="topic-actions">
+                                                                        <a class="btn btn-sm btn-outline-primary" href="<?= route_to('dskpn_by_topic', $topik['tm_id']) ?>" title="Lihat">
+                                                                            <i class="far fa-eye"></i>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        <?php 
+                                                        <?php
                                                             }
-                                                        } 
+                                                        }
                                                         ?>
                                                     </div>
-                                                    
+
                                                     <!-- Pagination for large datasets -->
                                                     <div class="topic-pagination-container" id="pagination-<?= $clust['ctm_id']; ?>" style="display: <?= $topicCount > 10 ? 'block' : 'none'; ?>">
                                                         <nav aria-label="Topic navigation">
@@ -414,7 +421,7 @@
                                                             </ul>
                                                         </nav>
                                                     </div>
-                                                    
+
                                                     <!-- No topics message -->
                                                     <?php if ($topicCount == 0) : ?>
                                                         <div class="text-center text-muted py-3">
@@ -449,7 +456,7 @@
     <button type="button" class="btn bg-info" data-bs-toggle="modal" data-bs-target="#addClusterModal" hidden>
         Tambah Kluster
     </button>
-    
+
     <!-- Modal Structure -->
     <div class="modal fade" id="addClusterModal" tabindex="-1" aria-labelledby="addClusterModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -561,28 +568,28 @@
             placeholder: "Sila pilih",
             allowClear: true
         });
-        
+
         // Handle search functionality for topics
         $("#topicSearch").on("keyup", function() {
             var value = $(this).val().toLowerCase();
-            
+
             // If search is empty, show all clusters
             if (value === "") {
                 $(".cluster-item").show();
                 $(".topic-data").show();
                 return;
             }
-            
+
             // Hide all clusters initially
             $(".cluster-item").hide();
-            
+
             // Loop through all topic items
             $(".topic-data").each(function() {
                 var text = $(this).data("topic");
                 var matches = text.indexOf(value) > -1;
-                
+
                 $(this).toggle(matches);
-                
+
                 // If this topic matches, show its parent cluster
                 if (matches) {
                     $(this).closest(".cluster-item").show();
@@ -590,26 +597,26 @@
                 }
             });
         });
-        
+
         // Set up pagination for large datasets
         $(".accordion-collapse").each(function() {
             const clusterId = $(this).attr('id').replace('collapse', '');
             const topicItems = $(this).find('.topic-item');
             const itemsPerPage = 10;
-            
+
             if (topicItems.length > itemsPerPage) {
                 // Initialize pagination
                 setupPagination(topicItems, itemsPerPage, clusterId);
                 showPage(1, topicItems, itemsPerPage);
             }
         });
-        
+
         // Function to set up pagination
         function setupPagination(items, itemsPerPage, clusterId) {
             const pageCount = Math.ceil(items.length / itemsPerPage);
             const paginationList = $(`#pagination-list-${clusterId}`);
             paginationList.empty();
-            
+
             // Previous button
             paginationList.append(`
                 <li class="page-item">
@@ -618,7 +625,7 @@
                     </a>
                 </li>
             `);
-            
+
             // Page numbers
             for (let i = 1; i <= pageCount; i++) {
                 if (pageCount <= 7 || i === 1 || i === pageCount || (i >= currentPage - 1 && i <= currentPage + 1)) {
@@ -635,7 +642,7 @@
                     `);
                 }
             }
-            
+
             // Next button
             paginationList.append(`
                 <li class="page-item">
@@ -644,14 +651,14 @@
                     </a>
                 </li>
             `);
-            
+
             // Event handlers for pagination
             paginationList.find('.page-link').click(function(e) {
                 e.preventDefault();
-                
+
                 const pageNum = $(this).data('page');
                 let newPage;
-                
+
                 if (pageNum === 'prev') {
                     newPage = Math.max(1, currentPage - 1);
                 } else if (pageNum === 'next') {
@@ -659,30 +666,30 @@
                 } else {
                     newPage = parseInt(pageNum);
                 }
-                
+
                 if (newPage !== currentPage) {
                     currentPage = newPage;
                     showPage(currentPage, items, itemsPerPage);
-                    
+
                     // Update active state
                     paginationList.find('.page-item').removeClass('active');
                     paginationList.find(`.page-link[data-page="${currentPage}"]`).parent().addClass('active');
                 }
             });
         }
-        
+
         // Function to show a specific page
         function showPage(page, items, itemsPerPage) {
             const startIndex = (page - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
-            
+
             items.hide();
             items.slice(startIndex, endIndex).show();
         }
-        
+
         // Set up current page variable
         let currentPage = 1;
-        
+
         // Handle accordion icon rotation
         $('.accordion-button').on('click', function() {
             const expanded = $(this).attr('aria-expanded') === 'true';
