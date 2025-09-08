@@ -45,6 +45,12 @@ class Autoload extends AutoloadConfig
         'Modules'     => APPPATH . 'modules',
     ];
 
+    public array $languagePaths = [
+        APPPATH . 'Language',
+        APPPATH . 'Modules/Login/Language',
+    ];
+
+
     /**
      * -------------------------------------------------------------------
      * Class Map
@@ -92,5 +98,7 @@ class Autoload extends AutoloadConfig
      *
      * @var list<string>
      */
-    public $helpers = [];
+    public $helpers = [
+        'module_lang_helper'
+    ];
 }

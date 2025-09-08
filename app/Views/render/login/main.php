@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ms">
 
 <head>
     <meta charset="utf-8" />
@@ -29,19 +29,28 @@
         /* ======= GENERAL STYLES ======= */
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
         }
 
         /* ======= TYPOGRAPHY ======= */
         h1 {
-            font-family: 'Lato', sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
             font-weight: 300;
             letter-spacing: 2px;
             font-size: 48px;
         }
 
         p {
-            font-family: 'Lato', sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
             letter-spacing: 1px;
             font-size: 14px;
             color: #333333;
@@ -525,10 +534,210 @@
                 max-width: 400px;
             }
         }
+
+        /* ======= LANGUAGE SWITCH STYLES ======= */
+        .language-switch-header {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .lang-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-toggle {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(94, 114, 228, 0.3);
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #5e72e4;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            min-width: 80px;
+            justify-content: space-between;
+        }
+
+        .lang-toggle:hover {
+            background: rgba(94, 114, 228, 0.1);
+            border-color: #5e72e4;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(94, 114, 228, 0.2);
+            color: #5e72e4;
+            text-decoration: none;
+        }
+
+        .lang-toggle i.fa-globe {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .lang-toggle i.fa-chevron-down {
+            font-size: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .lang-dropdown.active .lang-toggle i.fa-chevron-down {
+            transform: rotate(180deg);
+        }
+
+        .lang-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(94, 114, 228, 0.3);
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-top: 5px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            z-index: 1001;
+        }
+
+        .lang-dropdown.active .lang-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #67748e;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .lang-option:last-child {
+            border-bottom: none;
+        }
+
+        .lang-option:hover {
+            background: rgba(94, 114, 228, 0.1);
+            color: #5e72e4;
+            text-decoration: none;
+        }
+
+        .lang-option.active {
+            background: linear-gradient(135deg, #5e72e4, #825ee4);
+            color: white;
+        }
+
+        .lang-option.active:hover {
+            background: linear-gradient(135deg, #4c63d2, #6b4ce6);
+            color: white;
+        }
+
+        .lang-option i.fa-circle {
+            font-size: 6px;
+            opacity: 0.6;
+        }
+
+        .lang-option.active i.fa-circle {
+            opacity: 1;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Dark mode styles for language switch */
+        body.dark-mode .lang-toggle {
+            background: rgba(26, 32, 53, 0.95);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #adbdcc;
+        }
+
+        body.dark-mode .lang-toggle:hover {
+            background: rgba(94, 114, 228, 0.2);
+            border-color: #5e72e4;
+            color: #adbdcc;
+        }
+
+        body.dark-mode .lang-options {
+            background: rgba(26, 32, 53, 0.95);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode .lang-option {
+            color: #8392ab;
+            border-bottom-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .lang-option:hover {
+            background: rgba(94, 114, 228, 0.2);
+            color: #adbdcc;
+        }
+
+        body.dark-mode .lang-option.active {
+            background: linear-gradient(135deg, #5e72e4, #825ee4);
+            color: white;
+        }
+
+        /* Mobile responsive for language switch */
+        @media (max-width: 768px) {
+            .language-switch-header {
+                top: 15px;
+                left: 15px;
+            }
+
+            .lang-toggle {
+                padding: 6px 12px;
+                font-size: 11px;
+                min-width: 70px;
+            }
+
+            .lang-option {
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Language Switch Buttons - Fixed Position Top Left -->
+    <div class="language-switch-header">
+        <div class="lang-dropdown" id="langDropdown">
+            <button class="lang-toggle" id="langToggle" type="button">
+                <i class="fas fa-globe"></i>
+                <span id="currentLang"><?= strtoupper(session('lang') ?? 'ms') ?></span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="lang-options" id="langOptions">
+                <a href="<?= site_url('lang/ms') ?>" class="lang-option <?= (session('lang') == 'ms' || !session('lang')) ? 'active' : '' ?>">
+                    <i class="fas fa-circle"></i>
+                    Malaysia
+                </a>
+                <a href="<?= site_url('lang/en') ?>" class="lang-option <?= (session('lang') == 'en') ? 'active' : '' ?>">
+                    <i class="fas fa-circle"></i>
+                    English
+                </a>
+            </div>
+        </div>
+    </div>
+
+
     <main class="main-content mt-0">
         <div class="floating-element floating-1"></div>
         <div class="floating-element floating-2"></div>
@@ -571,8 +780,9 @@
                                 </div>
                                 <!--Header ends-->
                                 <div class="card-body p-4">
-                                    <h3 class="login-title">Log Masuk</h3>
 
+                                    <h3 class="login-title"><?= ml('Login', 'title') ?></h3>
+                                    <!-- <p><?= ml('Login', 'subtitle') ?></p> -->
                                     <form method="post" action="<?= site_url('login/attempt_login'); ?>" id="login-form" class="smart-form client-form">
                                         <?= csrf_field() ?>
 
@@ -580,7 +790,7 @@
                                             <span class="input-group-text">
                                                 <i class="fas fa-user-circle"></i>
                                             </span>
-                                            <input type="text" class="form-control" id="um_username" name="um_username" placeholder="Username" required>
+                                            <input type="text" class="form-control" id="um_username" name="um_username" placeholder="<?= ml('Login', 'username') ?>" required>
                                             <div class="login-status" id="usernameStatus">
                                                 <span class="status-dot"></span>
                                                 <span>Menyemak...</span>
@@ -597,7 +807,7 @@
                                                 <span class="input-group-text">
                                                     <i class="fas fa-lock"></i>
                                                 </span>
-                                                <input type="password" class="form-control" id="um_password" name="um_password" placeholder="Kata Laluan" required>
+                                                <input type="password" class="form-control" id="um_password" name="um_password" placeholder="<?= ml('Login', 'password') ?>" required>
                                             </div>
                                             <span class="password-toggle" id="togglePassword">
                                                 <i class="far fa-eye"></i>
@@ -607,19 +817,14 @@
                                             <?= session('errors.password') ?>
                                         </div>
 
-                                        <!-- <div class="form-check form-switch ms-1 mb-4">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
-                                            <label class="form-check-label small" for="rememberMe">Ingat saya</label>
-                                        </div> -->
-
                                         <button type="submit" class="btn login-btn w-100">
-                                            Log Masuk
+                                            <?= ml('Login', 'signin') ?>
                                             <i class="fas fa-arrow-right ms-1"></i>
                                         </button>
 
                                         <p class="register-link text-center">
-                                            Tidak mempunyai akaun?
-                                            <a href="<?= site_url('register') ?>">Daftar</a>
+                                            <?= ml('Login', 'noAccount') ?>
+                                            <a href="<?= site_url('register') ?>"><?= ml('Login', 'register') ?></a>
                                         </p>
                                     </form>
                                 </div>
@@ -651,6 +856,36 @@
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
 
+        // Language dropdown functionality
+        document.getElementById('langToggle').addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const dropdown = document.getElementById('langDropdown');
+            dropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('langDropdown');
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Update current language display based on active option
+        document.addEventListener('DOMContentLoaded', function() {
+            const activeOption = document.querySelector('.lang-option.active');
+            const currentLangSpan = document.getElementById('currentLang');
+            if (activeOption && currentLangSpan) {
+                const langText = activeOption.textContent.trim();
+                if (langText === 'Bahasa Malaysia') {
+                    currentLangSpan.textContent = 'BM';
+                } else if (langText === 'English') {
+                    currentLangSpan.textContent = 'EN';
+                }
+            }
+        });
+
         // Password toggle visibility - Fixed positioning
         document.getElementById('togglePassword').addEventListener('click', function(e) {
             e.preventDefault(); // Prevent form submission
@@ -668,7 +903,6 @@
             }
         });
 
-        // Dark mode toggle with enhanced styles
         // Dark mode toggle with enhanced styles and wave color changes
         document.getElementById('darkModeToggle').addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');

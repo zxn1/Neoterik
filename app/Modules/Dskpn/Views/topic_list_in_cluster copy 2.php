@@ -11,7 +11,10 @@
     }
 
     body {
-        font-family: 'Poppins', sans-serif;
+        font-family: "Lato", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
         color: var(--text-color);
         background-color: #f8f9fa;
     }

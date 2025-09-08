@@ -5,12 +5,16 @@
     <style>
         @media print {
             @page {
-                size: A4 landscape; /* Set to A4 size and portrait orientation */
+                size: A4 landscape;
+                /* Set to A4 size and portrait orientation */
             }
+
             body {
-                zoom: 0.9; /* Scales content to 90% */
+                zoom: 0.9;
+                /* Scales content to 90% */
             }
-  }
+        }
+
         /* Ensure the table collapses borders */
         .table {
             border-collapse: collapse;
@@ -73,8 +77,10 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
             overflow: hidden;
             padding: 10px 5px;
             word-break: normal;
@@ -84,8 +90,9 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
             font-weight: normal;
             overflow: hidden;
             padding: 10px 5px;
@@ -121,12 +128,12 @@
         <div class="container-custom">
             <h5 class="left">SULIT</h5>
             <div class="mid">
-            <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
+                <img src="http://localhost:8080/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
             </div>
             <h5 class="right">SULIT</h5>
         </div>
     </div>
-<br>
+    <br>
     <table class="table">
         <tr style="width:100%">
             <td style="width: 100px;"><b>KLUSTER:</b></td>
@@ -356,7 +363,7 @@
             </td>
         </tr>
     </table>
-<br>
+    <br>
     <div class="row">
         <div class="container-custom">
             <h5 class="left">SULIT</h5>

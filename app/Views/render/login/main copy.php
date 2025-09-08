@@ -26,16 +26,19 @@
     <!-- Overwrite template css -->
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
         }
 
         .main-content {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)), 
-                        url('<?= base_url('neoterik/img/assets/kabg.png') ?>');
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.7)),
+                url('<?= base_url('neoterik/img/assets/kabg.png') ?>');
             background-size: cover;
             background-position: center;
         }
-        
+
         .login-card {
             width: 400px;
             border-radius: 15px;
@@ -86,9 +89,11 @@
             0% {
                 box-shadow: 0 0 0 0 rgba(94, 114, 228, 0.7);
             }
+
             70% {
                 box-shadow: 0 0 0 10px rgba(94, 114, 228, 0);
             }
+
             100% {
                 box-shadow: 0 0 0 0 rgba(94, 114, 228, 0);
             }
@@ -246,13 +251,27 @@
         }
 
         @keyframes float1 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(20px, 20px) rotate(10deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(20px, 20px) rotate(10deg);
+            }
         }
 
         @keyframes float2 {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-20px, -10px) rotate(-10deg); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(-20px, -10px) rotate(-10deg);
+            }
         }
 
         /* Typing indicator for wow effect */
@@ -305,12 +324,21 @@
         }
 
         @keyframes loadingDots {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
 
         /* Show typing indicator on username focus */
-        #um_username:focus ~ .typing-indicator {
+        #um_username:focus~.typing-indicator {
             opacity: 1;
         }
     </style>
@@ -329,19 +357,19 @@
                                 <button class="dark-mode-toggle" id="darkModeToggle">
                                     <i class="fas fa-moon"></i>
                                 </button>
-                                
+
                                 <div class="card-header pb-0 text-center bg-transparent">
                                     <div class="login-card-header-bg"></div>
                                     <img src="<?= base_url('neoterik/img/logo_srsb.png') ?>" class="school-logo">
                                     <p class="school-name">SEKOLAH RENDAH SERI BUDIMAN</p>
                                 </div>
-                                
+
                                 <div class="card-body p-4">
                                     <h3 class="login-title">Log Masuk</h3>
-                                    
+
                                     <form method="post" action="<?= site_url('login/attempt_login'); ?>" id="login-form" class="smart-form client-form">
                                         <?= csrf_field() ?>
-                                        
+
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="fas fa-user-circle"></i>
@@ -357,7 +385,7 @@
                                         <div class="invalid-feedback">
                                             <?= session('errors.login') ?>
                                         </div>
-                                        
+
                                         <div class="input-group">
                                             <span class="input-group-text">
                                                 <i class="fas fa-key"></i>
@@ -370,27 +398,27 @@
                                         <div class="invalid-feedback">
                                             <?= session('errors.password') ?>
                                         </div>
-                                        
+
                                         <div class="form-check form-switch ms-1 mb-4">
                                             <input class="form-check-input" type="checkbox" id="rememberMe">
                                             <label class="form-check-label small" for="rememberMe">Ingat saya</label>
                                         </div>
-                                        
+
                                         <button type="submit" class="btn login-btn w-100">
                                             Log Masuk
                                             <i class="fas fa-arrow-right ms-1"></i>
                                         </button>
-                                        
+
                                         <p class="register-link text-center">
                                             Tidak mempunyai akaun?
                                             <a href="<?= site_url('register') ?>">Daftar</a>
                                         </p>
                                     </form>
                                 </div>
-                                
+
                                 <div class="text-center footer-text">
                                     <small>Universiti Pendidikan Sultan Idris © 2024<br>
-                                    Gambar: Kompleks Akademik</small>
+                                        Gambar: Kompleks Akademik</small>
                                 </div>
                             </div>
                         </div>
@@ -399,7 +427,7 @@
             </div>
         </section>
     </main>
-    
+
     <!-- Core JS Files -->
     <script src="../assets/js/core/popper.min.js"></script>
     <script src="../assets/js/core/bootstrap.min.js"></script>
@@ -414,12 +442,12 @@
             }
             Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
         }
-        
+
         // Password toggle visibility
         document.getElementById('togglePassword').addEventListener('click', function() {
             const password = document.getElementById('um_password');
             const toggleIcon = this.querySelector('i');
-            
+
             if (password.type === 'password') {
                 password.type = 'text';
                 toggleIcon.classList.remove('fa-eye');
@@ -430,76 +458,76 @@
                 toggleIcon.classList.add('fa-eye');
             }
         });
-        
+
         // Dark mode toggle
         document.getElementById('darkModeToggle').addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
             const icon = this.querySelector('i');
-            
+
             if (icon.classList.contains('fa-moon')) {
                 icon.classList.remove('fa-moon');
                 icon.classList.add('fa-sun');
-                
+
                 document.documentElement.style.setProperty('--bs-body-bg', '#1a2035');
                 document.documentElement.style.setProperty('--bs-body-color', '#fff');
-                
+
                 // Change card styles for dark mode
                 document.querySelector('.login-card').style.background = 'rgba(26, 32, 53, 0.95)';
                 document.querySelector('.login-card').style.borderColor = 'rgba(255, 255, 255, 0.1)';
                 document.querySelector('.login-title').style.color = '#fff';
-                
+
                 // Change input styles for dark mode
                 document.querySelectorAll('.input-group-text, .form-control').forEach(el => {
                     el.style.backgroundColor = '#2a3551';
                     el.style.color = '#fff';
                 });
-                
+
                 document.querySelectorAll('.input-group').forEach(el => {
                     el.style.borderColor = '#364156';
                 });
-                
+
                 document.querySelectorAll('.register-link, .footer-text').forEach(el => {
                     el.style.color = '#8392ab';
                 });
-                
+
             } else {
                 icon.classList.remove('fa-sun');
                 icon.classList.add('fa-moon');
-                
+
                 document.documentElement.style.setProperty('--bs-body-bg', '');
                 document.documentElement.style.setProperty('--bs-body-color', '');
-                
+
                 // Reset card styles
                 document.querySelector('.login-card').style.background = 'rgba(255, 255, 255, 0.95)';
                 document.querySelector('.login-card').style.borderColor = 'rgba(255, 255, 255, 0.3)';
                 document.querySelector('.login-title').style.color = '#344767';
-                
+
                 // Reset input styles
                 document.querySelectorAll('.input-group-text, .form-control').forEach(el => {
                     el.style.backgroundColor = '';
                     el.style.color = '';
                 });
-                
+
                 document.querySelectorAll('.input-group').forEach(el => {
                     el.style.borderColor = '#eee';
                 });
-                
+
                 document.querySelectorAll('.register-link, .footer-text').forEach(el => {
                     el.style.color = '';
                 });
             }
         });
-        
+
         // Add animated login button effect
         const loginBtn = document.querySelector('.login-btn');
         loginBtn.addEventListener('mouseenter', function() {
             this.innerHTML = 'Selamat Datang <i class="fas fa-arrow-right ms-1"></i>';
         });
-        
+
         loginBtn.addEventListener('mouseleave', function() {
             this.innerHTML = 'Log Masuk <i class="fas fa-arrow-right ms-1"></i>';
         });
-        
+
         // Add typing effect for username field
         document.getElementById('um_username').addEventListener('input', function() {
             if (this.value.length > 0) {
@@ -509,7 +537,7 @@
             }
         });
     </script>
-    
+
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->

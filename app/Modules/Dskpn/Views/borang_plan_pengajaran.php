@@ -5,12 +5,16 @@
     <style>
         @media print {
             @page {
-                size: A4 landscape; /* Set to A4 size and portrait orientation */
+                size: A4 landscape;
+                /* Set to A4 size and portrait orientation */
             }
+
             body {
-                zoom: 0.9; /* Scales content to 90% */
+                zoom: 0.9;
+                /* Scales content to 90% */
             }
-  }
+        }
+
         /* Ensure the table collapses borders */
         .table {
             border-collapse: collapse;
@@ -73,8 +77,10 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
             overflow: hidden;
             padding: 10px 5px;
             word-break: normal;
@@ -84,8 +90,9 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
             font-weight: normal;
             overflow: hidden;
             padding: 10px 5px;
@@ -121,19 +128,18 @@
         <div class="container-custom">
             <h5 class="left">SULIT</h5>
             <div class="mid">
-            <img src="/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
+                <img src="/neoterik/img/assets/header_bpp.jpg" style="max-width:400px !important;" alt="Your Image">
             </div>
             <?php
-            if($dskpn_details['dskpn_status'] == 5 || $dskpn_details['dskpn_status'] == null || empty($dskpn_details['dskpn_status']))
-            {
+            if ($dskpn_details['dskpn_status'] == 5 || $dskpn_details['dskpn_status'] == null || empty($dskpn_details['dskpn_status'])) {
             ?>
-            <img src="/neoterik/img/assets/draft_watermark_v1.png" style="max-width:400px !important; position : absolute; right : 35%; transform : rotate(30deg); top : 30%; opacity : 0.6;" alt="Your Image">
+                <img src="/neoterik/img/assets/draft_watermark_v1.png" style="max-width:400px !important; position : absolute; right : 35%; transform : rotate(30deg); top : 30%; opacity : 0.6;" alt="Your Image">
             <?php
             } ?>
             <h5 class="right">SULIT</h5>
         </div>
     </div>
-<br>
+    <br>
     <table class="table">
         <tr style="width:100%">
             <td style="width: 100px;"><b>KLUSTER:</b></td>
@@ -164,59 +170,59 @@
             <td class="tg-fymr" colspan="4" style="width: 60%;">REKA BENTUK INSTRUKSI:</td>
         </tr>
         <tr>
-            
-       <td class="tg-0pky" colspan="3" rowspan="9" style="vertical-align: top;">
-            <?php if (isset($learning_standard) && !empty($learning_standard) && isset($subjects) && !empty($subjects)): ?>
-                <?php
-                // Map subjects for easy lookup: sbm_id => sbm_desc
-                $subjectMap = [];
-                foreach ($subjects as $sb) {
-                    $subjectMap[$sb['sbm_id']] = $sb['sbm_desc'];
-                }
 
-                // Group learning standards by subject ID and learning standard group ID
-                $grouped = [];
-                foreach ($learning_standard as $ls) {
-                    $lsId = $ls['lsi_ls_id']; // i.e. the 'learning standard' group
-                    $grouped[$lsId]['subject_id'] = $ls['ls_sbm_id']; // keep subject ID for label
-                    $grouped[$lsId]['items'][] = $ls;
-                }
-                ?>
+            <td class="tg-0pky" colspan="3" rowspan="9" style="vertical-align: top;">
+                <?php if (isset($learning_standard) && !empty($learning_standard) && isset($subjects) && !empty($subjects)): ?>
+                    <?php
+                    // Map subjects for easy lookup: sbm_id => sbm_desc
+                    $subjectMap = [];
+                    foreach ($subjects as $sb) {
+                        $subjectMap[$sb['sbm_id']] = $sb['sbm_desc'];
+                    }
 
-                <?php foreach ($grouped as $lsId => $group): ?>
-                    <?php 
-                        $subjectName = $subjectMap[$group['subject_id']] ?? 'Unknown Subject';
+                    // Group learning standards by subject ID and learning standard group ID
+                    $grouped = [];
+                    foreach ($learning_standard as $ls) {
+                        $lsId = $ls['lsi_ls_id']; // i.e. the 'learning standard' group
+                        $grouped[$lsId]['subject_id'] = $ls['ls_sbm_id']; // keep subject ID for label
+                        $grouped[$lsId]['items'][] = $ls;
+                    }
                     ?>
-                    <div style="font-weight: bold; margin-bottom: 4px;">
-                        <?= $subjectName ?>
-                    </div>
 
-                    <?php foreach ($group['items'] as $item): ?>
-                        <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
-                            <tr style="border: none;">
-                                <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
-                                    <p><?= $item['lsi_number'] ?>.</p>
-                                </td>
-                                <td valign="top" style="border: none;">
-                                    <?= $item['lsi_desc'] ?>
-                                </td>
-                            </tr>
-                        </table>
+                    <?php foreach ($grouped as $lsId => $group): ?>
+                        <?php
+                        $subjectName = $subjectMap[$group['subject_id']] ?? 'Unknown Subject';
+                        ?>
+                        <div style="font-weight: bold; margin-bottom: 4px;">
+                            <?= $subjectName ?>
+                        </div>
+
+                        <?php foreach ($group['items'] as $item): ?>
+                            <table style="width: 100%; border-collapse: collapse; border: none; margin-bottom: 2px;">
+                                <tr style="border: none;">
+                                    <td valign="top" style="width: 35px; font-weight: bold; text-align: right; border: none; padding-right: 5px;">
+                                        <p><?= $item['lsi_number'] ?>.</p>
+                                    </td>
+                                    <td valign="top" style="border: none;">
+                                        <?= $item['lsi_desc'] ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        <?php endforeach; ?>
+
+                        <br>
                     <?php endforeach; ?>
-
-                    <br>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No learning standards available.</p>
-            <?php endif; ?>
-        </td>
+                <?php else: ?>
+                    <p>No learning standards available.</p>
+                <?php endif; ?>
+            </td>
 
             <td class="tg-0pky" colspan="1" rowspan="2">
                 <?php if (isset($standard_performance) && !empty($standard_performance)): ?>
                     <?php
                     // Collect all 'dskp_code' values from the nested arrays
                     $dskp_codes = [];
-                     // Loop through outer array sebab it nested array bukan flat array
+                    // Loop through outer array sebab it nested array bukan flat array
                     foreach ($standard_performance as $group) {
                         // Loop through inner array
                         foreach ($group as $item) {
@@ -373,7 +379,7 @@
         </tr>
         <tr>
             <td class="tg-0pky" colspan="4" rowspan="5">
-                <?php 
+                <?php
                 if (isset($activity) && !empty($activity)):
                     foreach ($activity as $ac) {
                         echo $ac['aci_number'] . ". " . $ac['aci_desc'] . "<br>";
@@ -397,7 +403,7 @@
             </td>
         </tr>
     </table>
-<br>
+    <br>
     <div class="row">
         <div class="container-custom">
             <h5 class="left">SULIT</h5>

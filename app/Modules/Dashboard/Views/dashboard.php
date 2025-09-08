@@ -16,8 +16,10 @@
     }
 
     .mac-card {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial,
-        sans-serif;
+      font-family: "Lato", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      /* font-weight: normal; */
       background: white;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ms">
+
 <head>
     <meta charset="UTF-8">
     <title>Penyelenggaraan | UPSI</title>
@@ -8,7 +9,10 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: "Lato", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            font-weight: normal;
         }
 
         * {
@@ -91,7 +95,7 @@
             background-color: rgba(255, 255, 255, 0.95);
             padding: 25px 30px 30px;
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             margin-top: 20px;
             max-width: 600px;
             width: 100%;
@@ -113,9 +117,17 @@
             border-radius: 50%;
         }
 
-        .red { background-color: #ff5f57; }
-        .yellow { background-color: #febc2e; }
-        .green { background-color: #28c840; }
+        .red {
+            background-color: #ff5f57;
+        }
+
+        .yellow {
+            background-color: #febc2e;
+        }
+
+        .green {
+            background-color: #28c840;
+        }
 
         .pp-infobox-title {
             color: #000000;
@@ -175,6 +187,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- HEADER -->
     <div class="site-header">
@@ -214,7 +227,11 @@
     <script>
         function updateDateTime() {
             const now = new Date();
-            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            const options = {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            };
             const time = now.toLocaleTimeString('ms-MY');
             const date = now.toLocaleDateString('ms-MY', options);
             document.getElementById('datetime').textContent = `${time} | ${date}`;
@@ -223,4 +240,5 @@
         updateDateTime();
     </script>
 </body>
+
 </html>

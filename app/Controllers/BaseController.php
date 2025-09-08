@@ -50,7 +50,11 @@ abstract class BaseController extends Controller
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-
+        //--------------------------------------------------------------------
+        // Set locale dari session, default 'ms'
+        //--------------------------------------------------------------------
+        $locale = session('lang') ?? 'ms';
+        service('request')->setLocale($locale);
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
@@ -103,11 +107,11 @@ abstract class BaseController extends Controller
         $view_path = 'App\\Modules\\' . ucfirst($modules) . '\\Views\\';
 
         $jsTemp = [];
-        foreach($js as $sc)
+        foreach ($js as $sc)
             $jsTemp[] = $modules . "\\" . $sc;
 
         $cssTemp = [];
-        foreach($css as $cs)
+        foreach ($css as $cs)
             $cssTemp[] = $modules . "\\" . $cs;
 
         $array = [
@@ -119,5 +123,4 @@ abstract class BaseController extends Controller
 
         echo view('render/main/main', $array);
     }
-    
 }

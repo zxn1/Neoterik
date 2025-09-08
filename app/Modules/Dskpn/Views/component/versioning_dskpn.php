@@ -1,6 +1,9 @@
 <style>
     body {
-        font-family: Arial, sans-serif;
+        font-family: "Lato", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        font-weight: normal;
         background-color: #f4f4f9;
         padding: 20px;
     }
@@ -242,7 +245,7 @@ if (!(strpos(current_url(), route_to('load_dskpn_versioning')) !== false)) { ?>
             $('#optionActivate').removeClass('active-outline');
         });
 
-        $('.custom-close-btn').on('click', function () {
+        $('.custom-close-btn').on('click', function() {
             $('#versioningModal').modal('hide');
         });
 
