@@ -758,7 +758,7 @@
 
                                         <div class="login-card-header-bg"></div>
                                         <img src="<?= base_url('neoterik/img/logo_srsb.png') ?>" class="school-logo">
-                                        <p class="school-name">SEKOLAH RENDAH SERI BUDIMAN</p>
+                                        <p class="school-name"><?= ml('Login', 'schoolname') ?></p>
                                     </div>
                                     <!--Waves Container-->
                                     <div>
@@ -793,7 +793,7 @@
                                             <input type="text" class="form-control" id="um_username" name="um_username" placeholder="<?= ml('Login', 'username') ?>" required>
                                             <div class="login-status" id="usernameStatus">
                                                 <span class="status-dot"></span>
-                                                <span>Menyemak...</span>
+                                                <span><?= ml('Login', 'loginattempt') ?></span>
                                             </div>
                                         </div>
                                         <?php if (session('errors.login')) : ?>
@@ -985,12 +985,12 @@
         // Enhanced animated login button effect
         const loginBtn = document.querySelector('.login-btn');
         loginBtn.addEventListener('mouseenter', function() {
-            this.innerHTML = 'Selamat Datang <i class="fas fa-arrow-right ms-1"></i>';
+            this.innerHTML = '<?= ml('Login', 'welcome') ?> <i class="fas fa-arrow-right ms-1"></i>';
             this.style.background = 'linear-gradient(135deg, #825ee4, #5e72e4)';
         });
 
         loginBtn.addEventListener('mouseleave', function() {
-            this.innerHTML = 'Log Masuk <i class="fas fa-arrow-right ms-1"></i>';
+            this.innerHTML = '<?= ml('Login', 'signin') ?> <i class="fas fa-arrow-right ms-1"></i>';
             this.style.background = 'linear-gradient(135deg, #5e72e4, #825ee4)';
         });
 
