@@ -8,15 +8,15 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-            <h6 class="my-auto text-white"><b>DSKPN</b></h6>
+            <h6 class="my-auto text-white"><b><?= ml('core_competency_list', 'dskpn') ?></b></h6>
         </div>
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="row">
                     <div class="form-group">
-                        <label for="subjectSelect">Mata Pelajaran</label>
+                        <label for="subjectSelect"><?= ml('core_competency_list', 'subject') ?></label>
                         <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
-                            <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
+                            <option disabled selected><?= ml('core_competency_list', 'select_subject_placeholder') ?></option>
                             <?php foreach ($subject_list as $subject) { ?>
                                 <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                             <?php } ?>
@@ -29,14 +29,14 @@
     <br>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white"><b>KOMPETENSI TERAS</b></h6>
+            <h6 class="my-auto text-white"><b><?= ml('core_competency_list', 'core_competency') ?></b></h6>
             <div>
                 <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-secondary text-white" id="edit-core-competency" style="margin-bottom:0 !important; display : none;">
-                    Ubah Kompetensi Teras Mata Pelajaran Ini&nbsp;&nbsp;
+                    <?= ml('core_competency_list', 'edit_core_competency') ?>&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
                 </a>
                 <a href="<?= route_to('view_core_competency_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
-                    Tetapan Kompetensi Teras&nbsp;&nbsp;
+                    <?= ml('core_competency_list', 'setup_core_competency') ?>&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
                 </a>
             </div>
@@ -46,10 +46,10 @@
             <table id="standard_performance_table" class="table align-items-center mb-0" id="subject_list">
                 <thead>
                     <tr>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">KOD</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">KOMPETENSI TERAS</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;"><?= ml('core_competency_list', 'no') ?></th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;"><?= ml('core_competency_list', 'code') ?></th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;"><?= ml('core_competency_list', 'core_competency_col') ?></th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;"><?= ml('core_competency_list', 'action') ?></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -114,11 +114,11 @@
     function deleteCoreCompetency(id, sbm_id) {
         var subject_text = $(this).find('option:selected').html();
         Swal.fire({
-            title: "Anda benar-benar ingin delete item Kompetensi Teras ini?",
+            title: "<?= ml('core_competency_list', 'delete_confirm_title') ?>",
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: "Ya",
-            denyButtonText: `Tidak`
+            confirmButtonText: "<?= ml('core_competency_list', 'confirm_yes') ?>",
+            denyButtonText: `<?= ml('core_competency_list', 'confirm_no') ?>`
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -156,12 +156,12 @@
 
                             tableBody.append(tableRow);
 
-                            Swal.fire("Berjaya!", "", "success");
+                            Swal.fire("<?= ml('core_competency_list', 'delete_success') ?>", "", "success");
                         });
                     }
                 });
             } else if (result.isDenied) {
-                Swal.fire("Dibatalkan..", "", "info");
+                Swal.fire("<?= ml('core_competency_list', 'cancelled') ?>", "", "info");
             }
         });
     }

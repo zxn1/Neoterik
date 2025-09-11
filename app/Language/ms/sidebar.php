@@ -1,0 +1,28 @@
+<?php
+
+return [
+    'utama'                                             => 'Utama',
+    'konfigurasi_utama'                                 => 'Konfigurasi Utama',
+    'topik'                                             => 'Topik',
+    'guru_kluster'                                      => 'Guru & Kluster',
+    'tahap_penguasaan'                                  => 'Tahap Penguasaan',
+    'kompetensi_teras'                                  => 'Kompetensi Teras',
+    'tetapan_admin'                                     => 'Tetapan Admin',
+    'akses_pengguna'                                    => 'Akses Pengguna',
+    'dskpn_versioning'                                  => 'Versi DSKPN',
+    'mata_pelajaran'                                    => 'Mata Pelajaran',
+    'kluster'                                           => 'Kluster',
+    'kluster_dan_topik'                                 => 'Kluster & Topik',
+    'senarai_dskpn'                                     => 'Senarai DSKPN',
+    'dskpn'                                             => 'DSKPN',
+    'penetapan'                                         => 'Penetapan',
+    'penetapan_standard_pembelajaran'                   => 'Penetapan<br>Standard<br>Pembelajaran',
+    'penetapan_tahap_penguasaan'                        => 'Penetapan<br>Tahap Penguasaan',
+    'penetapan_pemetaan_teras'                          => 'Penetapan<br>Pemetaan Teras',
+    'penetapan_pemetaan_domain'                         => 'Penetapan<br>Pemetaan Domain',
+    'penetapan_pemetaan_aktiviti_dan_pentaksiran'       => 'Penetapan<br>Pemetaan Aktiviti & Pentaksiran',
+    'penetapan_pemetaan_spesifikasi'                    => 'Penetapan<br>Pemetaan Spesifikasi',
+    'selesai'                                           => 'Selesai',
+    'log_keluar'                                        => 'Log Keluar',
+    'sistem_budiman'                                    => 'Sistem Budiman',
+];

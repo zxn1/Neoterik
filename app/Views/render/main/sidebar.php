@@ -3,7 +3,7 @@
     <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
     <a class="navbar-brand m-0" href="dashboard" target="_blank">
       <img src="<?= base_url() ?>neoterik/img/logo_srsb.png" class="navbar-brand-img h-100" alt="main_logo">
-      <span class="ms-1 font-weight-bold text-white" style="font-size: 1.2rem;">Sistem Budiman</span>
+      <span class="ms-1 font-weight-bold text-white" style="font-size: 1.2rem;"><?= lang('sidebar.sistem_budiman'); ?></span>
 
     </a>
   </div>
@@ -32,7 +32,7 @@
           <a class="nav-link <?= (url_is(route_to('dashboard'))) ? 'active' : ''; ?>" href="<?= route_to('dashboard'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>Utama</title>
+                <title><?= lang('sidebar.utama'); ?></title>
                 <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Rounded-Icons" transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g id="Icons-with-opacity" transform="translate(1716.000000, 291.000000)">
@@ -45,7 +45,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Utama</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.utama'); ?></span>
           </a>
         </li>
       <?php endif; ?>
@@ -58,7 +58,7 @@
           <a data-bs-toggle="collapse" href="#dskpn-configuration" class="nav-link " aria-controls="dskpn-configuration" role="button" aria-expanded="<?= $in_main_configuration ? 'true' : 'false' ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>Tetapan</title>
+                <title><?= lang('sidebar.penetapan'); ?></title>
                 <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Rounded-Icons" transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g id="Icons-with-opacity" transform="translate(1716.000000, 291.000000)">
@@ -72,7 +72,7 @@
               </svg>
 
             </div>
-            <span class="nav-link-text ms-1">Konfigurasi Utama</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.konfigurasi_utama'); ?></span>
           </a>
           <div class="collapse <?= $in_main_configuration ? 'show' : ''; ?>" id="dskpn-configuration">
             <ul class="nav ms-1 ps-1">
@@ -81,7 +81,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-bookmark" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Topik</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.topik'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -89,7 +89,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-chalkboard-teacher" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Guru & Kluster</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.guru_kluster'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -97,7 +97,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-brain" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Tahap Penguasaan</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.tahap_penguasaan'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -105,7 +105,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-project-diagram" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Kompetensi Teras</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.kompetensi_teras'); ?></span>
                 </a>
               </li>
             </ul>
@@ -122,7 +122,7 @@
           <a data-bs-toggle="collapse" href="#admin-setting" class="nav-link " aria-controls="admin-setting" role="button" aria-expanded="<?= $in_main_configuration ? 'true' : 'false' ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>settings</title>
+                <title><?= lang('sidebar.penetapan'); ?></title>
                 <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Rounded-Icons" transform="translate(-2020.000000, -442.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g id="Icons-with-opacity" transform="translate(1716.000000, 291.000000)">
@@ -136,7 +136,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Tetapan Admin</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.tetapan_admin'); ?></span>
           </a>
           <div class="collapse <?= $in_main_configuration ? 'show' : ''; ?>" id="admin-setting">
             <ul class="nav ms-1 ps-1">
@@ -145,7 +145,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-user-tie" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Akses Pengguna</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.akses_pengguna'); ?></span>
                 </a>
               </li>
             </ul>
@@ -155,7 +155,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-user-tie" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">DSKPN Versioning</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.dskpn_versioning'); ?></span>
                 </a>
               </li>
             </ul>
@@ -179,7 +179,7 @@
               </svg>
 
             </div>
-            <span class="nav-link-text ms-1">Konfigurasi Utama</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.konfigurasi_utama'); ?></span>
           </a>
           <div class="collapse <?= $in_main_configuration ? 'show' : ''; ?>" id="dskpn-configuration">
             <ul class="nav ms-1 ps-1">
@@ -188,7 +188,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Mata Pelajaran</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.mata_pelajaran'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -196,7 +196,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-book-reader" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Kluster</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.kluster'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -204,7 +204,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <i class="fas fa-bookmark" style="color : #3c4242; height : 16px; width : 16px;"></i>
                   </div>
-                  <span class="nav-link-text ms-1">Topik</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.topik'); ?></span>
                 </a>
               </li>
             </ul>
@@ -222,7 +222,7 @@
           <a class="nav-link <?= (url_is(route_to('cluster_topic')) || url_is(route_to('dskpn_by_topic_list'))) ? 'active' : ''; ?>" href="<?= route_to('cluster_topic'); ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>office</title>
+                <title><?= lang('sidebar.kluster_dan_topik'); ?></title>
                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g transform="translate(-1869.000000, -293.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g transform="translate(1716.000000, 291.000000)">
@@ -235,7 +235,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Kluster & Topik</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.kluster_dan_topik'); ?></span>
           </a>
         </li>
       <?php endif; ?>
@@ -283,7 +283,7 @@
                 </g>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Senarai DSKPN</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.senarai_dskpn'); ?></span>
           </a>
         </li>
       <?php endif; ?>
@@ -297,7 +297,7 @@
           <a data-bs-toggle="collapse" href="#standardPembelajaran" class="nav-link " aria-controls="standardPembelajaran" role="button" aria-expanded="<?= $in_dskpn_list ? 'true' : 'false' ?>">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center  me-2">
               <svg class="text-dark" width="16px" height="16px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <title>DSKPN</title>
+                <title><?= lang('sidebar.dskpn'); ?></title>
                 <g id="Basic-Elements" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                   <g id="Rounded-Icons" transform="translate(-1870.000000, -591.000000)" fill="#FFFFFF" fill-rule="nonzero">
                     <g id="Icons-with-opacity" transform="translate(1716.000000, 291.000000)">
@@ -311,7 +311,7 @@
               </svg>
 
             </div>
-            <span class="nav-link-text ms-1">DSKPN</span>
+            <span class="nav-link-text ms-1"><?= lang('sidebar.dskpn'); ?></span>
           </a>
           <?php
           // $stylish = "background-color : #cbefd3b8; border-radius : 10px; margin-bottom : 1px;";
@@ -324,7 +324,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Standard<br>Pembelajaran</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_standard_pembelajaran'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -332,7 +332,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Tahap Penguasaan</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_tahap_penguasaan'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -340,7 +340,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Teras</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_pemetaan_teras'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -348,7 +348,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Domain</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_pemetaan_domain'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -356,7 +356,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Aktiviti <br>& Pentaksiran</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_pemetaan_aktiviti_dan_pentaksiran'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -364,7 +364,7 @@
                   <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                     <dotlottie-player src="https://lottie.host/191170f4-0773-4212-908c-b52bcd890dfe/i27diFhRER.json" background="transparent" speed="1" direction="1" playMode="normal" loop autoplay style="width : 31px;"></dotlottie-player>
                   </div>
-                  <span class="nav-link-text ms-1" style="line-height : 1.2;">Penetapan<br>Pemetaan Spesifikasi</span>
+                  <span class="nav-link-text ms-1" style="line-height : 1.2;"><?= lang('sidebar.penetapan_pemetaan_spesifikasi'); ?></span>
                 </a>
               </li>
               <li class="nav-item ">
@@ -378,7 +378,7 @@
                       </svg>
                     <?php } ?>
                   </div>
-                  <span class="nav-link-text ms-1">Selesai</span>
+                  <span class="nav-link-text ms-1"><?= lang('sidebar.selesai'); ?></span>
                 </a>
               </li>
             </ul>
@@ -416,10 +416,13 @@
             <!-- Font Awesome icon for Sign Out -->
             <i class="fa fa-sign-out-alt" style="font-size:0.8rem;"></i>
           </div>
-          <span class="nav-link-text ms-1 d-flex">Log Keluar</span>
+          <span class="nav-link-text ms-1 d-flex"><?= lang('sidebar.log_keluar'); ?></span>
         </a>
       </li>
     </ul>
+
+
+
   </div>
   <!-- <div class="sidenav-footer mx-3 mt-3 pt-3">
     <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
@@ -436,4 +439,237 @@
       </div>
     </div>
   </div> -->
+
+  <!-- Language Switch Buttons - Fixed Position Top Left -->
+  <div class="language-switch-header">
+    <div class="lang-dropdown" id="langDropdown">
+      <button class="lang-toggle" id="langToggle" type="button">
+        <i class="fas fa-globe"></i>
+        <span id="currentLang"><?= strtoupper(session('lang') ?? 'ms') ?></span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="lang-options" id="langOptions">
+        <a href="<?= site_url('lang/ms') ?>" class="lang-option <?= (session('lang') == 'ms' || !session('lang')) ? 'active' : '' ?>">
+          <i class="fas fa-circle"></i>
+          Malaysia
+        </a>
+        <a href="<?= site_url('lang/en') ?>" class="lang-option <?= (session('lang') == 'en') ? 'active' : '' ?>">
+          <i class="fas fa-circle"></i>
+          English
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* ======= LANGUAGE SWITCH STYLES ======= */
+    .language-switch-header {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    .lang-dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .lang-toggle {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(94, 114, 228, 0.3);
+      border-radius: 8px;
+      padding: 8px 15px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #5e72e4;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      min-width: 80px;
+      justify-content: space-between;
+    }
+
+    .lang-toggle:hover {
+      background: rgba(94, 114, 228, 0.1);
+      border-color: #5e72e4;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(94, 114, 228, 0.2);
+      color: #5e72e4;
+      text-decoration: none;
+    }
+
+    .lang-toggle i.fa-globe {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .lang-toggle i.fa-chevron-down {
+      font-size: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .lang-dropdown.active .lang-toggle i.fa-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .lang-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(94, 114, 228, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      margin-top: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      z-index: 1001;
+    }
+
+    .lang-dropdown.active .lang-options {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 15px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #67748e;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .lang-option:last-child {
+      border-bottom: none;
+    }
+
+    .lang-option:hover {
+      background: rgba(94, 114, 228, 0.1);
+      color: #5e72e4;
+      text-decoration: none;
+    }
+
+    .lang-option.active {
+      background: linear-gradient(135deg, #5e72e4, #825ee4);
+      color: white;
+    }
+
+    .lang-option.active:hover {
+      background: linear-gradient(135deg, #4c63d2, #6b4ce6);
+      color: white;
+    }
+
+    .lang-option i.fa-circle {
+      font-size: 6px;
+      opacity: 0.6;
+    }
+
+    .lang-option.active i.fa-circle {
+      opacity: 1;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* Dark mode styles for language switch */
+    body.dark-mode .lang-toggle {
+      background: rgba(26, 32, 53, 0.95);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #adbdcc;
+    }
+
+    body.dark-mode .lang-toggle:hover {
+      background: rgba(94, 114, 228, 0.2);
+      border-color: #5e72e4;
+      color: #adbdcc;
+    }
+
+    body.dark-mode .lang-options {
+      background: rgba(26, 32, 53, 0.95);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode .lang-option {
+      color: #8392ab;
+      border-bottom-color: rgba(255, 255, 255, 0.05);
+    }
+
+    body.dark-mode .lang-option:hover {
+      background: rgba(94, 114, 228, 0.2);
+      color: #adbdcc;
+    }
+
+    body.dark-mode .lang-option.active {
+      background: linear-gradient(135deg, #5e72e4, #825ee4);
+      color: white;
+    }
+
+    /* Mobile responsive for language switch */
+    @media (max-width: 768px) {
+      .language-switch-header {
+        top: 15px;
+        left: 15px;
+      }
+
+      .lang-toggle {
+        padding: 6px 12px;
+        font-size: 11px;
+        min-width: 70px;
+      }
+
+      .lang-option {
+        padding: 8px 12px;
+        font-size: 11px;
+      }
+    }
+  </style>
+
+  <script>
+    // Language dropdown functionality
+    document.getElementById('langToggle').addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dropdown = document.getElementById('langDropdown');
+      dropdown.classList.toggle('active');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdown = document.getElementById('langDropdown');
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    // Update current language display based on active option
+    document.addEventListener('DOMContentLoaded', function() {
+      const activeOption = document.querySelector('.lang-option.active');
+      const currentLangSpan = document.getElementById('currentLang');
+      if (activeOption && currentLangSpan) {
+        const langText = activeOption.textContent.trim();
+        if (langText === 'Bahasa Malaysia') {
+          currentLangSpan.textContent = 'BM';
+        } else if (langText === 'English') {
+          currentLangSpan.textContent = 'EN';
+        }
+      }
+    });
+  </script>
 </aside>

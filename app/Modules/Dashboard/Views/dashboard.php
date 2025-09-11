@@ -146,36 +146,34 @@
   <!-- Kad Statistik -->
   <div class="row">
     <div class="col-lg-4 col-12">
-      <div class="card bg-info h-100 tilt" data-tilt="" style="will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
+      <div class="card bg-info h-100 tilt" data-tilt="">
         <div class="card-body pt-4 text-center">
-          <h2 class="text-white mb-0 mt-2 up">Pelajar</h2>
+          <h2 class="text-white mb-0 mt-2 up"><?= ml('dashboard', 'students') ?></h2>
           <h1 class="text-white mb-0 up">67</h1>
-          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
+          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5"><?= ml('dashboard', 'view_more') ?></a>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-12">
-      <div class="card h-100 tilt" data-tilt="" style="background-color : #82a9eb; will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
+      <div class="card h-100 tilt" data-tilt="" style="background-color: #82a9eb;">
         <div class="card-body pt-4 text-center">
-          <h2 class="text-white mb-0 mt-2 up">Kluster</h2>
+          <h2 class="text-white mb-0 mt-2 up"><?= ml('dashboard', 'clusters') ?></h2>
           <h1 class="text-white mb-0 up"><?= $kluster ?></h1>
-          <a href="<?= route_to('view_cluster'); ?>" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
+          <a href="<?= route_to('view_cluster'); ?>" class="btn btn-outline-white mb-2 px-5"><?= ml('dashboard', 'view_more') ?></a>
         </div>
       </div>
     </div>
     <div class="col-lg-4 col-12">
-      <div class="card h-100 tilt" data-tilt="" style="background-color: #5eab95f2; will-change: transform; transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);">
-        <!-- <div class="full-background" style="background-image: url('<?= base_url() ?>assets/img/curved-images/white-curved.jpg')"></div> -->
+      <div class="card h-100 tilt" data-tilt="" style="background-color: #5eab95f2;">
         <div class="card-body pt-4 text-center">
-          <h2 class="text-white mb-0 mt-2 up">Kelas</h2>
+          <h2 class="text-white mb-0 mt-2 up"><?= ml('dashboard', 'classes') ?></h2>
           <h1 class="text-white mb-0 up">4</h1>
-          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5">Lihat Lagi</a>
+          <a href="javascript:;" class="btn btn-outline-white mb-2 px-5"><?= ml('dashboard', 'view_more') ?></a>
         </div>
       </div>
     </div>
   </div>
+
   <!-- Kad Graf Chart.js + Dropdown Tahun -->
   <div class="row mt-4">
     <div class="col-lg-12">
@@ -186,21 +184,9 @@
           <div class="mac-dot green"></div>
         </div>
         <div class="mac-card-body" style="color: black;">
-          <div
-            style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            ">
-            <h4>Status Pentaksiran</h4>
-            <select
-              id="tahunSelect"
-              style="
-                padding: 6px 12px;
-                border-radius: 6px;
-                border: 1px solid #ccc;
-            ">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h4><?= ml('dashboard', 'assessment_status') ?></h4>
+            <select id="tahunSelect" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #ccc;">
               <option value="2024">2024</option>
               <option value="2023">2023</option>
               <option value="2022">2022</option>
@@ -242,28 +228,26 @@
     };
 
     function generateChart(data) {
-      if (statusChart) {
-        statusChart.destroy();
-      }
+      if (statusChart) statusChart.destroy();
 
       statusChart = new Chart(ctx, {
         type: 'bar',
         data: {
           labels: ['Kelas Bestari', 'Kelas Bijak', 'Kelas Pintar', 'Kelas Cerdik'],
           datasets: [{
-              label: 'Selesai',
+              label: '<?= ml('dashboard', 'completed') ?>',
               data: data.selesai,
-              backgroundColor: 'rgba(75, 192, 192, 0.8)'
+              backgroundColor: 'rgba(75,192,192,0.8)'
             },
             {
-              label: 'Dalam Proses',
+              label: '<?= ml('dashboard', 'in_progress') ?>',
               data: data.proses,
-              backgroundColor: 'rgba(255, 206, 86, 0.8)'
+              backgroundColor: 'rgba(255,206,86,0.8)'
             },
             {
-              label: 'Belum Bermula',
+              label: '<?= ml('dashboard', 'not_started') ?>',
               data: data.belum,
-              backgroundColor: 'rgba(255, 99, 132, 0.8)'
+              backgroundColor: 'rgba(255,99,132,0.8)'
             }
           ]
         },
@@ -275,7 +259,7 @@
             },
             title: {
               display: true,
-              text: 'Status Pentaksiran Mengikut Kelas'
+              text: '<?= ml('dashboard', 'status_chart_title') ?>'
             }
           },
           scales: {
@@ -290,7 +274,6 @@
     // Generate chart for default year
     generateChart(chartData[2024]);
 
-    // Event: Tahun dropdown change
     document.getElementById('tahunSelect').addEventListener('change', function() {
       const tahun = this.value;
       generateChart(chartData[tahun]);

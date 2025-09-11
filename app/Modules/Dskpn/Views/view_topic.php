@@ -240,47 +240,48 @@
     <!-- Main Card -->
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h5 class="my-auto text-white fw-bold m-0">TOPIK</h5>
+            <h5 class="my-auto text-white fw-bold m-0"><?= ml('view_topic', 'topic') ?></h5>
             <button type="button" class="btn bg-info text-white m-0" data-bs-toggle="modal" data-bs-target="#addClusterModal">
-                <i class="fas fa-plus-circle me-2"></i>Tambah Topik
+                <i class="fas fa-plus-circle me-2"></i><?= ml('view_topic', 'add_topic') ?>
             </button>
+
         </div>
         <div class="card-body">
             <!-- Enhanced Tabs Navigation -->
             <ul class="nav nav-tabs" id="topicTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="all-tab" data-bs-toggle="tab" data-bs-target="#all-tab-pane" type="button" role="tab" aria-controls="all-tab-pane" aria-selected="true">
-                        <i class="fas fa-layer-group me-2"></i>Semua
+                        <i class="fas fa-layer-group me-2"></i><?= ml('view_topic', 'all') ?>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year1-tab" data-bs-toggle="tab" data-bs-target="#year1-tab-pane" type="button" role="tab" aria-controls="year1-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">1</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">1</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year2-tab" data-bs-toggle="tab" data-bs-target="#year2-tab-pane" type="button" role="tab" aria-controls="year2-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">2</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">2</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year3-tab" data-bs-toggle="tab" data-bs-target="#year3-tab-pane" type="button" role="tab" aria-controls="year3-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">3</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">3</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year4-tab" data-bs-toggle="tab" data-bs-target="#year4-tab-pane" type="button" role="tab" aria-controls="year4-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">4</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">4</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year5-tab" data-bs-toggle="tab" data-bs-target="#year5-tab-pane" type="button" role="tab" aria-controls="year5-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">5</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">5</span>
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" id="year6-tab" data-bs-toggle="tab" data-bs-target="#year6-tab-pane" type="button" role="tab" aria-controls="year6-tab-pane" aria-selected="false">
-                        Tahun &nbsp; <span class="year-icon">6</span>
+                        <?= ml('view_topic', 'year') ?> &nbsp; <span class="year-icon">6</span>
                     </button>
                 </li>
             </ul>
@@ -293,11 +294,11 @@
                         <table class="table topic-table" id="allTopicsTable">
                             <thead>
                                 <tr>
-                                    <th style="width: 5%">BIL</th>
-                                    <th style="width: 10%">TAHUN</th>
-                                    <th>KLUSTER</th>
-                                    <th>TOPIK</th>
-                                    <th class="text-center" style="width: 10%">TINDAKAN</th>
+                                    <th style="width: 5%"><?= ml('view_topic', 'th_number') ?></th>
+                                    <th style="width: 10%"><?= ml('view_topic', 'th_year') ?></th>
+                                    <th><?= ml('view_topic', 'th_cluster') ?></th>
+                                    <th><?= ml('view_topic', 'th_topic') ?></th>
+                                    <th class="text-center" style="width: 10%"><?= ml('view_topic', 'no_action') ?></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -327,9 +328,9 @@
                                                     <i class="fas fa-edit"></i>
                                                 </button>
 
-                                                <?php 
-                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                    if (is_null($has_dskpn)) : ?>
+                                                <?php
+                                                $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                if (is_null($has_dskpn)) : ?>
                                                     <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                         onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                         aria-hidden="true">
@@ -378,9 +379,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -430,9 +431,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -482,9 +483,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -534,9 +535,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -586,9 +587,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -638,9 +639,9 @@
                                                         <i class="fas fa-edit"></i>
                                                     </button>
 
-                                                    <?php 
-                                                        $has_dskpn = get_topic_dskpn($topic['tm_id']);
-                                                        if (is_null($has_dskpn)) : ?>
+                                                    <?php
+                                                    $has_dskpn = get_topic_dskpn($topic['tm_id']);
+                                                    if (is_null($has_dskpn)) : ?>
                                                         <button type="button" class="btn btn-sm action-icon btn-delete btn-outline-danger"
                                                             onclick="openDeleteTopicModal(<?= $topic['tm_id'] ?>, '<?= rawurlencode($topic['tm_desc']) ?>')"
                                                             aria-hidden="true">
@@ -666,25 +667,25 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white" id="addClusterModalLabel">Tambah Topik</h5>
+                <h5 class="modal-title text-white" id="addClusterModalLabel"><?= ml('view_topic', 'add_topic') ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="addSubjectForm" action="<?= route_to('create_topic'); ?>" method="POST">
                     <?= csrf_field() ?>
                     <div class="modal-form-group">
-                        <label for="clusterSelect">Kluster</label>
+                        <label for="clusterSelect"><?= ml('view_topic', 'cluster') ?></label>
                         <select style="width:100%;" name="cluster" class="form-control select2" id="kluster" aria-label="Default select example">
-                            <option disabled selected>-- Sila Pilih Kluster --</option>
+                            <option disabled selected><?= ml('view_topic', 'please_select_cluster') ?></option>
                             <?php foreach ($clusters as $item) { ?>
                                 <option value="<?= $item['ctm_id']; ?>"><?= $item['ctm_desc']; ?></option>
                             <?php } ?>
                         </select>
                     </div>
                     <div class="modal-form-group">
-                        <label for="yearSelect">Tahun</label>
+                        <label for="yearSelect"><?= ml('view_topic', 'year') ?></label>
                         <select style="width:100%;" name="year" class="form-control select2" id="yearSelect" required>
-                            <option value="" disabled selected>-- Sila Pilih Tahun --</option>
+                            <option value="" disabled selected><?= ml('view_topic', 'please_select_year') ?></option>
                             <option value="1">Satu</option>
                             <option value="2">Dua</option>
                             <option value="3">Tiga</option>
@@ -695,11 +696,11 @@
                     </div>
                     <div class="modal-form-group">
                         <label for="yearInput">Topik</label>
-                        <input type="text" name="topik" class="form-control" placeholder="Sila Masukkan Topik" id="yearInput" required>
+                        <input type="text" name="topik" class="form-control" placeholder="<?= ml('view_topic', 'enter_topic') ?>" id="yearInput" required>
                     </div>
                     <div class="text-end">
-                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn bg-info text-white">Tambah</button>
+                        <button type="button" class="btn bg-secondary text-white" data-bs-dismiss="modal"><?= ml('view_topic', 'cancel') ?></button>
+                        <button type="submit" class="btn bg-info text-white"><?= ml('view_topic', 'add_topic') ?></button>
                     </div>
                 </form>
             </div>
@@ -759,24 +760,23 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white" id="deleteTopicModalLabel">Padam Topik</h5>
+                <h5 class="modal-title text-white" id="deleteTopicModalLabel"><?= ml('view_topic', 'delete') ?> <?= ml('view_topic', 'topic') ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="text-center">
                     <i class="fas fa-exclamation-triangle text-danger" style="font-size: 3rem;"></i>
-                    <h4 class="mt-3">Adakah anda pasti?</h4>
+                    <h4 class="mt-3"><?= ml('view_topic', 'delete_confirm_title') ?></h4>
                     <p class="text-muted">
-                        Anda akan memadam topik "<span id="deleteTopicDesc" class="fw-bold"></span>" secara kekal.
-                        Tindakan ini tidak boleh dibatalkan.
+                        <?= ml('view_topic', 'delete_confirm_text') ?>
                     </p>
                 </div>
                 <form id="deleteTopicForm" action="<?= route_to('delete_topic'); ?>" method="POST">
                     <input type="hidden" id="DeleteTmID" name="tm_id">
                     <div class="text-center">
-                        <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal">Batal</button>
+                        <button type="button" class="btn bg-secondary text-white me-2" data-bs-dismiss="modal"><?= ml('view_topic', 'cancel') ?></button>
                         <button type="submit" class="btn bg-danger text-white">
-                            <i class="fas fa-trash"></i> Padam
+                            <i class="fas fa-trash"></i><?= ml('view_topic', 'delete') ?>
                         </button>
                     </div>
                 </form>
@@ -797,8 +797,8 @@
 
         // Custom DataTables language options (keep your existing ones)
         const languageOptions = {
-            search: "Cari:",
-            lengthMenu: "Papar _MENU_ rekod",
+            search: "<?= ml('view_topic', 'search_placeholder') ?>",
+            lengthMenu: "<?= ml('view_topic', 'displaying') ?>",
             info: "Paparan _START_ hingga _END_ daripada _TOTAL_ rekod",
         };
 
@@ -1019,5 +1019,4 @@
         document.getElementById('deleteTopicDesc').textContent = decodeURIComponent(tm_desc);
         new bootstrap.Modal(document.getElementById('deleteTopicModal')).show();
     }
-
 </script>

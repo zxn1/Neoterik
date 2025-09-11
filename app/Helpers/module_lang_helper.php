@@ -11,8 +11,11 @@ if (!function_exists('ml')) {
      */
     function ml(string $module, string $key): string
     {
+        $uri = service('uri');
+        $modules = $uri->getSegment(1);
+
         $locale = session('lang') ?? 'ms';
-        $file = APPPATH . "Modules/$module/Language/$locale/$module.php";
+        $file = APPPATH . "Modules/" . ucfirst($modules) . "/Language/$locale/$module.php";
 
         if (!file_exists($file)) {
             return $key; // fallback kalau file tak wujud

@@ -3,14 +3,17 @@
         z-index: 9999 !important;
         left: 0;
     }
+
     ol li[data-list="bullet"] {
-        list-style-type: disc;    /* Tunjuk bullet */
+        list-style-type: disc;
+        /* Tunjuk bullet */
         list-style-position: inside;
         counter-reset: none !important;
     }
 
     ol li[data-list="bullet"]::before {
-        content: '';              /* Buang numbering auto */
+        content: '';
+        /* Buang numbering auto */
         counter-increment: none;
     }
 </style>
@@ -18,16 +21,16 @@
 <div class="container-fluid py-4">
     <div class="card">
         <div class="card-header d-flex p-3 bg-primary">
-            <h6 class="my-auto text-white"><b>DSKPN</b></h6>
+            <h6 class="my-auto text-white"><b><?= ml('standard_performance_list', 'dskpn') ?></b></h6>
         </div>
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="form-group">
-                            <label for="subjectSelect">Mata Pelajaran</label>
+                            <label for="subjectSelect"><?= ml('standard_performance_list', 'subject') ?></label>
                             <select style="width:100%;" name="subject" class="form-control select2" id="subject" aria-label="Default select example">
-                                <option disabled selected>-- Sila Pilih Mata Pelajaran --</option>
+                                <option disabled selected><?= ml('standard_performance_list', 'select_subject_placeholder') ?></option>
                                 <?php foreach ($subject_list as $subject) { ?>
                                     <option value="<?= $subject['sbm_id']; ?>"><?= $subject['sbm_desc']; ?></option>
                                 <?php } ?>
@@ -36,9 +39,9 @@
                     </div>
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="dskpCodeSelect">Kod Rujukan</label>
+                            <label for="dskpCodeSelect"><?= ml('standard_performance_list', 'code_reference') ?></label>
                             <select style="width:100%;" name="dskpCode" class="form-control select2" id="dskpCodeSelect" disabled required>
-                                <option value="" disabled selected>-- Sila Pilih Kod --</option>
+                                <option value="" disabled selected><?= ml('standard_performance_list', 'select_code_placeholder') ?></option>
                             </select>
                         </div>
                     </div>
@@ -49,14 +52,14 @@
     <br>
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center p-3 bg-primary">
-            <h6 class="my-auto text-white"><b>TAHAP PENGUASAAN</b></h6>
+            <h6 class="my-auto text-white"><b><?= ml('standard_performance_list', 'mastery_level') ?></b></h6>
             <div>
                 <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-secondary text-white" id="edit-tp" style="margin-bottom:0 !important; display : none;">
-                    Ubah Tahap Penguasaan&nbsp;&nbsp;
+                    <?= ml('standard_performance_list', 'edit_mastery_level') ?>&nbsp;&nbsp;
                     <i class="fas fa-pencil-ruler"></i>
                 </a>
                 <a href="<?= route_to('view_tp_core_setup'); ?>" class="btn bg-info text-white" style="margin-bottom:0 !important">
-                    Tetapan Tahap Penguasaan&nbsp;&nbsp;
+                    <?= ml('standard_performance_list', 'setup_mastery_level') ?>&nbsp;&nbsp;
                     <i class="fas fa-wrench"></i>
                 </a>
             </div>
@@ -67,9 +70,9 @@
                 <thead>
                     <tr>
                         <!-- <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 5%; text-align: left;">BIL</th> -->
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">LEVEL</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;">TAHAP PENGUASAAN</th>
-                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;">TINDAKAN</th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;"><?= ml('standard_performance_list', 'level') ?></th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 75%; text-align: left;"><?= ml('standard_performance_list', 'mastery_level') ?></th>
+                        <th class="text-uppercase text-secondary text-m font-weight-bolder" style="width: 10%; text-align: left;"><?= ml('standard_performance_list', 'action') ?></th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -105,14 +108,13 @@
                         var $dskpCodeSelect = $('#dskpCodeSelect');
                         $dskpCodeSelect.empty();
 
-                        $dskpCodeSelect.append('<option value="" disabled selected>-- Sila Pilih Kod --</option>');
+                        $dskpCodeSelect.append('<option value="" disabled selected><?= ml('standard_performance_list', 'select_code_placeholder') ?></option>');
 
                         let includedArr = [];
                         $.each(response, function(index, item) {
-                            if(!includedArr.includes(item.dskp_code))
-                            {
+                            if (!includedArr.includes(item.dskp_code)) {
                                 $dskpCodeSelect.append('<option value="' + item.dskp_code + '">' + item.dskp_code + '</option>');
-                                includedArr.push(item.dskp_code);   
+                                includedArr.push(item.dskp_code);
                             }
                         });
                     }
@@ -181,11 +183,11 @@
 
     function deleteStandardPerformance(id, sbm_id) {
         Swal.fire({
-            title: "Anda benar-benar ingin delete item Tahap Penguasaan ini?",
+            title: "<?= ml('standard_performance_list', 'delete_confirm_title') ?>",
             showDenyButton: true,
             showCancelButton: true,
-            confirmButtonText: "Ya",
-            denyButtonText: `Tidak`
+            confirmButtonText: "<?= ml('standard_performance_list', 'confirm_yes') ?>",
+            denyButtonText: `<?= ml('standard_performance_list', 'confirm_no') ?>`
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -232,15 +234,15 @@
 
                             tableBody.append(tableRow);
                         });
-                        Swal.fire("Berjaya!", "", "success");
+                        Swal.fire("<?= ml('standard_performance_list', 'delete_success') ?>", "", "success");
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching data:', error);
-                        Swal.fire("Error fetching data:" + error, "", "error");
+                        // console.error('Error fetching data:', error);
+                        Swal.fire("<?= ml('standard_performance_list', 'error_fetching') ?>" + error, "", "error");
                     }
                 });
             } else if (result.isDenied) {
-                Swal.fire("Dibatalkan..", "", "info");
+                Swal.fire("<?= ml('standard_performance_list', 'cancelled') ?>", "", "info");
             }
         });
     }
